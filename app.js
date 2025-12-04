@@ -44,6 +44,17 @@ window.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   surveyData.companyCode = urlParams.get('company') || '';
   
+  // ボタンイベント設定
+  const startButton = document.getElementById('startButton');
+  if (startButton) {
+    startButton.addEventListener('click', startSurvey);
+  }
+  
+  const submitButton = document.getElementById('submitButton');
+  if (submitButton) {
+    submitButton.addEventListener('click', submitSurvey);
+  }
+  
   // 初期表示
   updateLanguage();
 });
