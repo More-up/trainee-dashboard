@@ -28,7 +28,10 @@
       
       <!-- 言語選択 -->
       <div class="language-selector">
-        <label for="languageSelect" id="languageLabel">言語 / Language</label>
+        <label for="languageSelect" id="languageLabel">
+          <span class="material-icons">language</span>
+          <span id="languageLabelText">言語 / Language</span>
+        </label>
         <select id="languageSelect">
           <option value="ja">🇯🇵 日本語</option>
           <option value="vi">🇻🇳 Tiếng Việt</option>
@@ -55,58 +58,79 @@
          =========================== -->
     <section id="initialScreen">
       <div class="initial-card">
+        
+        <!-- 匿名バッジ -->
         <div class="anonymous-badge">
-          <p id="anonymousMessage">🔒 あなたの名前は記録されません</p>
-          <p id="anonymousSubMessage">安心して正直に答えてください</p>
+          <div class="badge-icon">
+            <span class="material-icons">lock</span>
+          </div>
+          <div class="badge-content">
+            <p class="badge-title" id="anonymousMessage">🔒 あなたの名前は記録されません</p>
+            <p class="badge-subtitle" id="anonymousSubMessage">安心して正直に答えてください</p>
+          </div>
         </div>
         
-        <div class="form-group">
-          <label for="employeeCode" id="employeeCodeLabel">従業員コード</label>
-          <select id="employeeCode">
-            <option value="" id="employeeCodePlaceholder">選択してください</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-          </select>
+        <!-- フォーム -->
+        <div class="form-container">
+          <div class="form-group">
+            <label for="employeeCode">
+              <span class="material-icons">badge</span>
+              <span id="employeeCodeLabel">従業員コード</span>
+            </label>
+            <select id="employeeCode">
+              <option value="" id="employeeCodePlaceholder">選択してください</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="nationality">
+              <span class="material-icons">public</span>
+              <span id="nationalityLabel">国籍</span>
+            </label>
+            <select id="nationality">
+              <option value="" id="nationalityPlaceholder">選択してください</option>
+              <option value="myanmar" id="nationalityMyanmar">🇲🇲 ミャンマー</option>
+              <option value="vietnam" id="nationalityVietnam">🇻🇳 ベトナム</option>
+              <option value="philippines" id="nationalityPhilippines">🇵🇭 フィリピン</option>
+              <option value="indonesia" id="nationalityIndonesia">🇮🇩 インドネシア</option>
+              <option value="thailand" id="nationalityThailand">🇹🇭 タイ</option>
+              <option value="nepal" id="nationalityNepal">🇳🇵 ネパール</option>
+              <option value="india" id="nationalityIndia">🇮🇳 インド</option>
+              <option value="cambodia" id="nationalityCambodia">🇰🇭 カンボジア</option>
+              <option value="china" id="nationalityChina">🇨🇳 中国</option>
+            </select>
+          </div>
+          
+          <button class="btn-primary btn-large" id="startButton" onclick="startSurvey()">
+            <span class="material-icons">play_arrow</span>
+            <span id="startButtonText">アンケートを始める</span>
+          </button>
         </div>
         
-        <div class="form-group">
-          <label for="nationality" id="nationalityLabel">国籍</label>
-          <select id="nationality">
-            <option value="" id="nationalityPlaceholder">選択してください</option>
-            <option value="myanmar" id="nationalityMyanmar">ミャンマー</option>
-            <option value="vietnam" id="nationalityVietnam">ベトナム</option>
-            <option value="philippines" id="nationalityPhilippines">フィリピン</option>
-            <option value="indonesia" id="nationalityIndonesia">インドネシア</option>
-            <option value="thailand" id="nationalityThailand">タイ</option>
-            <option value="nepal" id="nationalityNepal">ネパール</option>
-            <option value="india" id="nationalityIndia">インド</option>
-            <option value="cambodia" id="nationalityCambodia">カンボジア</option>
-            <option value="china" id="nationalityChina">中国</option>
-          </select>
+        <!-- フッター情報 -->
+        <div class="initial-footer">
+          <p id="footerInfo">所要時間: 約5〜10分</p>
         </div>
-        
-        <button class="btn-primary" id="startButton" onclick="startSurvey()">
-          <span class="material-icons">play_arrow</span>
-          <span id="startButtonText">アンケートを始める</span>
-        </button>
       </div>
     </section>
 
@@ -136,7 +160,7 @@
 
       <!-- 送信ボタン -->
       <div class="submit-section">
-        <button class="btn-primary" id="submitButton" onclick="submitSurvey()">
+        <button class="btn-primary btn-large" id="submitButton" onclick="submitSurvey()">
           <span class="material-icons">check_circle</span>
           <span id="submitButtonText">結果を見る</span>
         </button>
@@ -148,7 +172,9 @@
          =========================== -->
     <section id="completionSection" style="display: none;">
       <div class="completion-content">
-        <div class="completion-icon">✅</div>
+        <div class="completion-icon">
+          <span class="material-icons">check_circle</span>
+        </div>
         <h2 id="completionTitle">ご回答ありがとうございました！</h2>
         <p id="completionMessage">あなたの声は大切に受け取りました。</p>
         <p id="completionAutoClose">この画面は5秒後に自動的に閉じられます...</p>
