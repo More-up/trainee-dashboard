@@ -3,338 +3,168 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>技能実習生満足度調査ダッシュボード</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>安心して答えてください｜職場アンケート</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ヘッダー -->
+
+  <!-- ===========================
+       ヘッダー
+       =========================== -->
   <header>
     <div class="header-content">
       <div class="logo">
-        <span class="material-icons">dashboard</span>
-        <h1>技能実習生満足度調査</h1>
+        <span class="material-icons">assignment</span>
+        <h1 id="headerTitle">安心して答えてください｜職場アンケート</h1>
       </div>
-      <div class="header-actions">
-        <button id="themeToggle" class="icon-btn" title="ダークモード切替">
-          <span class="material-icons">dark_mode</span>
-        </button>
+      
+      <!-- 言語選択 -->
+      <div class="language-selector">
+        <label for="languageSelect" id="languageLabel">言語 / Language</label>
+        <select id="languageSelect">
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="vi">🇻🇳 Tiếng Việt</option>
+          <option value="zh">🇨🇳 中文</option>
+          <option value="tl">🇵🇭 Filipino</option>
+          <option value="id">🇮🇩 Bahasa Indonesia</option>
+          <option value="th">🇹🇭 ภาษาไทย</option>
+          <option value="ne">🇳🇵 नेपाली</option>
+          <option value="hi">🇮🇳 हिन्दी</option>
+          <option value="km">🇰🇭 ភាសាខ្មែរ</option>
+          <option value="my">🇲🇲 မြန်မာဘာသာ</option>
+        </select>
       </div>
     </div>
   </header>
 
+  <!-- ===========================
+       メインコンテンツ
+       =========================== -->
   <div class="container">
-    <!-- プログレスカード -->
-    <div class="progress-card">
-      <div class="progress-info">
-        <div class="progress-number">
-          <span id="answeredCount">0</span> / <span id="totalCount">35</span>
+    
+    <!-- ===========================
+         初期入力画面
+         =========================== -->
+    <section id="initialScreen">
+      <div class="initial-card">
+        <div class="anonymous-badge">
+          <p id="anonymousMessage">🔒 あなたの名前は記録されません</p>
+          <p id="anonymousSubMessage">安心して正直に答えてください</p>
         </div>
-        <div class="progress-label">問完了</div>
+        
+        <div class="form-group">
+          <label for="employeeCode" id="employeeCodeLabel">従業員コード</label>
+          <select id="employeeCode">
+            <option value="" id="employeeCodePlaceholder">選択してください</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="nationality" id="nationalityLabel">国籍</label>
+          <select id="nationality">
+            <option value="" id="nationalityPlaceholder">選択してください</option>
+            <option value="myanmar" id="nationalityMyanmar">ミャンマー</option>
+            <option value="vietnam" id="nationalityVietnam">ベトナム</option>
+            <option value="philippines" id="nationalityPhilippines">フィリピン</option>
+            <option value="indonesia" id="nationalityIndonesia">インドネシア</option>
+            <option value="thailand" id="nationalityThailand">タイ</option>
+            <option value="nepal" id="nationalityNepal">ネパール</option>
+            <option value="india" id="nationalityIndia">インド</option>
+            <option value="cambodia" id="nationalityCambodia">カンボジア</option>
+            <option value="china" id="nationalityChina">中国</option>
+          </select>
+        </div>
+        
+        <button class="btn-primary" id="startButton" onclick="startSurvey()">
+          <span class="material-icons">play_arrow</span>
+          <span id="startButtonText">アンケートを始める</span>
+        </button>
       </div>
-      <div class="progress-bar-wrapper">
-        <div class="progress-bar-fill"></div>
+    </section>
+
+    <!-- ===========================
+         アンケート画面
+         =========================== -->
+    <section id="surveySection" style="display: none;">
+      
+      <!-- プログレスバー -->
+      <div class="progress-container">
+        <div class="progress-info">
+          <p class="progress-number">
+            <span id="answeredCount">0</span> / 35 <span id="progressCompleted">問完了</span>
+          </p>
+          <p class="progress-label" id="progressRate">進捗率</p>
+        </div>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-details">
+          <span id="progressPercentage">0%</span>
+        </div>
       </div>
-      <div class="progress-details">
-        <span>進捗率</span>
-        <span id="progressPercentage">0%</span>
+
+      <!-- 質問カテゴリー -->
+      <div id="questionsContainer"></div>
+
+      <!-- 送信ボタン -->
+      <div class="submit-section">
+        <button class="btn-primary" id="submitButton" onclick="submitSurvey()">
+          <span class="material-icons">check_circle</span>
+          <span id="submitButtonText">結果を見る</span>
+        </button>
       </div>
-    </div>
+    </section>
 
-    <!-- メインコンテンツ -->
-    <main>
-      <!-- アンケートセクション -->
-      <section id="surveySection">
-        <!-- 1. 業務・職場環境 -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">work</span>
-            <h2 class="category-title">1. 業務・職場環境</h2>
-          </div>
-          <div class="question" data-category="業務・職場環境">
-            <p class="question-text">仕事の内容は、自分に合っていますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="業務・職場環境">
-            <p class="question-text">働く場所は、安全だと思いますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="業務・職場環境">
-            <p class="question-text">休みの日や働く時間は、ちょうどよいですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="業務・職場環境">
-            <p class="question-text">職場の雰囲気は、働きやすいですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
+    <!-- ===========================
+         完了画面
+         =========================== -->
+    <section id="completionSection" style="display: none;">
+      <div class="completion-content">
+        <div class="completion-icon">✅</div>
+        <h2 id="completionTitle">ご回答ありがとうございました！</h2>
+        <p id="completionMessage">あなたの声は大切に受け取りました。</p>
+        <p id="completionAutoClose">この画面は5秒後に自動的に閉じられます...</p>
+        <p id="completionCountdown">
+          <span id="completionRemaining">残り</span> 
+          <strong id="countdown">5</strong> 
+          <span id="completionSeconds">秒</span>
+        </p>
+      </div>
+    </section>
 
-        <!-- 2. 給与・待遇 -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">payments</span>
-            <h2 class="category-title">2. 給与・待遇</h2>
-          </div>
-          <div class="question" data-category="給与・待遇">
-            <p class="question-text">給料の金額に、満足していますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="給与・待遇">
-            <p class="question-text">残業代や手当は、きちんと受け取れていますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="給与・待遇">
-            <p class="question-text">保険や休暇などの制度は、十分だと思いますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="給与・待遇">
-            <p class="question-text">この会社で働くことで、生活に必要なお金を得られていますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
-
-        <!-- 3. 家族・プライベート事情 -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">family_restroom</span>
-            <h2 class="category-title">3. 家族・プライベート事情</h2>
-          </div>
-          <div class="question" data-category="家族・プライベート事情">
-            <p class="question-text">家族と連絡をとる時間は、十分にありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="家族・プライベート事情">
-            <p class="question-text">家族に送金する余裕はありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="家族・プライベート事情">
-            <p class="question-text">自分の時間（休みやプライベート）は、十分にありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="家族・プライベート事情">
-            <p class="question-text">将来、家族を日本に呼びたいと思いますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
-
-        <!-- 4. 人間関係 -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">groups</span>
-            <h2 class="category-title">4. 人間関係</h2>
-          </div>
-          <div class="question" data-category="人間関係">
-            <p class="question-text">同じ技能実習生の仲間との関係は良いですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="人間関係">
-            <p class="question-text">日本人の上司や同僚は、あなたの話を聞いてくれますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="人間関係">
-            <p class="question-text">困ったときに、同じ技能実習生の仲間は助けてくれますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="人間関係" data-type="negative">
-            <p class="question-text">職場で、いじめや差別を受けることはありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
-
-        <!-- 5. 日本語・コミュニケーション -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">translate</span>
-            <h2 class="category-title">5. 日本語・コミュニケーション</h2>
-          </div>
-          <div class="question" data-category="日本語・コミュニケーション" data-type="negative">
-            <p class="question-text">日本語での会話に困ることはありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="日本語・コミュニケーション">
-            <p class="question-text">仕事の説明や指示は分かりやすいですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="日本語・コミュニケーション">
-            <p class="question-text">分からないことを質問しやすいですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="日本語・コミュニケーション">
-            <p class="question-text">会社は、日本語の勉強を助けてくれますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="日本語・コミュニケーション">
-            <p class="question-text">母国語で相談できる人（通訳や先輩など）はいますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
-
-        <!-- 6. 文化・価値観 -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">public</span>
-            <h2 class="category-title">6. 文化・価値観</h2>
-          </div>
-          <div class="question" data-category="文化・価値観">
-            <p class="question-text">日本の文化や習慣に、慣れていますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="文化・価値観" data-type="negative">
-            <p class="question-text">仕事中に文化の違いで困ることはありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
-
-        <!-- 7. 生活環境 -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">home</span>
-            <h2 class="category-title">7. 生活環境</h2>
-          </div>
-          <div class="question" data-category="生活環境">
-            <p class="question-text">住んでいる場所（寮・アパートなど）は快適ですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="生活環境">
-            <p class="question-text">生活費は、給料に対してちょうどよいですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="生活環境" data-type="negative">
-            <p class="question-text">日本での生活で困ることはありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="生活環境">
-            <p class="question-text">会社は生活のサポートをしてくれますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="生活環境">
-            <p class="question-text">ルームシェア（2〜3人で同じ部屋）の生活は快適ですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="生活環境">
-            <p class="question-text">日本での生活は、安全で快適ですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
-
-        <!-- 8. キャリア・将来の見通し -->
-        <div class="category">
-          <div class="category-header">
-            <span class="material-icons category-icon">trending_up</span>
-            <h2 class="category-title">8. キャリア・将来の見通し</h2>
-          </div>
-          <div class="question" data-category="キャリア・将来の見通し">
-            <p class="question-text">今の仕事で、技術や知識が身についていますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="キャリア・将来の見通し">
-            <p class="question-text">昇進や給料アップのチャンスは、平等ですか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="キャリア・将来の見通し">
-            <p class="question-text">この会社で、長く働きたいと思いますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="キャリア・将来の見通し">
-            <p class="question-text">将来の資格や在留資格のサポートはありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="キャリア・将来の見通し">
-            <p class="question-text">新しい技術や知識を学ぶ機会はありますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-          <div class="question" data-category="キャリア・将来の見通し">
-            <p class="question-text">母国の友達にも「この会社で働いたほうがいいよ」と思えますか？</p>
-            <div class="emoji-options"></div>
-          </div>
-        </div>
-
-        <!-- 送信ボタン -->
-        <div class="submit-section">
-          <button id="submitBtn" class="btn-primary" disabled>
-            <span class="material-icons">send</span>
-            結果を見る
-          </button>
-        </div>
-      </section>
-
-      <!-- 結果分析セクション -->
-      <section id="resultsSection" style="display: none;">
-        <div class="results-header">
-          <h2>結果分析</h2>
-          <div class="results-actions">
-            <button id="exportBtn" class="btn-secondary">
-              <span class="material-icons">download</span>
-              CSV出力
-            </button>
-            <button id="printBtn" class="btn-secondary">
-              <span class="material-icons">print</span>
-              印刷
-            </button>
-            <button id="backBtn" class="btn-secondary">
-              <span class="material-icons">arrow_back</span>
-              戻る
-            </button>
-          </div>
-        </div>
-
-        <!-- サマリーカード -->
-        <div class="summary-grid">
-          <div class="summary-card">
-            <div class="summary-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-              <span class="material-icons">star</span>
-            </div>
-            <div class="summary-content">
-              <div class="summary-label">総合スコア</div>
-              <div class="summary-value" id="totalScore">0</div>
-            </div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-              <span class="material-icons">check_circle</span>
-            </div>
-            <div class="summary-content">
-              <div class="summary-label">回答数</div>
-              <div class="summary-value" id="answeredTotal">0 / 35</div>
-            </div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-              <span class="material-icons">mood</span>
-            </div>
-            <div class="summary-content">
-              <div class="summary-label">満足度</div>
-              <div class="summary-value" id="satisfactionLevel">-</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- レーダーチャート -->
-        <div class="chart-container">
-          <h3>カテゴリー別スコア</h3>
-          <canvas id="radarChart"></canvas>
-        </div>
-
-        <!-- カテゴリー詳細 -->
-        <div class="category-details" id="categoryDetails"></div>
-
-        <!-- 履歴セクション -->
-        <div class="history-section">
-          <div class="history-header">
-            <h3>回答履歴</h3>
-            <button id="clearHistoryBtn" class="btn-text">
-              <span class="material-icons">delete</span>
-              履歴をクリア
-            </button>
-          </div>
-          <div id="historyList" class="history-list"></div>
-        </div>
-      </section>
-    </main>
   </div>
 
+  <!-- JavaScript -->
+  <script src="translations.js"></script>
   <script src="app.js"></script>
+
 </body>
 </html>
