@@ -1,27 +1,63 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>技能実習生エンゲージメント診断</title>
-  <link rel="stylesheet" href="style.css"> <!-- ← CSSを外部読み込み -->
-</head>
-<body>
-  <h1>技能実習生エンゲージメント診断</h1>
-  <p class="subtitle">以下の質問に答えてください。</p>
+<!-- 1. 業務・職場環境 -->
+<h2>1. 業務・職場環境</h2>
+<div class="question" data-type="positive"><p>仕事の内容は、自分に合っていますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>働く場所は、安全だと思いますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>休みの日や働く時間は、ちょうどよいですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>職場の雰囲気は、働きやすいですか？</p><div class="options"></div><div class="result"></div></div>
 
-  <!-- 確定版の全設問をここに並べる -->
-  <h2>1. 業務・職場環境</h2>
-  <div class="question" data-type="positive">
-    <p>仕事の内容は、自分に合っていますか？</p>
-    <div class="options"></div>
-    <div class="result"></div>
-  </div>
-  <!-- 以下、確定版リスト全部を同じ構造で追加 -->
+<!-- 2. 給与・待遇 -->
+<h2>2. 給与・待遇</h2>
+<div class="question" data-type="positive"><p>給料の金額に、満足していますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>残業代や手当は、きちんと受け取れていますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>保険や休暇などの制度は、十分だと思いますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>この会社で働くことで、生活に必要なお金を得られていますか？</p><div class="options"></div><div class="result"></div></div>
 
-  <!-- 集計ボタン -->
-  <button id="calculate">診断結果を見る</button>
-  <div id="summary"></div>
+<!-- 3. 家族・プライベート事情 -->
+<h2>3. 家族・プライベート事情</h2>
+<div class="question" data-type="positive"><p>家族と連絡をとる時間は、十分にありますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>家族に送金する余裕はありますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>自分の時間（休みやプライベート）は、十分にありますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>将来、家族を日本に呼びたいと思いますか？</p><div class="options"></div><div class="result"></div></div>
 
-  <script src="app.js"></script> <!-- ← JSを外部読み込み -->
-</body>
-</html>
+<!-- 4. 人間関係 -->
+<h2>4. 人間関係</h2>
+<div class="question" data-type="positive"><p>同じ技能実習生の仲間との関係は良いですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>日本人の上司や同僚は、あなたの話を聞いてくれますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>困ったときに、同じ技能実習生の仲間は助けてくれますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="negative"><p>職場で、いじめや差別を受けることはありますか？</p><div class="options"></div><div class="result"></div></div>
+<!-- 5. 日本語・コミュニケーション -->
+<h2>5. 日本語・コミュニケーション</h2>
+<div class="question" data-type="negative"><p>日本語での会話に困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>仕事の説明や指示は分かりやすいですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>分からないことを質問しやすいですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>会社は、日本語の勉強を助けてくれますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>母国語で相談できる人（通訳や先輩など）はいますか？</p><div class="options"></div><div class="result"></div></div>
+
+<!-- 6. 文化・価値観 -->
+<h2>6. 文化・価値観</h2>
+<div class="question" data-type="positive"><p>日本の文化や習慣に、慣れていますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="negative"><p>仕事中に文化の違いで困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
+
+<!-- 7. 生活環境 -->
+<h2>7. 生活環境</h2>
+<div class="question" data-type="positive"><p>住んでいる場所（寮・アパートなど）は快適ですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>生活費は、給料に対してちょうどよいですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="negative"><p>日本での生活で困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>会社は生活のサポートをしてくれますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>ルームシェア（2〜3人で同じ部屋）の生活は快適ですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>日本での生活は、安全で快適ですか？</p><div class="options"></div><div class="result"></div></div>
+
+<!-- 8. キャリア・将来の見通し -->
+<h2>8. キャリア・将来の見通し</h2>
+<div class="question" data-type="positive"><p>今の仕事で、技術や知識が身についていますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>昇進や給料アップのチャンスは、平等ですか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>この会社で、長く働きたいと思いますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>将来の資格や在留資格のサポートはありますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>新しい技術や知識を学ぶ機会はありますか？</p><div class="options"></div><div class="result"></div></div>
+<div class="question" data-type="positive"><p>母国の友達にも「この会社で働いたほうがいいよ」と思えますか？</p><div class="options"></div><div class="result"></div></div>
+
+<!-- 集計ボタン -->
+<button id="calculate">診断結果を見る</button>
+<div id="summary"></div>
+
+<script src="app.js"></script>
