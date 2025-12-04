@@ -4,43 +4,108 @@
   <meta charset="UTF-8">
   <title>技能実習生エンゲージメント診断</title>
   <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+      max-width: 720px;
+      margin: 32px auto;
+      padding: 0 16px;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #555;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
     .question {
       margin: 20px 0;
     }
     .options {
       display: flex;
-      gap: 15px;
+      gap: 16px;
     }
     .option {
+      flex: 1;
       text-align: center;
       cursor: pointer;
+      border: 2px solid #e5e7eb; /* light gray */
+      border-radius: 12px;
+      padding: 12px;
+      transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.05s ease;
+      user-select: none;
+    }
+    .option:hover {
+      border-color: #9ca3af; /* gray */
+      background-color: #f9fafb;
+    }
+    .option:active {
+      transform: scale(0.98);
     }
     .option img {
       width: 60px;
       height: 60px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    .selected {
+      border-color: #2563eb; /* blue-600 */
+      background-color: #eff6ff; /* blue-50 */
+    }
+    .result {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f3f4f6; /* gray-100 */
+      border-radius: 8px;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
   <h1>技能実習生エンゲージメント診断</h1>
-  <p>以下の質問に答えてください。</p>
+  <p class="subtitle">以下の質問に答えてください。</p>
 
-  <div class="question">
+  <div class="question" id="q1">
     <p>Q1. 今の職場環境に満足していますか？</p>
     <div class="options">
-      <div class="option">
+      <div class="option" data-value="不満">
         <img src="https://twemoji.maxcdn.com/v/latest/svg/1f622.svg" alt="悲しい">
         <p>不満</p>
       </div>
-      <div class="option">
+      <div class="option" data-value="普通">
         <img src="https://twemoji.maxcdn.com/v/latest/svg/1f610.svg" alt="普通">
         <p>普通</p>
       </div>
-      <div class="option">
+      <div class="option" data-value="満足">
         <img src="https://twemoji.maxcdn.com/v/latest/svg/1f600.svg" alt="嬉しい">
         <p>満足</p>
       </div>
     </div>
+    <div class="result" id="q1-result" aria-live="polite" style="display:none;"></div>
   </div>
+
+  <script>
+    // Find all option groups and wire up selection behavior
+    document.querySelectorAll('.question').forEach((questionEl) => {
+      const options = questionEl.querySelectorAll('.option');
+      const resultEl = questionEl.querySelector('.result');
+
+      options.forEach((opt) => {
+        opt.addEventListener('click', () => {
+          // Clear previous selection
+          options.forEach(o => o.classList.remove('selected'));
+          // Set current selection
+          opt.classList.add('selected');
+
+          // Show immediate feedback
+          const value = opt.getAttribute('data-value');
+          resultEl.textContent = `選択: ${value}`;
+          resultEl.style.display = 'block';
+        });
+      });
+    });
+  </script>
 </body>
 </html>
