@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者ダッシュボード｜職場アンケート</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <style>
+    /* ===========================
+       グローバル設定
+       =========================== */
+    :root {
+      --primary-color: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #4285f4;
+      --background: #f8f9fa;
+      --surface: #ffffff;
+      --text-primary: #202124;
+      --text-secondary: #5f6368;
+      --border-color: #dadce0;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --success: #1e8e3e;
+      --warning: #ea8600;
+      --error: #d93025;
+      --spacing-xs: 8px;
+      --spacing-sm: 12px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* ===========================
+       ヘッダー
+       =========================== */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--spacing-md) var(--spacing-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .logo .material-icons {
+      font-size: 32px;
+      color: var(--primary-color);
+    }
+
+    .logo h1 {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .btn-logout {
+      background: var(--error);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-logout:hover {
+      background: #c5221f;
+      transform: translateY(-2px);
+    }
+
+    /* ===========================
+       コンテナ
+       =========================== */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--spacing-lg);
+    }
+
+    /* ===========================
+       フィルターセクション
+       =========================== */
+    .filter-section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .filter-section h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filter-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .filter-group select {
+      padding: 10px 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    .filter-group select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    /* ===========================
+       統計カード
+       =========================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .stat-icon {
+      font-size: 32px;
+      color: var(--primary-color);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .stat-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-unit {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+
+    /* ===========================
+       チャートセクション
+       =========================== */
+    .chart-section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .chart-section h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: var(--spacing-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: var(--spacing-lg);
+    }
+
+    .chart-container {
+      position: relative;
+      height: 350px;
+    }
+
+    /* ===========================
+       データテーブル
+       =========================== */
+    .table-section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .table-header h2 {
+      font-size: 18px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .table-actions {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+    .btn-action {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-action:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead {
+      background: var(--background);
+    }
+
+    th {
+      padding: 12px;
+      text-align: left;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tbody tr:hover {
+      background: var(--background);
+    }
+
+    .score-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 13px;
+    }
+
+    .score-high {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .score-medium {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .score-low {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    /* ===========================
+       AI分析セクション
+       =========================== */
+    .ai-analysis {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 12px;
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .ai-analysis h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .ai-insights {
+      display: grid;
+      gap: var(--spacing-md);
+    }
+
+    .ai-insight-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      padding: var(--spacing-md);
+    }
+
+    .ai-insight-card h3 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .ai-insight-card p {
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* ===========================
+       空データ表示
+       =========================== */
+    .no-data {
+      text-align: center;
+      padding: var(--spacing-xl);
+      color: var(--text-secondary);
+    }
+
+    .no-data .material-icons {
+      font-size: 64px;
+      margin-bottom: var(--spacing-md);
+      opacity: 0.3;
+    }
+
+    /* ===========================
+       レスポンシブ
+       =========================== */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+      }
+
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-wrapper {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+    }
+
+    /* ===========================
+       印刷用
+       =========================== */
+    @media print {
+      header,
+      .filter-section,
+      .table-actions,
+      .btn-logout {
+        display: none;
+      }
+
+      .container {
+        padding: 0;
+      }
+
+      .chart-section,
+      .table-section,
+      .ai-analysis {
+        page-break-inside: avoid;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===========================
+       ヘッダー
+       =========================== -->
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <span class="material-icons">dashboard</span>
+        <h1>管理者ダッシュボード</h1>
+      </div>
+      
+      <div class="header-actions">
+        <div class="user-info">
+          <span class="material-icons">account_circle</span>
+          <span id="adminUsername">管理者</span>
+        </div>
+        <button class="btn-logout" onclick="logout()">
+          <span class="material-icons">logout</span>
+          ログアウト
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===========================
+       メインコンテンツ
+       =========================== -->
+  <div class="container">
+
+    <!-- フィルターセクション -->
+    <div class="filter-section">
+      <h2>
+        <span class="material-icons">filter_list</span>
+        データフィルター
+      </h2>
+      <div class="filter-grid">
+        <div class="filter-group">
+          <label for="filterCompany">会社コード</label>
+          <select id="filterCompany" onchange="applyFilters()">
+            <option value="">すべて</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterMonth">月</label>
+          <select id="filterMonth" onchange="applyFilters()">
+            <option value="">すべて</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterEmployee">従業員コード</label>
+          <select id="filterEmployee" onchange="applyFilters()">
+            <option value="">すべて</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterNationality">国籍</label>
+          <select id="filterNationality" onchange="applyFilters()">
+            <option value="">すべて</option>
+            <option value="myanmar">ミャンマー</option>
+            <option value="vietnam">ベトナム</option>
+            <option value="philippines">フィリピン</option>
+            <option value="indonesia">インドネシア</option>
+            <option value="thailand">タイ</option>
+            <option value="nepal">ネパール</option>
+            <option value="india">インド</option>
+            <option value="cambodia">カンボジア</option>
+            <option value="china">中国</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 統計カード -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-icons stat-icon">people</span>
+          <span class="stat-label">総回答数</span>
+        </div>
+        <div>
+          <span class="stat-value" id="totalResponses">0</span>
+          <span class="stat-unit">件</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-icons stat-icon">assessment</span>
+          <span class="stat-label">平均スコア</span>
+        </div>
+        <div>
+          <span class="stat-value" id="averageScore">0</span>
+          <span class="stat-unit">/ 100</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-icons stat-icon">trending_up</span>
+          <span class="stat-label">最高スコア</span>
+        </div>
+        <div>
+          <span class="stat-value" id="maxScore">0</span>
+          <span class="stat-unit">/ 100</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-icons stat-icon">trending_down</span>
+          <span class="stat-label">最低スコア</span>
+        </div>
+        <div>
+          <span class="stat-value" id="minScore">0</span>
+          <span class="stat-unit">/ 100</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- チャートセクション -->
+    <div class="chart-section">
+      <h2>
+        <span class="material-icons">analytics</span>
+        データ分析
+      </h2>
+      <div class="chart-grid">
+        <div class="chart-container">
+          <canvas id="radarChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI分析セクション -->
+    <div class="ai-analysis" id="aiAnalysis">
+      <h2>
+        <span class="material-icons">psychology</span>
+        AI 国籍別文化分析
+      </h2>
+      <div class="ai-insights" id="aiInsights">
+        <!-- AIインサイトがここに動的に生成されます -->
+      </div>
+    </div>
+
+    <!-- データテーブル -->
+    <div class="table-section">
+      <div class="table-header">
+        <h2>
+          <span class="material-icons">table_chart</span>
+          回答データ一覧
+        </h2>
+        <div class="table-actions">
+          <button class="btn-action" onclick="exportCSV()">
+            <span class="material-icons">download</span>
+            CSV出力
+          </button>
+          <button class="btn-action" onclick="window.print()">
+            <span class="material-icons">print</span>
+            印刷
+          </button>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th>日時</th>
+              <th>会社コード</th>
+              <th>従業員コード</th>
+              <th>国籍</th>
+              <th>総合スコア</th>
+              <th>月</th>
+            </tr>
+          </thead>
+          <tbody id="dataTableBody">
+            <!-- データが動的に挿入されます -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="admin.js"></script>
+
+</body>
+</html>
