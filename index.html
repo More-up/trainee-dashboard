@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>技能実習生エンゲージメント診断</title>
+  <link rel="stylesheet" href="style.css"> <!-- ← CSSを外部読み込み -->
+</head>
+<body>
+  <h1>技能実習生エンゲージメント診断</h1>
+  <p class="subtitle">以下の質問に答えてください。</p>
+
+  <!-- 確定版の全設問をここに並べる -->
+  <h2>1. 業務・職場環境</h2>
+  <div class="question" data-type="positive">
+    <p>仕事の内容は、自分に合っていますか？</p>
+    <div class="options"></div>
+    <div class="result"></div>
+  </div>
+  <!-- 以下、確定版リスト全部を同じ構造で追加 -->
+
+  <!-- 集計ボタン -->
+  <button id="calculate">診断結果を見る</button>
+  <div id="summary"></div>
+
+  <script src="app.js"></script> <!-- ← JSを外部読み込み -->
+</body>
+</html>
