@@ -1,63 +1,413 @@
-<!-- 1. 業務・職場環境 -->
-<h2>1. 業務・職場環境</h2>
-<div class="question" data-type="positive"><p>仕事の内容は、自分に合っていますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>働く場所は、安全だと思いますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>休みの日や働く時間は、ちょうどよいですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>職場の雰囲気は、働きやすいですか？</p><div class="options"></div><div class="result"></div></div>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技能実習生満足度調査ダッシュボード</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="material-icons">dashboard</span>
+                <h1>技能実習生満足度調査</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="langBtn" title="言語切替">
+                    <span class="material-icons">language</span>
+                </button>
+                <button class="btn-icon" id="themeBtn" title="テーマ切替">
+                    <span class="material-icons">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<!-- 2. 給与・待遇 -->
-<h2>2. 給与・待遇</h2>
-<div class="question" data-type="positive"><p>給料の金額に、満足していますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>残業代や手当は、きちんと受け取れていますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>保険や休暇などの制度は、十分だと思いますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>この会社で働くことで、生活に必要なお金を得られていますか？</p><div class="options"></div><div class="result"></div></div>
+    <!-- メインコンテナ -->
+    <div class="container">
+        <!-- サイドバー -->
+        <aside class="sidebar">
+            <nav class="nav">
+                <a href="#" class="nav-item active" data-section="survey">
+                    <span class="material-icons">assignment</span>
+                    <span>アンケート</span>
+                </a>
+                <a href="#" class="nav-item" data-section="results">
+                    <span class="material-icons">analytics</span>
+                    <span>結果分析</span>
+                </a>
+                <a href="#" class="nav-item" data-section="history">
+                    <span class="material-icons">history</span>
+                    <span>履歴</span>
+                </a>
+            </nav>
+            
+            <!-- 進捗カード -->
+            <div class="progress-card">
+                <h3>回答進捗</h3>
+                <div class="progress-circle" id="progressCircle">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" class="progress-bg"></circle>
+                        <circle cx="50" cy="50" r="45" class="progress-fill" id="progressFill"></circle>
+                    </svg>
+                    <div class="progress-text" id="progressText">0%</div>
+                </div>
+                <p class="progress-info" id="progressInfo">0 / 39 問完了</p>
+            </div>
+        </aside>
 
-<!-- 3. 家族・プライベート事情 -->
-<h2>3. 家族・プライベート事情</h2>
-<div class="question" data-type="positive"><p>家族と連絡をとる時間は、十分にありますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>家族に送金する余裕はありますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>自分の時間（休みやプライベート）は、十分にありますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>将来、家族を日本に呼びたいと思いますか？</p><div class="options"></div><div class="result"></div></div>
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+            <!-- アンケートセクション -->
+            <section id="surveySection" class="content-section active">
+                <div class="section-header">
+                    <h2>アンケート</h2>
+                    <p class="subtitle">各質問に対してあなたの気持ちに最も近い絵文字を選んでください</p>
+                </div>
 
-<!-- 4. 人間関係 -->
-<h2>4. 人間関係</h2>
-<div class="question" data-type="positive"><p>同じ技能実習生の仲間との関係は良いですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>日本人の上司や同僚は、あなたの話を聞いてくれますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>困ったときに、同じ技能実習生の仲間は助けてくれますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="negative"><p>職場で、いじめや差別を受けることはありますか？</p><div class="options"></div><div class="result"></div></div>
-<!-- 5. 日本語・コミュニケーション -->
-<h2>5. 日本語・コミュニケーション</h2>
-<div class="question" data-type="negative"><p>日本語での会話に困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>仕事の説明や指示は分かりやすいですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>分からないことを質問しやすいですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>会社は、日本語の勉強を助けてくれますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>母国語で相談できる人（通訳や先輩など）はいますか？</p><div class="options"></div><div class="result"></div></div>
+                <!-- カテゴリー1: 業務・職場環境 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">work</span>
+                        <h3>1. 業務・職場環境</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="positive" data-category="work">
+                            <p class="question-text">仕事の内容は、自分に合っていますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="work">
+                            <p class="question-text">働く場所は、安全だと思いますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="work">
+                            <p class="question-text">休みの日や働く時間は、ちょうどよいですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="work">
+                            <p class="question-text">職場の雰囲気は、働きやすいですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- 6. 文化・価値観 -->
-<h2>6. 文化・価値観</h2>
-<div class="question" data-type="positive"><p>日本の文化や習慣に、慣れていますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="negative"><p>仕事中に文化の違いで困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
+                <!-- カテゴリー2: 給与・待遇 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">payments</span>
+                        <h3>2. 給与・待遇</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="positive" data-category="salary">
+                            <p class="question-text">給料の金額に、満足していますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="salary">
+                            <p class="question-text">残業代や手当は、きちんと受け取れていますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="salary">
+                            <p class="question-text">保険や休暇などの制度は、十分だと思いますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="salary">
+                            <p class="question-text">この会社で働くことで、生活に必要なお金を得られていますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- 7. 生活環境 -->
-<h2>7. 生活環境</h2>
-<div class="question" data-type="positive"><p>住んでいる場所（寮・アパートなど）は快適ですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>生活費は、給料に対してちょうどよいですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="negative"><p>日本での生活で困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>会社は生活のサポートをしてくれますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>ルームシェア（2〜3人で同じ部屋）の生活は快適ですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>日本での生活は、安全で快適ですか？</p><div class="options"></div><div class="result"></div></div>
+                <!-- カテゴリー3: 家族・プライベート事情 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">family_restroom</span>
+                        <h3>3. 家族・プライベート事情</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="positive" data-category="family">
+                            <p class="question-text">家族と連絡をとる時間は、十分にありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="family">
+                            <p class="question-text">家族に送金する余裕はありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="family">
+                            <p class="question-text">自分の時間（休みやプライベート）は、十分にありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="family">
+                            <p class="question-text">将来、家族を日本に呼びたいと思いますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- 8. キャリア・将来の見通し -->
-<h2>8. キャリア・将来の見通し</h2>
-<div class="question" data-type="positive"><p>今の仕事で、技術や知識が身についていますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>昇進や給料アップのチャンスは、平等ですか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>この会社で、長く働きたいと思いますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>将来の資格や在留資格のサポートはありますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>新しい技術や知識を学ぶ機会はありますか？</p><div class="options"></div><div class="result"></div></div>
-<div class="question" data-type="positive"><p>母国の友達にも「この会社で働いたほうがいいよ」と思えますか？</p><div class="options"></div><div class="result"></div></div>
+                <!-- カテゴリー4: 人間関係 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">groups</span>
+                        <h3>4. 人間関係</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="positive" data-category="relationship">
+                            <p class="question-text">同じ技能実習生の仲間との関係は良いですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="relationship">
+                            <p class="question-text">日本人の上司や同僚は、あなたの話を聞いてくれますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="relationship">
+                            <p class="question-text">困ったときに、同じ技能実習生の仲間は助けてくれますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="negative" data-category="relationship">
+                            <p class="question-text">職場で、いじめや差別を受けることはありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- 集計ボタン -->
-<button id="calculate">診断結果を見る</button>
-<div id="summary"></div>
+                <!-- カテゴリー5: 日本語・コミュニケーション -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">translate</span>
+                        <h3>5. 日本語・コミュニケーション</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="negative" data-category="communication">
+                            <p class="question-text">日本語での会話に困ることはありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="communication">
+                            <p class="question-text">仕事の説明や指示は分かりやすいですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="communication">
+                            <p class="question-text">分からないことを質問しやすいですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="communication">
+                            <p class="question-text">会社は、日本語の勉強を助けてくれますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="communication">
+                            <p class="question-text">母国語で相談できる人（通訳や先輩など）はいますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
 
-<script src="app.js"></script>
+                <!-- カテゴリー6: 文化・価値観 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">public</span>
+                        <h3>6. 文化・価値観</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="positive" data-category="culture">
+                            <p class="question-text">日本の文化や習慣に、慣れていますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="negative" data-category="culture">
+                            <p class="question-text">仕事中に文化の違いで困ることはありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- カテゴリー7: 生活環境 -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">home</span>
+                        <h3>7. 生活環境</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="positive" data-category="living">
+                            <p class="question-text">住んでいる場所（寮・アパートなど）は快適ですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="living">
+                            <p class="question-text">生活費は、給料に対してちょうどよいですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="negative" data-category="living">
+                            <p class="question-text">日本での生活で困ることはありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="living">
+                            <p class="question-text">会社は生活のサポートをしてくれますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="living">
+                            <p class="question-text">ルームシェア（2〜3人で同じ部屋）の生活は快適ですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="living">
+                            <p class="question-text">日本での生活は、安全で快適ですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- カテゴリー8: キャリア・将来の見通し -->
+                <div class="category-card">
+                    <div class="category-header">
+                        <span class="material-icons category-icon">trending_up</span>
+                        <h3>8. キャリア・将来の見通し</h3>
+                    </div>
+                    <div class="questions">
+                        <div class="question-card" data-type="positive" data-category="career">
+                            <p class="question-text">今の仕事で、技術や知識が身についていますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="career">
+                            <p class="question-text">昇進や給料アップのチャンスは、平等ですか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="career">
+                            <p class="question-text">この会社で、長く働きたいと思いますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="career">
+                            <p class="question-text">将来の資格や在留資格のサポートはありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="career">
+                            <p class="question-text">新しい技術や知識を学ぶ機会はありますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                        <div class="question-card" data-type="positive" data-category="career">
+                            <p class="question-text">母国の友達にも「この会社で働いたほうがいいよ」と思えますか?</p>
+                            <div class="emoji-options"></div>
+                            <div class="selected-result"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- アクションボタン -->
+                <div class="action-buttons">
+                    <button class="btn-secondary" id="resetBtn">
+                        <span class="material-icons">refresh</span>
+                        リセット
+                    </button>
+                    <button class="btn-primary" id="submitBtn">
+                        <span class="material-icons">send</span>
+                        結果を見る
+                    </button>
+                </div>
+            </section>
+
+            <!-- 結果分析セクション -->
+            <section id="resultsSection" class="content-section">
+                <div class="section-header">
+                    <h2>結果分析</h2>
+                    <div class="header-actions">
+                        <button class="btn-secondary" id="exportBtn">
+                            <span class="material-icons">download</span>
+                            エクスポート
+                        </button>
+                        <button class="btn-secondary" id="printBtn">
+                            <span class="material-icons">print</span>
+                            印刷
+                        </button>
+                    </div>
+                </div>
+
+                <!-- サマリーカード -->
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <span class="material-icons summary-icon">emoji_events</span>
+                        <div class="summary-content">
+                            <h4>総合スコア</h4>
+                            <p class="summary-value" id="totalScore">-</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <span class="material-icons summary-icon">check_circle</span>
+                        <div class="summary-content">
+                            <h4>回答数</h4>
+                            <p class="summary-value" id="answeredCount">-</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <span class="material-icons summary-icon">sentiment_satisfied</span>
+                        <div class="summary-content">
+                            <h4>満足度</h4>
+                            <p class="summary-value" id="satisfactionLevel">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- チャートコンテナ -->
+                <div class="chart-container">
+                    <h3>カテゴリー別スコア</h3>
+                    <canvas id="radarChart"></canvas>
+                </div>
+
+                <!-- カテゴリー詳細 -->
+                <div class="category-details" id="categoryDetails">
+                    <!-- JavaScriptで動的に生成 -->
+                </div>
+            </section>
+
+            <!-- 履歴セクション -->
+            <section id="historySection" class="content-section">
+                <div class="section-header">
+                    <h2>回答履歴</h2>
+                    <button class="btn-secondary" id="clearHistoryBtn">
+                        <span class="material-icons">delete_sweep</span>
+                        履歴をクリア
+                    </button>
+                </div>
+                <div id="historyList" class="history-list">
+                    <!-- JavaScriptで動的に生成 -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
