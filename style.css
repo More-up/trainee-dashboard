@@ -1,7 +1,7 @@
 /* 全体レイアウト */
 body {
   font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
-  background-color: #f7f9fc;
+  background-color: #f5f7fa;
   margin: 0;
   padding: 2rem;
   color: #333;
@@ -38,7 +38,7 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   transition: box-shadow 0.3s ease;
 }
 
@@ -54,8 +54,10 @@ h2 {
 /* 絵文字選択肢 */
 .options {
   display: flex;
-  gap: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
 }
 
 .options button {
@@ -66,6 +68,8 @@ h2 {
   cursor: pointer;
   background-color: #ecf0f1;
   transition: background-color 0.2s ease, transform 0.2s ease;
+  min-width: 48px;
+  text-align: center;
 }
 
 .options button:hover {
@@ -74,8 +78,8 @@ h2 {
 }
 
 .options button.selected {
-  background-color: #3498db;
-  color: #fff;
+  background-color: #3498db !important;
+  color: #fff !important;
   transform: scale(1.1);
 }
 
@@ -113,4 +117,20 @@ h2 {
   border-radius: 6px;
   font-size: 1rem;
   color: #2c3e50;
+}
+
+/* 進捗バー */
+#progress {
+  height: 10px;
+  background-color: #eee;
+  margin: 2rem 0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#progress div {
+  height: 100%;
+  width: 0%;
+  background-color: #3498db;
+  transition: width 0.3s ease;
 }
