@@ -1,13 +1,24 @@
 // ========================================
 // 絵文字選択肢データ
 // ========================================
-const optionsData = [
-    { emoji: "😍", label: "とても満足", score: 6 },
+// ポジティブ設問用
+const positiveOptionsData = [
+    { emoji: "😄", label: "とても満足", score: 6 },
     { emoji: "🙂", label: "やや満足", score: 5 },
     { emoji: "😐", label: "どちらでもない", score: 4 },
-    { emoji: "😕", label: "やや不満", score: 3 },
-    { emoji: "😠", label: "不満", score: 2 },
-    { emoji: "🥺", label: "とても不満", score: 1 }
+    { emoji: "🙁", label: "やや不満", score: 3 },
+    { emoji: "😢", label: "不満", score: 2 },
+    { emoji: "😭", label: "とても不満", score: 1 }
+];
+
+// ネガティブ設問用
+const negativeOptionsData = [
+    { emoji: "😄", label: "全くない", score: 6 },
+    { emoji: "🙂", label: "ほとんどない", score: 5 },
+    { emoji: "😐", label: "時々ある", score: 4 },
+    { emoji: "🙁", label: "よくある", score: 3 },
+    { emoji: "😢", label: "かなりある", score: 2 },
+    { emoji: "😭", label: "いつもある", score: 1 }
 ];
 
 // カテゴリーマッピング
@@ -43,6 +54,10 @@ function initializeQuestions() {
         const optionsContainer = card.querySelector('.emoji-options');
         card.dataset.questionId = index;
         
+        // ネガティブ設問かポジティブ設問かで選択肢を変える
+        const isNegative = card.dataset.type === 'negative';
+        const optionsData = isNegative ? negativeOptionsData : positiveOptionsData;
+        
         optionsData.forEach(option => {
             const btn = document.createElement('button');
             btn.className = 'emoji-btn';
@@ -69,12 +84,8 @@ function selectOption(card, btn, option) {
     // 新しい選択をマーク
     btn.classList.add('selected');
     
-    // データを保存
-    let score = option.score;
-    if (card.dataset.type === 'negative') {
-        score = 7 - score; // ネガティブ質問は逆スコア
-    }
-    card.dataset.score = score;
+    // データを保存（ネガティブ設問もそのままスコアを使用）
+    card.dataset.score = option.score;
     card.dataset.originalScore = option.score;
     
     // 結果を表示
