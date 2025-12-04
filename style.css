@@ -1,59 +1,116 @@
+/* 全体レイアウト */
 body {
-  font-family: system-ui, sans-serif;
-  max-width: 900px;
-  margin: 32px auto;
-  padding: 0 16px;
-  background-color: #f9fafb;
+  font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+  padding: 2rem;
+  color: #333;
 }
+
+/* タイトル */
 h1 {
+  font-size: 2rem;
   text-align: center;
-  color: #1f2937;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
 }
+
+.subtitle {
+  text-align: center;
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+/* セクションタイトル */
+h2 {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #34495e;
+  border-left: 4px solid #3498db;
+  padding-left: 0.5rem;
+}
+
+/* 質問カード */
 .question {
-  margin: 20px 0;
-  padding: 16px;
-  background: #fff;
-  border-radius: 12px;
+  background-color: #fff;
+  border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.3s ease;
 }
+
+.question:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.question p {
+  margin: 0 0 0.5rem;
+  font-weight: 500;
+}
+
+/* 絵文字選択肢 */
 .options {
   display: flex;
+  gap: 0.5rem;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
 }
-.option {
-  flex: 1 1 auto;
-  min-width: 120px;
-  text-align: center;
+
+.options button {
+  font-size: 1.5rem;
+  padding: 0.4rem 0.6rem;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  border: 2px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 12px;
-  background-color: #f3f4f6;
-}.option:hover {
-  border-color: #9ca3af;
-  background-color: #e5e7eb;
+  background-color: #ecf0f1;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
-.selected {
-  border-color: #2563eb;
-  background-color: #dbeafe;
+
+.options button:hover {
+  background-color: #d0d7de;
+  transform: scale(1.05);
 }
+
+.options button.selected {
+  background-color: #3498db;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* 結果表示 */
+.result {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #2c3e50;
+}
+
+/* 診断ボタン */
 #calculate {
   display: block;
-  margin: 32px auto;
-  padding: 12px 24px;
-  background-color: #2563eb;
-  color: white;
+  margin: 2rem auto;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background-color: #27ae60;
+  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
 #calculate:hover {
-  background-color: #1e40af;
+  background-color: #219150;
 }
+
+/* 診断結果 */
 #summary {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #eafaf1;
+  border-left: 4px solid #27ae60;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #2c3e50;
 }
