@@ -1,4 +1,238 @@
 /* ===========================
+   初期画面の改善スタイル
+   =========================== */
+
+/* ヘッダー改善 */
+.header-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: 0 0 16px 16px;
+  box-shadow: var(--shadow-lg);
+}
+
+.header-content .logo h1 {
+  color: white;
+  font-size: 22px;
+}
+
+.header-content .logo .material-icons {
+  color: white;
+  font-size: 36px;
+}
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: rgba(255, 255, 255, 0.2);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.language-selector label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.language-selector .material-icons {
+  font-size: 20px;
+}
+
+.language-selector select {
+  background: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* 初期カード改善 */
+.initial-card {
+  max-width: 600px;
+  margin: var(--spacing-xl) auto;
+  background: var(--surface);
+  border-radius: 24px;
+  padding: var(--spacing-xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* 匿名バッジ改善 */
+.anonymous-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: var(--spacing-lg);
+  border-radius: 16px;
+  margin-bottom: var(--spacing-xl);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.badge-icon {
+  flex-shrink: 0;
+}
+
+.badge-icon .material-icons {
+  font-size: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: var(--spacing-sm);
+  border-radius: 12px;
+}
+
+.badge-content {
+  flex: 1;
+}
+
+.badge-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.badge-subtitle {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* フォームコンテナ */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* フォームグループ改善 */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-group label .material-icons {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.form-group select {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background: white;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.form-group select:hover {
+  border-color: var(--primary-light);
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1);
+}
+
+/* ボタン改善 */
+.btn-large {
+  padding: 18px var(--spacing-xl);
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(26, 115, 232, 0.3);
+}
+
+.btn-large:hover {
+  box-shadow: 0 12px 32px rgba(26, 115, 232, 0.4);
+  transform: translateY(-4px);
+}
+
+/* フッター情報 */
+.initial-footer {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+.initial-footer p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* 完了画面改善 */
+.completion-icon {
+  font-size: 96px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.completion-icon .material-icons {
+  font-size: 96px;
+  color: var(--success);
+  animation: scaleIn 0.6s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* レスポンシブ改善 */
+@media (max-width: 768px) {
+  .header-content {
+    border-radius: 0;
+  }
+  
+  .language-selector {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .initial-card {
+    margin: var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+  
+  .anonymous-badge {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .badge-icon .material-icons {
+    font-size: 40px;
+  }
+  
+  .badge-title {
+    font-size: 16px;
+  }
+}
+/* ===========================
    グローバル設定
    =========================== */
 :root {
