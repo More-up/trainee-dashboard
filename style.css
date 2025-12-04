@@ -25,16 +25,13 @@ h1 {
 .option {
   flex: 1 1 auto;
   min-width: 120px;
-}
-.option {
   text-align: center;
   cursor: pointer;
   border: 2px solid #e5e7eb;
   border-radius: 10px;
   padding: 12px;
   background-color: #f3f4f6;
-}
-.option:hover {
+}.option:hover {
   border-color: #9ca3af;
   background-color: #e5e7eb;
 }
