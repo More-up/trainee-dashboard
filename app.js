@@ -3,6 +3,21 @@
 // ===========================
 let answers = {}; // 回答データを保存
 let totalQuestions = 0; // 総質問数
+let radarChart = null; // レーダーチャートのインスタンス
+
+// ===========================
+// カテゴリー名マッピング
+// ===========================
+const categoryNames = {
+  '業務・職場環境': '業務・職場環境',
+  '給与・待遇': '給与・待遇',
+  '家族・プライベート事情': '家族・プライベート',
+  '人間関係': '人間関係',
+  '日本語・コミュニケーション': '日本語・コミュニケーション',
+  '文化・価値観': '文化・価値観',
+  '生活環境': '生活環境',
+  'キャリア・将来の見通し': 'キャリア・将来'
+};
 
 // ===========================
 // 絵文字オプションデータ
@@ -31,9 +46,16 @@ const negativeOptionsData = [
 document.addEventListener('DOMContentLoaded', () => {
   initializeQuestions();
   updateProgress();
+  loadHistory();
+  initializeTheme();
   
-  // 送信ボタンのイベント
+  // イベントリスナー
   document.getElementById('submitBtn').addEventListener('click', handleSubmit);
+  document.getElementById('backBtn').addEventListener('click', showSurvey);
+  document.getElementById('exportBtn').addEventListener('click', exportToCSV);
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+  document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 });
 
 // ===========================
@@ -106,7 +128,7 @@ function updateProgress() {
   
   // 送信ボタンの有効/無効
   const submitBtn = document.getElementById('submitBtn');
-  if (answeredCount > 0) {
+  if (answeredCount === totalQuestions) {
     submitBtn.disabled = false;
   } else {
     submitBtn.disabled = true;
@@ -119,20 +141,153 @@ function updateProgress() {
 function handleSubmit() {
   const answeredCount = Object.keys(answers).length;
   
-  if (answeredCount === 0) {
-    alert('少なくとも1つの質問に回答してください。');
+  if (answeredCount !== totalQuestions) {
+    alert('すべての質問に回答してください。');
     return;
   }
+  
+  // 結果を計算
+  calculateResults();
   
   // データを保存
   saveToLocalStorage();
   
-  // アンケートセクションを非表示
-  document.getElementById('surveySection').style.display = 'none';
-  document.querySelector('.progress-sidebar').style.display = 'none';
+  // 結果画面を表示
+  showResults();
+}
+
+// ===========================
+// 結果計算
+// ===========================
+function calculateResults() {
+  // 総合スコア
+  const totalScore = Object.values(answers).reduce((sum, score) => sum + score, 0);
+  const maxScore = totalQuestions * 6;
+  const percentage = Math.round((totalScore / maxScore) * 100);
   
-  // 完了画面を表示
-  showCompletion(answeredCount);
+  document.getElementById('totalScore').textContent = `${percentage}点`;
+  document.getElementById('answeredTotal').textContent = `${Object.keys(answers).length} / ${totalQuestions}`;
+  
+  // 満足度レベル
+  let satisfactionLevel = '';
+  if (percentage >= 80) satisfactionLevel = '😄 非常に良好';
+  else if (percentage >= 60) satisfactionLevel = '🙂 良好';
+  else if (percentage >= 40) satisfactionLevel = '😐 普通';
+  else if (percentage >= 20) satisfactionLevel = '🙁 要改善';
+  else satisfactionLevel = '😢 深刻';
+  
+  document.getElementById('satisfactionLevel').textContent = satisfactionLevel;
+  
+  // カテゴリー別スコア
+  const categoryScores = calculateCategoryScores();
+  
+  // レーダーチャート描画
+  drawRadarChart(categoryScores);
+  
+  // カテゴリー詳細表示
+  displayCategoryDetails(categoryScores);
+}
+
+// ===========================
+// カテゴリー別スコア計算
+// ===========================
+function calculateCategoryScores() {
+  const questions = document.querySelectorAll('.question');
+  const categoryScores = {};
+  const categoryCounts = {};
+  
+  questions.forEach((question) => {
+    const questionId = question.getAttribute('data-question-id');
+    const category = question.getAttribute('data-category');
+    const score = answers[questionId];
+    
+    if (score !== undefined) {
+      if (!categoryScores[category]) {
+        categoryScores[category] = 0;
+        categoryCounts[category] = 0;
+      }
+      categoryScores[category] += score;
+      categoryCounts[category]++;
+    }
+  });
+  
+  // 平均スコアに変換（6点満点）
+  const avgScores = {};
+  Object.keys(categoryScores).forEach(category => {
+    avgScores[category] = (categoryScores[category] / categoryCounts[category]).toFixed(1);
+  });
+  
+  return avgScores;
+}
+
+// ===========================
+// レーダーチャート描画
+// ===========================
+function drawRadarChart(categoryScores) {
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  
+  // 既存のチャートを破棄
+  if (radarChart) {
+    radarChart.destroy();
+  }
+  
+  const labels = Object.keys(categoryScores).map(cat => categoryNames[cat] || cat);
+  const data = Object.values(categoryScores);
+  
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'スコア',
+        data: data,
+        backgroundColor: 'rgba(26, 115, 232, 0.2)',
+        borderColor: 'rgba(26, 115, 232, 1)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(26, 115, 232, 1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(26, 115, 232, 1)'
+      }]
+    },
+    options: {
+      scales: {
+        r: {
+          beginAtZero: true,
+          max: 6,
+          ticks: {
+            stepSize: 1
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+}
+
+// ===========================
+// カテゴリー詳細表示
+// ===========================
+function displayCategoryDetails(categoryScores) {
+  const container = document.getElementById('categoryDetails');
+  container.innerHTML = '<h3>カテゴリー別詳細</h3>';
+  
+  Object.keys(categoryScores).forEach(category => {
+    const score = categoryScores[category];
+    const percentage = Math.round((score / 6) * 100);
+    
+    const item = document.createElement('div');
+    item.className = 'detail-item';
+    item.innerHTML = `
+      <span class="detail-name">${categoryNames[category] || category}</span>
+      <span class="detail-score">${score} / 6.0 (${percentage}%)</span>
+    `;
+    container.appendChild(item);
+  });
 }
 
 // ===========================
@@ -140,9 +295,14 @@ function handleSubmit() {
 // ===========================
 function saveToLocalStorage() {
   const timestamp = new Date().toISOString();
+  const totalScore = Object.values(answers).reduce((sum, score) => sum + score, 0);
+  const maxScore = totalQuestions * 6;
+  const percentage = Math.round((totalScore / maxScore) * 100);
+  
   const responseData = {
     timestamp: timestamp,
     answers: answers,
+    totalScore: percentage,
     answeredCount: Object.keys(answers).length,
     totalQuestions: totalQuestions
   };
@@ -160,51 +320,180 @@ function saveToLocalStorage() {
   
   // 保存
   localStorage.setItem('surveyHistory', JSON.stringify(history));
+  
+  // 履歴を再読み込み
+  loadHistory();
 }
 
 // ===========================
-// 完了画面表示
+// 履歴読み込み
 // ===========================
-function showCompletion(answeredCount) {
-  const completionSection = document.getElementById('completionSection');
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('ja-JP', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+function loadHistory() {
+  const history = JSON.parse(localStorage.getItem('surveyHistory') || '[]');
+  const container = document.getElementById('historyList');
+  
+  if (history.length === 0) {
+    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">履歴がありません</p>';
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  history.forEach((entry, index) => {
+    const date = new Date(entry.timestamp);
+    const dateStr = date.toLocaleDateString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    const item = document.createElement('div');
+    item.className = 'history-item';
+    item.innerHTML = `
+      <div class="history-info">
+        <div class="history-date">${dateStr}</div>
+        <div class="history-stats">スコア: ${entry.totalScore}点 | 回答数: ${entry.answeredCount} / ${entry.totalQuestions}</div>
+      </div>
+      <div class="history-actions">
+        <button class="icon-btn-small" onclick="deleteHistoryItem(${index})" title="削除">
+          <span class="material-icons">delete</span>
+        </button>
+      </div>
+    `;
+    
+    // クリックで詳細表示（オプション）
+    item.addEventListener('click', (e) => {
+      if (!e.target.closest('.icon-btn-small')) {
+        viewHistoryItem(entry);
+      }
+    });
+    
+    container.appendChild(item);
+  });
+}
+
+// ===========================
+// 履歴アイテム表示
+// ===========================
+function viewHistoryItem(entry) {
+  answers = entry.answers;
+  
+  // 質問にチェックを復元
+  const questions = document.querySelectorAll('.question');
+  questions.forEach((question) => {
+    const questionId = question.getAttribute('data-question-id');
+    const score = answers[questionId];
+    
+    if (score !== undefined) {
+      const buttons = question.querySelectorAll('.emoji-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('selected');
+        if (parseInt(btn.getAttribute('data-score')) === score) {
+          btn.classList.add('selected');
+        }
+      });
+    }
   });
   
-  completionSection.innerHTML = `
-    <div class="completion-content">
-      <div class="completion-icon">✅</div>
-      <h2>ご回答ありがとうございました！</h2>
-      <p>あなたの貴重なご意見を受け取りました。</p>
-      <p><strong>回答日時:</strong> ${dateStr}</p>
-      <p><strong>回答数:</strong> ${answeredCount} / ${totalQuestions} 問</p>
-    </div>
-  `;
+  // 結果を計算して表示
+  calculateResults();
+  showResults();
+}
+
+// ===========================
+// 履歴アイテム削除
+// ===========================
+function deleteHistoryItem(index) {
+  if (!confirm('この履歴を削除しますか？')) return;
   
-  completionSection.style.display = 'block';
+  let history = JSON.parse(localStorage.getItem('surveyHistory') || '[]');
+  history.splice(index, 1);
+  localStorage.setItem('surveyHistory', JSON.stringify(history));
+  loadHistory();
+}
+
+// ===========================
+// 履歴クリア
+// ===========================
+function clearHistory() {
+  if (!confirm('すべての履歴を削除しますか？')) return;
   
-  // ページトップにスクロール
+  localStorage.removeItem('surveyHistory');
+  loadHistory();
+}
+
+// ===========================
+// CSV出力
+// ===========================
+function exportToCSV() {
+  const categoryScores = calculateCategoryScores();
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  
+  let csv = 'カテゴリー,スコア\n';
+  Object.keys(categoryScores).forEach(category => {
+    csv += `${category},${categoryScores[category]}\n`;
+  });
+  
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `survey_results_${timestamp}.csv`;
+  link.click();
+}
+
+// ===========================
+// 画面切り替え
+// ===========================
+function showResults() {
+  document.getElementById('surveySection').style.display = 'none';
+  document.querySelector('.progress-card').style.display = 'none';
+  document.getElementById('resultsSection').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showSurvey() {
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('surveySection').style.display = 'block';
+  document.querySelector('.progress-card').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ===========================
-// 管理者用: LocalStorageから履歴取得（デバッグ用）
+// テーマ切り替え
 // ===========================
-function getStoredData() {
-  const history = localStorage.getItem('surveyHistory');
-  if (history) {
-    console.log('保存されたデータ:');
-    console.log(JSON.parse(history));
-    return JSON.parse(history);
-  } else {
-    console.log('保存されたデータはありません。');
-    return [];
-  }
+function toggleTheme() {
+  const currentTheme = document.body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  const icon = document.querySelector('#themeToggle .material-icons');
+  icon.textContent = newTheme === 'dark' ? 'light_mode' : 'dark_mode';
 }
 
-// デバッグ用: ブラウザのコンソールで getStoredData() を実行すると履歴が表示されます
+function initializeTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  const icon = document.querySelector('#themeToggle .material-icons');
+  icon.textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
+}
+
+// ===========================
+// リセット機能（デバッグ用）
+// ===========================
+function resetSurvey() {
+  if (!confirm('回答をリセットしますか？')) return;
+  
+  answers = {};
+  
+  // すべての選択を解除
+  document.querySelectorAll('.emoji-btn').forEach(btn => {
+    btn.classList.remove('selected');
+  });
+  
+  updateProgress();
+  showSurvey();
+}
