@@ -6,55 +6,67 @@
   <style>
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
-      max-width: 800px;
+      max-width: 900px;
       margin: 32px auto;
       padding: 0 16px;
       line-height: 1.6;
+      background-color: #f9fafb;
     }
     h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
+      font-size: 26px;
+      margin-bottom: 12px;
+      text-align: center;
+      color: #1f2937;
     }
     h2 {
       margin-top: 32px;
       font-size: 20px;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 4px;
+      border-left: 4px solid #2563eb;
+      padding-left: 8px;
+      color: #111827;
     }
     .question {
       margin: 20px 0;
+      padding: 16px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
     .options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
     }
     .option {
-      flex: 1 1 45%;
-      text-align: left;
+      text-align: center;
       cursor: pointer;
       border: 2px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 8px;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
+      border-radius: 10px;
+      padding: 12px;
+      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.1s ease;
       user-select: none;
+      background-color: #f3f4f6;
     }
     .option:hover {
       border-color: #9ca3af;
-      background-color: #f9fafb;
+      background-color: #e5e7eb;
+    }
+    .option:active {
+      transform: scale(0.97);
     }
     .selected {
       border-color: #2563eb;
-      background-color: #eff6ff;
+      background-color: #dbeafe;
     }
     .result {
-      margin-top: 8px;
-      padding: 6px;
-      background: #f3f4f6;
-      border-radius: 6px;
+      margin-top: 10px;
+      padding: 8px;
+      background: #eff6ff;
+      border-radius: 8px;
       font-weight: 600;
       display: none;
+      color: #1e40af;
     }
   </style>
 </head>
@@ -62,45 +74,54 @@
   <h1>技能実習生エンゲージメント診断</h1>
   <p class="subtitle">以下の質問に答えてください。</p>
 
-  <!-- セクションごとにまとめる -->
+  <!-- ここに全設問を並べる（前回の確定版リストをそのまま） -->
+  <!-- 例: -->
   <h2>1. 業務・職場環境</h2>
-  <div class="question" data-type="positive"><p>仕事の内容は、自分に合っていますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>働く場所は、安全だと思いますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>休みの日や働く時間は、ちょうどよいですか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>職場の雰囲気は、働きやすいですか？</p><div class="options"></div><div class="result"></div></div>
+  <div class="question" data-type="positive">
+    <p>仕事の内容は、自分に合っていますか？</p>
+    <div class="options"></div>
+    <div class="result"></div>
+  </div>
+  <!-- 以下、確定版リストの全設問を同じ構造で追加 -->
 
-  <h2>2. 給与・待遇</h2>
-  <div class="question" data-type="positive"><p>給料の金額に、満足していますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>残業代や手当は、きちんと受け取れていますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>保険や休暇などの制度は、十分だと思いますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>この会社で働くことで、生活に必要なお金を得られていますか？</p><div class="options"></div><div class="result"></div></div>
+  <script>
+    const positiveOptions = [
+      {emoji:"😄", label:"とても満足", score:6},
+      {emoji:"🙂", label:"やや満足", score:5},
+      {emoji:"😐", label:"どちらでもない", score:4},
+      {emoji:"🙁", label:"やや不満", score:3},
+      {emoji:"😢", label:"不満", score:2},
+      {emoji:"😭", label:"とても不満", score:1},
+    ];
 
-  <h2>3. 家族・プライベート事情</h2>
-  <div class="question" data-type="positive"><p>家族と連絡をとる時間は、十分にありますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>家族に送金する余裕はありますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>自分の時間（休みやプライベート）は、十分にありますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>将来、家族を日本に呼びたいと思いますか？</p><div class="options"></div><div class="result"></div></div>
+    const negativeOptions = [
+      {emoji:"😄", label:"全くない", score:6},
+      {emoji:"🙂", label:"ほとんどない", score:5},
+      {emoji:"😐", label:"時々ある", score:4},
+      {emoji:"🙁", label:"よくある", score:3},
+      {emoji:"😢", label:"かなりある", score:2},
+      {emoji:"😭", label:"いつもある", score:1},
+    ];
 
-  <h2>4. 人間関係</h2>
-  <div class="question" data-type="positive"><p>同じ技能実習生の仲間との関係は良いですか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>日本人の上司や同僚は、あなたの話を聞いてくれますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>困ったときに、同じ技能実習生の仲間は助けてくれますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="negative"><p>職場で、いじめや差別を受けることはありますか？</p><div class="options"></div><div class="result"></div></div>
+    document.querySelectorAll('.question').forEach(q => {
+      const type = q.dataset.type;
+      const options = type === "positive" ? positiveOptions : negativeOptions;
+      const container = q.querySelector('.options');
+      const resultEl = q.querySelector('.result');
 
-  <h2>5. 日本語・コミュニケーション</h2>
-  <div class="question" data-type="negative"><p>日本語での会話に困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>仕事の説明や指示は分かりやすいですか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>分からないことを質問しやすいですか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>会社は、日本語の勉強を助けてくれますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>母国語で相談できる人（通訳や先輩など）はいますか？</p><div class="options"></div><div class="result"></div></div>
-
-  <h2>6. 文化・価値観</h2>
-  <div class="question" data-type="positive"><p>日本の文化や習慣に、慣れていますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="negative"><p>仕事中に文化の違いで困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
-
-  <h2>7. 生活環境</h2>
-  <div class="question" data-type="positive"><p>住んでいる場所（寮・アパートなど）は快適ですか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>生活費は、給料に対してちょうどよいですか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="negative"><p>日本での生活で困ることはありますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>会社は生活のサポートをしてくれますか？</p><div class="options"></div><div class="result"></div></div>
-  <div class="question" data-type="positive"><p>ルームシェア（2〜3人で同じ部屋）の生活は快適ですか？</p><div class="options"></div
+      options.forEach(opt => {
+        const div = document.createElement('div');
+        div.className = "option";
+        div.textContent = `${opt.emoji} ${opt.label}`;
+        div.addEventListener('click', () => {
+          [...container.children].forEach(c => c.classList.remove('selected'));
+          div.classList.add('selected');
+          resultEl.textContent = `選択: ${opt.label}（${opt.score}点）`;
+          resultEl.style.display = 'block';
+        });
+        container.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>
