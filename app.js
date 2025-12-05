@@ -20,229 +20,160 @@ const categories = [
     { start: 30, end: 35 }  // キャリア・将来の見通し
 ];
 
+// カテゴリー名のキー
+const categoryKeys = ['work', 'salary', 'family', 'relationship', 'communication', 'culture', 'living', 'career'];
+
 // ネガティブ設問番号(スコア反転対象)
 const negativeQuestions = [16, 17, 23, 26];
 
-// 質問タイプのマッピング (修正確定版)
+// 質問タイプのマッピング
 const questionTypes = {
-    1: 'satisfaction',   // 仕事の内容は、自分に合っていますか?
-    2: 'satisfaction',   // 働く場所は、安全だと思いますか?
-    3: 'satisfaction',   // 休みの日や働く時間は、ちょうどよいですか?
-    4: 'satisfaction',   // 職場の雰囲気は、働きやすいですか?
-    5: 'satisfaction',   // 給料の金額に、満足していますか?
-    6: 'satisfaction',   // 残業代や手当は、きちんと受け取れていますか?
-    7: 'satisfaction',   // 保険や休暇などの制度は、十分だと思いますか?
-    8: 'satisfaction',   // この会社で働くことで、生活に必要なお金を得られていますか?
-    9: 'satisfaction',   // 家族と連絡をとる時間は、十分にありますか?
-    10: 'availability',  // 家族に送金する余裕はありますか?
-    11: 'satisfaction',  // 自分の時間(休みやプライベート)は、十分にありますか?
-    12: 'desire',        // 将来、家族を日本に呼びたいと思いますか?
-    13: 'satisfaction',  // 同じ技能実習生の仲間との関係は良いですか?
-    14: 'satisfaction',  // 日本人の上司や同僚は、あなたの話を聞いてくれますか?
-    15: 'availability',  // 困ったときに、同じ技能実習生の仲間は助けてくれますか?
-    16: 'negative',      // 職場で、いじめや差別を受けることはありますか?
-    17: 'negative',      // 日本語での会話に困ることはありますか?
-    18: 'understanding', // 仕事の説明や指示は分かりやすいですか?
-    19: 'satisfaction',  // 分からないことを質問しやすいですか?
-    20: 'availability',  // 会社は、日本語の勉強を助けてくれますか?
-    21: 'availability',  // 母国語で相談できる人(通訳や先輩など)はいますか?
-    22: 'familiarity',   // 日本の文化や習慣に、慣れていますか?
-    23: 'negative',      // 仕事中に文化の違いで困ることはありますか?
-    24: 'satisfaction',  // 住んでいる場所(寮・アパートなど)は快適ですか?
-    25: 'satisfaction',  // 生活費は、給料に対してちょうどよいですか?
-    26: 'negative',      // 日本での生活で困ることはありますか?
-    27: 'availability',  // 会社は生活のサポートをしてくれますか?
-    28: 'satisfaction',  // 寮や家での生活環境(部屋の広さ・設備など)に満足していますか?
-    29: 'satisfaction',  // 日本での生活は、安全で快適ですか?
-    30: 'desire',        // 今の仕事で、技術や知識が身についていますか?
-    31: 'desire',        // 頑張った分だけ、評価や待遇が良くなると感じますか?
-    32: 'desire',        // この会社で、長く働きたいと思いますか?
-    33: 'availability',  // ビザ(在留資格)の更新や手続きで、会社や組合は助けてくれますか?
-    34: 'desire',        // この会社で働くことで、母国に帰ってから役立つ技術が学べていますか?
-    35: 'satisfaction'   // 母国の友達にも「この会社で働いたほうがいいよ」と思えますか?
+    1: 'satisfaction', 2: 'satisfaction', 3: 'satisfaction', 4: 'satisfaction',
+    5: 'satisfaction', 6: 'satisfaction', 7: 'satisfaction', 8: 'satisfaction',
+    9: 'satisfaction', 10: 'availability', 11: 'satisfaction', 12: 'desire',
+    13: 'satisfaction', 14: 'satisfaction', 15: 'availability', 16: 'negative',
+    17: 'negative', 18: 'understanding', 19: 'satisfaction', 20: 'availability',
+    21: 'availability', 22: 'familiarity', 23: 'negative', 24: 'satisfaction',
+    25: 'satisfaction', 26: 'negative', 27: 'availability', 28: 'satisfaction',
+    29: 'satisfaction', 30: 'desire', 31: 'desire', 32: 'desire',
+    33: 'availability', 34: 'desire', 35: 'satisfaction'
 };
+
+// 質問のキー
+const questionKeys = [
+    'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10',
+    'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'q20',
+    'q21', 'q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28', 'q29', 'q30',
+    'q31', 'q32', 'q33', 'q34', 'q35'
+];
 
 // ========== 初期化 ==========
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Page loaded - Initializing...');
     
-    // 国籍選択を最初の項目にリセット
     const nationalitySelect = document.getElementById('nationality');
     if (nationalitySelect) {
         nationalitySelect.selectedIndex = 0;
-        console.log('Nationality reset to:', nationalitySelect.value);
     }
     
-    // 従業員コードをリセット
     const employeeCodeSelect = document.getElementById('employeeCode');
     if (employeeCodeSelect) {
         employeeCodeSelect.selectedIndex = 0;
     }
     
-    // イベントリスナー設定
     setupEventListeners();
-    
-    // 初期言語検出
     detectLanguage();
 });
 
 // ========== イベントリスナー設定 ==========
 function setupEventListeners() {
-    console.log('Setting up event listeners...');
-    
-    // 国籍変更で言語切り替え
     const nationalitySelect = document.getElementById('nationality');
     if (nationalitySelect) {
         nationalitySelect.addEventListener('change', detectLanguage);
-        console.log('Nationality change listener attached');
     }
     
-    // アンケート開始ボタン
     const startButton = document.getElementById('startButton');
     if (startButton) {
         startButton.addEventListener('click', startSurvey);
-        console.log('Start button listener attached');
-    } else {
-        console.error('Start button not found!');
     }
     
-    // 送信ボタン
     const submitButton = document.getElementById('submitButton');
     if (submitButton) {
         submitButton.addEventListener('click', submitSurvey);
-        console.log('Submit button listener attached');
     }
 }
 
-// ========== 言語検出 (16カ国対応) ==========
+// ========== 言語検出 ==========
 function detectLanguage() {
     const nationalitySelect = document.getElementById('nationality');
     const lang = nationalitySelect.value;
     
-    console.log('Detecting language for:', lang);
-    
-    // 16カ国の言語マッピング
     const languageMap = {
-        'vietnam': 'vi',
-        'cambodia': 'km',
-        'india': 'hi',
-        'philippines': 'tl',
-        'laos': 'lo',
-        'mongolia': 'mn',
-        'bangladesh': 'bn',
-        'srilanka': 'si',
-        'myanmar': 'my',
-        'bhutan': 'dz',
-        'uzbekistan': 'uz',
-        'pakistan': 'ur',
-        'thailand': 'th',
-        'indonesia': 'id',
-        'nepal': 'ne',
-        'china': 'zh'
+        'vietnam': 'vi', 'cambodia': 'km', 'india': 'hi', 'philippines': 'tl',
+        'laos': 'lo', 'mongolia': 'mn', 'bangladesh': 'bn', 'srilanka': 'si',
+        'myanmar': 'my', 'bhutan': 'dz', 'uzbekistan': 'uz', 'pakistan': 'ur',
+        'thailand': 'th', 'indonesia': 'id', 'nepal': 'ne', 'china': 'zh'
     };
     
     currentLanguage = languageMap[lang] || 'ja';
-    console.log('Current language set to:', currentLanguage);
-    
     updateLanguage();
 }
 
 // ========== 言語更新 ==========
 function updateLanguage() {
     if (!translations || !translations[currentLanguage]) {
-        console.error('Translations not loaded for language:', currentLanguage);
+        console.error('Translations not loaded');
         return;
     }
     
     const t = translations[currentLanguage];
     
-    // タイトル
     const headerTitle = document.getElementById('headerTitle');
     if (headerTitle) headerTitle.textContent = t.title;
     
-    // ラベル
     const employeeCodeLabel = document.getElementById('employeeCodeLabel');
     if (employeeCodeLabel) employeeCodeLabel.textContent = t.employeeCodeLabel;
     
     const nationalityLabel = document.getElementById('nationalityLabel');
     if (nationalityLabel) nationalityLabel.textContent = t.nationalityLabel;
     
-    // プレースホルダー
     const employeeCodePlaceholder = document.getElementById('employeeCodePlaceholder');
     if (employeeCodePlaceholder) employeeCodePlaceholder.textContent = t.employeeCodePlaceholder;
     
-    // ボタン
     const startButtonText = document.getElementById('startButtonText');
     if (startButtonText) startButtonText.textContent = t.startButton;
     
     const submitButtonText = document.getElementById('submitButtonText');
     if (submitButtonText) submitButtonText.textContent = t.submitButton;
     
-    // 匿名メッセージ
     const anonymousMessage = document.getElementById('anonymousMessage');
-    if (anonymousMessage) anonymousMessage.textContent = t.anonymousTitle;
+    if (anonymousMessage) anonymousMessage.textContent = t.anonymousMessage;
     
     const anonymousSubMessage = document.getElementById('anonymousSubMessage');
-    if (anonymousSubMessage) anonymousSubMessage.textContent = t.anonymousSubtitle;
-    
-    console.log('Language updated successfully');
+    if (anonymousSubMessage) anonymousSubMessage.textContent = t.anonymousSubMessage;
 }
 
 // ========== アンケート開始 ==========
 function startSurvey() {
-    console.log('Start survey button clicked');
-    
     const employeeCode = document.getElementById('employeeCode').value;
     const nationality = document.getElementById('nationality').value;
-    
-    console.log('Employee Code:', employeeCode);
-    console.log('Nationality:', nationality);
-    
     const t = translations[currentLanguage];
     
-    // 入力チェック
     if (!employeeCode || employeeCode === '') {
-        alert(t.errorEmployeeCode || '従業員コードを選択してください');
+        alert(t.errorEmployeeCode);
         return;
     }
     
     if (!nationality || nationality === '') {
-        alert(t.errorNationality || '国籍を選択してください');
+        alert(t.errorNationality);
         return;
     }
     
-    // 月次重複チェック
     if (checkDuplicate(employeeCode)) {
-        alert(t.errorDuplicate || '今月はすでに回答済みです');
+        alert(t.errorDuplicate);
         return;
     }
     
-    // データ初期化
     surveyData.employeeCode = employeeCode;
     surveyData.nationality = nationality;
     surveyData.answers = new Array(35).fill(null);
     
-    console.log('Survey data initialized:', surveyData);
-    
-    // 画面切り替え
     document.getElementById('initialScreen').style.display = 'none';
     document.getElementById('surveySection').style.display = 'block';
     
-    // 質問生成
     generateQuestions();
-    
-    // ページトップにスクロール
     window.scrollTo(0, 0);
 }
 
-// ========== 質問生成 (35問・6種類の回答形式) ==========
+// ========== 質問生成 ==========
 function generateQuestions() {
     const t = translations[currentLanguage];
     const container = document.getElementById('questionsContainer');
     container.innerHTML = '';
     
-    t.questions.forEach((question, index) => {
-        const questionNumber = index + 1;
+    for (let i = 0; i < 35; i++) {
+        const questionNumber = i + 1;
+        const questionKey = questionKeys[i];
         const questionType = questionTypes[questionNumber];
         const categoryIndex = categories.findIndex(cat => 
             questionNumber >= cat.start && questionNumber <= cat.end
@@ -252,25 +183,30 @@ function generateQuestions() {
         questionDiv.className = 'question';
         questionDiv.dataset.question = questionNumber;
         
-        // カテゴリー番号表示
         const categoryLabel = document.createElement('div');
         categoryLabel.className = 'category-label';
-        categoryLabel.textContent = `${categoryIndex + 1}. ${t.categories[categoryIndex]}`;
+        categoryLabel.textContent = t.categories[categoryKeys[categoryIndex]];
         
-        // 質問タイトル
         const questionTitle = document.createElement('div');
         questionTitle.className = 'question-title';
-        questionTitle.textContent = `Q${questionNumber}. ${question}`;
+        questionTitle.textContent = `Q${questionNumber}. ${t.questions[questionKey]}`;
         
-        // 回答選択肢コンテナ
         const optionsContainer = document.createElement('div');
         optionsContainer.className = 'emoji-options';
         
-        // 質問タイプに応じた選択肢を取得
-        const options = t.choices[questionType];
+        const options = t[questionType];
+        const optionKeys = Object.keys(options);
         
-        // 絵文字と選択肢を生成
-        options.forEach((optionText, optionIndex) => {
+        const emojis = {
+            'satisfaction': ['😄', '🙂', '😐', '🙁', '😢'],
+            'desire': ['💯', '😊', '😐', '😕', '😔'],
+            'understanding': ['✅', '👍', '😐', '👎', '❌'],
+            'familiarity': ['🌟', '😊', '😐', '😕', '😰'],
+            'availability': ['✅', '👍', '😐', '👎', '❌'],
+            'negative': ['❌', '👎', '😐', '👍', '✅', '💯']
+        };
+        
+        optionKeys.forEach((optionKey, optionIndex) => {
             const optionDiv = document.createElement('div');
             optionDiv.className = 'emoji-option';
             
@@ -282,29 +218,17 @@ function generateQuestions() {
             
             const emoji = document.createElement('div');
             emoji.className = 'emoji';
-            
-            // 質問タイプに応じた絵文字
-            const emojis = {
-                'satisfaction': ['😄', '🙂', '😐', '🙁', '😢'],
-                'desire': ['💯', '😊', '😐', '😕', '😔'],
-                'understanding': ['✅', '👍', '😐', '👎', '❌'],
-                'familiarity': ['🌟', '😊', '😐', '😕', '😰'],
-                'availability': ['✅', '👍', '😐', '👎', '❌'],
-                'negative': ['❌', '👎', '😐', '👍', '✅', '💯']
-            };
-            
             emoji.textContent = emojis[questionType][optionIndex];
             
             const label = document.createElement('div');
             label.className = 'emoji-label';
-            label.textContent = optionText;
+            label.textContent = options[optionKey];
             
             button.appendChild(emoji);
             button.appendChild(label);
             optionDiv.appendChild(button);
             optionsContainer.appendChild(optionDiv);
             
-            // クリックイベント
             button.addEventListener('click', () => selectAnswer(questionNumber, optionIndex + 1, button));
         });
         
@@ -312,26 +236,19 @@ function generateQuestions() {
         questionDiv.appendChild(questionTitle);
         questionDiv.appendChild(optionsContainer);
         container.appendChild(questionDiv);
-    });
-    
-    console.log('Questions generated successfully');
+    }
 }
 
-// ========== 回答選択 (自動スクロール付き) ==========
+// ========== 回答選択 ==========
 function selectAnswer(questionNumber, value, button) {
     surveyData.answers[questionNumber - 1] = value;
     
-    // 同じ質問の他のボタンの選択を解除
     const allButtons = document.querySelectorAll(`button[data-question="${questionNumber}"]`);
     allButtons.forEach(btn => btn.classList.remove('selected'));
-    
-    // クリックされたボタンを選択状態に
     button.classList.add('selected');
     
-    // 進捗バー更新
     updateProgress();
     
-    // 次の質問へ自動スクロール (最終問以外)
     if (questionNumber < 35) {
         setTimeout(() => scrollToNextQuestion(questionNumber), 300);
     }
@@ -366,13 +283,11 @@ function updateProgress() {
 function submitSurvey() {
     const t = translations[currentLanguage];
     
-    // 全問回答チェック
     if (surveyData.answers.includes(null)) {
-        alert(t.errorIncomplete);
+        alert(t.errorAllQuestions);
         return;
     }
     
-    // スコア計算 (ネガティブ設問は反転)
     let totalScore = 0;
     surveyData.answers.forEach((answer, index) => {
         const questionNumber = index + 1;
@@ -383,18 +298,14 @@ function submitSurvey() {
         }
     });
     
-    // 100点満点に正規化
     surveyData.totalScore = Math.round((totalScore / 210) * 100);
     surveyData.submittedAt = new Date().toISOString();
     
-    // データ保存
     saveData(surveyData);
-    
-    // 完了画面表示
     showCompletion();
 }
 
-// ========== データ保存 (LocalStorage) ==========
+// ========== データ保存 ==========
 function saveData(data) {
     let allData = JSON.parse(localStorage.getItem('surveyData') || '[]');
     allData.push(data);
@@ -412,9 +323,8 @@ function showCompletion() {
     
     document.getElementById('surveySection').style.display = 'none';
     document.getElementById('completionSection').style.display = 'flex';
-    document.getElementById('completionTitle').textContent = t.completionMessage;
+    document.getElementById('completionTitle').textContent = t.completionTitle;
     
-    // カウントダウン
     let countdown = 5;
     const countdownElement = document.getElementById('countdown');
     
@@ -450,7 +360,7 @@ function resetSurvey() {
     window.scrollTo(0, 0);
 }
 
-// ========== 重複チェック (月次) ==========
+// ========== 重複チェック ==========
 function checkDuplicate(employeeCode) {
     const allData = JSON.parse(localStorage.getItem('surveyData') || '[]');
     const currentMonth = new Date().toISOString().slice(0, 7);
