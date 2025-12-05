@@ -21,7 +21,7 @@ const categories = [
 ];
 
 // ネガティブ設問番号(スコア反転対象)
-const negativeQuestions = [16, 17, 23, 26, 27];
+const negativeQuestions = [16, 17, 23, 26];
 
 // 質問タイプのマッピング (修正確定版)
 const questionTypes = {
@@ -64,14 +64,62 @@ const questionTypes = {
 
 // ========== 初期化 ==========
 document.addEventListener('DOMContentLoaded', () => {
-    detectLanguage();
+    console.log('Page loaded - Initializing...');
+    
+    // 国籍選択を最初の項目にリセット
+    const nationalitySelect = document.getElementById('nationality');
+    if (nationalitySelect) {
+        nationalitySelect.selectedIndex = 0;
+        console.log('Nationality reset to:', nationalitySelect.value);
+    }
+    
+    // 従業員コードをリセット
+    const employeeCodeSelect = document.getElementById('employeeCode');
+    if (employeeCodeSelect) {
+        employeeCodeSelect.selectedIndex = 0;
+    }
+    
+    // イベントリスナー設定
     setupEventListeners();
+    
+    // 初期言語検出
+    detectLanguage();
 });
+
+// ========== イベントリスナー設定 ==========
+function setupEventListeners() {
+    console.log('Setting up event listeners...');
+    
+    // 国籍変更で言語切り替え
+    const nationalitySelect = document.getElementById('nationality');
+    if (nationalitySelect) {
+        nationalitySelect.addEventListener('change', detectLanguage);
+        console.log('Nationality change listener attached');
+    }
+    
+    // アンケート開始ボタン
+    const startButton = document.getElementById('startButton');
+    if (startButton) {
+        startButton.addEventListener('click', startSurvey);
+        console.log('Start button listener attached');
+    } else {
+        console.error('Start button not found!');
+    }
+    
+    // 送信ボタン
+    const submitButton = document.getElementById('submitButton');
+    if (submitButton) {
+        submitButton.addEventListener('click', submitSurvey);
+        console.log('Submit button listener attached');
+    }
+}
 
 // ========== 言語検出 (16カ国対応) ==========
 function detectLanguage() {
     const nationalitySelect = document.getElementById('nationality');
     const lang = nationalitySelect.value;
+    
+    console.log('Detecting language for:', lang);
     
     // 16カ国の言語マッピング
     const languageMap = {
@@ -94,70 +142,78 @@ function detectLanguage() {
     };
     
     currentLanguage = languageMap[lang] || 'ja';
+    console.log('Current language set to:', currentLanguage);
+    
     updateLanguage();
 }
 
 // ========== 言語更新 ==========
 function updateLanguage() {
+    if (!translations || !translations[currentLanguage]) {
+        console.error('Translations not loaded for language:', currentLanguage);
+        return;
+    }
+    
     const t = translations[currentLanguage];
     
     // タイトル
-    document.querySelector('h1').textContent = t.title;
+    const headerTitle = document.getElementById('headerTitle');
+    if (headerTitle) headerTitle.textContent = t.title;
     
     // ラベル
-    document.querySelector('label[for="employeeCode"]').textContent = t.employeeCodeLabel;
-    document.querySelector('label[for="nationality"]').textContent = t.nationalityLabel;
+    const employeeCodeLabel = document.getElementById('employeeCodeLabel');
+    if (employeeCodeLabel) employeeCodeLabel.textContent = t.employeeCodeLabel;
+    
+    const nationalityLabel = document.getElementById('nationalityLabel');
+    if (nationalityLabel) nationalityLabel.textContent = t.nationalityLabel;
     
     // プレースホルダー
-    document.getElementById('employeeCode').placeholder = t.employeeCodePlaceholder;
-    
-    // 国籍オプション (16カ国)
-    const nationalityOptions = t.nationalities;
-    const nationalitySelect = document.getElementById('nationality');
-    nationalitySelect.innerHTML = nationalityOptions.map((n, i) => {
-        const values = ['vietnam', 'cambodia', 'india', 'philippines', 'laos', 'mongolia', 
-                       'bangladesh', 'srilanka', 'myanmar', 'bhutan', 'uzbekistan', 'pakistan',
-                       'thailand', 'indonesia', 'nepal', 'china'];
-        return `<option value="${values[i]}">${n}</option>`;
-    }).join('');
+    const employeeCodePlaceholder = document.getElementById('employeeCodePlaceholder');
+    if (employeeCodePlaceholder) employeeCodePlaceholder.textContent = t.employeeCodePlaceholder;
     
     // ボタン
-    document.getElementById('startBtn').textContent = t.startButton;
-    document.getElementById('submitBtn').textContent = t.submitButton;
-}
-
-// ========== イベントリスナー設定 ==========
-function setupEventListeners() {
-    // 国籍変更で言語切り替え
-    document.getElementById('nationality').addEventListener('change', detectLanguage);
+    const startButtonText = document.getElementById('startButtonText');
+    if (startButtonText) startButtonText.textContent = t.startButton;
     
-    // アンケート開始
-    document.getElementById('startBtn').addEventListener('click', startSurvey);
+    const submitButtonText = document.getElementById('submitButtonText');
+    if (submitButtonText) submitButtonText.textContent = t.submitButton;
     
-    // 送信
-    document.getElementById('submitBtn').addEventListener('click', submitSurvey);
+    // 匿名メッセージ
+    const anonymousMessage = document.getElementById('anonymousMessage');
+    if (anonymousMessage) anonymousMessage.textContent = t.anonymousTitle;
+    
+    const anonymousSubMessage = document.getElementById('anonymousSubMessage');
+    if (anonymousSubMessage) anonymousSubMessage.textContent = t.anonymousSubtitle;
+    
+    console.log('Language updated successfully');
 }
 
 // ========== アンケート開始 ==========
 function startSurvey() {
-    const employeeCode = document.getElementById('employeeCode').value.trim();
+    console.log('Start survey button clicked');
+    
+    const employeeCode = document.getElementById('employeeCode').value;
     const nationality = document.getElementById('nationality').value;
+    
+    console.log('Employee Code:', employeeCode);
+    console.log('Nationality:', nationality);
+    
     const t = translations[currentLanguage];
     
     // 入力チェック
-    if (!employeeCode) {
-        alert(t.errorEmployeeCode);
+    if (!employeeCode || employeeCode === '') {
+        alert(t.errorEmployeeCode || '従業員コードを選択してください');
         return;
     }
     
-    if (!nationality) {
-        alert(t.errorNationality);
+    if (!nationality || nationality === '') {
+        alert(t.errorNationality || '国籍を選択してください');
         return;
     }
     
     // 月次重複チェック
     if (checkDuplicate(employeeCode)) {
-        alert(t.errorDuplicate);
+        alert(t.errorDuplicate || '今月はすでに回答済みです');
         return;
     }
     
@@ -166,12 +222,17 @@ function startSurvey() {
     surveyData.nationality = nationality;
     surveyData.answers = new Array(35).fill(null);
     
+    console.log('Survey data initialized:', surveyData);
+    
     // 画面切り替え
-    document.getElementById('startSection').style.display = 'none';
+    document.getElementById('initialScreen').style.display = 'none';
     document.getElementById('surveySection').style.display = 'block';
     
     // 質問生成
     generateQuestions();
+    
+    // ページトップにスクロール
+    window.scrollTo(0, 0);
 }
 
 // ========== 質問生成 (35問・6種類の回答形式) ==========
@@ -217,14 +278,14 @@ function generateQuestions() {
             button.type = 'button';
             button.className = 'emoji-btn';
             button.dataset.question = questionNumber;
-            button.dataset.value = optionIndex + 1; // 1～5または1～6
+            button.dataset.value = optionIndex + 1;
             
             const emoji = document.createElement('div');
             emoji.className = 'emoji';
             
             // 質問タイプに応じた絵文字
             const emojis = {
-                'satisfaction': ['😄', '🙂', '😐', '😟', '😢'],
+                'satisfaction': ['😄', '🙂', '😐', '🙁', '😢'],
                 'desire': ['💯', '😊', '😐', '😕', '😔'],
                 'understanding': ['✅', '👍', '😐', '👎', '❌'],
                 'familiarity': ['🌟', '😊', '😐', '😕', '😰'],
@@ -252,6 +313,8 @@ function generateQuestions() {
         questionDiv.appendChild(optionsContainer);
         container.appendChild(questionDiv);
     });
+    
+    console.log('Questions generated successfully');
 }
 
 // ========== 回答選択 (自動スクロール付き) ==========
@@ -278,7 +341,7 @@ function selectAnswer(questionNumber, value, button) {
 function scrollToNextQuestion(currentQuestion) {
     const nextQuestion = document.querySelector(`.question[data-question="${currentQuestion + 1}"]`);
     if (nextQuestion) {
-        const offset = 80; // プログレスバーの高さ
+        const offset = 80;
         const elementPosition = nextQuestion.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = elementPosition - offset;
         
@@ -295,7 +358,8 @@ function updateProgress() {
     const progress = Math.round((answered / 35) * 100);
     
     document.getElementById('progressBar').style.width = `${progress}%`;
-    document.getElementById('progressText').textContent = `${answered} / 35`;
+    document.getElementById('answeredCount').textContent = answered;
+    document.getElementById('progressPercentage').textContent = `${progress}%`;
 }
 
 // ========== アンケート送信 ==========
@@ -313,14 +377,13 @@ function submitSurvey() {
     surveyData.answers.forEach((answer, index) => {
         const questionNumber = index + 1;
         if (negativeQuestions.includes(questionNumber)) {
-            // ネガティブ設問: 6点から引く (例: 1→6, 2→5, 3→4...)
             totalScore += (7 - answer);
         } else {
             totalScore += answer;
         }
     });
     
-    // 100点満点に正規化 (35問×6点満点=210点満点 → 100点満点)
+    // 100点満点に正規化
     surveyData.totalScore = Math.round((totalScore / 210) * 100);
     surveyData.submittedAt = new Date().toISOString();
     
@@ -336,7 +399,6 @@ function saveData(data) {
     let allData = JSON.parse(localStorage.getItem('surveyData') || '[]');
     allData.push(data);
     
-    // 最大100件まで保存
     if (allData.length > 100) {
         allData = allData.slice(-100);
     }
@@ -350,12 +412,21 @@ function showCompletion() {
     
     document.getElementById('surveySection').style.display = 'none';
     document.getElementById('completionSection').style.display = 'flex';
-    document.querySelector('#completionSection h2').textContent = t.completionMessage;
+    document.getElementById('completionTitle').textContent = t.completionMessage;
     
-    // 5秒後に自動リセット
-    setTimeout(() => {
-        resetSurvey();
-    }, 5000);
+    // カウントダウン
+    let countdown = 5;
+    const countdownElement = document.getElementById('countdown');
+    
+    const interval = setInterval(() => {
+        countdown--;
+        countdownElement.textContent = countdown;
+        
+        if (countdown <= 0) {
+            clearInterval(interval);
+            resetSurvey();
+        }
+    }, 1000);
 }
 
 // ========== リセット ==========
@@ -368,31 +439,24 @@ function resetSurvey() {
         submittedAt: ''
     };
     
-    document.getElementById('employeeCode').value = '';
+    document.getElementById('employeeCode').selectedIndex = 0;
+    document.getElementById('nationality').selectedIndex = 0;
     document.getElementById('progressBar').style.width = '0%';
-    document.getElementById('progressText').textContent = '0 / 35';
+    document.getElementById('answeredCount').textContent = '0';
+    document.getElementById('progressPercentage').textContent = '0%';
     document.getElementById('completionSection').style.display = 'none';
-    document.getElementById('startSection').style.display = 'block';
+    document.getElementById('initialScreen').style.display = 'block';
+    
+    window.scrollTo(0, 0);
 }
 
 // ========== 重複チェック (月次) ==========
 function checkDuplicate(employeeCode) {
     const allData = JSON.parse(localStorage.getItem('surveyData') || '[]');
-    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM形式
+    const currentMonth = new Date().toISOString().slice(0, 7);
     
     return allData.some(entry => 
         entry.employeeCode === employeeCode && 
         entry.submittedAt.slice(0, 7) === currentMonth
     );
-}
-
-// ========== 日付フォーマット ==========
-function formatDate(isoString) {
-    const date = new Date(isoString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
