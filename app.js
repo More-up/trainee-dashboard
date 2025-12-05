@@ -24,7 +24,7 @@ const categories = {
   career: { questions: [30, 31, 32, 33, 34, 35] }
 };
 
-// ネガティブ質問（逆スコアリング）
+// ネガティブ質問(逆スコアリング)
 const negativeQuestions = [16, 17, 23, 26];
 
 // ===========================
@@ -227,7 +227,8 @@ function generateQuestions() {
         const btn = document.createElement('button');
         btn.className = 'emoji-btn';
         btn.setAttribute('data-score', scores[i - 1]);
-        btn.onclick = () => selectAnswer(qNum, scores[i - 1], btn);
+        btn.setAttribute('data-question', qNum);
+        btn.onclick = () => selectAnswer(qNum, scores[i - 1]);
         
         btn.innerHTML = `
           <span class="emoji-icon">${emojis[i - 1]}</span>
@@ -248,22 +249,53 @@ function generateQuestions() {
 // ===========================
 // 回答選択
 // ===========================
-function selectAnswer(questionNum, score, button) {
-  // スコア保存
+function selectAnswer(questionNum, score) {
+  if (surveyData.answers[questionNum - 1] !== undefined && surveyData.answers[questionNum - 1] > 0) {
+    return; // 既に回答済みの場合は何もしない
+  }
+  
   surveyData.answers[questionNum - 1] = score;
   
-  // 選択状態更新
-  const questionDiv = button.closest('.question');
-  questionDiv.querySelectorAll('.emoji-btn').forEach(btn => {
-    btn.classList.remove('selected');
+  // 選択されたオプションをハイライト
+  const options = document.querySelectorAll(`.emoji-btn[data-question="${questionNum}"]`);
+  options.forEach(option => {
+    option.classList.remove('selected');
+    if (parseInt(option.dataset.score) === score) {
+      option.classList.add('selected');
+    }
   });
-  button.classList.add('selected');
   
-  // プログレス更新
   updateProgress();
   
-  // 次の質問へ自動スクロール
-  scrollToNextQuestion(questionNum);
+  // 次の質問に自動スクロール(300msの遅延後)
+  setTimeout(() => {
+    scrollToNextQuestion(questionNum);
+  }, 300);
+}
+
+// 次の質問に自動スクロールする関数
+function scrollToNextQuestion(currentQuestionNum) {
+  const nextQuestionNum = currentQuestionNum + 1;
+  
+  // 最後の質問の場合はスクロールしない
+  if (nextQuestionNum > 35) {
+    return;
+  }
+  
+  // 次の質問要素を取得
+  const nextQuestion = document.querySelector(`.question[data-question="${nextQuestionNum}"]`);
+  
+  if (nextQuestion) {
+    // 進捗バーの高さを考慮してスクロール位置を調整
+    const progressBarHeight = 80; // CSSの値と一致させる
+    const yOffset = -progressBarHeight - 20; // 進捗バー + 余白20px
+    const y = nextQuestion.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    
+    window.scrollTo({
+      top: y,
+      behavior: 'smooth'
+    });
+  }
 }
 
 // ===========================
@@ -285,34 +317,6 @@ function updateProgress() {
 }
 
 // ===========================
-// 次の質問へスクロール
-// ===========================
-function scrollToNextQuestion(currentQuestionNum) {
-  // 最後の質問の場合はスクロールしない
-  if (currentQuestionNum >= 35) {
-    return;
-  }
-  
-  // 次の質問要素を取得
-  const nextQuestionNum = currentQuestionNum + 1;
-  const nextQuestion = document.querySelector(`[data-question="${nextQuestionNum}"]`);
-  
-  if (nextQuestion) {
-    // スムーズスクロール（プログレスバーの高さを考慮）
-    setTimeout(() => {
-      const progressBarHeight = 120;
-      const elementPosition = nextQuestion.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - progressBarHeight - 20;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }, 300);
-  }
-}
-
-// ===========================
 // アンケート送信
 // ===========================
 function submitSurvey() {
@@ -324,7 +328,7 @@ function submitSurvey() {
     return;
   }
   
-  // スコア計算（100点満点）
+  // スコア計算(100点満点)
   const totalRawScore = surveyData.answers.reduce((sum, score) => sum + score, 0);
   surveyData.totalScore = Math.round((totalRawScore / 210) * 100);
   
