@@ -1,2582 +1,901 @@
-// ===========================
-// 多言語翻訳データ (16言語対応)
-// ===========================
 const translations = {
-  // ===========================
-  // 日本語
-  // ===========================
   ja: {
-    title: '安心して答えてください | 職場アンケート',
-    languageLabel: '言語選択',
-    anonymousMessage: 'あなたの名前は記録されません',
-    anonymousSubMessage: '安心して正直に答えてください',
-    employeeCodeLabel: '従業員コード',
-    employeeCodePlaceholder: '1〜20の番号を選択',
-    nationalityLabel: '国籍',
-    nationalityPlaceholder: '国籍を選択してください',
-    startButton: 'アンケートを始める',
-    submitButton: '結果を見る',
-    
-    // 16カ国の国籍
+    title: "技能実習生エンゲージメント診断",
+    anonymous: "※このアンケートは匿名です",
+    employeeCode: "社員コード",
+    nationality: "国籍",
+    startButton: "アンケートを始める",
+    submitButton: "送信する",
     nationalities: {
-      vietnam: 'ベトナム',
-      cambodia: 'カンボジア',
-      india: 'インド',
-      philippines: 'フィリピン',
-      laos: 'ラオス',
-      mongolia: 'モンゴル',
-      bangladesh: 'バングラデシュ',
-      srilanka: 'スリランカ',
-      myanmar: 'ミャンマー',
-      bhutan: 'ブータン',
-      uzbekistan: 'ウズベキスタン',
-      pakistan: 'パキスタン',
-      thailand: 'タイ',
-      indonesia: 'インドネシア',
-      nepal: 'ネパール',
-      china: '中国'
+      vn: "ベトナム", kh: "カンボジア", in: "インド", ph: "フィリピン", la: "ラオス", mn: "モンゴル",
+      bd: "バングラデシュ", lk: "スリランカ", mm: "ミャンマー", bt: "ブータン", uz: "ウズベキスタン",
+      pk: "パキスタン", th: "タイ", id: "インドネシア", np: "ネパール", cn: "中国"
     },
-    
-    // カテゴリー
     categories: {
-      work: '1. 業務・職場環境',
-      salary: '2. 給与・待遇',
-      family: '3. 家族・プライベート事情',
-      relationship: '4. 人間関係',
-      communication: '5. 日本語・コミュニケーション',
-      culture: '6. 文化・価値観',
-      living: '7. 生活環境',
-      career: '8. キャリア・将来の見通し'
+      work: "業務・職場環境", salary: "給与・待遇", family: "家族・プライベート事情",
+      relations: "人間関係", communication: "日本語・コミュニケーション", culture: "文化・価値観",
+      living: "生活環境", career: "キャリア・将来の見通し"
     },
-    
-    // 質問 (35問)
     questions: {
-      q1: '仕事の内容は、自分に合っていますか?',
-      q2: '働く場所は、安全だと思いますか?',
-      q3: '休みの日や働く時間は、ちょうどよいですか?',
-      q4: '職場の雰囲気は、働きやすいですか?',
-      q5: '給料の金額に、満足していますか?',
-      q6: '残業代や手当は、きちんと受け取れていますか?',
-      q7: '保険や休暇などの制度は、十分だと思いますか?',
-      q8: 'この会社で働くことで、生活に必要なお金を得られていますか?',
-      q9: '家族と連絡をとる時間は、十分にありますか?',
-      q10: '家族に送金する余裕はありますか?',
-      q11: '自分の時間(休みやプライベート)は、十分にありますか?',
-      q12: '将来、家族を日本に呼びたいと思いますか?',
-      q13: '同じ技能実習生の仲間との関係は良いですか?',
-      q14: '日本人の上司や同僚は、あなたの話を聞いてくれますか?',
-      q15: '困ったときに、同じ技能実習生の仲間は助けてくれますか?',
-      q16: '職場で、いじめや差別を受けることはありますか?',
-      q17: '日本語での会話に困ることはありますか?',
-      q18: '仕事の説明や指示は分かりやすいですか?',
-      q19: '分からないことを質問しやすいですか?',
-      q20: '会社は、日本語の勉強を助けてくれますか?',
-      q21: '母国語で相談できる人(通訳や先輩など)はいますか?',
-      q22: '日本の文化や習慣に、慣れていますか?',
-      q23: '仕事中に文化の違いで困ることはありますか?',
-      q24: '住んでいる場所(寮・アパートなど)は快適ですか?',
-      q25: '生活費は、給料に対してちょうどよいですか?',
-      q26: '日本での生活で困ることはありますか?',
-      q27: '会社は生活のサポートをしてくれますか?',
-      q28: '寮や家での生活環境(部屋の広さ・設備など)に満足していますか?',
-      q29: '日本での生活は、安全で快適ですか?',
-      q30: '今の仕事で、技術や知識が身についていますか?',
-      q31: '頑張った分だけ、評価や待遇が良くなると感じますか?',
-      q32: 'この会社で、長く働きたいと思いますか?',
-      q33: 'ビザ(在留資格)の更新や手続きで、会社や組合は助けてくれますか?',
-      q34: 'この会社で働くことで、母国に帰ってから役立つ技術が学べていますか?',
-      q35: '母国の友達にも「この会社で働いたほうがいいよ」と思えますか?'
+      q1: "仕事の内容は自分に合っていますか？", q2: "職場の設備や機械は安全ですか？",
+      q3: "仕事の時間や休みの日数に満足していますか？", q4: "仕事で学んだことは、母国に帰っても役に立つと思いますか？",
+      q5: "今の給料に満足していますか？", q6: "残業代や手当はきちんともらえていますか？",
+      q7: "寮の家賃や水道・電気代は妥当だと思いますか？", q8: "健康保険や年金の説明を受けて、安心していますか？",
+      q9: "母国の家族に送金できる金額に満足していますか？", q10: "家族の健康や生活のことで心配はありますか？",
+      q11: "母国の家族や友人と、十分に連絡が取れていますか？", q12: "休みの日に、リラックスしたり楽しんだりできていますか？",
+      q13: "上司や先輩は優しく教えてくれますか？", q14: "困ったとき、相談できる人はいますか？",
+      q15: "同僚とうまくコミュニケーションが取れていますか？", q16: "職場で差別や嫌がらせを受けたことはありますか？",
+      q17: "仕事で使う日本語を理解できていますか？", q18: "日本語を勉強する機会や時間はありますか？",
+      q19: "職場の人の話す日本語は速すぎると感じますか？", q20: "日本語がわからなくて、困ったことはありますか？",
+      q21: "職場のルールやマナーを理解していますか？", q22: "日本の文化や習慣に慣れましたか？",
+      q23: "日本の生活に満足していますか？", q24: "寮や住んでいる場所は住みやすいですか？",
+      q25: "近くに買い物できる店はありますか？", q26: "病気やケガをしたとき、病院に行けますか？",
+      q27: "交通手段（バス、電車、自転車など）は便利ですか？", q28: "寮の広さや設備（お風呂、トイレなど）に満足していますか？",
+      q29: "今の会社でもっと長く働きたいですか？", q30: "技能実習が終わった後、特定技能で働きたいですか？",
+      q31: "会社は技能実習の目標達成を助けてくれていますか？", q32: "会社や監理団体は、あなたの意見を聞いてくれますか？",
+      q33: "会社や監理団体は、ビザ（在留資格）の更新や手続きを助けてくれますか？", q34: "会社や監理団体は、日本での生活の困りごとを助けてくれますか？"
     },
-    
-    // 回答タイプ1: 満足度
-    satisfaction: {
-      option1: 'とても満足',
-      option2: 'やや満足',
-      option3: 'どちらとも言えない',
-      option4: 'やや不満',
-      option5: 'かなり不満',
-      option6: '全く満足していない'
+    choices: {
+      satisfaction: ["😄 とても満足", "🙂 満足", "😐 少し満足", "😟 少し不満", "😞 不満", "😭 とても不満"],
+      desire: ["😄 強く思う", "🙂 思う", "😐 少し思う", "😟 あまり思わない", "😞 思わない", "😭 全く思わない"],
+      understanding: ["😄 よく理解", "🙂 理解", "😐 少し理解", "😟 少し不理解", "😞 不理解", "😭 全く不理解"],
+      familiarity: ["😄 とても慣れた", "🙂 慣れた", "😐 少し慣れた", "😟 少し不慣れ", "😞 不慣れ", "😭 全く不慣れ"],
+      availability: ["😄 とてもある", "🙂 ある", "😐 少しある", "😟 あまりない", "😞 ない", "😭 全くない"],
+      negative: ["😄 全くない", "🙂 ない", "😐 あまりない", "😟 たまにある", "😞 よくある", "😭 いつもある"]
     },
-    
-    // 回答タイプ2: 希望・意欲
-    desire: {
-      option1: 'とてもそう思う',
-      option2: 'ややそう思う',
-      option3: 'どちらとも言えない',
-      option4: 'あまりそう思わない',
-      option5: 'ほとんどそう思わない',
-      option6: '全くそう思わない'
+    errors: {
+      employeeCode: "社員コードを入力してください", nationality: "国籍を選択してください",
+      allQuestions: "すべての質問に回答してください"
     },
-    
-    // 回答タイプ3: 理解度
-    understanding: {
-      option1: 'とてもよく分かる',
-      option2: 'まあまあ分かる',
-      option3: 'どちらとも言えない',
-      option4: 'あまり分からない',
-      option5: 'ほとんど分からない',
-      option6: '全く分からない'
-    },
-    
-    // 回答タイプ4: 慣れ
-    familiarity: {
-      option1: 'とてもよく慣れている',
-      option2: 'まあまあ慣れている',
-      option3: 'どちらとも言えない',
-      option4: 'あまり慣れていない',
-      option5: 'ほとんど慣れていない',
-      option6: '全く慣れていない'
-    },
-    
-    // 回答タイプ5: 有無・可能性
-    availability: {
-      option1: '十分にいる/ある/学べている',
-      option2: 'まあまあいる/ある/学べている',
-      option3: 'どちらとも言えない',
-      option4: 'あまりいない/ない/学べていない',
-      option5: 'ほとんどいない/ない/学べていない',
-      option6: '全くいない/ない/学べていない'
-    },
-    
-    // 回答タイプ6: ネガティブ質問
-    negative: {
-      option1: '全くない',
-      option2: 'ほとんどない',
-      option3: 'どちらとも言えない',
-      option4: 'たまにある',
-      option5: 'よくある',
-      option6: 'いつもある'
-    },
-    
-    // エラーメッセージ
-    errorEmployeeCode: '従業員コードを選択してください',
-    errorNationality: '国籍を選択してください',
-    errorAllQuestions: 'すべての質問に回答してください',
-    errorDuplicate: '従業員コード {code} は今月すでに回答済みです({date})',
-    
-    // 完了画面
-    completionTitle: 'ご協力ありがとうございました！',
-    completionMessage: 'あなたの回答は安全に保存されました',
-    completionAutoClose: 'このページは自動的に閉じます',
-    completionRemaining: '残り',
-    completionSeconds: '秒',
-    
-    footerInfo: '所要時間: 約5〜10分'
+    completion: {
+      title: "ご協力ありがとうございました!", message: "アンケートの回答が完了しました。\n5秒後に自動的にトップページに戻ります。"
+    }
   },
-
-  // ===========================
-  // ベトナム語
-  // ===========================
-  vi: {
-    title: 'Hãy trả lời một cách an tâm | Khảo sát nơi làm việc',
-    languageLabel: 'Chọn ngôn ngữ',
-    anonymousMessage: 'Tên của bạn sẽ không được ghi lại',
-    anonymousSubMessage: 'Hãy trả lời một cách trung thực',
-    employeeCodeLabel: 'Mã nhân viên',
-    employeeCodePlaceholder: 'Chọn số từ 1 đến 20',
-    nationalityLabel: 'Quốc tịch',
-    nationalityPlaceholder: 'Vui lòng chọn quốc tịch',
-    startButton: 'Bắt đầu khảo sát',
-    submitButton: 'Xem kết quả',
-    
+  vn: {
+    title: "Khảo sát mức độ gắn kết của thực tập sinh kỹ năng",
+    anonymous: "※Khảo sát này là ẩn danh",
+    employeeCode: "Mã nhân viên",
+    nationality: "Quốc tịch",
+    startButton: "Bắt đầu khảo sát",
+    submitButton: "Gửi",
     nationalities: {
-      vietnam: 'Việt Nam',
-      cambodia: 'Campuchia',
-      india: 'Ấn Độ',
-      philippines: 'Philippines',
-      laos: 'Lào',
-      mongolia: 'Mông Cổ',
-      bangladesh: 'Bangladesh',
-      srilanka: 'Sri Lanka',
-      myanmar: 'Myanmar',
-      bhutan: 'Bhutan',
-      uzbekistan: 'Uzbekistan',
-      pakistan: 'Pakistan',
-      thailand: 'Thái Lan',
-      indonesia: 'Indonesia',
-      nepal: 'Nepal',
-      china: 'Trung Quốc'
+      vn: "Việt Nam", kh: "Campuchia", in: "Ấn Độ", ph: "Philippines", la: "Lào", mn: "Mông Cổ",
+      bd: "Bangladesh", lk: "Sri Lanka", mm: "Myanmar", bt: "Bhutan", uz: "Uzbekistan",
+      pk: "Pakistan", th: "Thái Lan", id: "Indonesia", np: "Nepal", cn: "Trung Quốc"
     },
-    
     categories: {
-      work: '1. Công việc & Môi trường làm việc',
-      salary: '2. Lương & Đãi ngộ',
-      family: '3. Gia đình & Đời sống cá nhân',
-      relationship: '4. Quan hệ con người',
-      communication: '5. Tiếng Nhật & Giao tiếp',
-      culture: '6. Văn hóa & Giá trị',
-      living: '7. Môi trường sống',
-      career: '8. Sự nghiệp & Tương lai'
+      work: "Công việc & Môi trường làm việc", salary: "Lương & Đãi ngộ",
+      family: "Gia đình & Vấn đề riêng tư", relations: "Quan hệ con người",
+      communication: "Tiếng Nhật & Giao tiếp", culture: "Văn hóa & Giá trị",
+      living: "Môi trường sống", career: "Sự nghiệp & Triển vọng tương lai"
     },
-    
     questions: {
-      q1: 'Nội dung công việc có phù hợp với bạn không?',
-      q2: 'Bạn có cảm thấy nơi làm việc an toàn không?',
-      q3: 'Ngày nghỉ và giờ làm việc có phù hợp không?',
-      q4: 'Bầu không khí nơi làm việc có dễ làm việc không?',
-      q5: 'Bạn có hài lòng với mức lương không?',
-      q6: 'Bạn có nhận đủ tiền làm thêm giờ và phụ cấp không?',
-      q7: 'Các chế độ như bảo hiểm, nghỉ phép có đầy đủ không?',
-      q8: 'Làm việc tại công ty này có đủ tiền cho cuộc sống không?',
-      q9: 'Bạn có đủ thời gian liên lạc với gia đình không?',
-      q10: 'Bạn có đủ tiền để gửi về cho gia đình không?',
-      q11: 'Bạn có đủ thời gian riêng (nghỉ ngơi, đời tư) không?',
-      q12: 'Bạn có muốn đưa gia đình sang Nhật Bản trong tương lai không?',
-      q13: 'Quan hệ với các thực tập sinh khác có tốt không?',
-      q14: 'Cấp trên và đồng nghiệp người Nhật có lắng nghe bạn không?',
-      q15: 'Khi gặp khó khăn, các thực tập sinh khác có giúp đỡ bạn không?',
-      q16: 'Bạn có bị bắt nạt hoặc phân biệt đối xử nơi làm việc không?',
-      q17: 'Bạn có gặp khó khăn khi giao tiếp bằng tiếng Nhật không?',
-      q18: 'Giải thích và hướng dẫn công việc có dễ hiểu không?',
-      q19: 'Bạn có dễ hỏi khi không hiểu điều gì đó không?',
-      q20: 'Công ty có hỗ trợ bạn học tiếng Nhật không?',
-      q21: 'Có người (phiên dịch, tiền bối) để tư vấn bằng tiếng mẹ đẻ không?',
-      q22: 'Bạn có quen với văn hóa và phong tục Nhật Bản không?',
-      q23: 'Bạn có gặp khó khăn do khác biệt văn hóa trong công việc không?',
-      q24: 'Nơi ở (ký túc xá, căn hộ) có thoải mái không?',
-      q25: 'Chi phí sinh hoạt có phù hợp với mức lương không?',
-      q26: 'Bạn có gặp khó khăn trong cuộc sống tại Nhật Bản không?',
-      q27: 'Công ty có hỗ trợ cuộc sống của bạn không?',
-      q28: 'Bạn có hài lòng với môi trường sống (diện tích phòng, tiện nghi) tại ký túc xá hoặc nhà không?',
-      q29: 'Cuộc sống tại Nhật Bản có an toàn và thoải mái không?',
-      q30: 'Bạn có đang tích lũy được kỹ thuật và kiến thức từ công việc hiện tại không?',
-      q31: 'Bạn có cảm thấy nỗ lực của mình được đánh giá và đãi ngộ tốt hơn không?',
-      q32: 'Bạn có muốn làm việc lâu dài tại công ty này không?',
-      q33: 'Công ty hoặc hiệp hội có giúp đỡ việc gia hạn và thủ tục visa (tư cách lưu trú) không?',
-      q34: 'Bạn có đang học được kỹ thuật hữu ích cho khi trở về quê nhà từ công việc tại công ty này không?',
-      q35: 'Bạn có nghĩ rằng bạn sẽ giới thiệu bạn bè ở quê nhà làm việc tại công ty này không?'
+      q1: "Nội dung công việc có phù hợp với bạn không?", q2: "Thiết bị và máy móc tại nơi làm việc có an toàn không?",
+      q3: "Bạn có hài lòng với thời gian làm việc và số ngày nghỉ không?", q4: "Bạn có nghĩ những gì học được từ công việc sẽ hữu ích khi về nước không?",
+      q5: "Bạn có hài lòng với mức lương hiện tại không?", q6: "Bạn có nhận đủ tiền làm thêm giờ và phụ cấp không?",
+      q7: "Bạn có nghĩ tiền thuê ký túc xá và chi phí nước, điện là hợp lý không?", q8: "Bạn có được giải thích về bảo hiểm y tế và lương hưu và cảm thấy yên tâm không?",
+      q9: "Bạn có hài lòng với số tiền có thể gửi về cho gia đình ở quê nhà không?", q10: "Bạn có lo lắng về sức khỏe hoặc cuộc sống của gia đình ở quê nhà không?",
+      q11: "Bạn có thể liên lạc đầy đủ với gia đình và bạn bè ở quê nhà không?", q12: "Vào ngày nghỉ, bạn có thể thư giãn hoặc vui chơi không?",
+      q13: "Cấp trên và tiền bối có dạy bạn một cách tử tế không?", q14: "Khi gặp khó khăn, bạn có người để tham khảo không?",
+      q15: "Bạn có giao tiếp tốt với đồng nghiệp không?", q16: "Bạn có từng bị phân biệt đối xử hoặc quấy rối tại nơi làm việc không?",
+      q17: "Bạn có hiểu tiếng Nhật được sử dụng trong công việc không?", q18: "Bạn có cơ hội hoặc thời gian để học tiếng Nhật không?",
+      q19: "Bạn có cảm thấy người ở nơi làm việc nói tiếng Nhật quá nhanh không?", q20: "Bạn có gặp khó khăn vì không hiểu tiếng Nhật không?",
+      q21: "Bạn có hiểu các quy tắc và nghi thức tại nơi làm việc không?", q22: "Bạn đã quen với văn hóa và phong tục của Nhật Bản chưa?",
+      q23: "Bạn có hài lòng với cuộc sống tại Nhật Bản không?", q24: "Ký túc xá hoặc nơi bạn đang sống có dễ sống không?",
+      q25: "Gần đây có cửa hàng để mua sắm không?", q26: "Khi bị ốm hoặc bị thương, bạn có thể đến bệnh viện không?",
+      q27: "Phương tiện giao thông (xe buýt, tàu điện, xe đạp, v.v.) có thuận tiện không?", q28: "Bạn có hài lòng với diện tích và tiện nghi của ký túc xá (phòng tắm, nhà vệ sinh, v.v.) không?",
+      q29: "Bạn có muốn làm việc lâu dài hơn tại công ty hiện tại không?", q30: "Sau khi kết thúc thực tập sinh kỹ năng, bạn có muốn làm việc với tư cách kỹ năng đặc định không?",
+      q31: "Công ty có giúp bạn đạt được mục tiêu thực tập sinh kỹ năng không?", q32: "Công ty hoặc tổ chức quản lý có lắng nghe ý kiến của bạn không?",
+      q33: "Công ty hoặc tổ chức quản lý có giúp bạn gia hạn visa (tư cách lưu trú) và thủ tục không?", q34: "Công ty hoặc tổ chức quản lý có giúp bạn giải quyết khó khăn trong cuộc sống tại Nhật Bản không?"
     },
-    
-    satisfaction: {
-      option1: 'Rất hài lòng',
-      option2: 'Khá hài lòng',
-      option3: 'Không chắc chắn',
-      option4: 'Hơi không hài lòng',
-      option5: 'Khá không hài lòng',
-      option6: 'Hoàn toàn không hài lòng'
+    choices: {
+      satisfaction: ["😄 Rất hài lòng", "🙂 Hài lòng", "😐 Hơi hài lòng", "😟 Hơi không hài lòng", "😞 Không hài lòng", "😭 Rất không hài lòng"],
+      desire: ["😄 Rất nghĩ", "🙂 Nghĩ", "😐 Hơi nghĩ", "😟 Không nghĩ lắm", "😞 Không nghĩ", "😭 Hoàn toàn không nghĩ"],
+      understanding: ["😄 Hiểu rõ", "🙂 Hiểu", "😐 Hơi hiểu", "😟 Hơi không hiểu", "😞 Không hiểu", "😭 Hoàn toàn không hiểu"],
+      familiarity: ["😄 Rất quen", "🙂 Quen", "😐 Hơi quen", "😟 Hơi không quen", "😞 Không quen", "😭 Hoàn toàn không quen"],
+      availability: ["😄 Rất có", "🙂 Có", "😐 Hơi có", "😟 Không có lắm", "😞 Không có", "😭 Hoàn toàn không có"],
+      negative: ["😄 Hoàn toàn không có", "🙂 Không có", "😐 Không có lắm", "😟 Thỉnh thoảng có", "😞 Thường có", "😭 Luôn có"]
     },
-    
-    desire: {
-      option1: 'Rất đồng ý',
-      option2: 'Khá đồng ý',
-      option3: 'Không chắc chắn',
-      option4: 'Hơi không đồng ý',
-      option5: 'Khá không đồng ý',
-      option6: 'Hoàn toàn không đồng ý'
+    errors: {
+      employeeCode: "Vui lòng nhập mã nhân viên", nationality: "Vui lòng chọn quốc tịch",
+      allQuestions: "Vui lòng trả lời tất cả các câu hỏi"
     },
-    
-    understanding: {
-      option1: 'Rất dễ hiểu',
-      option2: 'Khá dễ hiểu',
-      option3: 'Không chắc chắn',
-      option4: 'Hơi khó hiểu',
-      option5: 'Khá khó hiểu',
-      option6: 'Hoàn toàn không hiểu'
-    },
-    
-    familiarity: {
-      option1: 'Rất quen thuộc',
-      option2: 'Khá quen thuộc',
-      option3: 'Không chắc chắn',
-      option4: 'Hơi chưa quen',
-      option5: 'Khá chưa quen',
-      option6: 'Hoàn toàn chưa quen'
-    },
-    
-    availability: {
-      option1: 'Có đầy đủ',
-      option2: 'Có khá nhiều',
-      option3: 'Không chắc chắn',
-      option4: 'Có ít',
-      option5: 'Có rất ít',
-      option6: 'Hoàn toàn không có'
-    },
-    
-    negative: {
-      option1: 'Hoàn toàn không có',
-      option2: 'Hầu như không có',
-      option3: 'Không chắc chắn',
-      option4: 'Thỉnh thoảng có',
-      option5: 'Thường xuyên có',
-      option6: 'Luôn luôn có'
-    },
-    
-    errorEmployeeCode: 'Vui lòng chọn mã nhân viên',
-    errorNationality: 'Vui lòng chọn quốc tịch',
-    errorAllQuestions: 'Vui lòng trả lời tất cả các câu hỏi',
-    errorDuplicate: 'Mã nhân viên {code} đã trả lời trong tháng này ({date})',
-    
-    completionTitle: 'Cảm ơn sự hợp tác của bạn!',
-    completionMessage: 'Câu trả lời của bạn đã được lưu an toàn',
-    completionAutoClose: 'Trang này sẽ tự động đóng',
-    completionRemaining: 'Còn lại',
-    completionSeconds: 'giây',
-    
-    footerInfo: 'Thời gian: Khoảng 5-10 phút'
+    completion: {
+      title: "Cảm ơn bạn đã hợp tác!", message: "Bạn đã hoàn thành khảo sát.\nSẽ tự động quay về trang chủ sau 5 giây."
+    }
   },
-
-  // ===========================
-  // 中国語
-  // ===========================
-  zh: {
-    title: '请放心回答 | 职场问卷调查',
-    languageLabel: '选择语言',
-    anonymousMessage: '您的姓名不会被记录',
-    anonymousSubMessage: '请放心诚实回答',
-    employeeCodeLabel: '员工代码',
-    employeeCodePlaceholder: '选择1到20的号码',
-    nationalityLabel: '国籍',
-    nationalityPlaceholder: '请选择国籍',
-    startButton: '开始问卷',
-    submitButton: '查看结果',
-    
+  cn: {
+    title: "技能实习生敬业度调查",
+    anonymous: "※此调查为匿名",
+    employeeCode: "员工编号",
+    nationality: "国籍",
+    startButton: "开始调查",
+    submitButton: "提交",
     nationalities: {
-      vietnam: '越南',
-      cambodia: '柬埔寨',
-      india: '印度',
-      philippines: '菲律宾',
-      laos: '老挝',
-      mongolia: '蒙古',
-      bangladesh: '孟加拉国',
-      srilanka: '斯里兰卡',
-      myanmar: '缅甸',
-      bhutan: '不丹',
-      uzbekistan: '乌兹别克斯坦',
-      pakistan: '巴基斯坦',
-      thailand: '泰国',
-      indonesia: '印度尼西亚',
-      nepal: '尼泊尔',
-      china: '中国'
+      vn: "越南", kh: "柬埔寨", in: "印度", ph: "菲律宾", la: "老挝", mn: "蒙古",
+      bd: "孟加拉国", lk: "斯里兰卡", mm: "缅甸", bt: "不丹", uz: "乌兹别克斯坦",
+      pk: "巴基斯坦", th: "泰国", id: "印度尼西亚", np: "尼泊尔", cn: "中国"
     },
-    
     categories: {
-      work: '1. 业务·职场环境',
-      salary: '2. 工资·待遇',
-      family: '3. 家庭·私人事务',
-      relationship: '4. 人际关系',
-      communication: '5. 日语·沟通',
-      culture: '6. 文化·价值观',
-      living: '7. 生活环境',
-      career: '8. 职业·未来展望'
+      work: "工作与工作环境", salary: "工资与待遇", family: "家庭与私人事务",
+      relations: "人际关系", communication: "日语与沟通", culture: "文化与价值观",
+      living: "生活环境", career: "职业与未来展望"
     },
-    
     questions: {
-      q1: '工作内容适合您吗？',
-      q2: '您觉得工作场所安全吗？',
-      q3: '休息日和工作时间合适吗？',
-      q4: '职场氛围容易工作吗？',
-      q5: '您对工资金额满意吗？',
-      q6: '加班费和补贴能正常领取吗？',
-      q7: '保险和休假等制度充分吗？',
-      q8: '在这家公司工作能获得生活所需的钱吗？',
-      q9: '与家人联系的时间充分吗？',
-      q10: '有余力给家人汇款吗？',
-      q11: '自己的时间(休息和私人)充分吗？',
-      q12: '将来想把家人接到日本吗？',
-      q13: '与其他技能实习生的关系好吗？',
-      q14: '日本的上司和同事会听您说话吗？',
-      q15: '遇到困难时，其他技能实习生会帮助您吗？',
-      q16: '在职场有受到欺凌或歧视吗？',
-      q17: '日语会话有困难吗？',
-      q18: '工作的说明和指示容易理解吗？',
-      q19: '不明白的事情容易提问吗？',
-      q20: '公司帮助您学习日语吗？',
-      q21: '有可以用母语商量的人(翻译或前辈等)吗？',
-      q22: '您习惯日本的文化和习俗吗？',
-      q23: '工作中因文化差异而困扰吗？',
-      q24: '居住的地方(宿舍·公寓等)舒适吗？',
-      q25: '生活费相对工资合适吗？',
-      q26: '在日本的生活中有困扰吗？',
-      q27: '公司支持您的生活吗？',
-      q28: '您对宿舍或家里的生活环境(房间大小·设施等)满意吗？',
-      q29: '在日本的生活安全舒适吗？',
-      q30: '您在现在的工作中学到了技术和知识吗？',
-      q31: '您感觉努力的程度会带来更好的评价和待遇吗？',
-      q32: '您想在这家公司长期工作吗？',
-      q33: '公司或工会在签证(在留资格)的更新和手续上帮助您吗？',
-      q34: '您在这家公司工作能学到回国后有用的技术吗？',
-      q35: '您会向祖国的朋友推荐"在这家公司工作比较好"吗？'
+      q1: "工作内容适合您吗？", q2: "工作场所的设备和机器安全吗？",
+      q3: "您对工作时间和休息天数满意吗？", q4: "您认为从工作中学到的东西回国后会有用吗？",
+      q5: "您对目前的工资满意吗？", q6: "您能按时领到加班费和津贴吗？",
+      q7: "您认为宿舍租金和水电费合理吗？", q8: "您得到了健康保险和养老金的说明并感到安心吗？",
+      q9: "您对能寄回家的金额满意吗？", q10: "您担心家乡家人的健康或生活吗？",
+      q11: "您能充分联系家乡的家人和朋友吗？", q12: "休息日您能放松或享受吗？",
+      q13: "上司和前辈温柔地教您吗？", q14: "遇到困难时,您有可以商量的人吗？",
+      q15: "您与同事沟通顺畅吗？", q16: "您在工作场所受到过歧视或骚扰吗？",
+      q17: "您理解工作中使用的日语吗？", q18: "您有学习日语的机会或时间吗？",
+      q19: "您觉得工作场所的人说日语太快吗？", q20: "您因为不懂日语而遇到困难吗？",
+      q21: "您理解工作场所的规则和礼仪吗？", q22: "您习惯了日本的文化和习俗吗？",
+      q23: "您对在日本的生活满意吗？", q24: "宿舍或您居住的地方住得舒适吗？",
+      q25: "附近有可以购物的商店吗？", q26: "生病或受伤时,您能去医院吗？",
+      q27: "交通工具（公交车、电车、自行车等）方便吗？", q28: "您对宿舍的面积和设施（浴室、厕所等）满意吗？",
+      q29: "您想在现在的公司工作更长时间吗？", q30: "技能实习结束后,您想以特定技能工作吗？",
+      q31: "公司帮助您实现技能实习的目标吗？", q32: "公司或监理团体听取您的意见吗？",
+      q33: "公司或监理团体帮助您办理签证（在留资格）的更新和手续吗？", q34: "公司或监理团体帮助您解决在日本生活中的困难吗？"
     },
-    
-    satisfaction: {
-      option1: '非常满意',
-      option2: '比较满意',
-      option3: '不确定',
-      option4: '有点不满',
-      option5: '比较不满',
-      option6: '完全不满意'
+    choices: {
+      satisfaction: ["😄 非常满意", "🙂 满意", "😐 有点满意", "😟 有点不满", "😞 不满", "😭 非常不满"],
+      desire: ["😄 强烈认为", "🙂 认为", "😐 有点认为", "😟 不太认为", "😞 不认为", "😭 完全不认为"],
+      understanding: ["😄 很理解", "🙂 理解", "😐 有点理解", "😟 有点不理解", "😞 不理解", "😭 完全不理解"],
+      familiarity: ["😄 非常习惯", "🙂 习惯", "😐 有点习惯", "😟 有点不习惯", "😞 不习惯", "😭 完全不习惯"],
+      availability: ["😄 非常有", "🙂 有", "😐 有点有", "😟 不太有", "😞 没有", "😭 完全没有"],
+      negative: ["😄 完全没有", "🙂 没有", "😐 不太有", "😟 偶尔有", "😞 经常有", "😭 总是有"]
     },
-    
-    desire: {
-      option1: '非常同意',
-      option2: '比较同意',
-      option3: '不确定',
-      option4: '有点不同意',
-      option5: '比较不同意',
-      option6: '完全不同意'
+    errors: {
+      employeeCode: "请输入员工编号", nationality: "请选择国籍",
+      allQuestions: "请回答所有问题"
     },
-    
-    understanding: {
-      option1: '非常容易理解',
-      option2: '比较容易理解',
-      option3: '不确定',
-      option4: '有点难理解',
-      option5: '比较难理解',
-      option6: '完全不理解'
-    },
-    
-    familiarity: {
-      option1: '非常习惯',
-      option2: '比较习惯',
-      option3: '不确定',
-      option4: '有点不习惯',
-      option5: '比较不习惯',
-      option6: '完全不习惯'
-    },
-    
-    availability: {
-      option1: '有很多',
-      option2: '有一些',
-      option3: '不确定',
-      option4: '不太有',
-      option5: '几乎没有',
-      option6: '完全没有'
-    },
-    
-    negative: {
-      option1: '完全没有',
-      option2: '几乎没有',
-      option3: '不确定',
-      option4: '偶尔有',
-      option5: '经常有',
-      option6: '总是有'
-    },
-    
-    errorEmployeeCode: '请选择员工代码',
-    errorNationality: '请选择国籍',
-    errorAllQuestions: '请回答所有问题',
-    errorDuplicate: '员工代码 {code} 本月已回答过({date})',
-    
-    completionTitle: '感谢您的合作！',
-    completionMessage: '您的回答已安全保存',
-    completionAutoClose: '此页面将自动关闭',
-    completionRemaining: '剩余',
-    completionSeconds: '秒',
-    
-    footerInfo: '所需时间: 约5-10分钟'
+    completion: {
+      title: "感谢您的合作!", message: "调查回答已完成。\n5秒后自动返回首页。"
+    }
   },
-  // ===========================
-  // フィリピン語 (タガログ語)
-  // ===========================
   tl: {
-    title: 'Sumagot nang may tiwala | Survey sa Trabaho',
-    languageLabel: 'Pumili ng Wika',
-    anonymousMessage: 'Ang iyong pangalan ay hindi irerekord',
-    anonymousSubMessage: 'Sumagot nang tapat at walang alalahanin',
-    employeeCodeLabel: 'Code ng Empleyado',
-    employeeCodePlaceholder: 'Pumili ng numero 1 hanggang 20',
-    nationalityLabel: 'Nasyonalidad',
-    nationalityPlaceholder: 'Pumili ng nasyonalidad',
-    startButton: 'Simulan ang Survey',
-    submitButton: 'Tingnan ang Resulta',
-    
+    title: "Pagtatasa ng Pakikipag-ugnayan ng Trainee sa Teknikal",
+    anonymous: "※Ang survey na ito ay anonymous",
+    employeeCode: "Employee Code",
+    nationality: "Nasyonalidad",
+    startButton: "Simulan ang Survey",
+    submitButton: "Isumite",
     nationalities: {
-      vietnam: 'Vietnam',
-      cambodia: 'Cambodia',
-      india: 'India',
-      philippines: 'Pilipinas',
-      laos: 'Laos',
-      mongolia: 'Mongolia',
-      bangladesh: 'Bangladesh',
-      srilanka: 'Sri Lanka',
-      myanmar: 'Myanmar',
-      bhutan: 'Bhutan',
-      uzbekistan: 'Uzbekistan',
-      pakistan: 'Pakistan',
-      thailand: 'Thailand',
-      indonesia: 'Indonesia',
-      nepal: 'Nepal',
-      china: 'Tsina'
+      vn: "Vietnam", kh: "Cambodia", in: "India", ph: "Pilipinas", la: "Laos", mn: "Mongolia",
+      bd: "Bangladesh", lk: "Sri Lanka", mm: "Myanmar", bt: "Bhutan", uz: "Uzbekistan",
+      pk: "Pakistan", th: "Thailand", id: "Indonesia", np: "Nepal", cn: "Tsina"
     },
-    
     categories: {
-      work: '1. Trabaho at Kapaligiran',
-      salary: '2. Sahod at Benepisyo',
-      family: '3. Pamilya at Personal',
-      relationship: '4. Relasyon sa Kapwa',
-      communication: '5. Wikang Hapon at Komunikasyon',
-      culture: '6. Kultura at Paniniwala',
-      living: '7. Kapaligiran ng Pamumuhay',
-      career: '8. Karera at Kinabukasan'
+      work: "Trabaho at Kapaligiran sa Trabaho", salary: "Sahod at Benepisyo",
+      family: "Pamilya at Personal na Bagay", relations: "Relasyon sa Tao",
+      communication: "Wikang Hapon at Komunikasyon", culture: "Kultura at Pagpapahalaga",
+      living: "Kapaligiran sa Pamumuhay", career: "Karera at Kinabukasan"
     },
-    
     questions: {
-      q1: 'Angkop ba sa iyo ang nilalaman ng trabaho?',
-      q2: 'Ligtas ba ang lugar ng trabaho?',
-      q3: 'Tama ba ang araw ng pahinga at oras ng trabaho?',
-      q4: 'Madaling magtrabaho ba sa kapaligiran?',
-      q5: 'Nasiyahan ka ba sa halaga ng sahod?',
-      q6: 'Nakukuha mo ba ang overtime pay at allowance?',
-      q7: 'Sapat ba ang insurance at leave?',
-      q8: 'Nakakakuha ka ba ng sapat na pera para sa buhay?',
-      q9: 'May sapat na oras ka ba para makipag-ugnayan sa pamilya?',
-      q10: 'May kakayahan ka bang magpadala ng pera sa pamilya?',
-      q11: 'May sapat na personal na oras ka ba?',
-      q12: 'Gusto mo bang dalhin ang pamilya mo sa Japan sa hinaharap?',
-      q13: 'Mabuti ba ang relasyon mo sa ibang trainees?',
-      q14: 'Nakikinig ba sa iyo ang mga Hapon na boss at katrabaho?',
-      q15: 'Tumutulong ba sa iyo ang ibang trainees kapag may problema?',
-      q16: 'May bullying o discrimination ba sa trabaho?',
-      q17: 'Nahihirapan ka ba sa pakikipag-usap sa Hapon?',
-      q18: 'Madaling maintindihan ba ang paliwanag sa trabaho?',
-      q19: 'Madali bang magtanong kapag may hindi naiintindihan?',
-      q20: 'Tinutulungan ka ba ng kumpanya na mag-aral ng Hapon?',
-      q21: 'May taong maaaring kausapin sa sariling wika (interpreter, senior)?',
-      q22: 'Nasanay ka na ba sa kultura at kaugalian ng Japan?',
-      q23: 'Nahihirapan ka ba dahil sa pagkakaiba ng kultura sa trabaho?',
-      q24: 'Komportable ba ang tirahan mo (dorm, apartment)?',
-      q25: 'Tama ba ang gastos sa buhay kumpara sa sahod?',
-      q26: 'May problema ka ba sa buhay sa Japan?',
-      q27: 'Sinusuportahan ka ba ng kumpanya sa buhay?',
-      q28: 'Nasiyahan ka ba sa kapaligiran ng pamumuhay (laki ng kwarto, pasilidad) sa dorm o bahay?',
-      q29: 'Ligtas at komportable ba ang buhay sa Japan?',
-      q30: 'Natututo ka ba ng teknika at kaalaman sa kasalukuyang trabaho?',
-      q31: 'Nakakaramdam ka ba na ang iyong pagsisikap ay nakikita at ginagantimpalaan?',
-      q32: 'Gusto mo bang magtrabaho ng matagal sa kompanyang ito?',
-      q33: 'Tumutulong ba ang kumpanya o union sa pag-renew at proseso ng visa?',
-      q34: 'Natututo ka ba ng teknika na makakatulong pagbalik sa bansang tinubuan mula sa trabaho dito?',
-      q35: 'Mairerekumenda mo ba sa mga kaibigan sa bansa na magtrabaho dito?'
+      q1: "Ang trabaho ba ay akma sa iyo?", q2: "Ang kagamitan at makina sa trabaho ba ay ligtas?",
+      q3: "Nasiyahan ka ba sa oras ng trabaho at bilang ng araw ng pahinga?", q4: "Sa tingin mo ba ang natutunan sa trabaho ay makakatulong pagbalik sa bansa?",
+      q5: "Nasiyahan ka ba sa kasalukuyang sahod?", q6: "Tumatanggap ka ba ng tamang bayad sa overtime at allowance?",
+      q7: "Sa tingin mo ba ang upa ng dorm at bayad sa tubig at kuryente ay makatwiran?", q8: "Nakatanggap ka ba ng paliwanag tungkol sa health insurance at pension at nakakaramdam ng katiwasayan?",
+      q9: "Nasiyahan ka ba sa halagang maipapadala sa pamilya sa bansa?", q10: "May alalahanin ka ba tungkol sa kalusugan o pamumuhay ng pamilya sa bansa?",
+      q11: "Nakakakomunikasyon ka ba nang sapat sa pamilya at kaibigan sa bansa?", q12: "Sa araw ng pahinga, nakakapagrelaks o nakakaenjoy ka ba?",
+      q13: "Ang boss at senior ba ay mahinahon na nagtuturo?", q14: "Kapag may problema, may taong maaaring konsultahin?",
+      q15: "Nakakakomunikasyon ka ba nang maayos sa mga kasamahan?", q16: "Nakaranas ka ba ng diskriminasyon o harassment sa trabaho?",
+      q17: "Nauunawaan mo ba ang Hapon na ginagamit sa trabaho?", q18: "May pagkakataon o oras ka ba upang mag-aral ng Hapon?",
+      q19: "Sa tingin mo ba ang Hapon na sinasalita ng mga tao sa trabaho ay masyadong mabilis?", q20: "Nakaranas ka ba ng problema dahil hindi mo nauunawaan ang Hapon?",
+      q21: "Nauunawaan mo ba ang mga patakaran at ugali sa trabaho?", q22: "Nasanay ka na ba sa kultura at kaugalian ng Hapon?",
+      q23: "Nasiyahan ka ba sa buhay sa Hapon?", q24: "Ang dorm o lugar na tinutuluyan mo ba ay madaling tirhan?",
+      q25: "Malapit ba ang tindahan kung saan maaaring mamili?", q26: "Kapag may sakit o sugat, makakapunta ka ba sa ospital?",
+      q27: "Ang transportasyon (bus, tren, bisikleta, atbp.) ba ay convenient?", q28: "Nasiyahan ka ba sa laki at pasilidad ng dorm (banyo, CR, atbp.)?",
+      q29: "Gusto mo bang magtrabaho nang mas matagal sa kasalukuyang kumpanya?", q30: "Pagkatapos ng technical intern training, gusto mo bang magtrabaho bilang specified skilled worker?",
+      q31: "Ang kumpanya ba ay tumutulong sa pagkamit ng layunin ng technical intern training?", q32: "Ang kumpanya o supervising organization ba ay nakikinig sa iyong opinyon?",
+      q33: "Ang kumpanya o supervising organization ba ay tumutulong sa visa (status of residence) renewal at proseso?", q34: "Ang kumpanya o supervising organization ba ay tumutulong sa mga problema sa buhay sa Hapon?"
     },
-    
-    satisfaction: {
-      option1: 'Lubos na nasiyahan',
-      option2: 'Medyo nasiyahan',
-      option3: 'Hindi tiyak',
-      option4: 'Medyo hindi nasiyahan',
-      option5: 'Hindi gaanong nasiyahan',
-      option6: 'Hindi nasiyahan'
+    choices: {
+      satisfaction: ["😄 Lubhang nasiyahan", "🙂 Nasiyahan", "😐 Medyo nasiyahan", "😟 Medyo hindi nasiyahan", "😞 Hindi nasiyahan", "😭 Lubhang hindi nasiyahan"],
+      desire: ["😄 Lubhang nais", "🙂 Nais", "😐 Medyo nais", "😟 Hindi gaanong nais", "😞 Hindi nais", "😭 Talagang hindi nais"],
+      understanding: ["😄 Lubhang nauunawaan", "🙂 Nauunawaan", "😐 Medyo nauunawaan", "😟 Medyo hindi nauunawaan", "😞 Hindi nauunawaan", "😭 Talagang hindi nauunawaan"],
+      familiarity: ["😄 Lubhang nasanay", "🙂 Nasanay", "😐 Medyo nasanay", "😟 Medyo hindi nasanay", "😞 Hindi nasanay", "😭 Talagang hindi nasanay"],
+      availability: ["😄 Lubhang meron", "🙂 Meron", "😐 Medyo meron", "😟 Hindi gaanong meron", "😞 Wala", "😭 Talagang wala"],
+      negative: ["😄 Talagang wala", "🙂 Wala", "😐 Hindi gaanong meron", "😟 Paminsan-minsan meron", "😞 Madalas meron", "😭 Laging meron"]
     },
-    
-    desire: {
-      option1: 'Lubos na sumasang-ayon',
-      option2: 'Medyo sumasang-ayon',
-      option3: 'Hindi tiyak',
-      option4: 'Medyo hindi sumasang-ayon',
-      option5: 'Hindi gaanong sumasang-ayon',
-      option6: 'Hindi sumasang-ayon'
+    errors: {
+      employeeCode: "Paki-input ang employee code", nationality: "Paki-select ang nasyonalidad",
+      allQuestions: "Paki-sagot ang lahat ng tanong"
     },
-    
-    understanding: {
-      option1: 'Napakadaling maintindihan',
-      option2: 'Medyo madaling maintindihan',
-      option3: 'Hindi tiyak',
-      option4: 'Medyo mahirap maintindihan',
-      option5: 'Mahirap maintindihan',
-      option6: 'Hindi maintindihan'
-    },
-    
-    familiarity: {
-      option1: 'Lubos na nasanay',
-      option2: 'Medyo nasanay',
-      option3: 'Hindi tiyak',
-      option4: 'Medyo hindi pa nasanay',
-      option5: 'Hindi pa gaanong nasanay',
-      option6: 'Hindi pa nasanay'
-    },
-    
-    availability: {
-      option1: 'Marami',
-      option2: 'May kaunti',
-      option3: 'Hindi tiyak',
-      option4: 'Hindi gaanong marami',
-      option5: 'Halos wala',
-      option6: 'Wala'
-    },
-    
-    negative: {
-      option1: 'Wala',
-      option2: 'Halos wala',
-      option3: 'Hindi tiyak',
-      option4: 'Paminsan-minsan',
-      option5: 'Madalas',
-      option6: 'Lagi'
-    },
-    
-    errorEmployeeCode: 'Pumili ng code ng empleyado',
-    errorNationality: 'Pumili ng nasyonalidad',
-    errorAllQuestions: 'Sagutin ang lahat ng tanong',
-    errorDuplicate: 'Ang code ng empleyado {code} ay sumagot na ngayong buwan ({date})',
-    
-    completionTitle: 'Salamat sa iyong kooperasyon!',
-    completionMessage: 'Ang iyong sagot ay ligtas na nai-save',
-    completionAutoClose: 'Ang page na ito ay kusang magsasara',
-    completionRemaining: 'Natitira',
-    completionSeconds: 'segundo',
-    
-    footerInfo: 'Oras: Mga 5-10 minuto'
+    completion: {
+      title: "Salamat sa iyong kooperasyon!", message: "Nakumpleto ang survey.\nAwtomatikong babalik sa top page pagkatapos ng 5 segundo."
+    }
   },
-
-  // ===========================
-  // インドネシア語
-  // ===========================
   id: {
-    title: 'Jawab dengan tenang | Survei Tempat Kerja',
-    languageLabel: 'Pilih Bahasa',
-    anonymousMessage: 'Nama Anda tidak akan dicatat',
-    anonymousSubMessage: 'Jawablah dengan jujur',
-    employeeCodeLabel: 'Kode Karyawan',
-    employeeCodePlaceholder: 'Pilih nomor 1 sampai 20',
-    nationalityLabel: 'Kebangsaan',
-    nationalityPlaceholder: 'Pilih kebangsaan',
-    startButton: 'Mulai Survei',
-    submitButton: 'Lihat Hasil',
-    
+    title: "Survei Keterlibatan Peserta Pelatihan Keterampilan",
+    anonymous: "※Survei ini bersifat anonim",
+    employeeCode: "Kode Karyawan",
+    nationality: "Kebangsaan",
+    startButton: "Mulai Survei",
+    submitButton: "Kirim",
     nationalities: {
-      vietnam: 'Vietnam',
-      cambodia: 'Kamboja',
-      india: 'India',
-      philippines: 'Filipina',
-      laos: 'Laos',
-      mongolia: 'Mongolia',
-      bangladesh: 'Bangladesh',
-      srilanka: 'Sri Lanka',
-      myanmar: 'Myanmar',
-      bhutan: 'Bhutan',
-      uzbekistan: 'Uzbekistan',
-      pakistan: 'Pakistan',
-      thailand: 'Thailand',
-      indonesia: 'Indonesia',
-      nepal: 'Nepal',
-      china: 'Tiongkok'
+      vn: "Vietnam", kh: "Kamboja", in: "India", ph: "Filipina", la: "Laos", mn: "Mongolia",
+      bd: "Bangladesh", lk: "Sri Lanka", mm: "Myanmar", bt: "Bhutan", uz: "Uzbekistan",
+      pk: "Pakistan", th: "Thailand", id: "Indonesia", np: "Nepal", cn: "Tiongkok"
     },
-    
     categories: {
-      work: '1. Pekerjaan & Lingkungan Kerja',
-      salary: '2. Gaji & Tunjangan',
-      family: '3. Keluarga & Pribadi',
-      relationship: '4. Hubungan Antar Manusia',
-      communication: '5. Bahasa Jepang & Komunikasi',
-      culture: '6. Budaya & Nilai',
-      living: '7. Lingkungan Hidup',
-      career: '8. Karir & Masa Depan'
+      work: "Pekerjaan & Lingkungan Kerja", salary: "Gaji & Tunjangan",
+      family: "Keluarga & Masalah Pribadi", relations: "Hubungan Manusia",
+      communication: "Bahasa Jepang & Komunikasi", culture: "Budaya & Nilai",
+      living: "Lingkungan Hidup", career: "Karir & Prospek Masa Depan"
     },
-    
     questions: {
-      q1: 'Apakah isi pekerjaan sesuai dengan Anda?',
-      q2: 'Apakah tempat kerja aman?',
-      q3: 'Apakah hari libur dan jam kerja tepat?',
-      q4: 'Apakah suasana tempat kerja nyaman untuk bekerja?',
-      q5: 'Apakah Anda puas dengan jumlah gaji?',
-      q6: 'Apakah uang lembur dan tunjangan diterima dengan benar?',
-      q7: 'Apakah sistem seperti asuransi dan cuti memadai?',
-      q8: 'Apakah bekerja di perusahaan ini memberikan uang yang cukup untuk hidup?',
-      q9: 'Apakah Anda punya cukup waktu untuk menghubungi keluarga?',
-      q10: 'Apakah Anda mampu mengirim uang ke keluarga?',
-      q11: 'Apakah Anda punya cukup waktu pribadi (libur dan privasi)?',
-      q12: 'Apakah Anda ingin membawa keluarga ke Jepang di masa depan?',
-      q13: 'Apakah hubungan dengan peserta pelatihan lain baik?',
-      q14: 'Apakah atasan dan rekan kerja Jepang mendengarkan Anda?',
-      q15: 'Apakah peserta pelatihan lain membantu Anda saat kesulitan?',
-      q16: 'Apakah ada bullying atau diskriminasi di tempat kerja?',
-      q17: 'Apakah Anda kesulitan berbicara dalam bahasa Jepang?',
-      q18: 'Apakah penjelasan dan instruksi pekerjaan mudah dipahami?',
-      q19: 'Apakah mudah bertanya ketika tidak mengerti?',
-      q20: 'Apakah perusahaan membantu Anda belajar bahasa Jepang?',
-      q21: 'Apakah ada orang yang bisa konsultasi dalam bahasa ibu (penerjemah, senior)?',
-      q22: 'Apakah Anda terbiasa dengan budaya dan kebiasaan Jepang?',
-      q23: 'Apakah Anda kesulitan karena perbedaan budaya dalam pekerjaan?',
-      q24: 'Apakah tempat tinggal (asrama, apartemen) nyaman?',
-      q25: 'Apakah biaya hidup tepat dibanding gaji?',
-      q26: 'Apakah Anda kesulitan dalam hidup di Jepang?',
-      q27: 'Apakah perusahaan mendukung kehidupan Anda?',
-      q28: 'Apakah Anda puas dengan lingkungan hidup (ukuran kamar, fasilitas) di asrama atau rumah?',
-      q29: 'Apakah hidup di Jepang aman dan nyaman?',
-      q30: 'Apakah Anda belajar teknik dan pengetahuan dari pekerjaan saat ini?',
-      q31: 'Apakah Anda merasa usaha Anda dihargai dan diperlakukan lebih baik?',
-      q32: 'Apakah Anda ingin bekerja lama di perusahaan ini?',
-      q33: 'Apakah perusahaan atau serikat membantu perpanjangan dan prosedur visa?',
-      q34: 'Apakah Anda belajar teknik yang berguna setelah kembali ke negara asal dari bekerja di perusahaan ini?',
-      q35: 'Apakah Anda akan merekomendasikan teman di negara asal untuk bekerja di perusahaan ini?'
+      q1: "Apakah isi pekerjaan sesuai dengan Anda?", q2: "Apakah peralatan dan mesin di tempat kerja aman?",
+      q3: "Apakah Anda puas dengan jam kerja dan jumlah hari libur?", q4: "Apakah Anda pikir apa yang dipelajari dari pekerjaan akan berguna saat kembali ke negara asal?",
+      q5: "Apakah Anda puas dengan gaji saat ini?", q6: "Apakah Anda menerima uang lembur dan tunjangan dengan benar?",
+      q7: "Apakah Anda pikir sewa asrama dan biaya air listrik wajar?", q8: "Apakah Anda mendapat penjelasan tentang asuransi kesehatan dan pensiun dan merasa tenang?",
+      q9: "Apakah Anda puas dengan jumlah yang dapat dikirim ke keluarga di negara asal?", q10: "Apakah Anda khawatir tentang kesehatan atau kehidupan keluarga di negara asal?",
+      q11: "Apakah Anda dapat berkomunikasi cukup dengan keluarga dan teman di negara asal?", q12: "Pada hari libur, apakah Anda dapat bersantai atau menikmati?",
+      q13: "Apakah atasan dan senior mengajar dengan lembut?", q14: "Saat ada masalah, apakah ada orang yang dapat dikonsultasikan?",
+      q15: "Apakah Anda berkomunikasi dengan baik dengan rekan kerja?", q16: "Apakah Anda pernah menerima diskriminasi atau pelecehan di tempat kerja?",
+      q17: "Apakah Anda memahami bahasa Jepang yang digunakan dalam pekerjaan?", q18: "Apakah Anda memiliki kesempatan atau waktu untuk belajar bahasa Jepang?",
+      q19: "Apakah Anda merasa orang di tempat kerja berbicara bahasa Jepang terlalu cepat?", q20: "Apakah Anda pernah kesulitan karena tidak memahami bahasa Jepang?",
+      q21: "Apakah Anda memahami aturan dan tata krama di tempat kerja?", q22: "Apakah Anda sudah terbiasa dengan budaya dan kebiasaan Jepang?",
+      q23: "Apakah Anda puas dengan kehidupan di Jepang?", q24: "Apakah asrama atau tempat tinggal Anda mudah ditinggali?",
+      q25: "Apakah ada toko di dekat untuk berbelanja?", q26: "Saat sakit atau cedera, apakah Anda bisa pergi ke rumah sakit?",
+      q27: "Apakah transportasi (bus, kereta, sepeda, dll.) nyaman?", q28: "Apakah Anda puas dengan luas dan fasilitas asrama (kamar mandi, toilet, dll.)?",
+      q29: "Apakah Anda ingin bekerja lebih lama di perusahaan saat ini?", q30: "Setelah pelatihan magang teknis selesai, apakah Anda ingin bekerja sebagai pekerja keterampilan khusus?",
+      q31: "Apakah perusahaan membantu Anda mencapai tujuan pelatihan magang teknis?", q32: "Apakah perusahaan atau organisasi pengawas mendengarkan pendapat Anda?",
+      q33: "Apakah perusahaan atau organisasi pengawas membantu pembaruan visa (status tinggal) dan prosedur?", q34: "Apakah perusahaan atau organisasi pengawas membantu kesulitan hidup di Jepang?"
     },
-    
-    satisfaction: {
-      option1: 'Sangat puas',
-      option2: 'Cukup puas',
-      option3: 'Tidak yakin',
-      option4: 'Agak tidak puas',
-      option5: 'Tidak puas',
-      option6: 'Sangat tidak puas'
+    choices: {
+      satisfaction: ["😄 Sangat puas", "🙂 Puas", "😐 Agak puas", "😟 Agak tidak puas", "😞 Tidak puas", "😭 Sangat tidak puas"],
+      desire: ["😄 Sangat ingin", "🙂 Ingin", "😐 Agak ingin", "😟 Tidak terlalu ingin", "😞 Tidak ingin", "😭 Sama sekali tidak ingin"],
+      understanding: ["😄 Sangat paham", "🙂 Paham", "😐 Agak paham", "😟 Agak tidak paham", "😞 Tidak paham", "😭 Sama sekali tidak paham"],
+      familiarity: ["😄 Sangat terbiasa", "🙂 Terbiasa", "😐 Agak terbiasa", "😟 Agak tidak terbiasa", "😞 Tidak terbiasa", "😭 Sama sekali tidak terbiasa"],
+      availability: ["😄 Sangat ada", "🙂 Ada", "😐 Agak ada", "😟 Tidak terlalu ada", "😞 Tidak ada", "😭 Sama sekali tidak ada"],
+      negative: ["😄 Sama sekali tidak ada", "🙂 Tidak ada", "😐 Tidak terlalu ada", "😟 Kadang-kadang ada", "😞 Sering ada", "😭 Selalu ada"]
     },
-    
-    desire: {
-      option1: 'Sangat setuju',
-      option2: 'Cukup setuju',
-      option3: 'Tidak yakin',
-      option4: 'Agak tidak setuju',
-      option5: 'Tidak setuju',
-      option6: 'Sangat tidak setuju'
+    errors: {
+      employeeCode: "Silakan masukkan kode karyawan", nationality: "Silakan pilih kebangsaan",
+      allQuestions: "Silakan jawab semua pertanyaan"
     },
-    
-    understanding: {
-      option1: 'Sangat mudah dipahami',
-      option2: 'Cukup mudah dipahami',
-      option3: 'Tidak yakin',
-      option4: 'Agak sulit dipahami',
-      option5: 'Sulit dipahami',
-      option6: 'Tidak bisa dipahami'
-    },
-    
-    familiarity: {
-      option1: 'Sangat terbiasa',
-      option2: 'Cukup terbiasa',
-      option3: 'Tidak yakin',
-      option4: 'Agak belum terbiasa',
-      option5: 'Belum terbiasa',
-      option6: 'Sangat belum terbiasa'
-    },
-    
-    availability: {
-      option1: 'Sangat banyak',
-      option2: 'Cukup banyak',
-      option3: 'Tidak yakin',
-      option4: 'Agak sedikit',
-      option5: 'Hampir tidak ada',
-      option6: 'Tidak ada'
-    },
-    
-    negative: {
-      option1: 'Tidak ada',
-      option2: 'Hampir tidak ada',
-      option3: 'Tidak yakin',
-      option4: 'Kadang-kadang',
-      option5: 'Sering',
-      option6: 'Selalu'
-    },
-    
-    errorEmployeeCode: 'Pilih kode karyawan',
-    errorNationality: 'Pilih kebangsaan',
-    errorAllQuestions: 'Jawab semua pertanyaan',
-    errorDuplicate: 'Kode karyawan {code} sudah menjawab bulan ini ({date})',
-    
-    completionTitle: 'Terima kasih atas kerja sama Anda!',
-    completionMessage: 'Jawaban Anda telah disimpan dengan aman',
-    completionAutoClose: 'Halaman ini akan tertutup otomatis',
-    completionRemaining: 'Tersisa',
-    completionSeconds: 'detik',
-    
-    footerInfo: 'Waktu: Sekitar 5-10 menit'
+    completion: {
+      title: "Terima kasih atas kerja sama Anda!", message: "Survei telah selesai.\nOtomatis kembali ke halaman utama setelah 5 detik."
+    }
   },
-
-  // ===========================
-  // タイ語
-  // ===========================
   th: {
-    title: 'ตอบด้วยความมั่นใจ | แบบสำรวจที่ทำงาน',
-    languageLabel: 'เลือกภาษา',
-    anonymousMessage: 'ชื่อของคุณจะไม่ถูกบันทึก',
-    anonymousSubMessage: 'กรุณาตอบอย่างตรงไปตรงมา',
-    employeeCodeLabel: 'รหัสพนักงาน',
-    employeeCodePlaceholder: 'เลือกหมายเลข 1 ถึง 20',
-    nationalityLabel: 'สัญชาติ',
-    nationalityPlaceholder: 'กรุณาเลือกสัญชาติ',
-    startButton: 'เริ่มแบบสำรวจ',
-    submitButton: 'ดูผลลัพธ์',
-    
+    title: "การสำรวจความผูกพันของผู้ฝึกงานด้านเทคนิค",
+    anonymous: "※แบบสำรวจนี้เป็นความลับ",
+    employeeCode: "รหัสพนักงาน",
+    nationality: "สัญชาติ",
+    startButton: "เริ่มแบบสำรวจ",
+    submitButton: "ส่ง",
     nationalities: {
-      vietnam: 'เวียดนาม',
-      cambodia: 'กัมพูชา',
-      india: 'อินเดีย',
-      philippines: 'ฟิลิปปินส์',
-      laos: 'ลาว',
-      mongolia: 'มองโกเลีย',
-      bangladesh: 'บังกลาเทศ',
-      srilanka: 'ศรีลังกา',
-      myanmar: 'เมียนมาร์',
-      bhutan: 'ภูฏาน',
-      uzbekistan: 'อุซเบกิสถาน',
-      pakistan: 'ปากีสถาน',
-      thailand: 'ไทย',
-      indonesia: 'อินโดนีเซีย',
-      nepal: 'เนปาล',
-      china: 'จีน'
+      vn: "เวียดนาม", kh: "กัมพูชา", in: "อินเดีย", ph: "ฟิลิปปินส์", la: "ลาว", mn: "มองโกเลีย",
+      bd: "บังกลาเทศ", lk: "ศรีลังกา", mm: "เมียนมาร์", bt: "ภูฏาน", uz: "อุซเบกิสถาน",
+      pk: "ปากีสถาน", th: "ไทย", id: "อินโดนีเซีย", np: "เนปาล", cn: "จีน"
     },
-    
     categories: {
-      work: '1. งานและสภาพแวดล้อมการทำงาน',
-      salary: '2. เงินเดือนและสวัสดิการ',
-      family: '3. ครอบครัวและเรื่องส่วนตัว',
-      relationship: '4. ความสัมพันธ์ระหว่างบุคคล',
-      communication: '5. ภาษาญี่ปุ่นและการสื่อสาร',
-      culture: '6. วัฒนธรรมและค่านิยม',
-      living: '7. สภาพแวดล้อมการใช้ชีวิต',
-      career: '8. อาชีพและอนาคต'
+      work: "งานและสภาพแวดล้อมการทำงาน", salary: "เงินเดือนและสวัสดิการ",
+      family: "ครอบครัวและเรื่องส่วนตัว", relations: "ความสัมพันธ์ระหว่างบุคคล",
+      communication: "ภาษาญี่ปุ่นและการสื่อสาร", culture: "วัฒนธรรมและค่านิยม",
+      living: "สภาพแวดล้อมการใช้ชีวิต", career: "อาชีพและแนวโน้มในอนาคต"
     },
-    
     questions: {
-      q1: 'เนื้อหางานเหมาะกับคุณหรือไม่?',
-      q2: 'คุณคิดว่าสถานที่ทำงานปลอดภัยหรือไม่?',
-      q3: 'วันหยุดและเวลาทำงานเหมาะสมหรือไม่?',
-      q4: 'บรรยากาศที่ทำงานเอื้อต่อการทำงานหรือไม่?',
-      q5: 'คุณพอใจกับจำนวนเงินเดือนหรือไม่?',
-      q6: 'คุณได้รับค่าล่วงเวลาและเบี้ยเลี้ยงอย่างถูกต้องหรือไม่?',
-      q7: 'ระบบประกันและวันหยุดเพียงพอหรือไม่?',
-      q8: 'การทำงานที่บริษัทนี้ทำให้คุณได้เงินเพียงพอสำหรับชีวิตหรือไม่?',
-      q9: 'คุณมีเวลาติดต่อกับครอบครัวเพียงพอหรือไม่?',
-      q10: 'คุณมีเงินส่งกลับให้ครอบครัวหรือไม่?',
-      q11: 'คุณมีเวลาส่วนตัว (หยุดพักและชีวิตส่วนตัว) เพียงพอหรือไม่?',
-      q12: 'คุณอยากพาครอบครัวมาญี่ปุ่นในอนาคตหรือไม่?',
-      q13: 'ความสัมพันธ์กับเพื่อนฝึกงานคนอื่นดีหรือไม่?',
-      q14: 'หัวหน้าและเพื่อนร่วมงานชาวญี่ปุ่นฟังคุณหรือไม่?',
-      q15: 'เมื่อมีปัญหา เพื่อนฝึกงานคนอื่นช่วยคุณหรือไม่?',
-      q16: 'มีการรังแกหรือเลือกปฏิบัติที่ทำงานหรือไม่?',
-      q17: 'คุณมีปัญหาในการพูดภาษาญี่ปุ่นหรือไม่?',
-      q18: 'คำอธิบายและคำสั่งงานเข้าใจง่ายหรือไม่?',
-      q19: 'คุณถามเมื่อไม่เข้าใจได้ง่ายหรือไม่?',
-      q20: 'บริษัทช่วยคุณเรียนภาษาญี่ปุ่นหรือไม่?',
-      q21: 'มีคนที่ปรึกษาได้ในภาษาแม่ (ล่าม รุ่นพี่) หรือไม่?',
-      q22: 'คุณคุ้นเคยกับวัฒนธรรมและขนบธรรมเนียมญี่ปุ่นหรือไม่?',
-      q23: 'คุณมีปัญหาเรื่องความแตกต่างทางวัฒนธรรมในงานหรือไม่?',
-      q24: 'ที่พักอาศัย (หอพัก อพาร์ทเมนต์) สะดวกสบายหรือไม่?',
-      q25: 'ค่าใช้จ่ายในการดำรงชีพเหมาะสมกับเงินเดือนหรือไม่?',
-      q26: 'คุณมีปัญหาในการใช้ชีวิตในญี่ปุ่นหรือไม่?',
-      q27: 'บริษัทสนับสนุนชีวิตของคุณหรือไม่?',
-      q28: 'คุณพอใจกับสภาพแวดล้อมการใช้ชีวิต (ขนาดห้อง สิ่งอำนวยความสะดวก) ในหอพักหรือบ้านหรือไม่?',
-      q29: 'ชีวิตในญี่ปุ่นปลอดภัยและสะดวกสบายหรือไม่?',
-      q30: 'คุณได้เรียนรู้เทคนิคและความรู้จากงานปัจจุบันหรือไม่?',
-      q31: 'คุณรู้สึกว่าความพยายามของคุณได้รับการประเมินและได้รับการปฏิบัติที่ดีขึ้นหรือไม่?',
-      q32: 'คุณอยากทำงานที่บริษัทนี้นานๆ หรือไม่?',
-      q33: 'บริษัทหรือสหภาพช่วยเรื่องการต่ออายุและขั้นตอนวีซ่า (สถานะการพำนัก) หรือไม่?',
-      q34: 'คุณกำลังเรียนรู้เทคนิคที่เป็นประโยชน์เมื่อกลับประเทศจากการทำงานที่บริษัทนี้หรือไม่?',
-      q35: 'คุณคิดว่าคุณจะแนะนำเพื่อนในประเทศให้มาทำงานที่บริษัทนี้หรือไม่?'
+      q1: "เนื้อหางานเหมาะกับคุณหรือไม่?", q2: "อุปกรณ์และเครื่องจักรในที่ทำงานปลอดภัยหรือไม่?",
+      q3: "คุณพอใจกับเวลาทำงานและจำนวนวันหยุดหรือไม่?", q4: "คุณคิดว่าสิ่งที่เรียนรู้จากงานจะมีประโยชน์เมื่อกลับประเทศหรือไม่?",
+      q5: "คุณพอใจกับเงินเดือนปัจจุบันหรือไม่?", q6: "คุณได้รับค่าล่วงเวลาและค่าตอบแทนอย่างถูกต้องหรือไม่?",
+      q7: "คุณคิดว่าค่าเช่าหอพักและค่าน้ำค่าไฟเหมาะสมหรือไม่?", q8: "คุณได้รับคำอธิบายเกี่ยวกับประกันสุขภาพและบำนาญและรู้สึกมั่นใจหรือไม่?",
+      q9: "คุณพอใจกับจำนวนเงินที่สามารถส่งกลับไปให้ครอบครัวในประเทศหรือไม่?", q10: "คุณกังวลเกี่ยวกับสุขภาพหรือชีวิตของครอบครัวในประเทศหรือไม่?",
+      q11: "คุณสามารถติดต่อกับครอบครัวและเพื่อนในประเทศได้เพียงพอหรือไม่?", q12: "ในวันหยุด คุณสามารถผ่อนคลายหรือเพลิดเพลินได้หรือไม่?",
+      q13: "หัวหน้าและรุ่นพี่สอนคุณอย่างอ่อนโยนหรือไม่?", q14: "เมื่อมีปัญหา คุณมีคนปรึกษาหรือไม่?",
+      q15: "คุณสื่อสารกับเพื่อนร่วมงานได้ดีหรือไม่?", q16: "คุณเคยได้รับการเลือกปฏิบัติหรือถูกกลั่นแกล้งในที่ทำงานหรือไม่?",
+      q17: "คุณเข้าใจภาษาญี่ปุ่นที่ใช้ในงานหรือไม่?", q18: "คุณมีโอกาสหรือเวลาในการเรียนภาษาญี่ปุ่นหรือไม่?",
+      q19: "คุณรู้สึกว่าคนในที่ทำงานพูดภาษาญี่ปุ่นเร็วเกินไปหรือไม่?", q20: "คุณเคยมีปัญหาเพราะไม่เข้าใจภาษาญี่ปุ่นหรือไม่?",
+      q21: "คุณเข้าใจกฎและมารยาทในที่ทำงานหรือไม่?", q22: "คุณคุ้นเคยกับวัฒนธรรมและประเพณีของญี่ปุ่นแล้วหรือยัง?",
+      q23: "คุณพอใจกับชีวิตในญี่ปุ่นหรือไม่?", q24: "หอพักหรือที่พักของคุณอยู่ได้ดีหรือไม่?",
+      q25: "ใกล้ๆ มีร้านค้าให้ซื้อของหรือไม่?", q26: "เมื่อป่วยหรือบาดเจ็บ คุณสามารถไปโรงพยาบาลได้หรือไม่?",
+      q27: "การเดินทาง (รถบัส รถไฟ จักรยาน ฯลฯ) สะดวกหรือไม่?", q28: "คุณพอใจกับขนาดและสิ่งอำนวยความสะดวกของหอพัก (ห้องน้ำ ห้องส้วม ฯลฯ) หรือไม่?",
+      q29: "คุณต้องการทำงานที่บริษัทปัจจุบันนานขึ้นหรือไม่?", q30: "หลังจากการฝึกงานด้านเทคนิคสิ้นสุดลง คุณต้องการทำงานในฐานะผู้มีทักษะเฉพาะหรือไม่?",
+      q31: "บริษัทช่วยให้คุณบรรลุเป้าหมายการฝึกงานด้านเทคนิคหรือไม่?", q32: "บริษัทหรือองค์กรดูแลรับฟังความคิดเห็นของคุณหรือไม่?",
+      q33: "บริษัทหรือองค์กรดูแลช่วยเหลือในการต่ออายุวีซ่า (สถานะการพำนัก) และขั้นตอนหรือไม่?", q34: "บริษัทหรือองค์กรดูแลช่วยเหลือปัญหาในการใช้ชีวิตในญี่ปุ่นหรือไม่?"
     },
-    
-    satisfaction: {
-      option1: 'พอใจมาก',
-      option2: 'ค่อนข้างพอใจ',
-      option3: 'ไม่แน่ใจ',
-      option4: 'ค่อนข้างไม่พอใจ',
-      option5: 'ไม่พอใจ',
-      option6: 'ไม่พอใจเลย'
+    choices: {
+      satisfaction: ["😄 พอใจมาก", "🙂 พอใจ", "😐 ค่อนข้างพอใจ", "😟 ค่อนข้างไม่พอใจ", "😞 ไม่พอใจ", "😭 ไม่พอใจมาก"],
+      desire: ["😄 คิดมาก", "🙂 คิด", "😐 ค่อนข้างคิด", "😟 ไม่ค่อยคิด", "😞 ไม่คิด", "😭 ไม่คิดเลย"],
+      understanding: ["😄 เข้าใจดี", "🙂 เข้าใจ", "😐 ค่อนข้างเข้าใจ", "😟 ค่อนข้างไม่เข้าใจ", "😞 ไม่เข้าใจ", "😭 ไม่เข้าใจเลย"],
+      familiarity: ["😄 คุ้นเคยมาก", "🙂 คุ้นเคย", "😐 ค่อนข้างคุ้นเคย", "😟 ค่อนข้างไม่คุ้นเคย", "😞 ไม่คุ้นเคย", "😭 ไม่คุ้นเคยเลย"],
+      availability: ["😄 มีมาก", "🙂 มี", "😐 ค่อนข้างมี", "😟 ไม่ค่อยมี", "😞 ไม่มี", "😭 ไม่มีเลย"],
+      negative: ["😄 ไม่มีเลย", "🙂 ไม่มี", "😐 ไม่ค่อยมี", "😟 บางครั้งมี", "😞 มักมี", "😭 มีเสมอ"]
     },
-    
-    desire: {
-      option1: 'เห็นด้วยอย่างยิ่ง',
-      option2: 'ค่อนข้างเห็นด้วย',
-      option3: 'ไม่แน่ใจ',
-      option4: 'ค่อนข้างไม่เห็นด้วย',
-      option5: 'ไม่เห็นด้วย',
-      option6: 'ไม่เห็นด้วยเลย'
+    errors: {
+      employeeCode: "กรุณาใส่รหัสพนักงาน", nationality: "กรุณาเลือกสัญชาติ",
+      allQuestions: "กรุณาตอบคำถามทั้งหมด"
     },
-    
-    understanding: {
-      option1: 'เข้าใจง่ายมาก',
-      option2: 'ค่อนข้างเข้าใจง่าย',
-      option3: 'ไม่แน่ใจ',
-      option4: 'ค่อนข้างยากเข้าใจ',
-      option5: 'ยากเข้าใจ',
-      option6: 'ไม่เข้าใจเลย'
-    },
-    
-    familiarity: {
-      option1: 'คุ้นเคยมาก',
-      option2: 'ค่อนข้างคุ้นเคย',
-      option3: 'ไม่แน่ใจ',
-      option4: 'ค่อนข้างไม่คุ้นเคย',
-      option5: 'ไม่คุ้นเคย',
-      option6: 'ไม่คุ้นเคยเลย'
-    },
-    
-    availability: {
-      option1: 'มีมาก',
-      option2: 'มีค่อนข้างมาก',
-      option3: 'ไม่แน่ใจ',
-      option4: 'มีน้อย',
-      option5: 'แทบไม่มี',
-      option6: 'ไม่มีเลย'
-    },
-    
-    negative: {
-      option1: 'ไม่มีเลย',
-      option2: 'แทบไม่มี',
-      option3: 'ไม่แน่ใจ',
-      option4: 'บางครั้ง',
-      option5: 'บ่อยครั้ง',
-      option6: 'ทุกครั้ง'
-    },
-    
-    errorEmployeeCode: 'กรุณาเลือกรหัสพนักงาน',
-    errorNationality: 'กรุณาเลือกสัญชาติ',
-    errorAllQuestions: 'กรุณาตอบคำถามทั้งหมด',
-    errorDuplicate: 'รหัสพนักงาน {code} ตอบแล้วในเดือนนี้ ({date})',
-    
-    completionTitle: 'ขอบคุณสำหรับความร่วมมือ!',
-    completionMessage: 'คำตอบของคุณถูกบันทึกอย่างปลอดภัย',
-    completionAutoClose: 'หน้านี้จะปิดอัตโนมัติ',
-    completionRemaining: 'เหลืออีก',
-    completionSeconds: 'วินาที',
-    
-    footerInfo: 'เวลา: ประมาณ 5-10 นาที'
+    completion: {
+      title: "ขอบคุณสำหรับความร่วมมือ!", message: "แบบสำรวจเสร็จสมบูรณ์\nจะกลับไปที่หน้าหลักอัตโนมัติหลังจาก 5 วินาที"
+    }
   },
-
-  // ===========================
-  // ネパール語
-  // ===========================
   ne: {
-    title: 'निश्चिन्त भएर जवाफ दिनुहोस् | कार्यस्थल सर्वेक्षण',
-    languageLabel: 'भाषा छान्नुहोस्',
-    anonymousMessage: 'तपाईंको नाम रेकर्ड हुने छैन',
-    anonymousSubMessage: 'कृपया इमानदारीपूर्वक जवाफ दिनुहोस्',
-    employeeCodeLabel: 'कर्मचारी कोड',
-    employeeCodePlaceholder: '1 देखि 20 सम्मको नम्बर छान्नुहोस्',
-    nationalityLabel: 'राष्ट्रियता',
-    nationalityPlaceholder: 'कृपया राष्ट्रियता छान्नुहोस्',
-    startButton: 'सर्वेक्षण सुरु गर्नुहोस्',
-    submitButton: 'नतिजा हेर्नुहोस्',
-    
+    title: "प्राविधिक प्रशिक्षार्थी संलग्नता सर्वेक्षण",
+    anonymous: "※यो सर्वेक्षण गुमनाम छ",
+    employeeCode: "कर्मचारी कोड",
+    nationality: "राष्ट्रियता",
+    startButton: "सर्वेक्षण सुरु गर्नुहोस्",
+    submitButton: "पेश गर्नुहोस्",
     nationalities: {
-      vietnam: 'भियतनाम',
-      cambodia: 'कम्बोडिया',
-      india: 'भारत',
-      philippines: 'फिलिपिन्स',
-      laos: 'लाओस',
-      mongolia: 'मंगोलिया',
-      bangladesh: 'बंगलादेश',
-      srilanka: 'श्रीलंका',
-      myanmar: 'म्यानमार',
-      bhutan: 'भुटान',
-      uzbekistan: 'उज्बेकिस्तान',
-      pakistan: 'पाकिस्तान',
-      thailand: 'थाइल्यान्ड',
-      indonesia: 'इन्डोनेसिया',
-      nepal: 'नेपाल',
-      china: 'चीन'
+      vn: "भियतनाम", kh: "कम्बोडिया", in: "भारत", ph: "फिलिपिन्स", la: "लाओस", mn: "मंगोलिया",
+      bd: "बंगलादेश", lk: "श्रीलंका", mm: "म्यानमार", bt: "भुटान", uz: "उज्बेकिस्तान",
+      pk: "पाकिस्तान", th: "थाइल्याण्ड", id: "इन्डोनेसिया", np: "नेपाल", cn: "चीन"
     },
-    
     categories: {
-      work: '1. काम र कार्यस्थल वातावरण',
-      salary: '2. तलब र सुविधा',
-      family: '3. परिवार र व्यक्तिगत',
-      relationship: '4. मानवीय सम्बन्ध',
-      communication: '5. जापानी भाषा र सञ्चार',
-      culture: '6. संस्कृति र मूल्यमान्यता',
-      living: '7. जीवन वातावरण',
-      career: '8. करियर र भविष्य'
+      work: "काम र कार्यस्थल वातावरण", salary: "तलब र उपचार",
+      family: "परिवार र व्यक्तिगत मामिला", relations: "मानव सम्बन्ध",
+      communication: "जापानी र संचार", culture: "संस्कृति र मूल्य",
+      living: "बस्ने वातावरण", career: "करियर र भविष्य दृष्टिकोण"
     },
-    
     questions: {
-      q1: 'कामको सामग्री तपाईंलाई उपयुक्त छ?',
-      q2: 'के तपाईंलाई कार्यस्थल सुरक्षित लाग्छ?',
-      q3: 'के बिदा र काम गर्ने समय उपयुक्त छ?',
-      q4: 'के कार्यस्थलको वातावरण काम गर्न सजिलो छ?',
-      q5: 'के तपाईं तलबको रकमसँग सन्तुष्ट हुनुहुन्छ?',
-      q6: 'के ओभरटाइम र भत्ता ठीकसँग प्राप्त गर्नुहुन्छ?',
-      q7: 'के बीमा र बिदा जस्ता प्रणाली पर्याप्त छ?',
-      q8: 'के यस कम्पनीमा काम गरेर जीवनको लागि आवश्यक पैसा पाउनुहुन्छ?',
-      q9: 'के परिवारसँग सम्पर्क गर्ने समय पर्याप्त छ?',
-      q10: 'के परिवारलाई पैसा पठाउने क्षमता छ?',
-      q11: 'के आफ्नो समय (बिदा र व्यक्तिगत) पर्याप्त छ?',
-      q12: 'के तपाईं भविष्यमा परिवारलाई जापानमा ल्याउन चाहनुहुन्छ?',
-      q13: 'के अन्य प्रशिक्षार्थीहरूसँगको सम्बन्ध राम्रो छ?',
-      q14: 'के जापानी मालिक र सहकर्मीहरूले तपाईंको कुरा सुन्छन्?',
-      q15: 'के समस्यामा परेको बेला अन्य प्रशिक्षार्थीहरूले मद्दत गर्छन्?',
-      q16: 'के कार्यस्थलमा धम्की वा भेदभाव हुन्छ?',
-      q17: 'के जापानी भाषामा कुरा गर्दा समस्या हुन्छ?',
-      q18: 'के कामको व्याख्या र निर्देशन बुझ्न सजिलो छ?',
-      q19: 'के नबुझेको कुरा सोध्न सजिलो छ?',
-      q20: 'के कम्पनीले तपाईंलाई जापानी भाषा सिक्न मद्दत गर्छ?',
-      q21: 'के मातृभाषामा परामर्श लिन सक्ने व्यक्ति (दोभासे, वरिष्ठ) छ?',
-      q22: 'के तपाईं जापानी संस्कृति र चलनमा अभ्यस्त हुनुभएको छ?',
-      q23: 'के कामको समयमा सांस्कृतिक भिन्नताले समस्या हुन्छ?',
-      q24: 'के बस्ने ठाउँ (छात्रावास, अपार्टमेन्ट) सहज छ?',
-      q25: 'के जीवन खर्च तलबको तुलनामा उपयुक्त छ?',
-      q26: 'के जापानमा जीवन बिताउँदा समस्या हुन्छ?',
-      q27: 'के कम्पनीले जीवनको सहयोग गर्छ?',
-      q28: 'के तपाईं छात्रावास वा घरको जीवन वातावरण (कोठाको आकार, सुविधा) सँग सन्तुष्ट हुनुहुन्छ?',
-      q29: 'के जापानमा जीवन सुरक्षित र सहज छ?',
-      q30: 'के तपाईं हालको कामबाट प्रविधि र ज्ञान सिक्दै हुनुहुन्छ?',
-      q31: 'के तपाईंलाई लाग्छ कि तपाईंको प्रयासले मूल्याङ्कन र उपचारमा सुधार ल्याउँछ?',
-      q32: 'के तपाईं यस कम्पनीमा लामो समयसम्म काम गर्न चाहनुहुन्छ?',
-      q33: 'के कम्पनी वा युनियनले भिसा (बसोबासको अधिकार) नवीकरण र प्रक्रियामा मद्दत गर्छ?',
-      q34: 'के तपाईं यस कम्पनीमा काम गरेर स्वदेश फर्किएपछि उपयोगी हुने प्रविधि सिक्दै हुनुहुन्छ?',
-      q35: 'के तपाईं स्वदेशका साथीहरूलाई "यस कम्पनीमा काम गर्नु राम्रो हो" भन्नुहुन्छ?'
+      q1: "काम को सामग्री तपाइँलाई उपयुक्त छ?", q2: "कार्यस्थलमा उपकरण र मेसिन सुरक्षित छन्?",
+      q3: "के तपाईं काम को समय र बिदा को संख्या संग सन्तुष्ट हुनुहुन्छ?", q4: "के तपाईं सोच्नुहुन्छ कि काम बाट सिकेको कुरा देश फर्केर पनि उपयोगी हुनेछ?",
+      q5: "के तपाईं हालको तलब संग सन्तुष्ट हुनुहुन्छ?", q6: "के तपाईंले ओभरटाइम र भत्ता ठीकसँग प्राप्त गर्नुहुन्छ?",
+      q7: "के तपाईं सोच्नुहुन्छ कि छात्रावास भाडा र पानी-बिजुली शुल्क उचित छ?", q8: "के तपाईंले स्वास्थ्य बीमा र पेन्सन को बारे मा व्याख्या प्राप्त गर्नुभयो र सुरक्षित महसुस गर्नुहुन्छ?",
+      q9: "के तपाईं देश मा परिवार लाई पठाउन सक्ने रकम संग सन्तुष्ट हुनुहुन्छ?", q10: "के तपाईं देश मा परिवार को स्वास्थ्य वा जीवन को बारे मा चिन्तित हुनुहुन्छ?",
+      q11: "के तपाईं देश मा परिवार र साथीहरु संग पर्याप्त सम्पर्क गर्न सक्नुहुन्छ?", q12: "बिदा को दिन मा, के तपाईं आराम वा रमाइलो गर्न सक्नुहुन्छ?",
+      q13: "के माथिल्लो र वरिष्ठले दयालु रूपमा सिकाउँछन्?", q14: "समस्या हुँदा, के तपाईंसँग परामर्श गर्न सक्ने व्यक्ति छ?",
+      q15: "के तपाईं सहकर्मीहरुसँग राम्रोसँग कुराकानी गर्न सक्नुहुन्छ?", q16: "के तपाईंले कार्यस्थलमा भेदभाव वा उत्पीडन प्राप्त गर्नुभएको छ?",
+      q17: "के तपाईं काममा प्रयोग हुने जापानी बुझ्नुहुन्छ?", q18: "के तपाईंसँग जापानी अध्ययन गर्ने अवसर वा समय छ?",
+      q19: "के तपाईं सोच्नुहुन्छ कि कार्यस्थलमा मानिसहरूले जापानी धेरै छिटो बोल्छन्?", q20: "के तपाईंले जापानी नबुझेर समस्या भोग्नुभएको छ?",
+      q21: "के तपाईं कार्यस्थलको नियम र शिष्टाचार बुझ्नुहुन्छ?", q22: "के तपाईं जापानको संस्कृति र चलनमा बानी पर्नुभयो?",
+      q23: "के तपाईं जापानमा जीवनसँग सन्तुष्ट हुनुहुन्छ?", q24: "के छात्रावास वा तपाईं बस्ने ठाउँ बस्न सजिलो छ?",
+      q25: "के नजिकै किनमेल गर्न पसलहरू छन्?", q26: "बिरामी वा चोट लाग्दा, के तपाईं अस्पताल जान सक्नुहुन्छ?",
+      q27: "के यातायात (बस, रेल, साइकल, आदि) सुविधाजनक छ?", q28: "के तपाईं छात्रावासको आकार र सुविधाहरू (बाथरूम, शौचालय, आदि) संग सन्तुष्ट हुनुहुन्छ?",
+      q29: "के तपाईं हालको कम्पनीमा लामो समय काम गर्न चाहनुहुन्छ?", q30: "प्राविधिक इन्टर्नशिप समाप्त भएपछि, के तपाईं निर्दिष्ट कौशल संग काम गर्न चाहनुहुन्छ?",
+      q31: "के कम्पनीले तपाईंलाई प्राविधिक इन्टर्नशिप लक्ष्य प्राप्त गर्न मद्दत गर्दछ?", q32: "के कम्पनी वा सुपरवाइजिङ संगठनले तपाईंको राय सुन्छ?",
+      q33: "के कम्पनी वा सुपरवाइजिङ संगठनले भिसा (निवास स्थिति) नवीकरण र प्रक्रियामा मद्दत गर्दछ?", q34: "के कम्पनी वा सुपरवाइजिङ संगठनले जापानमा जीवनका समस्याहरू समाधान गर्न मद्दत गर्दछ?"
     },
-    
-    satisfaction: {
-      option1: 'धेरै सन्तुष्ट',
-      option2: 'केही सन्तुष्ट',
-      option3: 'अनिश्चित',
-      option4: 'केही असन्तुष्ट',
-      option5: 'असन्तुष्ट',
-      option6: 'पूर्ण असन्तुष्ट'
+    choices: {
+      satisfaction: ["😄 धेरै सन्तुष्ट", "🙂 सन्तुष्ट", "😐 केही सन्तुष्ट", "😟 केही असन्तुष्ट", "😞 असन्तुष्ट", "😭 धेरै असन्तुष्ट"],
+      desire: ["😄 धेरै सोच्छु", "🙂 सोच्छु", "😐 केही सोच्छु", "😟 खासै सोच्दिन", "😞 सोच्दिन", "😭 पूर्णतया सोच्दिन"],
+      understanding: ["😄 राम्रोसँग बुझ्छु", "🙂 बुझ्छु", "😐 केही बुझ्छु", "😟 केही बुझ्दिन", "😞 बुझ्दिन", "😭 पूर्णतया बुझ्दिन"],
+      familiarity: ["😄 धेरै बानी परेको", "🙂 बानी परेको", "😐 केही बानी परेको", "😟 केही बानी नपरेको", "😞 बानी नपरेको", "😭 पूर्णतया बानी नपरेको"],
+      availability: ["😄 धेरै छ", "🙂 छ", "😐 केही छ", "😟 खासै छैन", "😞 छैन", "😭 पूर्णतया छैन"],
+      negative: ["😄 पूर्णतया छैन", "🙂 छैन", "😐 खासै छैन", "😟 कहिलेकाहीं छ", "😞 अक्सर छ", "😭 सधैं छ"]
     },
-    
-    desire: {
-      option1: 'धेरै सहमत',
-      option2: 'केही सहमत',
-      option3: 'अनिश्चित',
-      option4: 'केही असहमत',
-      option5: 'असहमत',
-      option6: 'पूर्ण असहमत'
+    errors: {
+      employeeCode: "कृपया कर्मचारी कोड प्रविष्ट गर्नुहोस्", nationality: "कृपया राष्ट्रियता चयन गर्नुहोस्",
+      allQuestions: "कृपया सबै प्रश्नहरूको जवाफ दिनुहोस्"
     },
-    
-    understanding: {
-      option1: 'धेरै सजिलो',
-      option2: 'केही सजिलो',
-      option3: 'अनिश्चित',
-      option4: 'केही गाह्रो',
-      option5: 'गाह्रो',
-      option6: 'पूर्ण गाह्रो'
-    },
-    
-    familiarity: {
-      option1: 'धेरै अभ्यस्त',
-      option2: 'केही अभ्यस्त',
-      option3: 'अनिश्चित',
-      option4: 'केही अनभ्यस्त',
-      option5: 'अनभ्यस्त',
-      option6: 'पूर्ण अनभ्यस्त'
-    },
-    
-    availability: {
-      option1: 'धेरै छ',
-      option2: 'केही छ',
-      option3: 'अनिश्चित',
-      option4: 'थोरै छ',
-      option5: 'लगभग छैन',
-      option6: 'छैन'
-    },
-    
-    negative: {
-      option1: 'छैन',
-      option2: 'लगभग छैन',
-      option3: 'अनिश्चित',
-      option4: 'कहिलेकाहीं',
-      option5: 'प्रायः',
-      option6: 'सधैं'
-    },
-    
-    errorEmployeeCode: 'कृपया कर्मचारी कोड छान्नुहोस्',
-    errorNationality: 'कृपया राष्ट्रियता छान्नुहोस्',
-    errorAllQuestions: 'कृपया सबै प्रश्नको जवाफ दिनुहोस्',
-    errorDuplicate: 'कर्मचारी कोड {code} ले यस महिना पहिले नै जवाफ दिइसकेको छ ({date})',
-    
-    completionTitle: 'तपाईंको सहयोगको लागि धन्यवाद!',
-    completionMessage: 'तपाईंको जवाफ सुरक्षित रूपमा सुरक्षित गरिएको छ',
-    completionAutoClose: 'यो पृष्ठ स्वतः बन्द हुनेछ',
-    completionRemaining: 'बाँकी',
-    completionSeconds: 'सेकेन्ड',
-    
-    footerInfo: 'समय: लगभग 5-10 मिनेट'
+    completion: {
+      title: "तपाईंको सहयोगको लागि धन्यवाद!", message: "सर्वेक्षण जवाफ पूरा भयो।\n5 सेकेन्ड पछि स्वचालित रूपमा शीर्ष पृष्ठमा फर्कनेछ।"
+    }
   },
-
-  // ===========================
-  // ヒンディー語
-  // ===========================
   hi: {
-    title: 'बेझिझक उत्तर दें | कार्यस्थल सर्वेक्षण',
-    languageLabel: 'भाषा चुनें',
-    anonymousMessage: 'आपका नाम रिकॉर्ड नहीं किया जाएगा',
-    anonymousSubMessage: 'कृपया ईमानदारी से उत्तर दें',
-    employeeCodeLabel: 'कर्मचारी कोड',
-    employeeCodePlaceholder: '1 से 20 तक का नंबर चुनें',
-    nationalityLabel: 'राष्ट्रीयता',
-    nationalityPlaceholder: 'कृपया राष्ट्रीयता चुनें',
-    startButton: 'सर्वेक्षण शुरू करें',
-    submitButton: 'परिणाम देखें',
-    
+    title: "तकनीकी प्रशिक्षु सहभागिता सर्वेक्षण",
+    anonymous: "※यह सर्वेक्षण गुमनाम है",
+    employeeCode: "कर्मचारी कोड",
+    nationality: "राष्ट्रीयता",
+    startButton: "सर्वेक्षण शुरू करें",
+    submitButton: "जमा करें",
     nationalities: {
-      vietnam: 'वियतनाम',
-      cambodia: 'कंबोडिया',
-      india: 'भारत',
-      philippines: 'फिलीपींस',
-      laos: 'लाओस',
-      mongolia: 'मंगोलिया',
-      bangladesh: 'बांग्लादेश',
-      srilanka: 'श्रीलंका',
-      myanmar: 'म्यांमार',
-      bhutan: 'भूटान',
-      uzbekistan: 'उज़्बेकिस्तान',
-      pakistan: 'पाकिस्तान',
-      thailand: 'थाईलैंड',
-      indonesia: 'इंडोनेशिया',
-      nepal: 'नेपाल',
-      china: 'चीन'
+      vn: "वियतनाम", kh: "कंबोडिया", in: "भारत", ph: "फिलीपींस", la: "लाओस", mn: "मंगोलिया",
+      bd: "बांग्लादेश", lk: "श्रीलंका", mm: "म्यांमार", bt: "भूटान", uz: "उज़्बेकिस्तान",
+      pk: "पाकिस्तान", th: "थाईलैंड", id: "इंडोनेशिया", np: "नेपाल", cn: "चीन"
     },
-    
     categories: {
-      work: '1. कार्य और कार्यस्थल वातावरण',
-      salary: '2. वेतन और लाभ',
-      family: '3. परिवार और व्यक्तिगत',
-      relationship: '4. मानवीय संबंध',
-      communication: '5. जापानी भाषा और संचार',
-      culture: '6. संस्कृति और मूल्य',
-      living: '7. रहने का वातावरण',
-      career: '8. कैरियर और भविष्य'
+      work: "काम और कार्यस्थल वातावरण", salary: "वेतन और उपचार",
+      family: "परिवार और निजी मामले", relations: "मानव संबंध",
+      communication: "जापानी और संचार", culture: "संस्कृति और मूल्य",
+      living: "रहने का वातावरण", career: "करियर और भविष्य की संभावनाएं"
     },
-    
     questions: {
-      q1: 'क्या काम की सामग्री आपके लिए उपयुक्त है?',
-      q2: 'क्या आपको कार्यस्थल सुरक्षित लगता है?',
-      q3: 'क्या अवकाश के दिन और काम के घंटे उचित हैं?',
-      q4: 'क्या कार्यस्थल का माहौल काम करने में आसान है?',
-      q5: 'क्या आप वेतन की राशि से संतुष्ट हैं?',
-      q6: 'क्या आपको ओवरटाइम और भत्ता ठीक से मिल रहा है?',
-      q7: 'क्या बीमा और अवकाश जैसी व्यवस्थाएं पर्याप्त हैं?',
-      q8: 'क्या इस कंपनी में काम करके आपको जीवन के लिए आवश्यक पैसे मिल रहे हैं?',
-      q9: 'क्या परिवार से संपर्क करने का समय पर्याप्त है?',
-      q10: 'क्या परिवार को पैसे भेजने की क्षमता है?',
-      q11: 'क्या अपना समय (आराम और निजी) पर्याप्त है?',
-      q12: 'क्या आप भविष्य में परिवार को जापान बुलाना चाहते हैं?',
-      q13: 'क्या अन्य प्रशिक्षुओं के साथ संबंध अच्छे हैं?',
-      q14: 'क्या जापानी मालिक और सहकर्मी आपकी बात सुनते हैं?',
-      q15: 'क्या परेशानी में अन्य प्रशिक्षु आपकी मदद करते हैं?',
-      q16: 'क्या कार्यस्थल पर धमकाना या भेदभाव होता है?',
-      q17: 'क्या जापानी में बातचीत करने में परेशानी होती है?',
-      q18: 'क्या काम की व्याख्या और निर्देश समझने में आसान हैं?',
-      q19: 'क्या न समझने पर सवाल पूछना आसान है?',
-      q20: 'क्या कंपनी जापानी भाषा सीखने में मदद करती है?',
-      q21: 'क्या मातृभाषा में परामर्श लेने वाला व्यक्ति (दुभाषिया, वरिष्ठ) है?',
-      q22: 'क्या आप जापानी संस्कृति और रीति-रिवाजों के अभ्यस्त हैं?',
-      q23: 'क्या काम के दौरान सांस्कृतिक अंतर से परेशानी होती है?',
-      q24: 'क्या रहने की जगह (छात्रावास, अपार्टमेंट) आरामदायक है?',
-      q25: 'क्या जीवन-यापन की लागत वेतन की तुलना में उचित है?',
-      q26: 'क्या जापान में जीवन में परेशानी होती है?',
-      q27: 'क्या कंपनी जीवन में सहायता करती है?',
-      q28: 'क्या आप छात्रावास या घर के रहने के वातावरण (कमरे का आकार, सुविधाएं) से संतुष्ट हैं?',
-      q29: 'क्या जापान में जीवन सुरक्षित और आरामदायक है?',
-      q30: 'क्या आप वर्तमान काम से तकनीक और ज्ञान सीख रहे हैं?',
-      q31: 'क्या आपको लगता है कि आपके प्रयास से मूल्यांकन और व्यवहार बेहतर होता है?',
-      q32: 'क्या आप इस कंपनी में लंबे समय तक काम करना चाहते हैं?',
-      q33: 'क्या कंपनी या संघ वीजा (निवास की स्थिति) के नवीनीकरण और प्रक्रिया में मदद करता है?',
-      q34: 'क्या आप इस कंपनी में काम करके मातृभूमि लौटने पर उपयोगी तकनीक सीख रहे हैं?',
-      q35: 'क्या आप मातृभूमि के दोस्तों को "इस कंपनी में काम करना बेहतर है" कहेंगे?'
+      q1: "क्या काम की सामग्री आपके लिए उपयुक्त है?", q2: "क्या कार्यस्थल में उपकरण और मशीनें सुरक्षित हैं?",
+      q3: "क्या आप काम के समय और छुट्टियों की संख्या से संतुष्ट हैं?", q4: "क्या आपको लगता है कि काम से सीखी गई चीजें देश लौटने पर उपयोगी होंगी?",
+      q5: "क्या आप वर्तमान वेतन से संतुष्ट हैं?", q6: "क्या आपको ओवरटाइम और भत्ता ठीक से मिल रहा है?",
+      q7: "क्या आपको लगता है कि छात्रावास का किराया और पानी-बिजली का खर्च उचित है?", q8: "क्या आपको स्वास्थ्य बीमा और पेंशन के बारे में स्पष्टीकरण मिला है और आप आश्वस्त हैं?",
+      q9: "क्या आप देश में परिवार को भेजी जा सकने वाली राशि से संतुष्ट हैं?", q10: "क्या आप देश में परिवार के स्वास्थ्य या जीवन के बारे में चिंतित हैं?",
+      q11: "क्या आप देश में परिवार और दोस्तों से पर्याप्त संपर्क कर पा रहे हैं?", q12: "छुट्टी के दिन, क्या आप आराम कर सकते हैं या आनंद ले सकते हैं?",
+      q13: "क्या वरिष्ठ और सीनियर दयालुता से सिखाते हैं?", q14: "समस्या होने पर, क्या आपके पास परामर्श करने के लिए कोई है?",
+      q15: "क्या आप सहकर्मियों के साथ अच्छी तरह से संवाद कर पा रहे हैं?", q16: "क्या आपने कार्यस्थल पर भेदभाव या उत्पीड़न का अनुभव किया है?",
+      q17: "क्या आप काम में उपयोग की जाने वाली जापानी भाषा समझते हैं?", q18: "क्या आपके पास जापानी भाषा सीखने का अवसर या समय है?",
+      q19: "क्या आपको लगता है कि कार्यस्थल के लोग जापानी बहुत तेज बोलते हैं?", q20: "क्या आपको जापानी नहीं समझने के कारण कोई परेशानी हुई है?",
+      q21: "क्या आप कार्यस्थल के नियमों और शिष्टाचार को समझते हैं?", q22: "क्या आप जापान की संस्कृति और रीति-रिवाजों के आदी हो गए हैं?",
+      q23: "क्या आप जापान में जीवन से संतुष्ट हैं?", q24: "क्या छात्रावास या आपके रहने की जगह रहने योग्य है?",
+      q25: "क्या आस-पास खरीदारी करने के लिए दुकानें हैं?", q26: "बीमार होने या चोट लगने पर, क्या आप अस्पताल जा सकते हैं?",
+      q27: "क्या परिवहन साधन (बस, ट्रेन, साइकिल आदि) सुविधाजनक हैं?", q28: "क्या आप छात्रावास के आकार और सुविधाओं (बाथरूम, शौचालय आदि) से संतुष्ट हैं?",
+      q29: "क्या आप वर्तमान कंपनी में अधिक समय तक काम करना चाहते हैं?", q30: "तकनीकी इंटर्नशिप समाप्त होने के बाद, क्या आप विशिष्ट कौशल के साथ काम करना चाहते हैं?",
+      q31: "क्या कंपनी आपको तकनीकी इंटर्नशिप लक्ष्य प्राप्त करने में मदद करती है?", q32: "क्या कंपनी या पर्यवेक्षण संगठन आपकी राय सुनता है?",
+      q33: "क्या कंपनी या पर्यवेक्षण संगठन वीजा (निवास स्थिति) नवीनीकरण और प्रक्रिया में मदद करता है?", q34: "क्या कंपनी या पर्यवेक्षण संगठन जापान में जीवन की कठिनाइयों को हल करने में मदद करता है?"
     },
-    
-    satisfaction: {
-      option1: 'बहुत संतुष्ट',
-      option2: 'कुछ हद तक संतुष्ट',
-      option3: 'अनिश्चित',
-      option4: 'कुछ हद तक असंतुष्ट',
-      option5: 'असंतुष्ट',
-      option6: 'पूर्ण असंतुष्ट'
+    choices: {
+      satisfaction: ["😄 बहुत संतुष्ट", "🙂 संतुष्ट", "😐 थोड़ा संतुष्ट", "😟 थोड़ा असंतुष्ट", "😞 असंतुष्ट", "😭 बहुत असंतुष्ट"],
+      desire: ["😄 दृढ़ता से सोचता हूं", "🙂 सोचता हूं", "😐 थोड़ा सोचता हूं", "😟 बहुत नहीं सोचता", "😞 नहीं सोचता", "😭 बिल्कुल नहीं सोचता"],
+      understanding: ["😄 अच्छी तरह समझता हूं", "🙂 समझता हूं", "😐 थोड़ा समझता हूं", "😟 थोड़ा नहीं समझता", "😞 नहीं समझता", "😭 बिल्कुल नहीं समझता"],
+      familiarity: ["😄 बहुत आदी", "🙂 आदी", "😐 थोड़ा आदी", "😟 थोड़ा गैर-आदी", "😞 गैर-आदी", "😭 बिल्कुल गैर-आदी"],
+      availability: ["😄 बहुत है", "🙂 है", "😐 थोड़ा है", "😟 बहुत नहीं है", "😞 नहीं है", "😭 बिल्कुल नहीं है"],
+      negative: ["😄 बिल्कुल नहीं है", "🙂 नहीं है", "😐 बहुत नहीं है", "😟 कभी-कभी है", "😞 अक्सर है", "😭 हमेशा है"]
     },
-    
-    desire: {
-      option1: 'पूरी तरह सहमत',
-      option2: 'कुछ हद तक सहमत',
-      option3: 'अनिश्चित',
-      option4: 'कुछ हद तक असहमत',
-      option5: 'असहमत',
-      option6: 'पूर्ण असहमत'
+    errors: {
+      employeeCode: "कृपया कर्मचारी कोड दर्ज करें", nationality: "कृपया राष्ट्रीयता चुनें",
+      allQuestions: "कृपया सभी प्रश्नों का उत्तर दें"
     },
-    
-    understanding: {
-      option1: 'बहुत आसान',
-      option2: 'कुछ हद तक आसान',
-      option3: 'अनिश्चित',
-      option4: 'कुछ हद तक कठिन',
-      option5: 'कठिन',
-      option6: 'पूर्ण कठिन'
-    },
-    
-    familiarity: {
-      option1: 'बहुत अभ्यस्त',
-      option2: 'कुछ हद तक अभ्यस्त',
-      option3: 'अनिश्चित',
-      option4: 'कुछ हद तक अनभ्यस्त',
-      option5: 'अनभ्यस्त',
-      option6: 'पूर्ण अनभ्यस्त'
-    },
-    
-    availability: {
-      option1: 'बहुत है',
-      option2: 'कुछ है',
-      option3: 'अनिश्चित',
-      option4: 'कम है',
-      option5: 'लगभग नहीं है',
-      option6: 'नहीं है'
-    },
-    
-    negative: {
-      option1: 'नहीं है',
-      option2: 'लगभग नहीं है',
-      option3: 'अनिश्चित',
-      option4: 'कभी-कभी',
-      option5: 'अक्सर',
-      option6: 'हमेशा'
-    },
-    
-    errorEmployeeCode: 'कृपया कर्मचारी कोड चुनें',
-    errorNationality: 'कृपया राष्ट्रीयता चुनें',
-    errorAllQuestions: 'कृपया सभी प्रश्नों का उत्तर दें',
-    errorDuplicate: 'कर्मचारी कोड {code} ने इस महीने पहले ही उत्तर दिया है ({date})',
-    
-    completionTitle: 'आपके सहयोग के लिए धन्यवाद!',
-    completionMessage: 'आपका उत्तर सुरक्षित रूप से सहेजा गया है',
-    completionAutoClose: 'यह पृष्ठ स्वचालित रूप से बंद हो जाएगा',
-    completionRemaining: 'शेष',
-    completionSeconds: 'सेकंड',
-    
-    footerInfo: 'समय: लगभग 5-10 मिनट'
-  }
-  // ===========================
-  // ミャンマー語
-  // ===========================
+    completion: {
+      title: "आपके सहयोग के लिए धन्यवाद!", message: "सर्वेक्षण उत्तर पूर्ण हो गया है।\n5 सेकंड बाद स्वचालित रूप से मुख्य पृष्ठ पर लौट जाएगा।"
+    }
+  },
   my: {
-    title: 'စိတ်ချစွာဖြေဆိုနိုင်ပါသည် | လုပ်ငန်းခွင်စစ်တမ်း',
-    languageLabel: 'ဘာသာစကားရွေးချယ်ပါ',
-    anonymousMessage: 'သင့်အမည်ကို မှတ်တမ်းတင်မည်မ​ဟုတ်ပါ',
-    anonymousSubMessage: 'စိတ်ချစွာ ရိုးသားစွာ ဖြေဆိုပါ',
-    employeeCodeLabel: 'ဝန်ထမ်းကုဒ်',
-    employeeCodePlaceholder: '1 မှ 20 အထိ နံပါတ်ရွေးပါ',
-    nationalityLabel: 'နိုင်ငံသား',
-    nationalityPlaceholder: 'နိုင်ငံသားရွေးချယ်ပါ',
-    startButton: 'စစ်တမ်းစတင်ပါ',
-    submitButton: 'ရလဒ်ကြည့်ပါ',
-    
+    title: "နည်းပညာပြင်ဆင်သင်တန်းသား ပူးပေါင်းဆောင်ရွက်မှု စစ်တမ်း",
+    anonymous: "※ဤစစ်တမ်းသည် အမည်ဝှက်ဖြစ်သည်",
+    employeeCode: "ဝန်ထမ်းကုဒ်",
+    nationality: "နိုင်ငံသား",
+    startButton: "စစ်တမ်းစတင်ရန်",
+    submitButton: "တင်သွင်းမည်",
     nationalities: {
-      vietnam: 'ဗီယက်နမ်',
-      cambodia: 'ကမ္ဘောဒီးယား',
-      india: 'အိန္ဒိယ',
-      philippines: 'ဖိလစ်ပိုင်',
-      laos: 'လာအို',
-      mongolia: 'မွန်ဂိုလီးယား',
-      bangladesh: 'ဘင်္ဂလားဒေ့ရှ်',
-      srilanka: 'သီရိလင်္ကာ',
-      myanmar: 'မြန်မာ',
-      bhutan: 'ဘူတန်',
-      uzbekistan: 'ဥဇဘက်ကစ္စတန်',
-      pakistan: 'ပါကစ္စတန်',
-      thailand: 'ထိုင်း',
-      indonesia: 'အင်ဒိုနီးရှား',
-      nepal: 'နီပေါ',
-      china: 'တရုတ်'
+      vn: "ဗီယက်နမ်", kh: "ကမ္ဘောဒီးယား", in: "အိန္ဒိယ", ph: "ဖိလစ်ပိုင်", la: "လာအို", mn: "မွန်ဂိုလီးယား",
+      bd: "ဘင်္ဂလားဒေ့ရှ်", lk: "သီရိလင်္ကာ", mm: "မြန်မာ", bt: "ဘူတန်", uz: "ဥဇဘက်ကစ္စတန်",
+      pk: "ပါကစ္စတန်", th: "ထိုင်း", id: "အင်ဒိုနီးရှား", np: "နီပေါ", cn: "တရုတ်"
     },
-    
     categories: {
-      work: '1. အလုပ်နှင့် လုပ်ငန်းခွင်ပတ်ဝန်းကျင်',
-      salary: '2. လစာနှင့် ခံစားခွင့်များ',
-      family: '3. မိသားစုနှင့် ကိုယ်ရေးကိုယ်တာ',
-      relationship: '4. လူမှုဆက်ဆံရေး',
-      communication: '5. ဂျပန်ဘာသာစကားနှင့် ဆက်သွယ်ရေး',
-      culture: '6. ယဉ်ကျေးမှုနှင့် တန်ဖိုးများ',
-      living: '7. နေထိုင်မှုပတ်ဝန်းကျင်',
-      career: '8. အသက်မွေးဝမ်းကျောင်းနှင့် အနာဂတ်'
+      work: "အလုပ်နှင့် အလုပ်ခွင်ပတ်ဝန်းကျင်", salary: "လစာနှင့် ကုသမှု",
+      family: "မိသားစုနှင့် ပုဂ္ဂိုလ်ရေး ကိစ္စရပ်များ", relations: "လူသားဆက်ဆံရေး",
+      communication: "ဂျပန်နှင့် ဆက်သွယ်မှု", culture: "ယဉ်ကျေးမှုနှင့် တန်ဖိုး",
+      living: "နေထိုင်မှုပတ်ဝန်းကျင်", career: "အသက်မွေးဝမ်းကျောင်းနှင့် အနာဂတ်အလားအလာ"
     },
-    
     questions: {
-      q1: 'အလုပ်အကြောင်းအရာက သင့်အတွက် သင့်တော်ပါသလား?',
-      q2: 'လုပ်ငန်းခွင်က ဘေးကင်းပါသလား?',
-      q3: 'ရုံးပိတ်ရက်များနှင့် အလုပ်အချိန်များ သင့်တော်ပါသလား?',
-      q4: 'လုပ်ငန်းခွင်ပတ်ဝန်းကျင်က အလုပ်လုပ်ရန် လွယ်ကူပါသလား?',
-      q5: 'လစာပမာဏနှင့် ကျေနပ်ပါသလား?',
-      q6: 'အချိန်ပို လစာနှင့် စရိတ်ထောက်ပံ့ကြေးများ ပြည့်စုံစွာ ရရှိပါသလား?',
-      q7: 'အာမခံနှင့် ခွင့်ရက်များ စနစ်များ လုံလောက်ပါသလား?',
-      q8: 'ဤကုမ္ပဏီတွင် အလုပ်လုပ်ခြင်းဖြင့် နေထိုင်ရန် လိုအပ်သော ငွေရရှိပါသလား?',
-      q9: 'မိသားစုနှင့် ဆက်သွယ်ရန် အချိန် လုံလောက်ပါသလား?',
-      q10: 'မိသားစုသို့ ငွေပို့ရန် စွမ်းရည်ရှိပါသလား?',
-      q11: 'သင့်အချိန် (အားလပ်ရက်နှင့် ကိုယ်ရေးကိုယ်တာ) လုံလောက်ပါသလား?',
-      q12: 'အနာဂတ်တွင် မိသားစုကို ဂျပန်သို့ ခေါ်ဆောင်လိုပါသလား?',
-      q13: 'အခြား အလုပ်သင်များနှင့် ဆက်ဆံရေး ကောင်းပါသလား?',
-      q14: 'ဂျပန် အကြီးအကဲများနှင့် လုပ်ဖော်ကိုင်ဖက်များက သင့်စကားကို နားထောင်ပါသလား?',
-      q15: 'အခက်အခဲ ကြုံရသောအခါ အခြား အလုပ်သင်များက ကူညီပါသလား?',
-      q16: 'လုပ်ငန်းခွင်တွင် အနိုင်ကျင့်ခြင်း သို့မဟုత် ခွဲခြားဆက်ဆံခြင်း ခံရပါသလား?',
-      q17: 'ဂျပန်ဘာသာဖြင့် စကားပြောရာတွင် အခက်အခဲ ရှိပါသလား?',
-      q18: 'အလုပ်၏ ရှင်းပြချက်နှင့် လမ်းညွှန်ချက်များ နားလည်ရလွယ်ပါသလား?',
-      q19: 'နားမလည်သောအရာကို မေးခွန်းထုတ်ရန် လွယ်ကူပါသလား?',
-      q20: 'ကုမ္ပဏီက ဂျပန်ဘာသာ လေ့လာရာတွင် ကူညီပါသလား?',
-      q21: 'မိခင်ဘာသာဖြင့် တိုင်ပင်နိုင်သူ (စကားပြန်၊ အကြီးတန်း) ရှိပါသလား?',
-      q22: 'ဂျပန်ယဉ်ကျေးမှုနှင့် ဓလေ့ထုံးတမ်းများကို ကျင့်သုံးပါသလား?',
-      q23: 'အလုပ်တွင် ယဉ်ကျေးမှု ကွာခြားချက်ကြောင့် အခက်အခဲ ရှိပါသလား?',
-      q24: 'နေထိုင်ရာနေရာ (အဆောင်၊ တိုက်ခန်း) သက်သောင့်သက်သာ ရှိပါသလား?',
-      q25: 'နေထိုင်မှုကုန်ကျစရိတ်သည် လစာနှင့် သင့်တော်ပါသလား?',
-      q26: 'ဂျပန်တွင် နေထိုင်ရာတွင် အခက်အခဲ ရှိပါသလား?',
-      q27: 'ကုမ္ပဏီက နေထိုင်မှုကို ပံ့ပိုးပါသလား?',
-      q28: 'အဆောင် သို့မဟုత် အိမ်တွင် နေထိုင်မှုပတ်ဝန်းကျင် (အခန်းအရွယ်အစား၊ အထောက်အကူပစ္စည်းများ) နှင့် ကျေနပ်ပါသလား?',
-      q29: 'ဂျပန်တွင် နေထိုင်မှုသည် ဘေးကင်းပြီး သက်သောင့်သက်သာ ရှိပါသလား?',
-      q30: 'လက်ရှိအလုပ်မှ နည်းပညာနှင့် အသိပညာ သင်ယူနေပါသလား?',
-      q31: 'သင့်ကြိုးစားမှုက အကဲဖြတ်မှုနှင့် ဆက်ဆံမှုကို ပိုကောင်းစေသည်ဎ ခံစားရပါသလား?',
-      q32: 'ဤကုမ္ပဏီတွင် ကြာရှည်စွာ အလုပ်လုပ်လိုပါသလား?',
-      q33: 'ကုမ္ပဏီ သို့မဟုတ် သမဂ္ဂက ဗီဇာ (နေထိုင်ခွင့်) သက်တမ်းတိုးနှင့် လုပ်ထုံးလုပ်နည်းများတွင် ကူညီပါသလား?',
-      q34: 'ဤကုမ္ပဏီတွင် အလုပ်လုပ်ခြင်းဖြင့် မိခင်နိုင်ငံသို့ ပြန်ရောက်သောအခါ အသုံးဝင်သော နည်းပညာ သင်ယူနေပါသလား?',
-      q35: 'မိခင်နိုင်ငံမှ သူငယ်ချင်းများကို "ဤကုမ္ပဏီတွင် အလုပ်လုပ်ရန် ပိုကောင်းသည်" ဟု ပြောနိုင်ပါသလား?'
+      q1: "အလုပ်အကြောင်းအရာသည် သင့်အတွက် သင့်လျော်ပါသလား။", q2: "လုပ်ငန်းခွင်ရှိ စက်ပစ္စည်းများနှင့် စက်များသည် ဘေးကင်းပါသလား။",
+      q3: "အလုပ်အချိန်နှင့် အားလပ်ရက်အရေအတွက်ကို သင် ကျေနပ်ပါသလား။", q4: "အလုပ်မှ သင်ယူခဲ့သည်များသည် နိုင်ငံပြန်သောအခါ အသုံးဝင်မည်ဟု သင်ထင်ပါသလား။",
+      q5: "လက်ရှိလစာကို သင် ကျေနပ်ပါသလား။", q6: "အချိန်ပို လုပ်ခနှင့် စရိတ်များကို သင် မှန်ကန်စွာ ရရှိပါသလား။",
+      q7: "အဆောင်ငှားခနှင့် ရေ-လျှပ်စစ် ကုန်ကျစရိတ်များသည် သင့်လျော်သည်ဟု သင်ထင်ပါသလား။", q8: "ကျန်းမာရေးအာမခံနှင့် ပင်စင်အကြောင်း ရှင်းလင်းချက်ရရှိပြီး စိတ်ချမှုရှိပါသလား။",
+      q9: "နိုင်ငံတွင် မိသားစုသို့ ပို့နိုင်သော ပမာဏကို သင် ကျေနပ်ပါသလား။", q10: "နိုင်ငံတွင် မိသားစု၏ ကျန်းမာရေး သို့မဟုတ် ဘဝအကြောင်း သင် စိုးရိမ်ပါသလား။",
+      q11: "နိုင်ငံတွင် မိသားစုနှင့် မိတ်ဆွေများနှင့် လုံလောက်စွာ ဆက်သွယ်နိုင်ပါသလား။", q12: "အားလပ်ရက်တွင် သင် အနားယူခြင်း သို့မဟုတ် ပျော်ရွှင်ခြင်း ပြုနိုင်ပါသလား။",
+      q13: "သူဌေးနှင့် အကြီးအကဲများက ကြင်နာစွာ သင်ပေးပါသလား။", q14: "ပြဿနာရှိသောအခါ တိုင်ပင်နိုင်သော လူရှိပါသလား။",
+      q15: "သင်သည် လုပ်ဖော်ကိုင်ဖက်များနှင့် ကောင်းမွန်စွာ ဆက်သွယ်နိုင်ပါသလား။", q16: "လုပ်ငန်းခွင်တွင် ခွဲခြားဆက်ဆံမှု သို့မဟုတ် နှောင့်ယှက်မှု ခံရဖူးပါသလား။",
+      q17: "အလုပ်တွင် အသုံးပြုသော ဂျပန်ကို သင်နားလည်ပါသလား။", q18: "ဂျပန် လေ့လာရန် အခွင့်အရေး သို့မဟုတ် အချိန်ရှိပါသလား။",
+      q19: "လုပ်ငန်းခွင်ရှိ လူများက ဂျပန်ကို အလွန်မြန်ဆန်စွာ ပြောဆိုသည်ဟု သင်ခံစားပါသလား။", q20: "ဂျပန်မနားလည်သောကြောင့် ပြဿနာတွေ့ဖူးပါသလား။",
+      q21: "လုပ်ငန်းခွင်၏ စည်းမျဉ်းများနှင့် အပြုအမူများကို သင်နားလည်ပါသလား။", q22: "ဂျပန်၏ ယဉ်ကျေးမှုနှင့် ဓလေ့ထုံးတမ်းများကို သင် ကျင့်သုံးပြီးပါသလား။",
+      q23: "ဂျပန်တွင် ဘဝနေထိုင်မှုကို သင် ကျေနပ်ပါသလား။", q24: "အဆောင် သို့မဟုတ် သင်နေထိုင်ရာနေရာသည် နေထိုင်ရန် လွယ်ကူပါသလား။",
+      q25: "အနီးတစ်ဝိုက်တွင် ဈေးဝယ်ရန် ဆိုင်များရှိပါသလား။", q26: "ဖျားနာခြင်း သို့မဟုတ် ထိခိုက်ဒဏ်ရာရခြင်းရှိသောအခါ ဆေးရုံသို့ သွားနိုင်ပါသလား။",
+      q27: "သယ်ယူပို့ဆောင်ရေး (ဘတ်စ်ကား၊ ရထား၊ စက်ဘီးစသည်) သည် အဆင်ပြေပါသလား။", q28: "အဆောင်၏ ကျယ်ဝန်းမှုနှင့် အဆောက်အအုံများ (ရေချိုးခန်း၊ အိမ်သာစသည်) ကို သင် ကျေနပ်ပါသလား။",
+      q29: "သင်သည် လက်ရှိကုမ္ပဏီတွင် ပိုမိုကြာရှည်စွာ အလုပ်လုပ်လိုပါသလား။", q30: "နည်းပညာအလုပ်သင်များ ပြီးဆုံးပြီးနောက်, သင်သည် သတ်မှတ်ကျွမ်းကျင်မှုဖြင့် အလုပ်လုပ်လိုပါသလား။",
+      q31: "ကုမ္ပဏီသည် နည်းပညာအလုပ်သင် ရည်မှန်းချက်များရရှိရန် သင့်ကို ကူညီပါသလား။", q32: "ကုမ္ပဏီ သို့မဟုတ် ကြီးကြပ်ရေးအဖွဲ့သည် သင်၏အမြင်ကို နားထောင်ပါသလား။",
+      q33: "ကုမ္ပဏီ သို့မဟုတ် ကြီးကြပ်ရေးအဖွဲ့သည် ဗီဇာ (နေထိုင်ခွင့်အခြေအနေ) သက်တမ်းတိုးခြင်းနှင့် လုပ်ထုံးလုပ်နည်းများတွင် ကူညီပါသလား။", q34: "ကုမ္ပဏီ သို့မဟုတ် ကြီးကြပ်ရေးအဖွဲ့သည် ဂျပန်တွင် နေထိုင်မှု အခက်အခဲများကို ဖြေရှင်းရန် ကူညီပါသလား။"
     },
-    
-    satisfaction: {
-      option1: 'အလွန် ကျေနပ်သည်',
-      option2: 'အနည်းငယ် ကျေနပ်သည်',
-      option3: 'မသေချာ',
-      option4: 'အနည်းငယ် မကျေနပ်',
-      option5: 'မကျေနပ်',
-      option6: 'လုံးဝ မကျေနပ်'
+    choices: {
+      satisfaction: ["😄 အလွန်ကျေနပ်", "🙂 ကျေနပ်", "😐 အနည်းငယ်ကျေနပ်", "😟 အနည်းငယ်မကျေနပ်", "😞 မကျေနပ်", "😭 အလွန်မကျေနပ်"],
+      desire: ["😄 အလွန်ထင်", "🙂 ထင်", "😐 အနည်းငယ်ထင်", "😟 များစွာမထင်", "😞 မထင်", "😭 လုံးဝမထင်"],
+      understanding: ["😄 ကောင်းစွာနားလည်", "🙂 နားလည်", "😐 အနည်းငယ်နားလည်", "😟 အနည်းငယ်မနားလည်", "😞 မနားလည်", "😭 လုံးဝမနားလည်"],
+      familiarity: ["😄 အလွန်ကျင့်သုံး", "🙂 ကျင့်သုံး", "😐 အနည်းငယ်ကျင့်သုံး", "😟 အနည်းငယ်မကျင့်သုံး", "😞 မကျင့်သုံး", "😭 လုံးဝမကျင့်သုံး"],
+      availability: ["😄 အလွန်ရှိ", "🙂 ရှိ", "😐 အနည်းငယ်ရှိ", "😟 များစွာမရှိ", "😞 မရှိ", "😭 လုံးဝမရှိ"],
+      negative: ["😄 လုံးဝမရှိ", "🙂 မရှိ", "😐 များစွာမရှိ", "😟 တစ်ခါတစ်ရံရှိ", "😞 မကြာခဏရှိ", "😭 အမြဲရှိ"]
     },
-    
-    desire: {
-      option1: 'အလွန်သဘောတူ',
-      option2: 'အနည်းငယ်သဘောတူ',
-      option3: 'မသေချာ',
-      option4: 'အနည်းငယ် မသဘောတူ',
-      option5: 'မသဘောတူ',
-      option6: 'လုံးဝမသဘောတူ'
+    errors: {
+      employeeCode: "ကျေးဇူးပြု၍ ဝန်ထမ်းကုဒ်ကို ထည့်သွင်းပါ", nationality: "ကျေးဇူးပြု၍ နိုင်ငံသားကို ရွေးချယ်ပါ",
+      allQuestions: "ကျေးဇူးပြု၍ မေးခွန်းအားလုံးကို ဖြေကြားပါ"
     },
-    
-    understanding: {
-      option1: 'အလွန်လွယ်ကူ',
-      option2: 'အနည်းငယ်လွယ်ကူ',
-      option3: 'မသေချာ',
-      option4: 'အနည်းငယ်ခက်ခဲ',
-      option5: 'ခက်ခဲ',
-      option6: 'လုံးဝခက်ခဲ'
-    },
-    
-    familiarity: {
-      option1: 'အလွန်ကျင့်သုံး',
-      option2: 'အနည်းငယ်ကျင့်သုံး',
-      option3: 'မသေချာ',
-      option4: 'အနည်းငယ်မကျင့်သုံး',
-      option5: 'မကျင့်သုံး',
-      option6: 'လုံးဝမကျင့်သုံး'
-    },
-    
-    availability: {
-      option1: 'အလွန်များ',
-      option2: 'အနည်းငယ်များ',
-      option3: 'မသေချာ',
-      option4: 'အနည်းငယ်နည်း',
-      option5: 'နည်း',
-      option6: 'လုံးဝမရှိ'
-    },
-    
-    negative: {
-      option1: 'လုံးဝမရှိ',
-      option2: 'နည်း',
-      option3: 'မသေချာ',
-      option4: 'တစ်ခါတစ်ရံ',
-      option5: 'မကြာခဏ',
-      option6: 'အမြဲတမ်း'
-    },
-    
-    errorEmployeeCode: 'ဝန်ထမ်းကုဒ် ရွေးချယ်ပါ',
-    errorNationality: 'နိုင်ငံသား ရွေးချယ်ပါ',
-    errorAllQuestions: 'မေးခွန်းအားလုံး ဖြေဆိုပါ',
-    errorDuplicate: 'ဝန်ထမ်းကုဒ် {code} သည် ယခုလတွင် ဖြေဆိုပြီးဖြစ်သည် ({date})',
-    
-    completionTitle: 'ပူးပေါင်းဆောင်ရွက်မှုအတွက် ကျေးဇူးတင်ပါသည်!',
-    completionMessage: 'သင့်အဖြေကို လုံခြုံစွာ သိမ်းဆည်းပြီးပါပြီ',
-    completionAutoClose: 'ဤစာမျက်နှာသည် အလိုအလျောက် ပိတ်သွားမည်',
-    completionRemaining: 'ကျန်ရှိ',
-    completionSeconds: 'စက္ကန့်',
-    
-    footerInfo: 'အချိန်: ခန့်မှန်းခြေ 5-10 မိနစ်'
+    completion: {
+      title: "သင့်ပူးပေါင်းဆောင်ရွက်မှုအတွက် ကျေးဇူးတင်ပါသည်!", message: "စစ်တမ်းဖြေကြားမှု ပြီးစီးပါပြီ။\n5 စက္ကန့်အကြာတွင် အလိုအလျောက် ပင်မစာမျက်နှာသို့ ပြန်သွားပါမည်။"
+    }
   },
-
-  // ===========================
-  // クメール語 (カンボジア)
-  // ===========================
   km: {
-    title: 'សូមឆ្លើយតបដោយទំនុកចិត្ត | ការស្ទង់មតិនៅកន្លែងធ្វើការ',
-    languageLabel: 'ជ្រើសរើសភាសា',
-    anonymousMessage: 'ឈ្មោះរបស់អ្នកនឹងមិនត្រូវបានកត់ត្រាទេ',
-    anonymousSubMessage: 'សូមឆ្លើយតបដោយស្មោះត្រង់',
-    employeeCodeLabel: 'លេខកូដបុគ្គលិក',
-    employeeCodePlaceholder: 'ជ្រើសរើសលេខពី 1 ដល់ 20',
-    nationalityLabel: 'សញ្ជាតិ',
-    nationalityPlaceholder: 'សូមជ្រើសរើសសញ្ជាតិ',
-    startButton: 'ចាប់ផ្តើមការស្ទង់មតិ',
-    submitButton: 'មើលលទ្ធផល',
-    
+    title: "ការស្ទង់មតិការចូលរួមរបស់អ្នកកម្មសិក្សាបច្ចេកទេស",
+    anonymous: "※ការស្ទង់មតិនេះគឺអនាមិក",
+    employeeCode: "លេខកូដបុគ្គលិក",
+    nationality: "សញ្ជាតិ",
+    startButton: "ចាប់ផ្តើមការស្ទង់មតិ",
+    submitButton: "ដាក់ស្នើ",
     nationalities: {
-      vietnam: 'វៀតណាម',
-      cambodia: 'កម្ពុជា',
-      india: 'ឥណ្ឌា',
-      philippines: 'ហ្វីលីពីន',
-      laos: 'ឡាវ',
-      mongolia: 'ម៉ុងហ្គោលី',
-      bangladesh: 'បង់ក្លាដែស',
-      srilanka: 'ស្រីលង្កា',
-      myanmar: 'មីយ៉ាន់ម៉ា',
-      bhutan: 'ប៊ូតាន',
-      uzbekistan: 'អ៊ូសបេគីស្ថាន',
-      pakistan: 'ប៉ាគីស្ថាន',
-      thailand: 'ថៃ',
-      indonesia: 'ឥណ្ឌូនេស៊ី',
-      nepal: 'នេប៉ាល់',
-      china: 'ចិន'
+      vn: "វៀតណាម", kh: "កម្ពុជា", in: "ឥណ្ឌា", ph: "ហ្វីលីពីន", la: "ឡាវ", mn: "ម៉ុងហ្គោលី",
+      bd: "បង់ក្លាដែស", lk: "ស្រីលង្កា", mm: "មីយ៉ាន់ម៉ា", bt: "ប៊ូតាន", uz: "អ៊ូសបេគីស្ថាន",
+      pk: "ប៉ាគីស្ថាន", th: "ថៃ", id: "ឥណ្ឌូនេស៊ី", np: "នេប៉ាល់", cn: "ចិន"
     },
-    
     categories: {
-      work: '1. ការងារ និង បរិយាកាសធ្វើការ',
-      salary: '2. ប្រាក់ឈ្នួល និង អត្ថប្រយោជន៍',
-      family: '3. គ្រួសារ និង ផ្ទាល់ខ្លួន',
-      relationship: '4. ទំនាក់ទំនងមនុស្ស',
-      communication: '5. ភាសាជប៉ុន និង ការទំនាក់ទំនង',
-      culture: '6. វប្បធម៌ និង តម្លៃ',
-      living: '7. បរិយាកាសរស់នៅ',
-      career: '8. អាជីព និង អនាគត'
+      work: "ការងារ និងបរិយាកាសការងារ", salary: "ប្រាក់ខែ និងការព្យាបាល",
+      family: "គ្រួសារ និងបញ្ហាផ្ទាល់ខ្លួន", relations: "ទំនាក់ទំនងមនុស្ស",
+      communication: "ភាសាជប៉ុន និងទំនាក់ទំនង", culture: "វប្បធម៌ និងតម្លៃ",
+      living: "បរិយាកាសរស់នៅ", career: "អាជីព និងទស្សនវិស័យអនាគត"
     },
-    
     questions: {
-      q1: 'តើខ្លឹមសារការងារសមរម្យសម្រាប់អ្នកទេ?',
-      q2: 'តើកន្លែងធ្វើការមានសុវត្ថិភាពទេ?',
-      q3: 'តើថ្ងៃឈប់សម្រាក និង ម៉ោងធ្វើការសមរម្យទេ?',
-      q4: 'តើបរិយាកាសនៅកន្លែងធ្វើការងាយស្រួលធ្វើការទេ?',
-      q5: 'តើអ្នកពេញចិត្តនឹងចំនួនប្រាក់ឈ្នួលទេ?',
-      q6: 'តើអ្នកទទួលបានប្រាក់បន្ថែមម៉ោង និង ប្រាក់ឧបត្ថម្ភត្រឹមត្រូវទេ?',
-      q7: 'តើប្រព័ន្ធធានារ៉ាប់រង និង ការឈប់សម្រាកគ្រប់គ្រាន់ទេ?',
-      q8: 'តើការធ្វើការនៅក្រុមហ៊ុននេះផ្តល់ប្រាក់គ្រប់គ្រាន់សម្រាប់ជីវិតទេ?',
-      q9: 'តើអ្នកមានពេលវេលាគ្រប់គ្រាន់ក្នុងការទាក់ទងគ្រួសារទេ?',
-      q10: 'តើអ្នកមានលទ្ធភាពផ្ញើប្រាក់ទៅគ្រួសារទេ?',
-      q11: 'តើអ្នកមានពេលវេលាផ្ទាល់ខ្លួន (ឈប់សម្រាក និង ផ្ទាល់ខ្លួន) គ្រប់គ្រាន់ទេ?',
-      q12: 'តើអ្នកចង់នាំគ្រួសារមកជប៉ុននាពេលអនាគតទេ?',
-      q13: 'តើទំនាក់ទំនងជាមួយសិក្ខាកាមដទៃទៀតល្អទេ?',
-      q14: 'តើថ្នាក់ដឹកនាំ និង សហការីជប៉ុនស្តាប់អ្នកទេ?',
-      q15: 'តើនៅពេលមានបញ្ហា សិក្ខាកាមដទៃទៀតជួយអ្នកទេ?',
-      q16: 'តើមានការរំលោភបំពាន ឬ ការរើសអើងនៅកន្លែងធ្វើការទេ?',
-      q17: 'តើអ្នកមានបញ្ហាក្នុងការនិយាយភាសាជប៉ុនទេ?',
-      q18: 'តើការពន្យល់ និង ការណែនាំការងារងាយយល់ទេ?',
-      q19: 'តើងាយស្រួលសួរពេលមិនយល់ទេ?',
-      q20: 'តើក្រុមហ៊ុនជួយអ្នករៀនភាសាជប៉ុនទេ?',
-      q21: 'តើមាននរណាម្នាក់អាចពិគ្រោះជាភាសាកំណើត (អ្នកបកប្រែ, អ្នកចាស់) ទេ?',
-      q22: 'តើអ្នកធ្លាប់ស្គាល់វប្បធម៌ និង ទម្លាប់របស់ជប៉ុនហើយទេ?',
-      q23: 'តើអ្នកមានបញ្ហាដោយសារភាពខុសគ្នានៃវប្បធម៌ក្នុងការងារទេ?',
-      q24: 'តើកន្លែងរស់នៅ (អន្តេវាសិកដ្ឋាន, អាផាតមិន) ងាយស្រួលទេ?',
-      q25: 'តើថ្លៃចំណាយរស់នៅសមរម្យនឹងប្រាក់ឈ្នួលទេ?',
-      q26: 'តើអ្នកមានបញ្ហាក្នុងការរស់នៅជប៉ុនទេ?',
-      q27: 'តើក្រុមហ៊ុនគាំទ្រជីវិតរស់នៅរបស់អ្នកទេ?',
-      q28: 'តើអ្នកពេញចិត្តនឹងបរិយាកាសរស់នៅ (ទំហំបន្ទប់, គ្រឿងបរិក្ខារ) នៅអន្តេវាសិកដ្ឋាន ឬ ផ្ទះទេ?',
-      q29: 'តើជីវិតនៅជប៉ុនមានសុវត្ថិភាព និង ងាយស្រួលទេ?',
-      q30: 'តើអ្នកកំពុងរៀនបច្ចេកទេស និង ចំណេះដឹងពីការងារបច្ចុប្បន្នទេ?',
-      q31: 'តើអ្នកមានអារម្មណ៍ថាការខិតខំប្រឹងប្រែងរបស់អ្នកធ្វើឱ្យការវាយតម្លៃ និង ការប្រព្រឹត្តប្រសើរឡើងទេ?',
-      q32: 'តើអ្នកចង់ធ្វើការនៅក្រុមហ៊ុននេះយូរទេ?',
-      q33: 'តើក្រុមហ៊ុន ឬ សហជីពជួយក្នុងការបន្តថ្មី និង នីតិវិធីទិដ្ឋាការ (ស្ថានភាពស្នាក់នៅ) ទេ?',
-      q34: 'តើអ្នកកំពុងរៀនបច្ចេកទេសដែលមានប្រយោជន៍បន្ទាប់ពីត្រលប់ទៅស្រុកកំណើតពីការធ្វើការនៅក្រុមហ៊ុននេះទេ?',
-      q35: 'តើអ្នកនឹងណែនាំមិត្តភក្តិនៅស្រុកកំណើតឱ្យធ្វើការនៅក្រុមហ៊ុននេះទេ?'
+      q1: "តើខ្លឹមសារការងារសមនឹងអ្នកទេ?", q2: "តើឧបករណ៍និងម៉ាស៊ីននៅកន្លែងធ្វើការមានសុវត្ថិភាពទេ?",
+      q3: "តើអ្នកពេញចិត្តនឹងម៉ោងធ្វើការនិងចំនួនថ្ងៃឈប់សម្រាកទេ?", q4: "តើអ្នកគិតថាអ្វីដែលបានរៀនពីការងារនឹងមានប្រយោជន៍នៅពេលត្រឡប់ប្រទេសវិញទេ?",
+      q5: "តើអ្នកពេញចិត្តនឹងប្រាក់ខែបច្ចុប្បន្នទេ?", q6: "តើអ្នកទទួលបានប្រាក់ធ្វើការលើសម៉ោងនិងប្រាក់ឧបត្ថម្ភត្រឹមត្រូវទេ?",
+      q7: "តើអ្នកគិតថាថ្លៃជួលអន្តេវាសិកដ្ឋាននិងថ្លៃទឹកអគ្គិសនីសមរម្យទេ?", q8: "តើអ្នកបានទទួលការពន្យល់អំពីធានារ៉ាប់រងសុខភាពនិងប្រាក់ចូលនិវត្តន៍ហើយមានអារម្មណ៍ស្ងប់ស្ងាត់ទេ?",
+      q9: "តើអ្នកពេញចិត្តនឹងចំនួនទឹកប្រាក់ដែលអាចផ្ញើទៅគ្រួសារនៅប្រទេសកំណើតទេ?", q10: "តើអ្នកព្រួយបារម្ភអំពីសុខភាពឬជីវិតរបស់គ្រួសារនៅប្រទេសកំណើតទេ?",
+      q11: "តើអ្នកអាចទាក់ទងគ្រប់គ្រាន់ជាមួយគ្រួសារនិងមិត្តភក្តិនៅប្រទេសកំណើតទេ?", q12: "នៅថ្ងៃឈប់សម្រាក តើអ្នកអាចសម្រាកឬរីករាយបានទេ?",
+      q13: "តើថ្នាក់លើនិងអតីតបុគ្គលិកបង្រៀនអ្នកដោយសេចក្តីសប្បុរសទេ?", q14: "នៅពេលមានបញ្ហា តើអ្នកមានមនុស្សដែលអាចពិគ្រោះទេ?",
+      q15: "តើអ្នកទំនាក់ទំនងបានល្អជាមួយសហការីទេ?", q16: "តើអ្នកធ្លាប់ទទួលការរើសអើងឬការយាយីនៅកន្លែងធ្វើការទេ?",
+      q17: "តើអ្នកយល់ភាសាជប៉ុនដែលប្រើក្នុងការងារទេ?", q18: "តើអ្នកមានឱកាសឬពេលវេលាដើម្បីរៀនភាសាជប៉ុនទេ?",
+      q19: "តើអ្នកមានអារម្មណ៍ថាមនុស្សនៅកន្លែងធ្វើការនិយាយភាសាជប៉ុនលឿនពេកទេ?", q20: "តើអ្នកធ្លាប់មានបញ្ហាដោយសារមិនយល់ភាសាជប៉ុនទេ?",
+      q21: "តើអ្នកយល់ច្បាប់និងអាកប្បកិរិយានៅកន្លែងធ្វើការទេ?", q22: "តើអ្នកស្រួលនឹងវប្បធម៌និងទំនៀមទម្លាប់របស់ជប៉ុនហើយឬនៅ?",
+      q23: "តើអ្នកពេញចិត្តនឹងជីវិតនៅជប៉ុនទេ?", q24: "តើអន្តេវាសិកដ្ឋានឬកន្លែងដែលអ្នករស់នៅងាយស្រួលរស់នៅទេ?",
+      q25: "តើក្បែរនេះមានហាងដើម្បីទិញឥវ៉ាន់ទេ?", q26: "នៅពេលឈឺឬរងរបួស តើអ្នកអាចទៅមន្ទីរពេទ្យបានទេ?",
+      q27: "តើមធ្យោបាយធ្វើដំណើរ (ឡានក្រុង រថភ្លើង កង់ ។ល។) ងាយស្រួលទេ?", q28: "តើអ្នកពេញចិត្តនឹងទំហំនិងគ្រឿងបរិក្ខាររបស់អន្តេវាសិកដ្ឋាន (បន្ទប់ទឹក បង្គន់ ។ល។) ទេ?",
+      q29: "តើអ្នកចង់ធ្វើការយូរជាងនេះនៅក្រុមហ៊ុនបច្ចុប្បន្នទេ?", q30: "បន្ទាប់ពីការកម្មសិក្សាបច្ចេកទេសបញ្ចប់ តើអ្នកចង់ធ្វើការជាមួយជំនាញជាក់លាក់ទេ?",
+      q31: "តើក្រុមហ៊ុនជួយអ្នកសម្រេចគោលដៅការកម្មសិក្សាបច្ចេកទេសទេ?", q32: "តើក្រុមហ៊ុនឬអង្គការត្រួតពិនិត្យស្តាប់មតិរបស់អ្នកទេ?",
+      q33: "តើក្រុមហ៊ុនឬអង្គការត្រួតពិនិត្យជួយអ្នកក្នុងការបន្តទិដ្ឋាការ (ស្ថានភាពស្នាក់នៅ) និងនីតិវិធីទេ?", q34: "តើក្រុមហ៊ុនឬអង្គការត្រួតពិនិត្យជួយដោះស្រាយការលំបាករស់នៅក្នុងជប៉ុនទេ?"
     },
-    
-    satisfaction: {
-      option1: 'ពេញចិត្តខ្លាំង',
-      option2: 'ពេញចិត្តបន្តិច',
-      option3: 'មិនប្រាកដ',
-      option4: 'មិនសូវពេញចិត្ត',
-      option5: 'មិនពេញចិត្ត',
-      option6: 'មិនពេញចិត្តទាល់តែសោះ'
+    choices: {
+      satisfaction: ["😄 ពេញចិត្តខ្លាំង", "🙂 ពេញចិត្ត", "😐 ពេញចិត្តបន្តិច", "😟 មិនពេញចិត្តបន្តិច", "😞 មិនពេញចិត្ត", "😭 មិនពេញចិត្តខ្លាំង"],
+      desire: ["😄 គិតខ្លាំង", "🙂 គិត", "😐 គិតបន្តិច", "😟 មិនគិតច្រើន", "😞 មិនគិត", "😭 មិនគិតសោះ"],
+      understanding: ["😄 យល់ល្អ", "🙂 យល់", "😐 យល់បន្តិច", "😟 មិនយល់បន្តិច", "😞 មិនយល់", "😭 មិនយល់សោះ"],
+      familiarity: ["😄 ស្រួលខ្លាំង", "🙂 ស្រួល", "😐 ស្រួលបន្តិច", "😟 មិនស្រួលបន្តិច", "😞 មិនស្រួល", "😭 មិនស្រួលសោះ"],
+      availability: ["😄 មានច្រើន", "🙂 មាន", "😐 មានបន្តិច", "😟 មិនមានច្រើន", "😞 មិនមាន", "😭 មិនមានសោះ"],
+      negative: ["😄 មិនមានសោះ", "🙂 មិនមាន", "😐 មិនមានច្រើន", "😟 ម្តងម្កាលមាន", "😞 មានញឹកញាប់", "😭 មានជានិច្ច"]
     },
-    
-    desire: {
-      option1: 'យល់ស្របខ្លាំង',
-      option2: 'យល់ស្របបន្តិច',
-      option3: 'មិនប្រាកដ',
-      option4: 'មិនសូវយល់ស្រប',
-      option5: 'មិនយល់ស្រប',
-      option6: 'មិនយល់ស្របទាល់តែសោះ'
+    errors: {
+      employeeCode: "សូមបញ្ចូលលេខកូដបុគ្គលិក", nationality: "សូមជ្រើសរើសសញ្ជាតិ",
+      allQuestions: "សូមឆ្លើយសំណួរទាំងអស់"
     },
-    
-    understanding: {
-      option1: 'យល់ស្រួល',
-      option2: 'យល់បន្តិច',
-      option3: 'មិនប្រាកដ',
-      option4: 'មិនសូវយល់',
-      option5: 'លំបាកយល់',
-      option6: 'មិនយល់ទាល់តែសោះ'
-    },
-    
-    familiarity: {
-      option1: 'ធ្លាប់ស្គាល់ខ្លាំង',
-      option2: 'ធ្លាប់ស្គាល់បន្តិច',
-      option3: 'មិនប្រាកដ',
-      option4: 'មិនសូវធ្លាប់ស្គាល់',
-      option5: 'មិនធ្លាប់ស្គាល់',
-      option6: 'មិនធ្លាប់ស្គាល់ទាល់តែសោះ'
-    },
-    
-    availability: {
-      option1: 'មានច្រើន',
-      option2: 'មានបន្តិច',
-      option3: 'មិនប្រាកដ',
-      option4: 'មានតិច',
-      option5: 'ស្ទើរតែគ្មាន',
-      option6: 'គ្មានទាល់តែសោះ'
-    },
-    
-    negative: {
-      option1: 'គ្មានទាល់តែសោះ',
-      option2: 'ស្ទើរតែគ្មាន',
-      option3: 'មិនប្រាកដ',
-      option4: 'ពេលខ្លះ',
-      option5: 'ជាញឹកញាប់',
-      option6: 'រហូត'
-    },
-    
-    errorEmployeeCode: 'សូមជ្រើសរើសលេខកូដបុគ្គលិក',
-    errorNationality: 'សូមជ្រើសរើសសញ្ជាតិ',
-    errorAllQuestions: 'សូមឆ្លើយសំណួរទាំងអស់',
-    errorDuplicate: 'លេខកូដបុគ្គលិក {code} បានឆ្លើយក្នុងខែនេះរួចហើយ ({date})',
-    
-    completionTitle: 'សូមអរគុណចំពោះការសហការ!',
-    completionMessage: 'ចម្លើយរបស់អ្នកត្រូវបានរក្សាទុកដោយសុវត្ថិភាព',
-    completionAutoClose: 'ទំព័រនេះនឹងបិទដោយស្វ័យប្រវត្តិ',
-    completionRemaining: 'នៅសល់',
-    completionSeconds: 'វិនាទី',
-    
-    footerInfo: 'ពេលវេលា: ប្រហែល 5-10 នាទី'
+    completion: {
+      title: "សូមអរគុណសម្រាប់កិច្ចសហប្រតិបត្តិការរបស់អ្នក!", message: "ការឆ្លើយការស្ទង់មតិបានបញ្ចប់។\nនឹងត្រឡប់ទៅទំព័រដើមដោយស្វ័យប្រវត្តិក្នុងរយៈពេល 5 វិនាទី។"
+    }
   },
-
-  // ===========================
-  // ラオス語 (新規)
-  // ===========================
   lo: {
-    title: 'ຕອບດ້ວຍຄວາມໝັ້ນໃຈ | ການສຳຫຼວດບ່ອນເຮັດວຽກ',
-    languageLabel: 'ເລືອກພາສາ',
-    anonymousMessage: 'ຊື່ຂອງທ່ານຈະບໍ່ຖືກບັນທຶກ',
-    anonymousSubMessage: 'ກະລຸນາຕອບຢ່າງຈິງໃຈ',
-    employeeCodeLabel: 'ລະຫັດພະນັກງານ',
-    employeeCodePlaceholder: 'ເລືອກເລກ 1 ຫາ 20',
-    nationalityLabel: 'ສັນຊາດ',
-    nationalityPlaceholder: 'ກະລຸນາເລືອກສັນຊາດ',
-    startButton: 'ເລີ່ມການສຳຫຼວດ',
-    submitButton: 'ເບິ່ງຜົນລັບ',
-    
+    title: "ການສຳຫຼວດການມີສ່ວນຮ່ວມຂອງຜູ້ຝຶກງານດ້ານວິຊາການ",
+    anonymous: "※ການສຳຫຼວດນີ້ເປັນແບບບໍ່ເປີດເຜີຍຊື່",
+    employeeCode: "ລະຫັດພະນັກງານ",
+    nationality: "ສັນຊາດ",
+    startButton: "ເລີ່ມການສຳຫຼວດ",
+    submitButton: "ສົ່ງ",
     nationalities: {
-      vietnam: 'ຫວຽດນາມ',
-      cambodia: 'ກຳປູເຈຍ',
-      india: 'ອິນເດຍ',
-      philippines: 'ຟິລິບປິນ',
-      laos: 'ລາວ',
-      mongolia: 'ມົງໂກເລຍ',
-      bangladesh: 'ບັງກະລາເທດ',
-      srilanka: 'ສີລັງກາ',
-      myanmar: 'ມຽນມາ',
-      bhutan: 'ພູຖານ',
-      uzbekistan: 'ອຸສເບກິສະຖານ',
-      pakistan: 'ປາກິສະຖານ',
-      thailand: 'ໄທ',
-      indonesia: 'ອິນໂດເນເຊຍ',
-      nepal: 'ເນປານ',
-      china: 'ຈີນ'
+      vn: "ຫວຽດນາມ", kh: "ກຳປູເຈຍ", in: "ອິນເດຍ", ph: "ຟີລິບປິນ", la: "ລາວ", mn: "ມົງໂກເລຍ",
+      bd: "ບັງກະລາເທດ", lk: "ສີລັງກາ", mm: "ມຽນມາ", bt: "ພູຖານ", uz: "ອຸສເບກິສຖານ",
+      pk: "ປາກິສຖານ", th: "ໄທ", id: "ອິນໂດເນເຊຍ", np: "ເນປານ", cn: "ຈີນ"
     },
-    
     categories: {
-      work: '1. ວຽກ ແລະ ສະພາບແວດລ້ອມບ່ອນເຮັດວຽກ',
-      salary: '2. ເງີນເດືອນ ແລະ ສວັດດີການ',
-      family: '3. ຄອບຄົວ ແລະ ສ່ວນຕົວ',
-      relationship: '4. ສາຍພົວພັນລະຫວ່າງບຸກຄົນ',
-      communication: '5. ພາສາຍີ່ປຸ່ນ ແລະ ການສື່ສານ',
-      culture: '6. ວັດທະນະທຳ ແລະ ຄຸນຄ່າ',
-      living: '7. ສະພາບແວດລ້ອມການດຳລົງຊີວິດ',
-      career: '8. ອາຊີບ ແລະ ອະນາຄົດ'
+      work: "ວຽກງານ ແລະ ສະພາບແວດລ້ອມບ່ອນເຮັດວຽກ", salary: "ເງິນເດືອນ ແລະ ການປິ່ນປົວ",
+      family: "ຄອບຄົວ ແລະ ເລື່ອງສ່ວນຕົວ", relations: "ຄວາມສຳພັນລະຫວ່າງມະນຸດ",
+      communication: "ພາສາຍີ່ປຸ່ນ ແລະ ການສື່ສານ", culture: "ວັດທະນະທຳ ແລະ ຄຸນຄ່າ",
+      living: "ສະພາບແວດລ້ອມການດຳລົງຊີວິດ", career: "ອາຊີບ ແລະ ທັດສະນະອະນາຄົດ"
     },
-    
     questions: {
-      q1: 'ເນື້ອຫາວຽກເໝາະສົມກັບທ່ານບໍ?',
-      q2: 'ທ່ານຄິດວ່າບ່ອນເຮັດວຽກປອດໄພບໍ?',
-      q3: 'ວັນພັກ ແລະ ຊົ່ວໂມງການເຮັດວຽກເໝາະສົມບໍ?',
-      q4: 'ບັນຍາກາດບ່ອນເຮັດວຽກງ່າຍຕໍ່ການເຮັດວຽກບໍ?',
-      q5: 'ທ່ານພໍໃຈກັບຈຳນວນເງິນເດືອນບໍ?',
-      q6: 'ທ່ານໄດ້ຮັບເງິນລ່ວງເວລາ ແລະ ເງິນຊ່ວຍເຫຼືອຢ່າງຖືກຕ້ອງບໍ?',
-      q7: 'ລະບົບການປະກັນໄພ ແລະ ການພັກຜ່ອນພຽງພໍບໍ?',
-      q8: 'ການເຮັດວຽກຢູ່ບໍລິສັດນີ້ເຮັດໃຫ້ທ່ານໄດ້ເງິນພຽງພໍສຳລັບຊີວິດບໍ?',
-      q9: 'ທ່ານມີເວລາພຽງພໍໃນການຕິດຕໍ່ຄອບຄົວບໍ?',
-      q10: 'ທ່ານມີຄວາມສາມາດສົ່ງເງິນໃຫ້ຄອບຄົວບໍ?',
-      q11: 'ທ່ານມີເວລາສ່ວນຕົວ (ພັກຜ່ອນ ແລະ ສ່ວນຕົວ) ພຽງພໍບໍ?',
-      q12: 'ທ່ານຢາກນຳຄອບຄົວມາຍີ່ປຸ່ນໃນອະນາຄົດບໍ?',
-      q13: 'ສາຍພົວພັນກັບນັກຝຶກອື່ນໆດີບໍ?',
-      q14: 'ຫົວໜ້າ ແລະ ເພື່ອນຮ່ວມງານຊາວຍີ່ປຸ່ນຟັງທ່ານບໍ?',
-      q15: 'ເມື່ອມີບັນຫາ, ນັກຝຶກອື່ນໆຊ່ວຍທ່ານບໍ?',
-      q16: 'ມີການກົດຂີ່ ຫຼື ການຈຳແນກຢູ່ບ່ອນເຮັດວຽກບໍ?',
-      q17: 'ທ່ານມີບັນຫາໃນການສົນທະນາເປັນພາສາຍີ່ປຸ່ນບໍ?',
-      q18: 'ຄຳອະທິບາຍ ແລະ ຄຳແນະນຳວຽກເຂົ້າໃຈງ່າຍບໍ?',
-      q19: 'ງ່າຍໃນການຖາມເມື່ອບໍ່ເຂົ້າໃຈບໍ?',
-      q20: 'ບໍລິສັດຊ່ວຍທ່ານຮຽນພາສາຍີ່ປຸ່ນບໍ?',
-      q21: 'ມີຄົນທີ່ສາມາດປຶກສາເປັນພາສາແມ່ (ນາຍພາສາ, ຮຸ່ນພີ່) ບໍ?',
-      q22: 'ທ່ານຄຸ້ນເຄີຍກັບວັດທະນະທຳ ແລະ ປະເພນີຂອງຍີ່ປຸ່ນບໍ?',
-      q23: 'ທ່ານມີບັນຫາຍ້ອນຄວາມແຕກຕ່າງທາງວັດທະນະທຳໃນວຽກບໍ?',
-      q24: 'ບ່ອນພັກອາໄສ (ຫໍພັກ, ອາພາດເມັນ) ສະດວກສະບາຍບໍ?',
-      q25: 'ຄ່າໃຊ້ຈ່າຍໃນການດຳລົງຊີວິດເໝາະສົມກັບເງິນເດືອນບໍ?',
-      q26: 'ທ່ານມີບັນຫາໃນການດຳລົງຊີວິດຢູ່ຍີ່ປຸ່ນບໍ?',
-      q27: 'ບໍລິສັດສະໜັບສະໜູນການດຳລົງຊີວິດຂອງທ່ານບໍ?',
-      q28: 'ທ່ານພໍໃຈກັບສະພາບແວດລ້ອມການດຳລົງຊີວິດ (ຂະໜາດຫ້ອງ, ສິ່ງອຳນວຍຄວາມສະດວກ) ຢູ່ຫໍພັກ ຫຼື ເຮືອນບໍ?',
-      q29: 'ການດຳລົງຊີວິດຢູ່ຍີ່ປຸ່ນປອດໄພ ແລະ ສະດວກສະບາຍບໍ?',
-      q30: 'ທ່ານກຳລັງຮຽນຮູ້ເຕັກນິກ ແລະ ຄວາມຮູ້ຈາກວຽກປັດຈຸບັນບໍ?',
-      q31: 'ທ່ານຮູ້ສຶກວ່າຄວາມພະຍາຍາມຂອງທ່ານເຮັດໃຫ້ການປະເມີນ ແລະ ການປະຕິບັດດີຂຶ້ນບໍ?',
-      q32: 'ທ່ານຢາກເຮັດວຽກຢູ່ບໍລິສັດນີ້ດົນບໍ?',
-      q33: 'ບໍລິສັດ ຫຼື ສະຫະພັນຊ່ວຍໃນການຕໍ່ອາຍຸ ແລະ ຂັ້ນຕອນວີຊ່າ (ສະຖານະການອາໄສ) ບໍ?',
-      q34: 'ທ່ານກຳລັງຮຽນຮູ້ເຕັກນິກທີ່ມີປະໂຫຍດເມື່ອກັບປະເທດຈາກການເຮັດວຽກຢູ່ບໍລິສັດນີ້ບໍ?',
-      q35: 'ທ່ານຈະແນະນຳໝູ່ເພື່ອນໃນປະເທດໃຫ້ເຮັດວຽກຢູ່ບໍລິສັດນີ້ບໍ?'
+      q1: "ເນື້ອໃນວຽກງານເໝາະສົມກັບທ່ານບໍ?", q2: "ອຸປະກອນ ແລະ ເຄື່ອງຈັກໃນບ່ອນເຮັດວຽກມີຄວາມປອດໄພບໍ?",
+      q3: "ທ່ານພໍໃຈກັບເວລາເຮັດວຽກ ແລະ ຈຳນວນມື້ພັກບໍ?", q4: "ທ່ານຄິດວ່າສິ່ງທີ່ຮຽນຮູ້ຈາກວຽກຈະມີປະໂຫຍດເມື່ອກັບປະເທດບໍ?",
+      q5: "ທ່ານພໍໃຈກັບເງິນເດືອນປັດຈຸບັນບໍ?", q6: "ທ່ານໄດ້ຮັບເງິນເພີ່ມເວລາ ແລະ ເງິນອຸດໜູນຢ່າງຖືກຕ້ອງບໍ?",
+      q7: "ທ່ານຄິດວ່າຄ່າເຊົ່າຫໍພັກ ແລະ ຄ່ານ້ຳໄຟສົມເຫດສົມຜົນບໍ?", q8: "ທ່ານໄດ້ຮັບຄຳອະທິບາຍກ່ຽວກັບປະກັນສຸຂະພາບ ແລະ ບໍານານ ແລະ ຮູ້ສຶກໝັ້ນໃຈບໍ?",
+      q9: "ທ່ານພໍໃຈກັບຈຳນວນເງິນທີ່ສາມາດສົ່ງໃຫ້ຄອບຄົວໃນປະເທດບໍ?", q10: "ທ່ານກັງວົນກ່ຽວກັບສຸຂະພາບ ຫຼື ຊີວິດຂອງຄອບຄົວໃນປະເທດບໍ?",
+      q11: "ທ່ານສາມາດຕິດຕໍ່ກັບຄອບຄົວ ແລະ ໝູ່ໃນປະເທດຢ່າງພຽງພໍບໍ?", q12: "ໃນມື້ພັກ, ທ່ານສາມາດພັກຜ່ອນ ຫຼື ມ່ວນຊື່ນໄດ້ບໍ?",
+      q13: "ຫົວໜ້າ ແລະ ຮຸ່ນພີ່ສອນທ່ານດ້ວຍຄວາມອ່ອນໂຍນບໍ?", q14: "ເມື່ອມີບັນຫາ, ທ່ານມີຄົນປຶກສາບໍ?",
+      q15: "ທ່ານສື່ສານກັບເພື່ອນຮ່ວມງານໄດ້ດີບໍ?", q16: "ທ່ານເຄີຍໄດ້ຮັບການຈຳແນກ ຫຼື ການກົດຂີ່ໃນບ່ອນເຮັດວຽກບໍ?",
+      q17: "ທ່ານເຂົ້າໃຈພາສາຍີ່ປຸ່ນທີ່ໃຊ້ໃນວຽກບໍ?", q18: "ທ່ານມີໂອກາດ ຫຼື ເວລາເພື່ອຮຽນພາສາຍີ່ປຸ່ນບໍ?",
+      q19: "ທ່ານຮູ້ສຶກວ່າຄົນໃນບ່ອນເຮັດວຽກເວົ້າພາສາຍີ່ປຸ່ນໄວເກີນໄປບໍ?", q20: "ທ່ານເຄີຍມີບັນຫາເພາະບໍ່ເຂົ້າໃຈພາສາຍີ່ປຸ່ນບໍ?",
+      q21: "ທ່ານເຂົ້າໃຈກົດລະບຽບ ແລະ ມາລະຍາດໃນບ່ອນເຮັດວຽກບໍ?", q22: "ທ່ານເຄີຍຊິນກັບວັດທະນະທຳ ແລະ ປະເພນີຂອງຍີ່ປຸ່ນແລ້ວບໍ?",
+      q23: "ທ່ານພໍໃຈກັບຊີວິດໃນຍີ່ປຸ່ນບໍ?", q24: "ຫໍພັກ ຫຼື ບ່ອນທີ່ທ່ານພັກຢູ່ງ່າຍຕໍ່ການດຳລົງຊີວິດບໍ?",
+      q25: "ໃກ້ໆມີຮ້ານເພື່ອຊື້ເຄື່ອງບໍ?", q26: "ເມື່ອເຈັບປ່ວຍ ຫຼື ບາດເຈັບ, ທ່ານສາມາດໄປໂຮງໝໍໄດ້ບໍ?",
+      q27: "ພາຫະນະ (ລົດເມ, ລົດໄຟ, ລົດຖີບ ແລ ອື່ນໆ) ສະດວກບໍ?", q28: "ທ່ານພໍໃຈກັບຂະໜາດ ແລະ ສິ່ງອຳນວຍຄວາມສະດວກຂອງຫໍພັກ (ຫ້ອງນ້ຳ, ຫ້ອງສ້ວມ ແລ ອື່ນໆ) ບໍ?",
+      q29: "ທ່ານຕ້ອງການເຮັດວຽກໃນບໍລິສັດປັດຈຸບັນນານຂຶ້ນບໍ?", q30: "ຫຼັງຈາກການຝຶກງານດ້ານວິຊາການສິ້ນສຸດ, ທ່ານຕ້ອງການເຮັດວຽກດ້ວຍທັກສະສະເພາະບໍ?",
+      q31: "ບໍລິສັດຊ່ວຍທ່ານບັນລຸເປົ້າໝາຍການຝຶກງານດ້ານວິຊາການບໍ?", q32: "ບໍລິສັດ ຫຼື ອົງກອນຄຸ້ມຄອງຟັງຄວາມຄິດເຫັນຂອງທ່ານບໍ?",
+      q33: "ບໍລິສັດ ຫຼື ອົງກອນຄຸ້ມຄອງຊ່ວຍທ່ານໃນການຕໍ່ວີຊາ (ສະຖານະພາບການພັກເຊົາ) ແລະ ຂັ້ນຕອນບໍ?", q34: "ບໍລິສັດ ຫຼື ອົງກອນຄຸ້ມຄອງຊ່ວຍແກ້ໄຂຄວາມຫຍຸ້ງຍາກໃນການດຳລົງຊີວິດໃນຍີ່ປຸ່ນບໍ?"
     },
-    
-    satisfaction: {
-      option1: 'ພໍໃຈຫຼາຍ',
-      option2: 'ພໍໃຈໜ້ອຍ',
-      option3: 'ບໍ່ແນ່ໃຈ',
-      option4: 'ບໍ່ຄ່ອຍພໍໃຈ',
-      option5: 'ບໍ່ພໍໃຈ',
-      option6: 'ບໍ່ພໍໃຈເລີຍ'
+    choices: {
+      satisfaction: ["😄 ພໍໃຈຫຼາຍ", "🙂 ພໍໃຈ", "😐 ພໍໃຈໜ້ອຍ", "😟 ບໍ່ພໍໃຈໜ້ອຍ", "😞 ບໍ່ພໍໃຈ", "😭 ບໍ່ພໍໃຈຫຼາຍ"],
+      desire: ["😄 ຄິດຫຼາຍ", "🙂 ຄິດ", "😐 ຄິດໜ້ອຍ", "😟 ບໍ່ຄິດຫຼາຍ", "😞 ບໍ່ຄິດ", "😭 ບໍ່ຄິດເລີຍ"],
+      understanding: ["😄 ເຂົ້າໃຈດີ", "🙂 ເຂົ້າໃຈ", "😐 ເຂົ້າໃຈໜ້ອຍ", "😟 ບໍ່ເຂົ້າໃຈໜ້ອຍ", "😞 ບໍ່ເຂົ້າໃຈ", "😭 ບໍ່ເຂົ້າໃຈເລີຍ"],
+      familiarity: ["😄 ຊິນຫຼາຍ", "🙂 ຊິນ", "😐 ຊິນໜ້ອຍ", "😟 ບໍ່ຊິນໜ້ອຍ", "😞 ບໍ່ຊິນ", "😭 ບໍ່ຊິນເລີຍ"],
+      availability: ["😄 ມີຫຼາຍ", "🙂 ມີ", "😐 ມີໜ້ອຍ", "😟 ບໍ່ມີຫຼາຍ", "😞 ບໍ່ມີ", "😭 ບໍ່ມີເລີຍ"],
+      negative: ["😄 ບໍ່ມີເລີຍ", "🙂 ບໍ່ມີ", "😐 ບໍ່ມີຫຼາຍ", "😟 ບາງຄັ້ງມີ", "😞 ມີເລື້ອຍໆ", "😭 ມີສະເໝີ"]
     },
-    
-    desire: {
-      option1: 'ເຫັນດີຫຼາຍ',
-      option2: 'ເຫັນດີໜ້ອຍ',
-      option3: 'ບໍ່ແນ່ໃຈ',
-      option4: 'ບໍ່ຄ່ອຍເຫັນດີ',
-      option5: 'ບໍ່ເຫັນດີ',
-      option6: 'ບໍ່ເຫັນດີເລີຍ'
+    errors: {
+      employeeCode: "ກະລຸນາໃສ່ລະຫັດພະນັກງານ", nationality: "ກະລຸນາເລືອກສັນຊາດ",
+      allQuestions: "ກະລຸນາຕອບຄຳຖາມທັງໝົດ"
     },
-    
-    understanding: {
-      option1: 'ເຂົ້າໃຈງ່າຍຫຼາຍ',
-      option2: 'ເຂົ້າໃຈງ່າຍໜ້ອຍ',
-      option3: 'ບໍ່ແນ່ໃຈ',
-      option4: 'ບໍ່ຄ່ອຍເຂົ້າໃຈ',
-      option5: 'ຍາກເຂົ້າໃຈ',
-      option6: 'ບໍ່ເຂົ້າໃຈເລີຍ'
-    },
-    
-    familiarity: {
-      option1: 'ຄຸ້ນເຄີຍຫຼາຍ',
-      option2: 'ຄຸ້ນເຄີຍໜ້ອຍ',
-      option3: 'ບໍ່ແນ່ໃຈ',
-      option4: 'ບໍ່ຄ່ອຍຄຸ້ນເຄີຍ',
-      option5: 'ບໍ່ຄຸ້ນເຄີຍ',
-      option6: 'ບໍ່ຄຸ້ນເຄີຍເລີຍ'
-    },
-    
-    availability: {
-      option1: 'ມີຫຼາຍ',
-      option2: 'ມີໜ້ອຍ',
-      option3: 'ບໍ່ແນ່ໃຈ',
-      option4: 'ມີນ້ອຍ',
-      option5: 'ເກືອບບໍ່ມີ',
-      option6: 'ບໍ່ມີເລີຍ'
-    },
-    
-    negative: {
-      option1: 'ບໍ່ມີເລີຍ',
-      option2: 'ເກືອບບໍ່ມີ',
-      option3: 'ບໍ່ແນ່ໃຈ',
-      option4: 'ບາງຄັ້ງ',
-      option5: 'ເລື້ອຍໆ',
-      option6: 'ສະເໝີ'
-    },
-    
-    errorEmployeeCode: 'ກະລຸນາເລືອກລະຫັດພະນັກງານ',
-    errorNationality: 'ກະລຸນາເລືອກສັນຊາດ',
-    errorAllQuestions: 'ກະລຸນາຕອບທຸກຄຳຖາມ',
-    errorDuplicate: 'ລະຫັດພະນັກງານ {code} ໄດ້ຕອບໃນເດືອນນີ້ແລ້ວ ({date})',
-    
-    completionTitle: 'ຂອບໃຈສຳລັບການຮ່ວມມື!',
-    completionMessage: 'ຄຳຕອບຂອງທ່ານໄດ້ຖືກບັນທຶກຢ່າງປອດໄພແລ້ວ',
-    completionAutoClose: 'ໜ້ານີ້ຈະປິດອັດຕະໂນມັດ',
-    completionRemaining: 'ເຫຼືອ',
-    completionSeconds: 'ວິນາທີ',
-    
-    footerInfo: 'ເວລາ: ປະມານ 5-10 ນາທີ'
-  }
-};
-  // ===========================
-  // モンゴル語 (新規)
-  // ===========================
-  ,
+    completion: {
+      title: "ຂອບໃຈສຳລັບການຮ່ວມມືຂອງທ່ານ!", message: "ການຕອບແບບສອບຖາມສຳເລັດແລ້ວ.\nຈະກັບຄືນໄປຫນ້າຫຼັກໂດຍອັດຕະໂນມັດພາຍໃນ 5 ວິນາທີ."
+    }
+  },
   mn: {
-    title: 'Итгэлтэйгээр хариулна уу | Ажлын байрны судалгаа',
-    languageLabel: 'Хэл сонгох',
-    anonymousMessage: 'Таны нэр бүртгэгдэхгүй',
-    anonymousSubMessage: 'Үнэнч хариулна уу',
-    employeeCodeLabel: 'Ажилтны код',
-    employeeCodePlaceholder: '1-ээс 20 хүртэлх дугаар сонгоно уу',
-    nationalityLabel: 'Харьяат',
-    nationalityPlaceholder: 'Харьяат сонгоно уу',
-    startButton: 'Судалгаа эхлүүлэх',
-    submitButton: 'Үр дүн харах',
-    
+    title: "Техникийн дадлагажигчийн оролцооны судалгаа",
+    anonymous: "※Энэ судалгаа нэрээ нууцална",
+    employeeCode: "Ажилтны код",
+    nationality: "Үндэс угсаа",
+    startButton: "Судалгаа эхлүүлэх",
+    submitButton: "Илгээх",
     nationalities: {
-      vietnam: 'Вьетнам',
-      cambodia: 'Камбож',
-      india: 'Энэтхэг',
-      philippines: 'Филиппин',
-      laos: 'Лаос',
-      mongolia: 'Монгол',
-      bangladesh: 'Бангладеш',
-      srilanka: 'Шри Ланка',
-      myanmar: 'Мьянмар',
-      bhutan: 'Бутан',
-      uzbekistan: 'Узбекистан',
-      pakistan: 'Пакистан',
-      thailand: 'Тайланд',
-      indonesia: 'Индонез',
-      nepal: 'Балба',
-      china: 'Хятад'
+      vn: "Вьетнам", kh: "Камбож", in: "Энэтхэг", ph: "Филиппин", la: "Лаос", mn: "Монгол",
+      bd: "Бангладеш", lk: "Шри Ланка", mm: "Мьянмар", bt: "Бутан", uz: "Узбекистан",
+      pk: "Пакистан", th: "Тайланд", id: "Индонез", np: "Балба", cn: "Хятад"
     },
-    
     categories: {
-      work: '1. Ажил ба ажлын орчин',
-      salary: '2. Цалин ба тэтгэмж',
-      family: '3. Гэр бүл ба хувийн асуудал',
-      relationship: '4. Хүний харилцаа',
-      communication: '5. Япон хэл ба харилцаа холбоо',
-      culture: '6. Соёл ба үнэт зүйлс',
-      living: '7. Амьдрах орчин',
-      career: '8. Карьер ба ирээдүй'
+      work: "Ажил болон ажлын орчин", salary: "Цалин болон нөхцөл",
+      family: "Гэр бүл болон хувийн асуудал", relations: "Хүмүүсийн харилцаа",
+      communication: "Япон хэл болон харилцаа холбоо", culture: "Соёл болон үнэт зүйлс",
+      living: "Амьдралын орчин", career: "Карьер болон ирээдүйн хэтийн төлөв"
     },
-    
     questions: {
-      q1: 'Ажлын агуулга танд тохирч байна уу?',
-      q2: 'Ажлын газар аюулгүй гэж бодож байна уу?',
-      q3: 'Амралтын өдөр ба ажлын цаг тохиромжтой юу?',
-      q4: 'Ажлын орчин ажиллахад хялбар юу?',
-      q5: 'Цалингийн хэмжээнд сэтгэл хангалуун байна уу?',
-      q6: 'Илүү цагийн мөнгө болон тэтгэмжийг зөв авч байна уу?',
-      q7: 'Даатгал, амралтын систем хангалттай юу?',
-      q8: 'Энэ компанид ажиллаж амьдрахад хангалттай мөнгө авч байна уу?',
-      q9: 'Гэр бүлтэйгээ холбогдох цаг хангалттай юу?',
-      q10: 'Гэр бүлдээ мөнгө илгээх боломжтой юу?',
-      q11: 'Хувийн цаг (амралт, хувийн) хангалттай юу?',
-      q12: 'Ирээдүйд гэр бүлээ Японд дуудмаар байна уу?',
-      q13: 'Бусад сургагч нартай харилцаа сайн байна уу?',
-      q14: 'Япон удирдлага, хамтран ажиллагсад таны яриаг сонсдог уу?',
-      q15: 'Хүндрэлтэй үед бусад сургагч нар тусалдаг уу?',
-      q16: 'Ажлын байранд дарамт, ялгаварлал байдаг уу?',
-      q17: 'Япон хэлээр ярихад бэрхшээлтэй байна уу?',
-      q18: 'Ажлын тайлбар, зааврыг ойлгоход хялбар юу?',
-      q19: 'Ойлгоогүй зүйлээ асуухад хялбар юу?',
-      q20: 'Компани япон хэл сурахад тусалдаг уу?',
-      q21: 'Эх хэлээрээ зөвлөгөө авах хүн (орчуулагч, ахлагч) байдаг уу?',
-      q22: 'Японы соёл, зан заншилд дассан уу?',
-      q23: 'Ажил дээр соёлын ялгаанаас хүндрэлтэй байдаг уу?',
-      q24: 'Амьдрах газар (дотуур байр, орон сууц) тав тухтай юу?',
-      q25: 'Амьдралын зардал цалинтай харьцуулахад тохиромжтой юу?',
-      q26: 'Японд амьдрахад хүндрэлтэй байдаг уу?',
-      q27: 'Компани амьдралыг дэмждэг үү?',
-      q28: 'Дотуур байр эсвэл гэрийн амьдрах орчин (өрөөний хэмжээ, тоног төхөөрөмж)-д сэтгэл хангалуун байна уу?',
-      q29: 'Японд амьдрал аюулгүй, тав тухтай юу?',
-      q30: 'Одоогийн ажлаас техник, мэдлэг суралцаж байна уу?',
-      q31: 'Хичээл зүтгэл тань үнэлгээ, хандлагыг сайжруулж байгааг мэдэрч байна уу?',
-      q32: 'Энэ компанид удаан ажиллахыг хүсч байна уу?',
-      q33: 'Компани эсвэл холбоо виз (оршин суух эрх) сунгах, журамд тусалдаг уу?',
-      q34: 'Энэ компанид ажиллаж эх орондоо буцахад ашигтай техник суралцаж байна уу?',
-      q35: 'Эх орныхоо найзуудад "энэ компанид ажиллах нь дээр" гэж санал болгох уу?'
+      q1: "Ажлын агуулга танд тохирч байна уу?", q2: "Ажлын газрын тоног төхөөрөмж, машин аюулгүй юу?",
+      q3: "Та ажлын цаг, амралтын өдрийн тоонд сэтгэл хангалуун байна уу?", q4: "Ажлаас сурсан зүйл эх орондоо буцаж очоод хэрэг болно гэж бодож байна уу?",
+      q5: "Та одоогийн цалиндаа сэтгэл хангалуун байна уу?", q6: "Та илүү цагийн мөнгө, мөнгөн тусламж зөв авч байна уу?",
+      q7: "Дотуур байрны түрээс, ус цахилгааны төлбөр боломжийн гэж бодож байна уу?", q8: "Та эрүүл мэндийн даатгал, тэтгэврийн тухай тайлбар авч, сэтгэл амгалан байна уу?",
+      q9: "Та эх орондоо гэр бүлдээ илгээж чадах дүнд сэтгэл хангалуун байна уу?", q10: "Та эх орондоо байгаа гэр бүлийнхээ эрүүл мэнд, амьдралын талаар санаа зовж байна уу?",
+      q11: "Та эх орондоо байгаа гэр бүл, найз нөхөдтэйгээ хангалттай холбоо барьж чадаж байна уу?", q12: "Амралтын өдөр та амарч, зугаацаж чадаж байна уу?",
+      q13: "Дарга, ахлагч нар танд эелдгээр заадаг уу?", q14: "Асуудал гарвал зөвлөгөө авах хүн байдаг уу?",
+      q15: "Та хамт олноороо сайн харилцаж байна уу?", q16: "Та ажлын газартаа ялгаварлан гадуурхалт, дээрэлхэлт хүлээсэн үү?",
+      q17: "Та ажилдаа хэрэглэгддэг япон хэлийг ойлгож байна уу?", q18: "Танд япон хэл сурах боломж, цаг байдаг уу?",
+      q19: "Ажлын газрын хүмүүс япон хэлээр хэтэрхий хурдан ярьдаг гэж бодож байна уу?", q20: "Та япон хэлийг ойлгохгүйгээс асуудалтай тулгарч байсан уу?",
+      q21: "Та ажлын газрын дүрэм, ёс заншлыг ойлгож байна уу?", q22: "Та Японы соёл, заншилд дассан уу?",
+      q23: "Та Японд амьдрахдаа сэтгэл хангалуун байна уу?", q24: "Дотуур байр эсвэл таны амьдарч байгаа газар амьдрахад тохиромжтой юу?",
+      q25: "Ойролцоо дэлгүүр байдаг уу?", q26: "Өвдөж, гэмтэх үед эмнэлэгт очиж чадах уу?",
+      q27: "Тээвэр (автобус, галт тэрэг, дугуй гэх мэт) тохиромжтой юу?", q28: "Та дотуур байрны хэмжээ, тохижилтод (угаалгын өрөө, бие засах газар гэх мэт) сэтгэл хангалуун байна уу?",
+      q29: "Та одоогийн компанидаа илүү урт хугацаагаар ажиллахыг хүсч байна уу?", q30: "Техникийн дадлага дууссаны дараа та тодорхой ур чадвараар ажиллахыг хүсч байна уу?",
+      q31: "Компани танд техникийн дадлагын зорилгод хүрэхэд тусалдаг уу?", q32: "Компани эсвэл удирдах байгууллага таны саналыг сонсдог уу?",
+      q33: "Компани эсвэл удирдах байгууллага танд виз (оршин суух статус) сунгах, үйл ажиллагаанд тусалдаг уу?", q34: "Компани эсвэл удирдах байгууллага танд Японд амьдрах хүндрэлийг шийдвэрлэхэд тусалдаг уу?"
     },
-    
-    satisfaction: {
-      option1: 'Маш сэтгэл хангалуун',
-      option2: 'Сэтгэл хангалуун',
-      option3: 'Тодорхойгүй',
-      option4: 'Тийм ч сэтгэл хангалуун биш',
-      option5: 'Сэтгэл хангалуун биш',
-      option6: 'Огт сэтгэл хангалуун биш'
+    choices: {
+      satisfaction: ["😄 Маш сэтгэл хангалуун", "🙂 Сэтгэл хангалуун", "😐 Бага зэрэг сэтгэл хангалуун", "😟 Бага зэрэг сэтгэл хангалуун бус", "😞 Сэтгэл хангалуун бус", "😭 Маш сэтгэл хангалуун бус"],
+      desire: ["😄 Хүчтэй бодож байна", "🙂 Бодож байна", "😐 Бага зэрэг бодож байна", "😟 Тийм ч бодохгүй байна", "😞 Бодохгүй байна", "😭 Огт бодохгүй байна"],
+      understanding: ["😄 Сайн ойлгож байна", "🙂 Ойлгож байна", "😐 Бага зэрэг ойлгож байна", "😟 Бага зэрэг ойлгохгүй байна", "😞 Ойлгохгүй байна", "😭 Огт ойлгохгүй байна"],
+      familiarity: ["😄 Маш дассан", "🙂 Дассан", "😐 Бага зэрэг дассан", "😟 Бага зэрэг дасаагүй", "😞 Дасаагүй", "😭 Огт дасаагүй"],
+      availability: ["😄 Маш их байдаг", "🙂 Байдаг", "😐 Бага зэрэг байдаг", "😟 Тийм ч байдаггүй", "😞 Байдаггүй", "😭 Огт байдаггүй"],
+      negative: ["😄 Огт байдаггүй", "🙂 Байдаггүй", "😐 Тийм ч байдаггүй", "😟 Заримдаа байдаг", "😞 Байнга байдаг", "😭 Үргэлж байдаг"]
     },
-    
-    desire: {
-      option1: 'Маш зөвшөөрч байна',
-      option2: 'Зөвшөөрч байна',
-      option3: 'Тодорхойгүй',
-      option4: 'Тийм ч зөвшөөрөхгүй байна',
-      option5: 'Зөвшөөрөхгүй байна',
-      option6: 'Огт зөвшөөрөхгүй байна'
+    errors: {
+      employeeCode: "Ажилтны кодоо оруулна уу", nationality: "Үндсээ сонгоно уу",
+      allQuestions: "Бүх асуултад хариулна уу"
     },
-    
-    understanding: {
-      option1: 'Маш ойлгомжтой',
-      option2: 'Ойлгомжтой',
-      option3: 'Тодорхойгүй',
-      option4: 'Тийм ч ойлгомжгүй',
-      option5: 'Ойлгомжгүй',
-      option6: 'Огт ойлгомжгүй'
-    },
-    
-    familiarity: {
-      option1: 'Маш дассан',
-      option2: 'Дассан',
-      option3: 'Тодорхойгүй',
-      option4: 'Тийм ч дасаагүй',
-      option5: 'Дасаагүй',
-      option6: 'Огт дасаагүй'
-    },
-    
-    availability: {
-      option1: 'Маш их байна',
-      option2: 'Байна',
-      option3: 'Тодорхойгүй',
-      option4: 'Тийм ч их биш',
-      option5: 'Бараг байхгүй',
-      option6: 'Огт байхгүй'
-    },
-    
-    negative: {
-      option1: 'Огт байхгүй',
-      option2: 'Бараг байхгүй',
-      option3: 'Тодорхойгүй',
-      option4: 'Заримдаа',
-      option5: 'Байнга',
-      option6: 'Үргэлж'
-    },
-    
-    errorEmployeeCode: 'Ажилтны код сонгоно уу',
-    errorNationality: 'Харьяат сонгоно уу',
-    errorAllQuestions: 'Бүх асуултад хариулна уу',
-    errorDuplicate: 'Ажилтны код {code} энэ сард аль хэдийн хариулсан ({date})',
-    
-    completionTitle: 'Хамтран ажилласанд баярлалаа!',
-    completionMessage: 'Таны хариулт аюулгүй хадгалагдлаа',
-    completionAutoClose: 'Энэ хуудас автоматаар хаагдана',
-    completionRemaining: 'Үлдсэн',
-    completionSeconds: 'секунд',
-    
-    footerInfo: 'Хугацаа: Ойролцоогоор 5-10 минут'
+    completion: {
+      title: "Хамтран ажиллаагад баярлалаа!", message: "Судалгааны хариулт дууслаа.\n5 секундын дараа автоматаар нүүр хуудас руу буцна."
+    }
   },
-
-  // ===========================
-  // ベンガル語 (バングラデシュ) (新規)
-  // ===========================
   bn: {
-    title: 'নিশ্চিন্তে উত্তর দিন | কর্মস্থল জরিপ',
-    languageLabel: 'ভাষা নির্বাচন করুন',
-    anonymousMessage: 'আপনার নাম রেকর্ড করা হবে না',
-    anonymousSubMessage: 'অনুগ্রহ করে সৎভাবে উত্তর দিন',
-    employeeCodeLabel: 'কর্মচারী কোড',
-    employeeCodePlaceholder: '১ থেকে ২০ পর্যন্ত নম্বর নির্বাচন করুন',
-    nationalityLabel: 'জাতীয়তা',
-    nationalityPlaceholder: 'অনুগ্রহ করে জাতীয়তা নির্বাচন করুন',
-    startButton: 'জরিপ শুরু করুন',
-    submitButton: 'ফলাফল দেখুন',
-    
+    title: "প্রযুক্তিগত প্রশিক্ষণার্থী সম্পৃক্ততা সমীক্ষা",
+    anonymous: "※এই সমীক্ষাটি বেনামী",
+    employeeCode: "কর্মচারী কোড",
+    nationality: "জাতীয়তা",
+    startButton: "সমীক্ষা শুরু করুন",
+    submitButton: "জমা দিন",
     nationalities: {
-      vietnam: 'ভিয়েতনাম',
-      cambodia: 'কম্বোডিয়া',
-      india: 'ভারত',
-      philippines: 'ফিলিপাইন',
-      laos: 'লাওস',
-      mongolia: 'মঙ্গোলিয়া',
-      bangladesh: 'বাংলাদেশ',
-      srilanka: 'শ্রীলংকা',
-      myanmar: 'মায়ানমার',
-      bhutan: 'ভুটান',
-      uzbekistan: 'উজবেকিস্তান',
-      pakistan: 'পাকিস্তান',
-      thailand: 'থাইল্যান্ড',
-      indonesia: 'ইন্দোনেশিয়া',
-      nepal: 'নেপাল',
-      china: 'চীন'
+      vn: "ভিয়েতনাম", kh: "কম্বোডিয়া", in: "ভারত", ph: "ফিলিপাইন", la: "লাওস", mn: "মঙ্গোলিয়া",
+      bd: "বাংলাদেশ", lk: "শ্রীলঙ্কা", mm: "মিয়ানমার", bt: "ভুটান", uz: "উজবেকিস্তান",
+      pk: "পাকিস্তান", th: "থাইল্যান্ড", id: "ইন্দোনেশিয়া", np: "নেপাল", cn: "চীন"
     },
-    
     categories: {
-      work: '১. কাজ ও কর্মপরিবেশ',
-      salary: '২. বেতন ও সুবিধা',
-      family: '৩. পরিবার ও ব্যক্তিগত',
-      relationship: '৪. মানবিক সম্পর্ক',
-      communication: '৫. জাপানি ভাষা ও যোগাযোগ',
-      culture: '৬. সংস্কৃতি ও মূল্যবোধ',
-      living: '৭. জীবনযাপন পরিবেশ',
-      career: '৮. ক্যারিয়ার ও ভবিষ্যৎ'
+      work: "কাজ ও কর্মক্ষেত্র পরিবেশ", salary: "বেতন ও চিকিৎসা",
+      family: "পরিবার ও ব্যক্তিগত বিষয়", relations: "মানব সম্পর্ক",
+      communication: "জাপানি ভাষা ও যোগাযোগ", culture: "সংস্কৃতি ও মূল্যবোধ",
+      living: "জীবন পরিবেশ", career: "পেশা ও ভবিষ্যৎ দৃষ্টিভঙ্গি"
     },
-    
     questions: {
-      q1: 'কাজের বিষয়বস্তু আপনার জন্য উপযুক্ত?',
-      q2: 'কর্মস্থল কি নিরাপদ মনে হয়?',
-      q3: 'ছুটির দিন এবং কাজের সময় কি উপযুক্ত?',
-      q4: 'কর্মস্থলের পরিবেশ কি কাজ করতে সহজ?',
-      q5: 'বেতনের পরিমাণে কি সন্তুষ্ট?',
-      q6: 'ওভারটাইম এবং ভাতা কি সঠিকভাবে পাচ্ছেন?',
-      q7: 'বীমা এবং ছুটির মতো ব্যবস্থা কি পর্যাপ্ত?',
-      q8: 'এই কোম্পানিতে কাজ করে জীবনযাপনের জন্য পর্যাপ্ত অর্থ পাচ্ছেন?',
-      q9: 'পরিবারের সাথে যোগাযোগের জন্য পর্যাপ্ত সময় আছে?',
-      q10: 'পরিবারে টাকা পাঠানোর সামর্থ্য আছে?',
-      q11: 'নিজের সময় (ছুটি এবং ব্যক্তিগত) কি পর্যাপ্ত?',
-      q12: 'ভবিষ্যতে পরিবারকে জাপানে আনতে চান?',
-      q13: 'অন্যান্য প্রশিক্ষণার্থীদের সাথে সম্পর্ক কি ভালো?',
-      q14: 'জাপানি বস এবং সহকর্মীরা কি আপনার কথা শোনেন?',
-      q15: 'সমস্যার সময় অন্য প্রশিক্ষণার্থীরা কি সাহায্য করেন?',
-      q16: 'কর্মস্থলে কি হয়রানি বা বৈষম্য আছে?',
-      q17: 'জাপানি ভাষায় কথা বলতে কি সমস্যা হয়?',
-      q18: 'কাজের ব্যাখ্যা এবং নির্দেশনা কি বুঝতে সহজ?',
-      q19: 'না বুঝলে প্রশ্ন করা কি সহজ?',
-      q20: 'কোম্পানি কি জাপানি ভাষা শিখতে সাহায্য করে?',
-      q21: 'মাতৃভাষায় পরামর্শ নেওয়ার মতো কেউ (দোভাষী, সিনিয়র) আছে?',
-      q22: 'জাপানের সংস্কৃতি এবং রীতিনীতিতে কি অভ্যস্ত?',
-      q23: 'কাজে সাংস্কৃতিক পার্থক্যের কারণে কি সমস্যা হয়?',
-      q24: 'বসবাসের জায়গা (ডরমিটরি, অ্যাপার্টমেন্ট) কি আরামদায়ক?',
-      q25: 'জীবনযাপন খরচ কি বেতনের তুলনায় উপযুক্ত?',
-      q26: 'জাপানে জীবনযাপনে কি সমস্যা হয়?',
-      q27: 'কোম্পানি কি জীবনযাপনে সহায়তা করে?',
-      q28: 'ডরমিটরি বা বাড়ির জীবনযাপন পরিবেশ (রুমের আকার, সুবিধা) নিয়ে কি সন্তুষ্ট?',
-      q29: 'জাপানে জীবনযাপন কি নিরাপদ এবং আরামদায়ক?',
-      q30: 'বর্তমান কাজ থেকে কি প্রযুক্তি এবং জ্ঞান শিখছেন?',
-      q31: 'আপনার প্রচেষ্টা কি মূল্যায়ন এবং আচরণ উন্নত করছে বলে মনে হয়?',
-      q32: 'এই কোম্পানিতে দীর্ঘদিন কাজ করতে চান?',
-      q33: 'কোম্পানি বা ইউনিয়ন কি ভিসা (বসবাসের স্ট্যাটাস) নবায়ন এবং প্রক্রিয়ায় সাহায্য করে?',
-      q34: 'এই কোম্পানিতে কাজ করে দেশে ফিরে কাজে লাগবে এমন প্রযুক্তি কি শিখছেন?',
-      q35: 'দেশের বন্ধুদের কি "এই কোম্পানিতে কাজ করা ভালো" বলবেন?'
+      q1: "কাজের বিষয়বস্তু আপনার জন্য উপযুক্ত?", q2: "কর্মস্থলে সরঞ্জাম এবং যন্ত্রপাতি নিরাপদ?",
+      q3: "আপনি কাজের সময় এবং ছুটির দিনের সংখ্যায় সন্তুষ্ট?", q4: "আপনি মনে করেন কাজ থেকে শেখা জিনিস দেশে ফিরে গেলে কাজে লাগবে?",
+      q5: "আপনি বর্তমান বেতনে সন্তুষ্ট?", q6: "আপনি ওভারটাইম এবং ভাতা সঠিকভাবে পান?",
+      q7: "আপনি মনে করেন ছাত্রাবাসের ভাড়া এবং পানি-বিদ্যুৎ খরচ যুক্তিসঙ্গত?", q8: "আপনি স্বাস্থ্য বীমা এবং পেনশন সম্পর্কে ব্যাখ্যা পেয়েছেন এবং নিশ্চিন্ত?",
+      q9: "আপনি দেশে পরিবারের কাছে পাঠানো অর্থের পরিমাণে সন্তুষ্ট?", q10: "আপনি দেশে পরিবারের স্বাস্থ্য বা জীবন নিয়ে চিন্তিত?",
+      q11: "আপনি দেশে পরিবার এবং বন্ধুদের সাথে পর্যাপ্ত যোগাযোগ করতে পারছেন?", q12: "ছুটির দিনে, আপনি বিশ্রাম নিতে বা উপভোগ করতে পারছেন?",
+      q13: "উর্ধ্বতন এবং সিনিয়ররা কি আপনাকে দয়াপূর্ণভাবে শেখান?", q14: "সমস্যা হলে, আপনার পরামর্শের জন্য কেউ আছে?",
+      q15: "আপনি সহকর্মীদের সাথে ভালভাবে যোগাযোগ করতে পারছেন?", q16: "আপনি কর্মক্ষেত্রে বৈষম্য বা হয়রানি পেয়েছেন?",
+      q17: "আপনি কাজে ব্যবহৃত জাপানি বোঝেন?", q18: "আপনার জাপানি শেখার সুযোগ বা সময় আছে?",
+      q19: "আপনি মনে করেন কর্মক্ষেত্রের লোকেরা জাপানি খুব দ্রুত বলে?", q20: "আপনি জাপানি না বোঝার কারণে সমস্যায় পড়েছেন?",
+      q21: "আপনি কর্মক্ষেত্রের নিয়ম এবং শিষ্টাচার বোঝেন?", q22: "আপনি জাপানের সংস্কৃতি এবং রীতিনীতিতে অভ্যস্ত হয়েছেন?",
+      q23: "আপনি জাপানে জীবনে সন্তুষ্ট?", q24: "ছাত্রাবাস বা আপনার থাকার জায়গা বসবাসের জন্য সহজ?",
+      q25: "কাছাকাছি কেনাকাটার জন্য দোকান আছে?", q26: "অসুস্থ বা আহত হলে, আপনি হাসপাতালে যেতে পারবেন?",
+      q27: "পরিবহন (বাস, ট্রেন, সাইকেল ইত্যাদি) সুবিধাজনক?", q28: "আপনি ছাত্রাবাসের আকার এবং সুবিধা (বাথরুম, টয়লেট ইত্যাদি) নিয়ে সন্তুষ্ট?",
+      q29: "আপনি বর্তমান কোম্পানিতে আরও দীর্ঘ সময় কাজ করতে চান?", q30: "প্রযুক্তিগত ইন্টার্নশিপ শেষ হওয়ার পরে, আপনি নির্দিষ্ট দক্ষতা নিয়ে কাজ করতে চান?",
+      q31: "কোম্পানি আপনাকে প্রযুক্তিগত ইন্টার্নশিপ লক্ষ্য অর্জনে সাহায্য করে?", q32: "কোম্পানি বা তত্ত্বাবধায়ক সংস্থা আপনার মতামত শোনে?",
+      q33: "কোম্পানি বা তত্ত্বাবধায়ক সংস্থা আপনাকে ভিসা (বসবাসের অবস্থা) পুনর্নবীকরণ এবং পদ্ধতিতে সাহায্য করে?", q34: "কোম্পানি বা তত্ত্বাবধায়ক সংস্থা আপনাকে জাপানে জীবনের অসুবিধা সমাধানে সাহায্য করে?"
     },
-    
-    satisfaction: {
-      option1: 'খুব সন্তুষ্ট',
-      option2: 'কিছুটা সন্তুষ্ট',
-      option3: 'অনিশ্চিত',
-      option4: 'কিছুটা অসন্তুষ্ট',
-      option5: 'অসন্তুষ্ট',
-      option6: 'সম্পূর্ণ অসন্তুষ্ট'
+    choices: {
+      satisfaction: ["😄 অত্যন্ত সন্তুষ্ট", "🙂 সন্তুষ্ট", "😐 কিছুটা সন্তুষ্ট", "😟 কিছুটা অসন্তুষ্ট", "😞 অসন্তুষ্ট", "😭 অত্যন্ত অসন্তুষ্ট"],
+      desire: ["😄 দৃঢ়ভাবে মনে করি", "🙂 মনে করি", "😐 কিছুটা মনে করি", "😟 খুব একটা মনে করি না", "😞 মনে করি না", "😭 একেবারেই মনে করি না"],
+      understanding: ["😄 ভালভাবে বুঝি", "🙂 বুঝি", "😐 কিছুটা বুঝি", "😟 কিছুটা বুঝি না", "😞 বুঝি না", "😭 একেবারেই বুঝি না"],
+      familiarity: ["😄 খুব অভ্যস্ত", "🙂 অভ্যস্ত", "😐 কিছুটা অভ্যস্ত", "😟 কিছুটা অনভ্যস্ত", "😞 অনভ্যস্ত", "😭 একেবারেই অনভ্যস্ত"],
+      availability: ["😄 খুব আছে", "🙂 আছে", "😐 কিছুটা আছে", "😟 খুব একটা নেই", "😞 নেই", "😭 একেবারেই নেই"],
+      negative: ["😄 একেবারেই নেই", "🙂 নেই", "😐 খুব একটা নেই", "😟 মাঝে মাঝে আছে", "😞 প্রায়ই আছে", "😭 সবসময় আছে"]
     },
-    
-    desire: {
-      option1: 'সম্পূর্ণ সহমত',
-      option2: 'কিছুটা সহমত',
-      option3: 'অনিশ্চিত',
-      option4: 'কিছুটা অসহমত',
-      option5: 'অসহমত',
-      option6: 'সম্পূর্ণ অসহমত'
+    errors: {
+      employeeCode: "অনুগ্রহ করে কর্মচারী কোড লিখুন", nationality: "অনুগ্রহ করে জাতীয়তা নির্বাচন করুন",
+      allQuestions: "অনুগ্রহ করে সব প্রশ্নের উত্তর দিন"
     },
-    
-    understanding: {
-      option1: 'খুব সহজ',
-      option2: 'কিছুটা সহজ',
-      option3: 'অনিশ্চিত',
-      option4: 'কিছুটা কঠিন',
-      option5: 'কঠিন',
-      option6: 'সম্পূর্ণ কঠিন'
-    },
-    
-    familiarity: {
-      option1: 'খুব অভ্যস্ত',
-      option2: 'কিছুটা অভ্যস্ত',
-      option3: 'অনিশ্চিত',
-      option4: 'কিছুটা অভ্যস্ত নয়',
-      option5: 'অভ্যস্ত নয়',
-      option6: 'সম্পূর্ণ অভ্যস্ত নয়'
-    },
-    
-    availability: {
-      option1: 'অনেক আছে',
-      option2: 'কিছু আছে',
-      option3: 'অনিশ্চিত',
-      option4: 'কম আছে',
-      option5: 'প্রায় নেই',
-      option6: 'নেই'
-    },
-    
-    negative: {
-      option1: 'নেই',
-      option2: 'প্রায় নেই',
-      option3: 'অনিশ্চিত',
-      option4: 'মাঝে মাঝে',
-      option5: 'প্রায়ই',
-      option6: 'সবসময়'
-    },
-    
-    errorEmployeeCode: 'অনুগ্রহ করে কর্মচারী কোড নির্বাচন করুন',
-    errorNationality: 'অনুগ্রহ করে জাতীয়তা নির্বাচন করুন',
-    errorAllQuestions: 'অনুগ্রহ করে সব প্রশ্নের উত্তর দিন',
-    errorDuplicate: 'কর্মচারী কোড {code} এই মাসে ইতিমধ্যে উত্তর দিয়েছে ({date})',
-    
-    completionTitle: 'সহযোগিতার জন্য ধন্যবাদ!',
-    completionMessage: 'আপনার উত্তর নিরাপদভাবে সংরক্ষণ করা হয়েছে',
-    completionAutoClose: 'এই পৃষ্ঠা স্বয়ংক্রিয়ভাবে বন্ধ হবে',
-    completionRemaining: 'বাকি',
-    completionSeconds: 'সেকেন্ড',
-    
-    footerInfo: 'সময়: প্রায় ৫-১০ মিনিট'
+    completion: {
+      title: "আপনার সহযোগিতার জন্য ধন্যবাদ!", message: "সমীক্ষা উত্তর সম্পূর্ণ হয়েছে।\n5 সেকেন্ড পরে স্বয়ংক্রিয়ভাবে প্রধান পৃষ্ঠায় ফিরবে।"
+    }
   },
-
-  // ===========================
-  // シンハラ語 (スリランカ) (新規)
-  // ===========================
   si: {
-    title: 'විශ්වාසයෙන් පිළිතුරු දෙන්න | කාර්යස්ථාන සමීක්ෂණය',
-    languageLabel: 'භාෂාව තෝරන්න',
-    anonymousMessage: 'ඔබේ නම වාර්තා නොකෙරේ',
-    anonymousSubMessage: 'කරුණාකර අවංකව පිළිතුරු දෙන්න',
-    employeeCodeLabel: 'සේවක කේතය',
-    employeeCodePlaceholder: '1 සිට 20 දක්වා අංකයක් තෝරන්න',
-    nationalityLabel: 'ජාතිකත්වය',
-    nationalityPlaceholder: 'කරුණාකර ජාතිකත්වය තෝරන්න',
-    startButton: 'සමීක්ෂණය ආරම්භ කරන්න',
-    submitButton: 'ප්‍රතිඵල බලන්න',
-    
+    title: "තාක්ෂණික පුහුණු අභ්‍යාසලාභීන්ගේ සම්බන්ධ කිරීමේ සමීක්ෂණය",
+    anonymous: "※මෙම සමීක්ෂණය නිර්නාමිකයි",
+    employeeCode: "සේවක කේතය",
+    nationality: "ජාතිකත්වය",
+    startButton: "සමීක්ෂණය ආරම්භ කරන්න",
+    submitButton: "ඉදිරිපත් කරන්න",
     nationalities: {
-      vietnam: 'වියට්නාමය',
-      cambodia: 'කාම්බෝජය',
-      india: 'ඉන්දියාව',
-      philippines: 'පිලිපීනය',
-      laos: 'ලාඕසය',
-      mongolia: 'මොංගෝලියාව',
-      bangladesh: 'බංග්ලාදේශය',
-      srilanka: 'ශ්‍රී ලංකාව',
-      myanmar: 'මියන්මාරය',
-      bhutan: 'භූතානය',
-      uzbekistan: 'උස්බෙකිස්තානය',
-      pakistan: 'පාකිස්තානය',
-      thailand: 'තායිලන්තය',
-      indonesia: 'ඉන්දුනීසියාව',
-      nepal: 'නේපාලය',
-      china: 'චීනය'
+      vn: "වියට්නාමය", kh: "කාම්බෝජය", in: "ඉන්දියාව", ph: "පිලිපීනය", la: "ලාඕසය", mn: "මොංගෝලියාව",
+      bd: "බංග්ලාදේශය", lk: "ශ්‍රී ලංකාව", mm: "මියන්මාරය", bt: "භූතානය", uz: "උස්බෙකිස්තානය",
+      pk: "පාකිස්තානය", th: "තායිලන්තය", id: "ඉන්දුනීසියාව", np: "නේපාලය", cn: "චීනය"
     },
-    
     categories: {
-      work: '1. රැකියාව සහ කාර්යාල පරිසරය',
-      salary: '2. වැටුප් සහ ප්‍රතිලාභ',
-      family: '3. පවුල සහ පුද්ගලික',
-      relationship: '4. මානව සබඳතා',
-      communication: '5. ජපන් භාෂාව සහ සන්නිවේදනය',
-      culture: '6. සංස්කෘතිය සහ වටිනාකම්',
-      living: '7. ජීවන පරිසරය',
-      career: '8. වෘත්තීය සහ අනාගතය'
+      work: "වැඩ සහ වැඩ පරිසරය", salary: "වැටුප් සහ ප්‍රතිකාර",
+      family: "පවුල සහ පුද්ගලික කරුණු", relations: "මිනිස් සම්බන්ධතා",
+      communication: "ජපන් භාෂාව සහ සන්නිවේදනය", culture: "සංස්කෘතිය සහ වටිනාකම්",
+      living: "ජීවන පරිසරය", career: "වෘත්තිය සහ අනාගත දැක්ම"
     },
-    
     questions: {
-      q1: 'රැකියාවේ අන්තර්ගතය ඔබට සුදුසුද?',
-      q2: 'රැකියා ස්ථානය ආරක්ෂිත යැයි සිතනවාද?',
-      q3: 'නිවාඩු දින සහ රැකියා කාලය සුදුසුද?',
-      q4: 'රැකියා ස්ථාන පරිසරය වැඩ කිරීමට පහසුද?',
-      q5: 'වැටුප් ප්‍රමාණය ගැන සෑහීමකට පත්ද?',
-      q6: 'අතිකාල වැටුප් සහ දීමනා නිසි ලෙස ලැබෙනවාද?',
-      q7: 'රක්ෂණ සහ නිවාඩු වැනි ක්‍රම ප්‍රමාණවත්ද?',
-      q8: 'මෙම සමාගමේ වැඩ කිරීමෙන් ජීවත්වීමට අවශ්‍ය මුදල් ලැබෙනවාද?',
-      q9: 'පවුල සමඟ සන්නිවේදනය කිරීමට ප්‍රමාණවත් කාලයක් තිබේද?',
-      q10: 'පවුලට මුදල් යැවීමේ හැකියාවක් තිබේද?',
-      q11: 'ඔබේ කාලය (නිවාඩු සහ පුද්ගලික) ප්‍රමාණවත්ද?',
-      q12: 'අනාගතයේදී පවුල ජපානයට ගෙන්වා ගැනීමට අවශ්‍යද?',
-      q13: 'අනෙකුත් පුහුණු කරුවන් සමඟ සබඳතා හොඳද?',
-      q14: 'ජපන් ලොක්කු සහ සගයන් ඔබේ කථාව අසනවාද?',
-      q15: 'ගැටළු වලදී අනෙකුත් පුහුණු කරුවන් උදව් කරනවාද?',
-      q16: 'රැකියා ස්ථානයේ හිරිහැර හෝ වෙනස්කම් සිදුවනවාද?',
-      q17: 'ජපන් භාෂාවෙන් කථා කිරීමේදී ගැටළු තිබේද?',
-      q18: 'රැකියා පැහැදිලි කිරීම් සහ උපදෙස් තේරුම් ගැනීමට පහසුද?',
-      q19: 'නොතේරෙන දෙයක් විමසීමට පහසුද?',
-      q20: 'සමාගම ජපන් භාෂාව ඉගෙනීමට උදව් කරනවාද?',
-      q21: 'මව් භාෂාවෙන් උපදෙස් ලබා ගත හැකි කෙනෙක් (පරිවර්තකයා, ජ්‍යෙෂ්ඨයා) සිටීද?',
-      q22: 'ජපන් සංස්කෘතිය සහ සම්ප්‍රදායන් හුරුපුරුදුද?',
-      q23: 'රැකියාවේදී සංස්කෘතික වෙනස්කම් නිසා ගැටළු තිබේද?',
-      q24: 'ජීවත් වන ස්ථානය (නේවාසිකාගාරය, මහල් නිවාසය) සුවපහසුද?',
-      q25: 'ජීවන වියදම වැටුප් සමඟ සැසඳීමේදී සුදුසුද?',
-      q26: 'ජපානයේ ජීවත්වීමේදී ගැටළු තිබේද?',
-      q27: 'සමාගම ජීවන සහාය සපයයිද?',
-      q28: 'නේවාසිකාගාරයේ හෝ නිවසේ ජීවන පරිසරය (කාමර ප්‍රමාණය, පහසුකම්) ගැන සෑහීමකට පත්ද?',
-      q29: 'ජපානයේ ජීවිතය ආරක්ෂිත සහ සුවපහසුද?',
-      q30: 'වර්තමාන රැකියාවෙන් තාක්ෂණය සහ දැනුම ඉගෙන ගන්නවාද?',
-      q31: 'ඔබේ උත්සාහය තක්සේරුව සහ ප්‍රතිකාර වැඩි දියුණු කරන බව දැනෙනවාද?',
-      q32: 'මෙම සමාගමේ දිගු කාලයක් වැඩ කිරීමට අවශ්‍යද?',
-      q33: 'සමාගම හෝ වෘත්තීය සමිතිය වීසා (නේවාසික තත්ත්වය) අළුත් කිරීම සහ ක්‍රියාවලිය සඳහා උදව් කරනවාද?',
-      q34: 'මෙම සමාගමේ වැඩ කිරීමෙන් මව් රටට ආපසු ගිය පසු ප්‍රයෝජනවත් තාක්ෂණයක් ඉගෙන ගන්නවාද?',
-      q35: 'මව් රටේ මිතුරන්ට "මෙම සමාගමේ වැඩ කිරීම හොඳයි" යැයි කියනවාද?'
+      q1: "වැඩේ අන්තර්ගතය ඔබට සුදුසුද?", q2: "රැකියා ස්ථානයේ උපකරණ සහ යන්ත්‍ර ආරක්ෂිතද?",
+      q3: "ඔබ වැඩ කාලය සහ නිවාඩු දින ගණන පිළිබඳ සෑහීමකද?", q4: "වැඩෙන් ඉගෙන ගත් දේ රටට ආපසු ගියාම ප්‍රයෝජනවත් වනු ඇතැයි ඔබ සිතනවාද?",
+      q5: "ඔබ වත්මන් වැටුප පිළිබඳ සෑහීමකද?", q6: "ඔබට අතිකාල වැටුප් සහ දීමනා නිවැරදිව ලැබෙනවාද?",
+      q7: "ඔබ නේවාසිකාගාර කුලිය සහ ජල-විදුලි ගාස්තු සාධාරණ යැයි සිතනවාද?", q8: "ඔබට සෞඛ්‍ය රක්ෂණය සහ විශ්‍රාම වැටුප් පිළිබඳ පැහැදිලි කිරීමක් ලැබී ආරක්ෂිතද?",
+      q9: "ඔබ රට තුළ පවුලට යැවිය හැකි මුදල පිළිබඳ සෑහීමකද?", q10: "ඔබ රටේ පවුලේ සෞඛ්‍යය හෝ ජීවිතය ගැන කරදර වනවාද?",
+      q11: "ඔබට රටේ පවුල සහ මිතුරන් සමඟ ප්‍රමාණවත් තරම් සන්නිවේදනය කළ හැකිද?", q12: "නිවාඩු දිනයක, ඔබට විවේක ගත හැකිද හෝ විනෝද විය හැකිද?",
+      q13: "ඉහළ නිලධාරීන් සහ ජ්‍යෙෂ්ඨයන් කාරුණිකව ඉගැන්වනවාද?", q14: "ගැටළුවක් ඇති විට, ඔබට උපදෙස් ලබා ගත හැකි කෙනෙකු සිටීද?",
+      q15: "ඔබ සගයන් සමඟ හොඳින් සන්නිවේදනය කරනවාද?", q16: "ඔබ රැකියා ස්ථානයේ වෙනස් කොට සැලකීම හෝ හිරිහැර ලැබුවාද?",
+      q17: "ඔබ වැඩේ භාවිතා කරන ජපන් භාෂාව තේරුම් ගනිද?", q18: "ඔබට ජපන් ඉගෙන ගැනීමට අවස්ථාව හෝ කාලය තිබේද?",
+      q19: "ඔබ සිතන්නේ රැකියා ස්ථානයේ අය ජපන් ඉතා වේගයෙන් කතා කරන බවද?", q20: "ඔබට ජපන් නොතේරීම නිසා ගැටළු ඇති වුණාද?",
+      q21: "ඔබ රැකියා ස්ථානයේ නීති සහ ආචාර ධර්ම තේරුම් ගනිද?", q22: "ඔබ ජපානයේ සංස්කෘතිය සහ සිරිත් විරිත්වලට හුරු වී ඇද්ද?",
+      q23: "ඔබ ජපානයේ ජීවිතය පිළිබඳ සෑහීමකද?", q24: "නේවාසිකාගාරය හෝ ඔබ ජීවත් වන ස්ථානය ජීවත් වීමට පහසුද?",
+      q25: "ආසන්නයේ සාප්පු සවාරි සඳහා වෙළඳසැල් තිබේද?", q26: "අසනීප වීමේදී හෝ තුවාල වීමේදී, ඔබට රෝහලට යා හැකිද?",
+      q27: "ප්‍රවාහනය (බස් රථ, දුම්රිය, බයිසිකල් ආදිය) පහසුද?", q28: "ඔබ නේවාසිකාගාරයේ ප්‍රමාණය සහ පහසුකම් (නාන කාමරය, වැසිකිලිය ආදිය) පිළිබඳ සෑහීමකද?",
+      q29: "ඔබ වත්මන් සමාගමේ වැඩි කාලයක් වැඩ කිරීමට කැමතිද?", q30: "තාක්ෂණික පුහුණුව අවසන් වූ පසු, ඔබ නිශ්චිත කුසලතා සමඟ වැඩ කිරීමට කැමතිද?",
+      q31: "සමාගම ඔබට තාක්ෂණික පුහුණු අරමුණු සාක්ෂාත් කර ගැනීමට උපකාර කරනවාද?", q32: "සමාගම හෝ අධීක්ෂණ සංවිධානය ඔබේ අදහස් අසනවාද?",
+      q33: "සමාගම හෝ අධීක්ෂණ සංවිධානය ඔබට වීසා (නේවාසික තත්ත්වය) අලුත් කිරීම සහ ක්‍රියා පටිපාටියට උපකාර කරනවාද?", q34: "සමාගම හෝ අධීක්ෂණ සංවිධානය ඔබට ජපානයේ ජීවිත දුෂ්කරතා විසඳීමට උපකාර කරනවාද?"
     },
-    
-    satisfaction: {
-      option1: 'ඉතා සෑහීමකට පත්',
-      option2: 'තරමක් සෑහීමකට පත්',
-      option3: 'අවිනිශ්චිත',
-      option4: 'තරමක් අසතුටුයි',
-      option5: 'අසතුටුයි',
-      option6: 'සම්පූර්ණයෙන්ම අසතුටුයි'
+    choices: {
+      satisfaction: ["😄 ඉතා සෑහීමකි", "🙂 සෑහීමකි", "😐 තරමක් සෑහීමකි", "😟 තරමක් අසතුටුයි", "😞 අසතුටුයි", "😭 ඉතා අසතුටුයි"],
+      desire: ["😄 දැඩිව සිතනවා", "🙂 සිතනවා", "😐 තරමක් සිතනවා", "😟 එතරම් සිතන්නේ නැහැ", "😞 සිතන්නේ නැහැ", "😭 කිසිසේත්ම සිතන්නේ නැහැ"],
+      understanding: ["😄 හොඳින් තේරුම් ගනිමි", "🙂 තේරුම් ගනිමි", "😐 තරමක් තේරුම් ගනිමි", "😟 තරමක් තේරුම් ගන්නේ නැහැ", "😞 තේරුම් ගන්නේ නැහැ", "😭 කිසිසේත්ම තේරුම් ගන්නේ නැහැ"],
+      familiarity: ["😄 ඉතා හුරු වී ඇත", "🙂 හුරු වී ඇත", "😐 තරමක් හුරු වී ඇත", "😟 තරමක් හුරු වී නැත", "😞 හුරු වී නැත", "😭 කිසිසේත්ම හුරු වී නැත"],
+      availability: ["😄 ඉතා ඇත", "🙂 ඇත", "😐 තරමක් ඇත", "😟 එතරම් නැත", "😞 නැත", "😭 කිසිසේත්ම නැත"],
+      negative: ["😄 කිසිසේත්ම නැත", "🙂 නැත", "😐 එතරම් නැත", "😟 සමහර විට ඇත", "😞 බොහෝ විට ඇත", "😭 සැමවිටම ඇත"]
     },
-    
-    desire: {
-      option1: 'සම්පූර්ණයෙන්ම එකඟයි',
-      option2: 'තරමක් එකඟයි',
-      option3: 'අවිනිශ්චිත',
-      option4: 'තරමක් එකඟ නැත',
-      option5: 'එකඟ නැත',
-      option6: 'සම්පූර්ණයෙන්ම එකඟ නැත'
+    errors: {
+      employeeCode: "කරුණාකර සේවක කේතය ඇතුළත් කරන්න", nationality: "කරුණාකර ජාතිකත්වය තෝරන්න",
+      allQuestions: "කරුණාකර සියලුම ප්‍රශ්න වලට පිළිතුරු දෙන්න"
     },
-    
-    understanding: {
-      option1: 'ඉතා පහසු',
-      option2: 'තරමක් පහසු',
-      option3: 'අවිනිශ්චිත',
-      option4: 'තරමක් අපහසු',
-      option5: 'අපහසු',
-      option6: 'සම්පූර්ණයෙන්ම අපහසු'
-    },
-    
-    familiarity: {
-      option1: 'ඉතා හුරුපුරුදු',
-      option2: 'තරමක් හුරුපුරුදු',
-      option3: 'අවිනිශ්චිත',
-      option4: 'තරමක් හුරුපුරුදු නැත',
-      option5: 'හුරුපුරුදු නැත',
-      option6: 'සම්පූර්ණයෙන්ම හුරුපුරුදු නැත'
-    },
-    
-    availability: {
-      option1: 'බොහෝ තිබේ',
-      option2: 'තරමක් තිබේ',
-      option3: 'අවිනිශ්චිත',
-      option4: 'ස්වල්පයක් තිබේ',
-      option5: 'පාහේ නැත',
-      option6: 'නැත'
-    },
-    
-    negative: {
-      option1: 'නැත',
-      option2: 'පාහේ නැත',
-      option3: 'අවිනිශ්චිත',
-      option4: 'සමහර විට',
-      option5: 'නිතර',
-      option6: 'නිතරම'
-    },
-    
-    errorEmployeeCode: 'කරුණාකර සේවක කේතය තෝරන්න',
-    errorNationality: 'කරුණාකර ජාතිකත්වය තෝරන්න',
-    errorAllQuestions: 'කරුණාකර සියලුම ප්‍රශ්නවලට පිළිතුරු දෙන්න',
-    errorDuplicate: 'සේවක කේතය {code} මෙම මාසයේ දැනටමත් පිළිතුරු දී ඇත ({date})',
-    
-    completionTitle: 'සහයෝගයට ස්තූතියි!',
-    completionMessage: 'ඔබේ පිළිතුර ආරක්ෂිතව සුරකින ලදී',
-    completionAutoClose: 'මෙම පිටුව ස්වයංක්‍රීයව වසා දමනු ඇත',
-    completionRemaining: 'ඉතිරි',
-    completionSeconds: 'තත්පර',
-    
-    footerInfo: 'කාලය: ආසන්න වශයෙන් 5-10 මිනිත්තු'
+    completion: {
+      title: "ඔබේ සහයෝගයට ස්තූතියි!", message: "සමීක්ෂණ පිළිතුර සම්පූර්ණයි.\nතත්පර 5කින් ස්වයංක්‍රීයව ප්‍රධාන පිටුවට යනු ඇත."
+    }
   },
-
-  // ===========================
-  // ゾンカ語 (ブータン) (新規)
-  // ===========================
   dz: {
-    title: 'ཡིད་ཆེས་དང་བཅས་ལན་འདེབས་གནང་ | ལཱ་གི་ས་གནས་ཞིབ་དཔྱད།',
-    languageLabel: 'སྐད་ཡིག་འདེམས་པ།',
-    anonymousMessage: 'ཁྱོད་ཀྱི་མིང་དེ་ཐོ་བཀོད་མི་འབད།',
-    anonymousSubMessage: 'ཁ་གསལ་སྦེ་ལན་སྤྲོད།',
-    employeeCodeLabel: 'ལཱ་གཡོག་པའི་ཨང་རྟགས།',
-    employeeCodePlaceholder: '༡ ལས་ ༢༠ བར་གྱི་ཨང་གྲངས་འདེམས་པ།',
-    nationalityLabel: 'མི་རིགས།',
-    nationalityPlaceholder: 'མི་རིགས་འདེམས་པ།',
-    startButton: 'ཞིབ་དཔྱད་འགོ་བཙུགས།',
-    submitButton: 'འབྲས་བུ་ལྟ།',
-    
+    title: "འཕྲོད་བསྟེན་སློབ་སྦྱོང་པའི་འབྲེལ་བ་ཞིབ་བཤེར།",
+    anonymous: "※ཞིབ་བཤེར་འདི་མིང་མེད་ཡིན།",
+    employeeCode: "ལས་བྱེད་པའི་ཨང་རྟགས།",
+    nationality: "རྒྱལ་ཁབ།",
+    startButton: "ཞིབ་བཤེར་འགོ་བཙུགས།",
+    submitButton: "འབུལ།",
     nationalities: {
-      vietnam: 'བེཊ་ནཱམ།',
-      cambodia: 'ཀམ་བོ་ཌི་ཡ།',
-      india: 'རྒྱ་གར།',
-      philippines: 'ཕི་ལི་པིནས།',
-      laos: 'ལཱ་འོསི།',
-      mongolia: 'སོག་པོ།',
-      bangladesh: 'བངྒ་ལ་དེཤ།',
-      srilanka: 'ཤྲཱི་ལང་ཀ།',
-      myanmar: 'མི་ཡཱན་མར།',
-      bhutan: 'འབྲུག',
-      uzbekistan: 'ཨུཛ་བེ་ཀིསི་ཏཱན།',
-      pakistan: 'པ་ཀིསི་ཏཱན།',
-      thailand: 'ཐཱའི་ལེནཌ།',
-      indonesia: 'ཨིན་ཌོ་ནེ་ཤི་ཡ།',
-      nepal: 'བལ་ཡུལ།',
-      china: 'རྒྱ་ནག'
+      vn: "བེཊ་ནམ།", kh: "ཁམ་བོ་ཌི་ཡ།", in: "རྒྱ་གར།", ph: "ཕི་ལི་པིནས།", la: "ལ་འོསི།", mn: "སོག་པོ།",
+      bd: "བང་ལ་དེཤ།", lk: "སིརི་ལང་ཀ།", mm: "འབར་མ།", bt: "འབྲུག", uz: "ཨུཛ་བེ་ཀིསི་ཐན།",
+      pk: "པ་ཀི་སི་ཐན།", th: "ཐཱའི་ལེནཌ།", id: "ཨིན་ཌོ་ནེ་ཤི་ཡ།", np: "བལ་ཡུལ།", cn: "རྒྱ་ནག"
     },
-    
     categories: {
-      work: '༡. ལཱ་དང་ལཱ་གི་ས་གནས་ཁོར་ཡུག',
-      salary: '༢. དངུལ་ཕོགས་དང་སྒྲུབ་ཆོག',
-      family: '༣. ནང་མི་དང་རང་དོན།',
-      relationship: '༤. མི་འབྲེལ།',
-      communication: '༥. ཇ་པཱན་སྐད་དང་འབྲེལ་བ།',
-      culture: '༦. རིག་གཞུང་དང་གནས་གོང་།',
-      living: '༧. གནས་སྡོད་ཁོར་ཡུག',
-      career: '༨. འཚོ་བ་དང་མ་འོངས་པ།'
+      work: "ལས་ཀ་དང་ལས་ཀའི་ཁོར་ཡུག", salary: "དངུལ་ཕོགས་དང་སྨན་བཅོས།",
+      family: "ནང་མི་དང་སྒེར་གྱི་གནད་དོན།", relations: "མི་དང་མིའི་འབྲེལ་བ།",
+      communication: "ཉི་ཧོང་སྐད་དང་འབྲེལ་མཐུད།", culture: "རིག་གཞུང་དང་རིན་ཐང་།",
+      living: "འཚོ་བའི་ཁོར་ཡུག", career: "ལས་གཞི་དང་མ་འོངས་ལྟ་ཚུལ།"
     },
-    
     questions: {
-      q1: 'ལཱ་གི་ནང་དོན་དེ་ཁྱོད་ལུ་འོས་ཡོདཔ་སྨོ?',
-      q2: 'ལཱ་གི་ས་གནས་དེ་ཉེན་སྲུང་ཡོདཔ་བརྩིཝ་སྨོ?',
-      q3: 'གཟབ་གཟབ་གི་ཉིན་དང་ལཱ་གི་ཆུ་ཚོད་འོས་ཡོདཔ་སྨོ?',
-      q4: 'ལཱ་གི་ས་གནས་ཀྱི་ཁོར་ཡུག་དེ་ལཱ་འབད་ནི་ལུ་སྲལ་ཡོདཔ་སྨོ?',
-      q5: 'དངུལ་ཕོགས་ཀྱི་ཆེ་ཆུང་ལུ་དགའ་སྤོབ་སྦེ་ཡོདཔ་སྨོ?',
-      q6: 'བསྐལ་ལྷག་དངུལ་དང་གྲོགས་རམ་ངེས་བདེན་སྦེ་འབད་ཡོདཔ་སྨོ?',
-      q7: 'ཞིབ་འདོན་དང་གཟབ་གཟབ་བཟུམ་གྱི་ལམ་ལུགས་ཕྱུག་ཡོདཔ་སྨོ?',
-      q8: 'ཀུམ་པ་ནི་འདི་ནང་ལཱ་འབད་བའི་ཐོག་ལས་གཞི་རྟེན་ལུ་དགོས་མཁོ་ཡོད་པའི་དངུལ་འབད་ཚུགསཔ་སྨོ?',
-      q9: 'ནང་མི་དང་འབྲེལ་བ་འབད་ནི་ལུ་ཆུ་ཚོད་ཕྱུག་ཡོདཔ་སྨོ?',
-      q10: 'ནང་མི་ལུ་དངུལ་གཏང་ནིའི་ནུས་པ་ཡོདཔ་སྨོ?',
-      q11: 'རང་གི་ཆུ་ཚོད་(གཟབ་གཟབ་དང་རང་དོན)ཕྱུག་ཡོདཔ་སྨོ?',
-      q12: 'མ་འོངས་པར་ནང་མི་ཇ་པཱན་ལུ་བོད་དགོཔ་སྨོ?',
-      q13: 'གཞན་གྱི་སྦྱོང་བྱེད་པ་ཚུ་དང་འབྲེལ་བ་ལེགས་ཤོམ་ཡོདཔ་སྨོ?',
-      q14: 'ཇ་པཱན་གྱི་དཔོན་པོ་དང་ལཱ་གཡོག་ཚུ་གིས་ཁྱོད་ཀྱི་གསུང་དེ་ཉན་ནི་ཨིན་ན?',
-      q15: 'དཀའ་ངལ་བྱུང་བའི་སྐབས་ལུ་གཞན་གྱི་སྦྱོང་བྱེད་པ་ཚུ་གིས་གྲོགས་རམ་འབདཝ་ཨིན་ན?',
-      q16: 'ལཱ་གི་ས་གནས་ལུ་འཕྲུལ་བཀོལ་ཡང་ན་ཁྱད་པར་ཅན་གྱི་བྱ་སྤྱོད་ཡོདཔ་སྨོ?',
-      q17: 'ཇ་པཱན་སྐད་ཐོག་ལས་གླེང་སླང་འབད་ནི་ལུ་དཀའ་ངལ་ཡོདཔ་སྨོ?',
-      q18: 'ལཱ་གི་བཤད་པ་དང་བརྡ་སྟོན་དེ་ཧ་གོཝ་སྦེ་ཨིན་ན?',
-      q19: 'མ་ཧ་གོ་བའི་དོན་དག་དྲིས་ནི་སྲལ་ཡོདཔ་སྨོ?',
-      q20: 'ཀུམ་པ་ནི་འདི་གིས་ཇ་པཱན་སྐད་སྦྱོང་ནི་ལུ་གྲོགས་རམ་འབདཝ་ཨིན་ན?',
-      q21: 'ཕ་སྐད་ཐོག་ལས་ལམ་སྟོན་འབད་བའི་མི་(སྐད་སྒྱུར་བ་༼རྒན་ལས)ཡོདཔ་སྨོ?',
-      q22: 'ཇ་པཱན་གྱི་རིག་གཞུང་དང་གོམས་གཤིས་ལུ་གོམས་འདྲིས་སྦེ་ཡོདཔ་སྨོ?',
-      q23: 'ལཱ་ནང་རིག་གཞུང་གི་ཁྱད་པར་ལས་དཀའ་ངལ་ཡོདཔ་སྨོ?',
-      q24: 'གནས་སྡོད་ས་གནས་(གཞིས་ཆགས་༼ཁང་ཕོངས)བདེ་སྐྱིད་ཡོདཔ་སྨོ?',
-      q25: 'གཞི་རྟེན་གྱི་གླ་ཆ་དེ་དངུལ་ཕོགས་དང་བསྡུར་བ་ད་འོས་ཡོདཔ་སྨོ?',
-      q26: 'ཇ་པཱན་ནང་གཞི་རྟེན་སྦེ་དཀའ་ངལ་ཡོདཔ་སྨོ?',
-      q27: 'ཀུམ་པ་ནི་འདི་གིས་གཞི་རྟེན་ལུ་གྲོགས་རམ་འབདཝ་ཨིན་ན?',
-      q28: 'གཞིས་ཆགས་ཡང་ན་ཁང་པའི་གནས་སྡོད་ཁོར་ཡུག(ཁང་མིག་གི་ཆེ་ཆུང་༼གྲོགས་རམ)ལུ་དགའ་སྤོབ་སྦེ་ཡོདཔ་སྨོ?',
-      q29: 'ཇ་པཱན་ནང་གཞི་རྟེན་དེ་ཉེན་སྲུང་དང་བདེ་སྐྱིད་ཅན་ཨིན་ན?',
-      q30: 'ད་ལྟོའི་ལཱ་ལས་འཕྲུལ་རིག་དང་ཤེས་ཡོན་སྦྱོང་དོ་ཡོདཔ་སྨོ?',
-      q31: 'ཁྱོད་ཀྱི་དཀའ་ལས་དེ་གིས་ངོས་འཛིན་དང་བྱ་སྤྱོད་ལེགས་བཅོས་འབད་དོ་ཡོདཔ་སྦེ་ཚོར་དོ་ཡོདཔ་སྨོ?',
-      q32: 'ཀུམ་པ་ནི་འདི་ནང་ལུ་རིང་མོ་སྦེ་ལཱ་འབད་དགོཔ་སྨོ?',
-      q33: 'ཀུམ་པ་ནི་ཡང་ན་མཐུན་ཚོགས་ཀྱིས་བི་ཛ(གནས་སྡོད་གནས་ཚད)གསར་བཟོ་དང་ལམ་ལུགས་ལུ་གྲོགས་རམ་འབདཝ་ཨིན་ན?',
-      q34: 'ཀུམ་པ་ནི་འདི་ནང་ལཱ་འབད་བའི་ཐོག་ལས་ཕ་ཡུལ་ལུ་ལོག་འགྱོ་བའི་སྐབས་ལུ་ཕན་ཐོགས་འབད་མིའི་འཕྲུལ་རིག་སྦྱོང་དོ་ཡོདཔ་སྨོ?',
-      q35: 'ཕ་ཡུལ་གྱི་གྲོགས་པོ་ཚུ་ལུ་ཡང་"ཀུམ་པ་ནི་འདི་ནང་ལཱ་འབད་ནི་དེ་ལེགས་ཤོམ་ཨིན་པས"ཟེར་བརྗོདཔ་སྨོ?'
+      q1: "ལས་ཀའི་ནང་དོན་ཁྱོད་ལུ་འཚམ་པ་ཨིན་ན།", q2: "ལས་ཀའི་ས་གནས་ཀྱི་ཡོ་ཆས་དང་འཕྲུལ་ཆས་ཚུ་བདེ་འཇགས་ཨིན་ན།",
+      q3: "ཁྱོད་ལས་ཀའི་དུས་ཚོད་དང་གཟབ་གཟབ་ཚེས་གྲངས་ལུ་དགའ་པོ་ཡོད་ག", q4: "ལས་ཀ་ལས་སྦྱངས་མི་ཚུ་རྒྱལ་ཁབ་ལུ་ལོག་འགྱོ་བའི་སྐབས་ཕན་ཐོགས་འོང་ག་སྦེ་ཁྱོད་ཀྱིས་སེམས་ག",
+      q5: "ཁྱོད་ད་ལྟོའི་དངུལ་ཕོགས་ལུ་དགའ་པོ་ཡོད་ག", q6: "ཁྱོད་ལུ་དུས་ཡུན་ལྷག་པའི་དངུལ་དང་གྲོགས་རམ་ངེས་པར་དུ་ཐོབ་དོ་ཡོད་ག",
+      q7: "ཁྱོད་གཞིས་ཀའི་ཁང་གླ་དང་ཆུ་གློག་གི་ཁ་ཚིག་འདི་འོས་ལྡན་ཨིན་ག་སྦེ་སེམས་ག", q8: "ཁྱོད་ལུ་འཕྲོད་བསྟེན་འཚོ་སྐྱོང་དང་དགོངས་ལོན་གྱི་སྐོར་ལས་འགྲེལ་བཤད་ཐོབ་སྟེ་ཡིད་ཆེས་ཡོད་ག",
+      q9: "ཁྱོད་རྒྱལ་ཁབ་ནང་གི་ནང་མི་ལུ་བཏང་ཆོག་པའི་དངུལ་གྱི་གྲངས་འབོར་ལུ་དགའ་པོ་ཡོད་ག", q10: "ཁྱོད་རྒྱལ་ཁབ་ནང་གི་ནང་མིའི་འཕྲོད་བསྟེན་ཡང་ན་འཚོ་བའི་སྐོར་ལས་སེམས་ཁྲལ་ཡོད་ག",
+      q11: "ཁྱོད་ཀྱིས་རྒྱལ་ཁབ་ནང་གི་ནང་མི་དང་གྲོགས་པོ་ཚུ་དང་ལུང་ཕོགས་འབྲེལ་མཐུད་འབད་ཚུགས་དོ་ཡོད་ག", q12: "གཟབ་གཟབ་ཚེས་ནང་ཁྱོད་ངལ་གསོ་ཡང་ན་སྐྱིད་སྡུག་འབད་ཚུགས་དོ་ཡོད་ག",
+      q13: "མགོ་གནས་དང་སྔོན་མའི་ལས་བྱེད་པ་ཚུ་གིས་བརྩེ་བའི་ངང་སྦྱོང་བརྡར་འབད་དོ་ཡོད་ག", q14: "དཀའ་ངལ་བྱུང་བའི་སྐབས་བློ་འདྲི་ཆོག་པའི་མི་ཡོད་ག",
+      q15: "ཁྱོད་ཀྱིས་ལཱ་གཅིག་ཁར་འབད་མི་ཚུ་དང་ལེགས་ཤོམ་འབྲེལ་མཐུད་འབད་ཚུགས་དོ་ཡོད་ག", q16: "ཁྱོད་ལས་ཀའི་ས་གནས་ནང་ཁྱད་པར་ཡང་ན་གནོད་སྐྱོད་ཐོབ་ཡོད་ག",
+      q17: "ཁྱོད་ཀྱིས་ལས་ཀ་ནང་ལག་ལེན་འཐབ་མི་ཉི་ཧོང་སྐད་ཧ་གོ་དོ་ཡོད་ག", q18: "ཁྱོད་ལུ་ཉི་ཧོང་སྐད་སློབ་སྦྱོང་འབད་ནིའི་གོ་སྐབས་ཡང་ན་དུས་ཚོད་ཡོད་ག",
+      q19: "ཁྱོད་ཀྱིས་ལས་ཀའི་ས་གནས་ནང་མི་ཚུ་གིས་ཉི་ཧོང་སྐད་ཧ་ལམ་མགྱོགས་དྲགས་སྦེ་སླབ་དོ་ཡོད་ག་སྦེ་ཚོར་དོ་ཡོད་ག", q20: "ཁྱོད་ལུ་ཉི་ཧོང་སྐད་མ་ཧ་གོ་བའི་རྐྱེན་པ་ལས་དཀའ་ངལ་བྱུང་ཡོད་ག",
+      q21: "ཁྱོད་ཀྱིས་ལས་ཀའི་ས་གནས་ཀྱི་ཁྲིམས་ལུགས་དང་སྤྱོད་ལམ་ཚུ་ཧ་གོ་དོ་ཡོད་ག", q22: "ཁྱོད་ཉི་ཧོང་གི་རིག་གཞུང་དང་སྲོལ་ལུགས་ཚུ་ལུ་འདྲིས་ཡོད་ག",
+      q23: "ཁྱོད་ཉི་ཧོང་ནང་འཚོ་བ་ལུ་དགའ་པོ་ཡོད་ག", q24: "གཞིས་ཀ་ཡང་ན་ཁྱོད་སྡོད་སའི་ས་གནས་འདི་སྡོད་ནིའི་དོན་ལུ་བཏུབ་ག",
+      q25: "ཉེ་འདབས་ལུ་ཉོ་ཆ་འབད་ནིའི་ཚོང་ཁང་ཡོད་ག", q26: "ན་བའི་སྐབས་ཡང་ན་རྨས་སྐྱོན་བྱུང་བའི་སྐབས་ཁྱོད་སྨན་ཁང་ལུ་འགྱོ་ཚུགས་དོ་ཡོད་ག",
+      q27: "འགྲུལ་བསྐྱོད་(གླིང་འཁོར་རླངས་འཁོར་རྐང་འཁོར་ལ་སོགས་པ)བཏུབ་ག", q28: "ཁྱོད་གཞིས་ཀའི་ཚད་དང་དཀའ་རྙོག་ཚུ་(ཁྲུས་སྣོད་གསང་སྤྱོད་ལ་སོགས་པ)ལུ་དགའ་པོ་ཡོད་ག",
+      q29: "ཁྱོད་ད་ལྟོའི་ཀུམ་པ་ནི་ནང་དུས་ཡུན་རིངམོ་སྦེ་ལཱ་འབད་དགོ་པསམ་སྦེ་སེམས་ག", q30: "འཕྲོད་བསྟེན་སློབ་སྦྱོང་མཇུག་བསྡུ་བའི་ཤུལ་ཁྱོད་ངེས་གཏན་གྱི་ལག་རྩལ་དང་གཅིག་ཁར་ལཱ་འབད་དགོ་པསམ་སྦེ་སེམས་ག",
+      q31: "ཀུམ་པ་ནི་གིས་ཁྱོད་ལུ་འཕྲོད་བསྟེན་སློབ་སྦྱོང་གི་དམིགས་དོན་བསྒྲུབ་ནི་ལུ་གྲོགས་རམ་འབད་དོ་ཡོད་ག", q32: "ཀུམ་པ་ནི་ཡང་ན་ལྟ་རྟོག་ཚོགས་པ་གིས་ཁྱོད་ཀྱི་བསམ་ཚུལ་ཉན་དོ་ཡོད་ག",
+      q33: "ཀུམ་པ་ནི་ཡང་ན་ལྟ་རྟོག་ཚོགས་པ་གིས་ཁྱོད་ལུ་བི་ཛ་(སྡོད་ས་གནས་སྟངས)གསརཔ་བཟོ་ནི་དང་ལམ་ལུགས་ལུ་གྲོགས་རམ་འབད་དོ་ཡོད་ག", q34: "ཀུམ་པ་ནི་ཡང་ན་ལྟ་རྟོག་ཚོགས་པ་གིས་ཁྱོད་ལུ་ཉི་ཧོང་ནང་འཚོ་བའི་དཀའ་ངལ་ཚུ་སེལ་ནི་ལུ་གྲོགས་རམ་འབད་དོ་ཡོད་ག"
     },
-    
-    satisfaction: {
-      option1: 'ཧ་ཅང་དགའ་སྤོབ།',
-      option2: 'འབྲིང་དགའ་སྤོབ།',
-      option3: 'གཏན་འཁེལ་མེད།',
-      option4: 'འབྲིང་མི་དགའ།',
-      option5: 'མི་དགའ།',
-      option6: 'ཧ་ལམ་མི་དགའ།'
+    choices: {
+      satisfaction: ["😄 ཧ་ལམ་དགའ་པོ་ཡོད།", "🙂 དགའ་པོ་ཡོད།", "😐 ཅིག་ཙམ་དགའ་པོ་ཡོད།", "😟 ཅིག་ཙམ་དགའ་པོ་མེད།", "😞 དགའ་པོ་མེད།", "😭 ཧ་ལམ་དགའ་པོ་མེད།"],
+      desire: ["😄 ཧ་ལམ་སེམས།", "🙂 སེམས།", "😐 ཅིག་ཙམ་སེམས།", "😟 ཧ་ལམ་མི་སེམས།", "😞 མི་སེམས།", "😭 ཡང་དག་པར་མི་སེམས།"],
+      understanding: ["😄 ལེགས་ཤོམ་ཧ་གོ།", "🙂 ཧ་གོ།", "😐 ཅིག་ཙམ་ཧ་གོ།", "😟 ཅིག་ཙམ་མ་ཧ་གོ།", "😞 མ་ཧ་གོ།", "😭 ཡང་དག་པར་མ་ཧ་གོ།"],
+      familiarity: ["😄 ཧ་ལམ་འདྲིས།", "🙂 འདྲིས།", "😐 ཅིག་ཙམ་འདྲིས།", "😟 ཅིག་ཙམ་མ་འདྲིས།", "😞 མ་འདྲིས།", "😭 ཡང་དག་པར་མ་འདྲིས།"],
+      availability: ["😄 ཧ་ལམ་ཡོད།", "🙂 ཡོད།", "😐 ཅིག་ཙམ་ཡོད།", "😟 ཧ་ལམ་མེད།", "😞 མེད།", "😭 ཡང་དག་པར་མེད།"],
+      negative: ["😄 ཡང་དག་པར་མེད།", "🙂 མེད།", "😐 ཧ་ལམ་མེད།", "😟 ཐོག་ཐོག་ཅིག་ཡོད།", "😞 ཕལ་ཆེར་ཡོད།", "😭 ཨ་རྟག་ར་ཡོད།"]
     },
-    
-    desire: {
-      option1: 'ཧ་ཅང་མཐུན།',
-      option2: 'འབྲིང་མཐུན།',
-      option3: 'གཏན་འཁེལ་མེད།',
-      option4: 'འབྲིང་མི་མཐུན།',
-      option5: 'མི་མཐུན།',
-      option6: 'ཧ་ལམ་མི་མཐུན།'
+    errors: {
+      employeeCode: "ལས་བྱེད་པའི་ཨང་རྟགས་བཙུགས་གནང།", nationality: "རྒྱལ་ཁབ་གདམ་ཁ་རྐྱབས།",
+      allQuestions: "དྲི་བ་ཆ་མཉམ་ལན་འདེབས་གནང།"
     },
-    
-    understanding: {
-      option1: 'ཧ་ཅང་སྲལ།',
-      option2: 'འབྲིང་སྲལ།',
-      option3: 'གཏན་འཁེལ་མེད།',
-      option4: 'འབྲིང་དཀའ།',
-      option5: 'དཀའ།',
-      option6: 'ཧ་ལམ་དཀའ།'
-    },
-    
-    familiarity: {
-      option1: 'ཧ་ཅང་གོམས་འདྲིས།',
-      option2: 'འབྲིང་གོམས་འདྲིས།',
-      option3: 'གཏན་འཁེལ་མེད།',
-      option4: 'འབྲིང་མ་གོམས།',
-      option5: 'མ་གོམས།',
-      option6: 'ཧ་ལམ་མ་གོམས།'
-    },
-    
-    availability: {
-      option1: 'ཧ་ཅང་མང་།',
-      option2: 'འབྲིང་མང་།',
-      option3: 'གཏན་འཁེལ་མེད།',
-      option4: 'འབྲིང་ཉུང་།',
-      option5: 'ཉུང་།',
-      option6: 'མེད།'
-    },
-    
-    negative: {
-      option1: 'མེད།',
-      option2: 'ཉུང་།',
-      option3: 'གཏན་འཁེལ་མེད།',
-      option4: 'མཐའ་དམའ་རེ།',
-      option5: 'ཧྲིལ་པོ།',
-      option6: 'ཆ་ཚང་།'
-    },
-    
-    errorEmployeeCode: 'ལཱ་གཡོག་པའི་ཨང་རྟགས་འདེམས་གནང་།',
-    errorNationality: 'མི་རིགས་འདེམས་གནང་།',
-    errorAllQuestions: 'དྲི་བ་ཆ་མཉམ་ལུ་ལན་སྤྲོད་གནང་།',
-    errorDuplicate: 'ལཱ་གཡོག་པའི་ཨང་རྟགས་ {code} གིས་ཟླ་བ་འདི་ནང་ཧེ་མ་ལས་ལན་སྤྲོད་ཡོདཔ། ({date})',
-    
-    completionTitle: 'མཐུན་འགྱུར་ལུ་བཀའ་དྲིན་ཆེ།',
-    completionMessage: 'ཁྱོད་ཀྱི་ལན་དེ་ཉེན་སྲུང་ནང་ཉར་ཚགས་བཞག་ཡོད།',
-    completionAutoClose: 'ཤོག་ལེབ་འདི་རང་བཞིན་གྱིས་ཁ་བསྡམས་འོང་།',
-    completionRemaining: 'ལྷག་མ།',
-    completionSeconds: 'སྐར་ཆ།',
-    
-    footerInfo: 'དུས་ཚོད: ཆ་འཕྲོས་ 5-10 སྐར་མ།'
+    completion: {
+      title: "ཁྱོད་ཀྱི་མཐུན་འགྱུར་ལུ་ཐུགས་རྗེ་ཆེ!", message: "ཞིབ་བཤེར་ལན་ཚུ་ཚར་སོང་།\nསྐར་ཆ་5ཤུལ་ལུ་རང་བཞིན་གྱིས་གཙོ་ཤོག་ལུ་ལོག་འགྱོ།"
+    }
   },
-
-  // ===========================
-  // ウズベク語 (新規)
-  // ===========================
   uz: {
-    title: 'Ishonch bilan javob bering | Ish joyidagi so\'rovnoma',
-    languageLabel: 'Tilni tanlang',
-    anonymousMessage: 'Sizning ismingiz yozilmaydi',
-    anonymousSubMessage: 'Iltimos, halol javob bering',
-    employeeCodeLabel: 'Xodim kodi',
-    employeeCodePlaceholder: '1 dan 20 gacha raqamni tanlang',
-    nationalityLabel: 'Millati',
-    nationalityPlaceholder: 'Iltimos, millatni tanlang',
-    startButton: 'So\'rovnomani boshlash',
-    submitButton: 'Natijani ko\'rish',
-    
+    title: "Texnik amaliyotchi ishtirokchilik so'rovi",
+    anonymous: "※Ushbu so'rov anonim",
+    employeeCode: "Xodim kodi",
+    nationality: "Millati",
+    startButton: "So'rovni boshlash",
+    submitButton: "Yuborish",
     nationalities: {
-      vietnam: 'Vetnam',
-      cambodia: 'Kambodja',
-      india: 'Hindiston',
-      philippines: 'Filippin',
-      laos: 'Laos',
-      mongolia: 'Mo\'g\'uliston',
-      bangladesh: 'Bangladesh',
-      srilanka: 'Shri-Lanka',
-      myanmar: 'Myanma',
-      bhutan: 'Butan',
-      uzbekistan: 'O\'zbekiston',
-      pakistan: 'Pokiston',
-      thailand: 'Tailand',
-      indonesia: 'Indoneziya',
-      nepal: 'Nepal',
-      china: 'Xitoy'
+      vn: "Vyetnam", kh: "Kambodja", in: "Hindiston", ph: "Filippin", la: "Laos", mn: "Mo'g'uliston",
+      bd: "Bangladesh", lk: "Shri-Lanka", mm: "Myanma", bt: "Butan", uz: "O'zbekiston",
+      pk: "Pokiston", th: "Tailand", id: "Indoneziya", np: "Nepal", cn: "Xitoy"
     },
-    
     categories: {
-      work: '1. Ish va ish joyi muhiti',
-      salary: '2. Maosh va imtiyozlar',
-      family: '3. Oila va shaxsiy',
-      relationship: '4. Insoniy munosabatlar',
-      communication: '5. Yapon tili va aloqa',
-      culture: '6. Madaniyat va qadriyatlar',
-      living: '7. Yashash muhiti',
-      career: '8. Martaba va kelajak'
+      work: "Ish va ish muhiti", salary: "Maosh va davolanish",
+      family: "Oila va shaxsiy masalalar", relations: "Inson munosabatlari",
+      communication: "Yapon tili va aloqa", culture: "Madaniyat va qadriyatlar",
+      living: "Yashash muhiti", career: "Karyera va kelajak istiqbollari"
     },
-    
     questions: {
-      q1: 'Ish mazmuni sizga mos keladimi?',
-      q2: 'Ish joyi xavfsiz deb o\'ylaysizmi?',
-      q3: 'Dam olish kunlari va ish vaqti qulaymi?',
-      q4: 'Ish joyi muhiti ishlashga qulayma?',
-      q5: 'Maosh miqdoridan qoniqasizmi?',
-      q6: 'Qo\'shimcha ish haqi va nafaqalarni to\'g\'ri olayapsizmi?',
-      q7: 'Sug\'urta va dam olish kabi tizimlar yetarlimi?',
-      q8: 'Bu kompaniyada ishlash orqali yashash uchun yetarli pul olayapsizmi?',
-      q9: 'Oila bilan aloqa qilish uchun yetarli vaqt bormi?',
-      q10: 'Oilaga pul yuborish imkoniyatingiz bormi?',
-      q11: 'O\'z vaqtingiz (dam olish va shaxsiy) yetarlimi?',
-      q12: 'Kelajakda oilangizni Yaponiyaga olib kelishni xohlaysizmi?',
-      q13: 'Boshqa stajyorlar bilan munosabatlar yaxshimi?',
-      q14: 'Yapon rahbarlari va hamkasblari sizning gapingizni tinglaydimi?',
-      q15: 'Qiyinchilik tug\'ilganda boshqa stajyorlar yordam beradimi?',
-      q16: 'Ish joyida ta\'qib yoki kamsitish bormi?',
-      q17: 'Yapon tilida gaplashishda qiyinchilik bormi?',
-      q18: 'Ish tushuntirishlari va ko\'rsatmalari tushunarli mi?',
-      q19: 'Tushunmagan narsani so\'rash osonmi?',
-      q20: 'Kompaniya yapon tilini o\'rganishga yordam beradimi?',
-      q21: 'Ona tilida maslahat olish mumkin bo\'lgan odam (tarjimon, katta) bormi?',
-      q22: 'Yaponiya madaniyati va urf-odatlariga o\'rganib qoldingizmi?',
-      q23: 'Ishda madaniy farqlar tufayli qiyinchilik bormi?',
-      q24: 'Yashash joyi (yotoqxona, kvartira) qulayma?',
-      q25: 'Yashash xarajatlari maoshga nisbatan qulayma?',
-      q26: 'Yaponiyada yashashda qiyinchilik bormi?',
-      q27: 'Kompaniya hayotni qo\'llab-quvvatlaydimi?',
-      q28: 'Yotoqxona yoki uydagi yashash muhiti (xona hajmi, jihozlar) dan qoniqasizmi?',
-      q29: 'Yaponiyada hayot xavfsiz va qulayma?',
-      q30: 'Hozirgi ishdan texnologiya va bilim o\'rganayapsizmi?',
-      q31: 'Harakatingiz baholash va munosabatni yaxshilashini his qilasizmi?',
-      q32: 'Bu kompaniyada uzoq muddatli ishlashni xohlaysizmi?',
-      q33: 'Kompaniya yoki kasaba uyushmasi viza (yashash holati) yangilash va jarayonlarda yordam beradimi?',
-      q34: 'Bu kompaniyada ishlash orqali vatanga qaytganingizda foydali texnologiyani o\'rganayapsizmi?',
-      q35: 'Vatandagi do\'stlaringizga "bu kompaniyada ishlash yaxshi" deb aytasizmi?'
+      q1: "Ish mazmuni sizga mosmi?", q2: "Ish joyidagi jihozlar va mashinalar xavfsizmi?",
+      q3: "Siz ish vaqti va dam olish kunlari sonidan mamnunmisiz?", q4: "Ishdan o'rgangan narsalar mamlakatga qaytganingizda foydali bo'ladi deb o'ylaysizmi?",
+      q5: "Siz hozirgi maoshdan mamnunmisiz?", q6: "Ortiqcha ishlash va nafaqalarni to'g'ri olasizmi?",
+      q7: "Siz yotoqxona ijarasi va suv-elektr to'lovlari oqilona deb o'ylaysizmi?", q8: "Siz sog'liqni saqlash sug'urtasi va pensiya haqida tushuntirish oldingiz va ishonasizmi?",
+      q9: "Siz mamlakatdagi oilaga yuborish mumkin bo'lgan miqdordan mamnunmisiz?", q10: "Siz mamlakatdagi oilaning sog'lig'i yoki hayoti haqida tashvishlimisiz?",
+      q11: "Siz mamlakatdagi oila va do'stlar bilan yetarlicha aloqa qila olasizmi?", q12: "Dam olish kunida, siz dam olish yoki zavqlanish mumkinmi?",
+      q13: "Rahbar va kattalar mehribonlik bilan o'rgatadilarmi?", q14: "Muammo bo'lganda, maslahat olish uchun odamingiz bormi?",
+      q15: "Siz hamkasblar bilan yaxshi muloqot qilasizmi?", q16: "Siz ish joyida kamsitish yoki ta'qibga uchragansizmi?",
+      q17: "Siz ishda ishlatiladigan yapon tilini tushunasiymi?", q18: "Sizda yapon tilini o'rganish imkoniyati yoki vaqti bormi?",
+      q19: "Siz ish joyidagi odamlar yapon tilida juda tez gaplashishadi deb o'ylaysizmi?", q20: "Siz yapon tilini tushunmasligingiz sababli muammoga duch keldingizmi?",
+      q21: "Siz ish joyining qoidalari va odob-axloqini tushunasiymi?", q22: "Siz Yaponiya madaniyati va urf-odatlariga o'rganib qoldingizmi?",
+      q23: "Siz Yaponiyada hayotdan mamnunmisiz?", q24: "Yotoqxona yoki siz yashaydigan joy yashoq uchun qulayma?",
+      q25: "Yaqinda xarid qilish uchun do'konlar bormi?", q26: "Kasal bo'lganingizda yoki jarohatlanganda, kasalxonaga borishingiz mumkinmi?",
+      q27: "Transport (avtobus, poezd, velosiped va boshqalar) qulayma?", q28: "Siz yotoqxonaning o'lchami va jihozlaridan (hammom, hojatxona va boshqalar) mamnunmisiz?",
+      q29: "Siz hozirgi kompaniyada ko'proq vaqt ishlashni xohlaysizmi?", q30: "Texnik amaliyot tugagandan so'ng, siz maxsus ko'nikma bilan ishlashni xohlaysizmi?",
+      q31: "Kompaniya sizga texnik amaliyot maqsadiga erishishda yordam beradimi?", q32: "Kompaniya yoki nazorat tashkiloti sizning fikringizni tinglaydimi?",
+      q33: "Kompaniya yoki nazorat tashkiloti sizga viza (yashash holati) uzaytirish va jarayonlarda yordam beradimi?", q34: "Kompaniya yoki nazorat tashkiloti sizga Yaponiyada hayotdagi qiyinchiliklarni hal qilishda yordam beradimi?"
     },
-    
-    satisfaction: {
-      option1: 'Juda qoniqarli',
-      option2: 'Biroz qoniqarli',
-      option3: 'Noaniq',
-      option4: 'Biroz qoniqarsiz',
-      option5: 'Qoniqarsiz',
-      option6: 'Butunlay qoniqarsiz'
+    choices: {
+      satisfaction: ["😄 Juda mamnun", "🙂 Mamnun", "😐 Biroz mamnun", "😟 Biroz nomamnun", "😞 Nomamnun", "😭 Juda nomamnun"],
+      desire: ["😄 Kuchli o'ylayman", "🙂 O'ylayman", "😐 Biroz o'ylayman", "😟 Unchalik o'ylamayman", "😞 O'ylamayman", "😭 Umuman o'ylamayman"],
+      understanding: ["😄 Yaxshi tushunaman", "🙂 Tushunaman", "😐 Biroz tushunaman", "😟 Biroz tushunmayman", "😞 Tushunmayman", "😭 Umuman tushunmayman"],
+      familiarity: ["😄 Juda o'rgandim", "🙂 O'rgandim", "😐 Biroz o'rgandim", "😟 Biroz o'rganmadim", "😞 O'rganmadim", "😭 Umuman o'rganmadim"],
+      availability: ["😄 Juda bor", "🙂 Bor", "😐 Biroz bor", "😟 Unchalik yo'q", "😞 Yo'q", "😭 Umuman yo'q"],
+      negative: ["😄 Umuman yo'q", "🙂 Yo'q", "😐 Unchalik yo'q", "😟 Ba'zida bor", "😞 Tez-tez bor", "😭 Doimo bor"]
     },
-    
-    desire: {
-      option1: 'To\'liq roziman',
-      option2: 'Biroz roziman',
-      option3: 'Noaniq',
-      option4: 'Biroz rozi emasman',
-      option5: 'Rozi emasman',
-      option6: 'Butunlay rozi emasman'
+    errors: {
+      employeeCode: "Iltimos, xodim kodini kiriting", nationality: "Iltimos, millatni tanlang",
+      allQuestions: "Iltimos, barcha savollarga javob bering"
     },
-    
-    understanding: {
-      option1: 'Juda oson',
-      option2: 'Biroz oson',
-      option3: 'Noaniq',
-      option4: 'Biroz qiyin',
-      option5: 'Qiyin',
-      option6: 'Butunlay qiyin'
-    },
-    
-    familiarity: {
-      option1: 'Juda o\'rganib qolgan',
-      option2: 'Biroz o\'rganib qolgan',
-      option3: 'Noaniq',
-      option4: 'Biroz o\'rganmagan',
-      option5: 'O\'rganmagan',
-      option6: 'Butunlay o\'rganmagan'
-    },
-    
-    availability: {
-      option1: 'Juda ko\'p',
-      option2: 'Biroz',
-      option3: 'Noaniq',
-      option4: 'Kam',
-      option5: 'Deyarli yo\'q',
-      option6: 'Yo\'q'
-    },
-    
-    negative: {
-      option1: 'Yo\'q',
-      option2: 'Deyarli yo\'q',
-      option3: 'Noaniq',
-      option4: 'Ba\'zan',
-      option5: 'Tez-tez',
-      option6: 'Doimo'
-    },
-    
-    errorEmployeeCode: 'Iltimos, xodim kodini tanlang',
-    errorNationality: 'Iltimos, millatni tanlang',
-    errorAllQuestions: 'Iltimos, barcha savollarga javob bering',
-    errorDuplicate: 'Xodim kodi {code} bu oyda allaqachon javob bergan ({date})',
-    
-    completionTitle: 'Hamkorlik uchun rahmat!',
-    completionMessage: 'Sizning javobingiz xavfsiz saqlandi',
-    completionAutoClose: 'Bu sahifa avtomatik ravishda yopiladi',
-    completionRemaining: 'Qoldi',
-    completionSeconds: 'soniya',
-    
-    footerInfo: 'Vaqt: Taxminan 5-10 daqiqa'
+    completion: {
+      title: "Hamkorligingiz uchun rahmat!", message: "So'rov javobi tugallandi.\n5 soniyadan keyin avtomatik ravishda asosiy sahifaga qaytadi."
+    }
   },
-
-  // ===========================
-  // ウルドゥー語 (パキスタン) (新規)
-  // ===========================
   ur: {
-    title: 'اعتماد کے ساتھ جواب دیں | کام کی جگہ کا سروے',
-    languageLabel: 'زبان منتخب کریں',
-    anonymousMessage: 'آپ کا نام ریکارڈ نہیں کیا جائے گا',
-    anonymousSubMessage: 'براہ کرم ایمانداری سے جواب دیں',
-    employeeCodeLabel: 'ملازم کوڈ',
-    employeeCodePlaceholder: '1 سے 20 تک نمبر منتخب کریں',
-    nationalityLabel: 'قومیت',
-    nationalityPlaceholder: 'براہ کرم قومیت منتخب کریں',
-    startButton: 'سروے شروع کریں',
-    submitButton: 'نتائج دیکھیں',
-    
+    title: "تکنیکی تربیت یافتہ کی شمولیت کا سروے",
+    anonymous: "※یہ سروے گمنام ہے",
+    employeeCode: "ملازم کوڈ",
+    nationality: "قومیت",
+    startButton: "سروے شروع کریں",
+    submitButton: "جمع کرائیں",
     nationalities: {
-      vietnam: 'ویتنام',
-      cambodia: 'کمبوڈیا',
-      india: 'بھارت',
-      philippines: 'فلپائن',
-      laos: 'لاؤس',
-      mongolia: 'منگولیا',
-      bangladesh: 'بنگلہ دیش',
-      srilanka: 'سری لنکا',
-      myanmar: 'میانمار',
-      bhutan: 'بھوٹان',
-      uzbekistan: 'ازبکستان',
-      pakistan: 'پاکستان',
-      thailand: 'تھائی لینڈ',
-      indonesia: 'انڈونیشیا',
-      nepal: 'نیپال',
-      china: 'چین'
+      vn: "ویتنام", kh: "کمبوڈیا", in: "بھارت", ph: "فلپائن", la: "لاؤس", mn: "منگولیا",
+      bd: "بنگلہ دیش", lk: "سری لنکا", mm: "میانمار", bt: "بھوٹان", uz: "ازبکستان",
+      pk: "پاکستان", th: "تھائی لینڈ", id: "انڈونیشیا", np: "نیپال", cn: "چین"
     },
-    
     categories: {
-      work: '1. کام اور کام کی جگہ کا ماحول',
-      salary: '2. تنخواہ اور فوائد',
-      family: '3. خاندان اور ذاتی',
-      relationship: '4. انسانی تعلقات',
-      communication: '5. جاپانی زبان اور رابطہ',
-      culture: '6. ثقافت اور اقدار',
-      living: '7. رہائش کا ماحول',
-      career: '8. کیریئر اور مستقبل'
+      work: "کام اور کام کا ماحول", salary: "تنخواہ اور علاج",
+      family: "خاندان اور ذاتی معاملات", relations: "انسانی تعلقات",
+      communication: "جاپانی زبان اور رابطہ", culture: "ثقافت اور اقدار",
+      living: "رہائش کا ماحول", career: "کیریئر اور مستقبل کا نقطہ نظر"
     },
-    
     questions: {
-      q1: 'کیا کام کا مواد آپ کے لیے موزوں ہے؟',
-      q2: 'کیا آپ کو کام کی جگہ محفوظ لگتی ہے؟',
-      q3: 'کیا چھٹیوں کے دن اور کام کا وقت مناسب ہے؟',
-      q4: 'کیا کام کی جگہ کا ماحول کام کرنے میں آسان ہے؟',
-      q5: 'کیا آپ تنخواہ کی رقم سے مطمئن ہیں؟',
-      q6: 'کیا آپ کو اوور ٹائم اور الاؤنس صحیح طریقے سے مل رہا ہے؟',
-      q7: 'کیا انشورنس اور چھٹیوں جیسے نظام کافی ہیں؟',
-      q8: 'کیا اس کمپنی میں کام کرکے زندگی کے لیے کافی پیسے مل رہے ہیں؟',
-      q9: 'کیا خاندان سے رابطے کے لیے کافی وقت ہے؟',
-      q10: 'کیا آپ کے پاس خاندان کو پیسے بھیجنے کی صلاحیت ہے؟',
-      q11: 'کیا آپ کا اپنا وقت (چھٹی اور ذاتی) کافی ہے؟',
-      q12: 'کیا آپ مستقبل میں خاندان کو جاپان لانا چاہتے ہیں؟',
-      q13: 'کیا دوسرے تربیت یافتگان کے ساتھ تعلقات اچھے ہیں؟',
-      q14: 'کیا جاپانی باس اور ساتھی آپ کی بات سنتے ہیں؟',
-      q15: 'کیا مشکل میں دوسرے تربیت یافتگان مدد کرتے ہیں؟',
-      q16: 'کیا کام کی جگہ پر تنگ کرنا یا امتیاز ہے؟',
-      q17: 'کیا جاپانی میں بات کرنے میں مشکل ہے؟',
-      q18: 'کیا کام کی وضاحت اور ہدایات سمجھنے میں آسان ہیں؟',
-      q19: 'کیا نہ سمجھنے پر سوال کرنا آسان ہے؟',
-      q20: 'کیا کمپنی جاپانی زبان سیکھنے میں مدد کرتی ہے؟',
-      q21: 'کیا مادری زبان میں مشورہ لینے والا کوئی (مترجم، سینئر) ہے؟',
-      q22: 'کیا آپ جاپانی ثقافت اور رسم و رواج کے عادی ہیں؟',
-      q23: 'کیا کام میں ثقافتی فرق سے مشکل ہے؟',
-      q24: 'کیا رہائش کی جگہ (ہاسٹل، اپارٹمنٹ) آرام دہ ہے؟',
-      q25: 'کیا رہائشی اخراجات تنخواہ کے مقابلے میں مناسب ہیں؟',
-      q26: 'کیا جاپان میں رہنے میں مشکل ہے؟',
-      q27: 'کیا کمپنی زندگی میں مدد کرتی ہے؟',
-      q28: 'کیا آپ ہاسٹل یا گھر میں رہائش کے ماحول (کمرے کا سائز، سہولیات) سے مطمئن ہیں؟',
-      q29: 'کیا جاپان میں زندگی محفوظ اور آرام دہ ہے؟',
-      q30: 'کیا آپ موجودہ کام سے ٹیکنالوجی اور علم سیکھ رہے ہیں؟',
-      q31: 'کیا آپ محسوس کرتے ہیں کہ آپ کی کوشش تشخیص اور سلوک بہتر بنا رہی ہے؟',
-      q32: 'کیا آپ اس کمپنی میں لمبے عرصے تک کام کرنا چاہتے ہیں؟',
-      q33: 'کیا کمپنی یا یونین ویزا (رہائش کی حیثیت) کی تجدید اور عمل میں مدد کرتی ہے؟',
-      q34: 'کیا آپ اس کمپنی میں کام کرکے وطن واپسی پر کارآمد ٹیکنالوجی سیکھ رہے ہیں؟',
-      q35: 'کیا آپ وطن کے دوستوں کو "اس کمپنی میں کام کرنا اچھا ہے" کہیں گے؟'
+      q1: "کیا کام کا مواد آپ کے لیے موزوں ہے؟", q2: "کیا کام کی جگہ پر سامان اور مشینیں محفوظ ہیں؟",
+      q3: "کیا آپ کام کے وقت اور چھٹیوں کی تعداد سے مطمئن ہیں؟", q4: "کیا آپ سوچتے ہیں کہ کام سے سیکھی ہوئی چیزیں ملک واپس جانے پر کام آئیں گی؟",
+      q5: "کیا آپ موجودہ تنخواہ سے مطمئن ہیں؟", q6: "کیا آپ کو اوور ٹائم اور الاؤنس صحیح طریقے سے ملتا ہے؟",
+      q7: "کیا آپ سوچتے ہیں کہ ہاسٹل کا کرایہ اور پانی بجلی کے اخراجات مناسب ہیں؟", q8: "کیا آپ کو صحت کی انشورنس اور پنشن کے بارے میں وضاحت ملی ہے اور آپ مطمئن ہیں؟",
+      q9: "کیا آپ ملک میں خاندان کو بھیجی جانے والی رقم سے مطمئن ہیں؟", q10: "کیا آپ ملک میں خاندان کی صحت یا زندگی کے بارے میں فکر مند ہیں؟",
+      q11: "کیا آپ ملک میں خاندان اور دوستوں کے ساتھ کافی رابطہ کر سکتے ہیں؟", q12: "چھٹی کے دن، کیا آپ آرام کر سکتے ہیں یا لطف اندوز ہو سکتے ہیں؟",
+      q13: "کیا سینئر اور بزرگ مہربانی سے سکھاتے ہیں؟", q14: "مسئلہ ہونے پر، کیا آپ کے پاس مشورہ کرنے کے لیے کوئی ہے؟",
+      q15: "کیا آپ ساتھیوں کے ساتھ اچھی طرح بات چیت کر سکتے ہیں؟", q16: "کیا آپ نے کام کی جگہ پر امتیازی سلوک یا ہراساں کیا گیا ہے؟",
+      q17: "کیا آپ کام میں استعمال ہونے والی جاپانی سمجھتے ہیں؟", q18: "کیا آپ کے پاس جاپانی سیکھنے کا موقع یا وقت ہے؟",
+      q19: "کیا آپ محسوس کرتے ہیں کہ کام کی جگہ کے لوگ جاپانی بہت تیزی سے بولتے ہیں؟", q20: "کیا آپ کو جاپانی نہ سمجھنے کی وجہ سے پریشانی ہوئی ہے؟",
+      q21: "کیا آپ کام کی جگہ کے قواعد اور آداب سمجھتے ہیں؟", q22: "کیا آپ جاپان کی ثقافت اور رسم و رواج کے عادی ہو گئے ہیں؟",
+      q23: "کیا آپ جاپان میں زندگی سے مطمئن ہیں؟", q24: "کیا ہاسٹل یا آپ کی رہائش کی جگہ رہنے کے لیے آسان ہے؟",
+      q25: "کیا قریب میں خریداری کے لیے دکانیں ہیں؟", q26: "بیمار ہونے یا زخمی ہونے پر، کیا آپ ہسپتال جا سکتے ہیں؟",
+      q27: "کیا نقل و حمل (بس، ٹرین، سائیکل وغیرہ) سہولت ہے؟", q28: "کیا آپ ہاسٹل کے سائز اور سہولیات (باتھ روم، ٹوائلٹ وغیرہ) سے مطمئن ہیں؟",
+      q29: "کیا آپ موجودہ کمپنی میں زیادہ وقت کام کرنا چاہتے ہیں؟", q30: "تکنیکی انٹرنشپ ختم ہونے کے بعد، کیا آپ مخصوص مہارت کے ساتھ کام کرنا چاہتے ہیں؟",
+      q31: "کیا کمپنی آپ کو تکنیکی انٹرنشپ کا مقصد حاصل کرنے میں مدد کرتی ہے؟", q32: "کیا کمپنی یا نگران تنظیم آپ کی رائے سنتی ہے؟",
+      q33: "کیا کمپنی یا نگران تنظیم آپ کو ویزا (رہائش کی حیثیت) کی تجدید اور طریقہ کار میں مدد کرتی ہے؟", q34: "کیا کمپنی یا نگران تنظیم آپ کو جاپان میں زندگی کی مشکلات کو حل کرنے میں مدد کرتی ہے؟"
     },
-    
-    satisfaction: {
-      option1: 'بہت مطمئن',
-      option2: 'کچھ مطمئن',
-      option3: 'غیر یقینی',
-      option4: 'کچھ غیر مطمئن',
-      option5: 'غیر مطمئن',
-      option6: 'مکمل طور پر غیر مطمئن'
+    choices: {
+      satisfaction: ["😄 بہت مطمئن", "🙂 مطمئن", "😐 تھوڑا مطمئن", "😟 تھوڑا ناخوش", "😞 ناخوش", "😭 بہت ناخوش"],
+      desire: ["😄 سختی سے سوچتا ہوں", "🙂 سوچتا ہوں", "😐 تھوڑا سوچتا ہوں", "😟 زیادہ نہیں سوچتا", "😞 نہیں سوچتا", "😭 بالکل نہیں سوچتا"],
+      understanding: ["😄 اچھی طرح سمجھتا ہوں", "🙂 سمجھتا ہوں", "😐 تھوڑا سمجھتا ہوں", "😟 تھوڑا نہیں سمجھتا", "😞 نہیں سمجھتا", "😭 بالکل نہیں سمجھتا"],
+      familiarity: ["😄 بہت عادی", "🙂 عادی", "😐 تھوڑا عادی", "😟 تھوڑا غیر عادی", "😞 غیر عادی", "😭 بالکل غیر عادی"],
+      availability: ["😄 بہت ہے", "🙂 ہے", "😐 تھوڑا ہے", "😟 زیادہ نہیں", "😞 نہیں ہے", "😭 بالکل نہیں ہے"],
+      negative: ["😄 بالکل نہیں ہے", "🙂 نہیں ہے", "😐 زیادہ نہیں", "😟 کبھی کبھار ہے", "😞 اکثر ہے", "😭 ہمیشہ ہے"]
     },
-    
-    desire: {
-      option1: 'مکمل طور پر متفق',
-      option2: 'کچھ متفق',
-      option3: 'غیر یقینی',
-      option4: 'کچھ غیر متفق',
-      option5: 'غیر متفق',
-      option6: 'مکمل طور پر غیر متفق'
+    errors: {
+      employeeCode: "براہ کرم ملازم کوڈ درج کریں", nationality: "براہ کرم قومیت منتخب کریں",
+      allQuestions: "براہ کرم تمام سوالات کے جواب دیں"
     },
-    
-    understanding: {
-      option1: 'بہت آسان',
-      option2: 'کچھ آسان',
-      option3: 'غیر یقینی',
-      option4: 'کچھ مشکل',
-      option5: 'مشکل',
-      option6: 'مکمل طور پر مشکل'
-    },
-    
-    familiarity: {
-      option1: 'بہت عادی',
-      option2: 'کچھ عادی',
-      option3: 'غیر یقینی',
-      option4: 'کچھ غیر عادی',
-      option5: 'غیر عادی',
-      option6: 'مکمل طور پر غیر عادی'
-    },
-    
-    availability: {
-      option1: 'بہت زیادہ',
-      option2: 'کچھ',
-      option3: 'غیر یقینی',
-      option4: 'کم',
-      option5: 'تقریباً نہیں',
-      option6: 'نہیں'
-    },
-    
-    negative: {
-      option1: 'نہیں',
-      option2: 'تقریباً نہیں',
-      option3: 'غیر یقینی',
-      option4: 'کبھی کبھار',
-      option5: 'اکثر',
-      option6: 'ہمیشہ'
-    },
-    
-    errorEmployeeCode: 'براہ کرم ملازم کوڈ منتخب کریں',
-    errorNationality: 'براہ کرم قومیت منتخب کریں',
-    errorAllQuestions: 'براہ کرم تمام سوالات کے جواب دیں',
-    errorDuplicate: 'ملازم کوڈ {code} نے اس مہینے پہلے ہی جواب دیا ہے ({date})',
-    
-    completionTitle: 'تعاون کے لیے شکریہ!',
-    completionMessage: 'آپ کا جواب محفوظ طریقے سے محفوظ کر لیا گیا ہے',
-    completionAutoClose: 'یہ صفحہ خود بخود بند ہو جائے گا',
-    completionRemaining: 'باقی',
-    completionSeconds: 'سیکنڈ',
-    
-    footerInfo: 'وقت: تقریباً 5-10 منٹ'
+    completion: {
+      title: "آپ کے تعاون کا شکریہ!", message: "سروے کا جواب مکمل ہو گیا۔\n5 سیکنڈ بعد خودکار طور پر مرکزی صفحہ پر واپس آئیں گے۔"
+    }
   }
-};
 };
