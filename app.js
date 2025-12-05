@@ -94,7 +94,10 @@ function updateLanguage() {
   
   // ヘッダー
   document.getElementById('headerTitle').textContent = t.title;
-  document.getElementById('languageLabelText').textContent = t.languageLabel;
+  const languageLabelTextEl = document.getElementById('languageLabelText');
+  if (languageLabelTextEl) {
+    languageLabelTextEl.textContent = t.languageLabel;
+  }
   
   // 初期画面
   document.getElementById('anonymousMessage').textContent = t.anonymousMessage;
@@ -117,8 +120,9 @@ function updateLanguage() {
   document.getElementById('nationalityChina').textContent = '🇨🇳 ' + t.nationalities.china;
   
   // フッター情報
-  if (document.getElementById('footerInfo')) {
-    document.getElementById('footerInfo').textContent = t.footerInfo || '所要時間: 約5〜10分';
+  const footerInfoEl = document.getElementById('footerInfo');
+  if (footerInfoEl) {
+    footerInfoEl.textContent = t.footerInfo || '所要時間: 約5〜10分';
   }
 }
 
@@ -168,6 +172,9 @@ function startSurvey() {
   
   // プログレス更新
   updateProgress();
+  
+  // ページトップへスクロール
+  window.scrollTo(0, 0);
 }
 
 // ===========================
@@ -254,6 +261,9 @@ function selectAnswer(questionNum, score, button) {
   
   // プログレス更新
   updateProgress();
+  
+  // 次の質問へ自動スクロール
+  scrollToNextQuestion(questionNum);
 }
 
 // ===========================
@@ -272,6 +282,34 @@ function updateProgress() {
   if (answeredElement) answeredElement.textContent = answeredCount;
   if (progressBar) progressBar.style.width = percentage + '%';
   if (progressPercentage) progressPercentage.textContent = percentage + '%';
+}
+
+// ===========================
+// 次の質問へスクロール
+// ===========================
+function scrollToNextQuestion(currentQuestionNum) {
+  // 最後の質問の場合はスクロールしない
+  if (currentQuestionNum >= 35) {
+    return;
+  }
+  
+  // 次の質問要素を取得
+  const nextQuestionNum = currentQuestionNum + 1;
+  const nextQuestion = document.querySelector(`[data-question="${nextQuestionNum}"]`);
+  
+  if (nextQuestion) {
+    // スムーズスクロール（プログレスバーの高さを考慮）
+    setTimeout(() => {
+      const progressBarHeight = 120;
+      const elementPosition = nextQuestion.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - progressBarHeight - 20;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }, 300);
+  }
 }
 
 // ===========================
@@ -332,6 +370,9 @@ function showCompletion() {
   document.getElementById('completionAutoClose').textContent = t.completionAutoClose;
   document.getElementById('completionRemaining').textContent = t.completionRemaining;
   document.getElementById('completionSeconds').textContent = t.completionSeconds;
+  
+  // ページトップへスクロール
+  window.scrollTo(0, 0);
   
   // カウントダウン
   let countdown = 5;
