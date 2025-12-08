@@ -41,7 +41,7 @@ const questionTypes = {
 const translations = {
     ja: {
         title: '職場アンケート',
-        privacyNotice: 'お名前は記録されません。安心して正直にお答えください。',
+        privacyNotice: 'お名前は記録されません\n安心して正直にお答えください。',
         employeeCode: '社員番号',
         nationality: '国籍',
         selectNationality: '選択してください',
@@ -165,7 +165,7 @@ const translations = {
     },
     vn: {
         title: 'Khảo sát nơi làm việc',
-        privacyNotice: 'Tên của bạn sẽ không được ghi lại. Hãy trả lời trung thực một cách an tâm.',
+        privacyNotice: 'Tên của bạn sẽ không được ghi lại\nHãy trả lời trung thực một cách an tâm.',
         employeeCode: 'Mã nhân viên',
         nationality: 'Quốc tịch',
         selectNationality: 'Vui lòng chọn',
@@ -289,7 +289,7 @@ const translations = {
     },
     my: {
         title: 'အလုပ်ခွင်စစ်တမ်း',
-        privacyNotice: 'သင့်အမည်ကို မှတ်တမ်းမတင်ပါ။ စိတ်ချလုံခြုံစွာ ရိုးသားစွာဖြေဆိုနိုင်ပါသည်။',
+        privacyNotice: 'သင့်အမည်ကို မှတ်တမ်းမတင်ပါ။\nစိတ်ချလုံခြုံစွာ ရိုးသားစွာဖြေဆိုနိုင်ပါသည်။',
         employeeCode: 'ဝန်ထမ်းနံပါတ်',
         nationality: 'နိုင်ငံသား',
         selectNationality: 'ကျေးဇူးပြု၍ ရွေးချယ်ပါ',
