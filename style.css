@@ -358,4 +358,10 @@ body {
         overflow-wrap: break-word;  /* 単語途中でも折り返す */
         white-space: normal;  /* 折り返し許可 */
     }
+
+    /* ミャンマー語のみフォントサイズをさらに小さく */
+    body[data-lang="my"] .choice-label-text {
+        font-size: 0.46rem;  /* ミャンマー語専用: さらに縮小 */
+        line-height: 1.1;  /* 行間を詰める */
+    }
 }
