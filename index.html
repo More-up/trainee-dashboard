@@ -9,16 +9,27 @@
 <body>
     <div class="container">
         <div class="header">
-            <span class="icon">📋</span>
-            <h1 data-i18n="title">職場アンケート</h1>
-            <p class="language-indicator">🌐 <span id="currentLanguage">言語 / Language</span></p>
+            <div class="header-left">
+                <span class="icon">📋</span>
+                <h1 data-i18n="title">職場アンケート</h1>
+            </div>
+            <div class="header-right">
+                <label for="languageSelect" style="display: flex; align-items: center; gap: 8px; color: white; font-size: 14px;">
+                    <span>🌐</span>
+                    <select id="languageSelect" style="padding: 8px 12px; border-radius: 8px; border: none; font-size: 14px; cursor: pointer;">
+                        <option value="ja">日本語</option>
+                        <option value="vn">Tiếng Việt</option>
+                        <option value="id">Bahasa Indonesia</option>
+                    </select>
+                </label>
+            </div>
         </div>
 
         <div id="setupForm">
             <div class="privacy-notice">
                 <span class="icon">🔒</span>
-                <p><strong>あなたの名前は記録されません</strong></p>
-                <p>安心して正直に答えてください</p>
+                <p><strong data-i18n="privacyTitle">あなたの名前は記録されません</strong></p>
+                <p data-i18n="privacyMessage">安心して正直に答えてください</p>
             </div>
 
             <div class="form-group">
@@ -26,7 +37,7 @@
                     <span class="icon">👤</span>
                     <span data-i18n="employeeCode">社員番号</span>
                 </label>
-                <input type="text" id="employeeCode" data-i18n="employeeCode">
+                <input type="text" id="employeeCode" data-i18n-placeholder="employeeCode">
             </div>
 
             <div class="form-group">
