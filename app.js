@@ -1,12 +1,6 @@
 let currentLanguage = 'ja';
 let currentAnswers = {};
 
-const languageMap = {
-    'jp': 'ja', 'vn': 'vn', 'cn': 'ja', 'ph': 'ja', 'id': 'id', 'th': 'ja',
-    'np': 'ja', 'in': 'ja', 'pk': 'ja', 'mm': 'ja', 'kh': 'ja', 'la': 'ja', 
-    'mn': 'ja', 'bd': 'ja', 'lk': 'ja', 'bt': 'ja', 'uz': 'ja'
-};
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Page loaded - Initializing...');
     
@@ -15,17 +9,28 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
+    // 言語選択の初期化
+    const languageSelect = document.getElementById('languageSelect');
+    if (languageSelect) {
+        languageSelect.addEventListener('change', function() {
+            currentLanguage = this.value;
+            updateLanguage();
+        });
+    }
+    
+    // 国籍選択の初期化
     const nationalitySelect = document.getElementById('nationality');
     if (nationalitySelect) {
         nationalitySelect.value = '';
-        nationalitySelect.addEventListener('change', handleNationalityChange);
     }
     
+    // アンケート開始ボタンの初期化
     const startButton = document.getElementById('startSurvey');
     if (startButton) {
         startButton.addEventListener('click', startSurvey);
     }
     
+    // 初期言語検出と表示更新
     detectLanguage();
 });
 
@@ -38,18 +43,13 @@ function detectLanguage() {
     } else {
         currentLanguage = 'ja';
     }
-    updateLanguage();
-}
-
-function handleNationalityChange(event) {
-    const nationalityCode = event.target.value;
-    if (nationalityCode && languageMap[nationalityCode]) {
-        const mappedLang = languageMap[nationalityCode];
-        if (translations[mappedLang]) {
-            currentLanguage = mappedLang;
-            updateLanguage();
-        }
+    
+    const languageSelect = document.getElementById('languageSelect');
+    if (languageSelect) {
+        languageSelect.value = currentLanguage;
     }
+    
+    updateLanguage();
 }
 
 function updateLanguage() {
@@ -60,6 +60,10 @@ function updateLanguage() {
     
     const t = translations[currentLanguage];
     
+    // ページタイトルを更新
+    document.title = t.title;
+    
+    // data-i18n属性を持つすべての要素を更新
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         const keys = key.split('.');
@@ -69,14 +73,25 @@ function updateLanguage() {
             if (!value) break;
         }
         if (value) {
-            if (element.tagName === 'INPUT' && element.type === 'text') {
-                element.placeholder = value;
+            if (element.tagName === 'OPTION') {
+                element.textContent = value;
+            } else if (element.tagName === 'TITLE') {
+                element.textContent = value;
             } else {
                 element.textContent = value;
             }
         }
     });
     
+    // data-i18n-placeholder属性を持つ要素のプレースホルダーを更新
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        if (t[key]) {
+            element.placeholder = t[key];
+        }
+    });
+    
+    // 国籍選択のオプションを更新
     const nationalitySelect = document.getElementById('nationality');
     if (nationalitySelect && t.nationalities) {
         const currentValue = nationalitySelect.value;
