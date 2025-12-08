@@ -59,6 +59,7 @@ function updateLanguage() {
     document.getElementById('employeeCodeLabel').textContent = t.employeeCode;
     document.getElementById('nationalityLabel').textContent = t.nationality;
     document.getElementById('startButton').textContent = t.startButton;
+    document.getElementById('submitButton').textContent = t.submitButton || '✓ 送信';
     document.getElementById('completionTime').textContent = t.completionTime;
     document.getElementById('completionTitle').textContent = t.completionTitle;
     document.getElementById('completionMessage').textContent = t.completionMessage;
