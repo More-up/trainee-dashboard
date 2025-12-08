@@ -324,9 +324,10 @@ body {
     }
 
     .choices-horizontal {
-        gap: 0.2rem;  /* スマホ: 最小限の間隔（6個1列対応） */
+        gap: 0.3rem;  /* スマホ: 0.2rem → 0.3rem（間隔を少し広げる） */
         padding: 0;  /* 左右の余白をなくす */
         justify-content: space-between;  /* 両端揃え */
+        margin-bottom: 1rem;  /* 下の余白を追加（次の設問との間隔） */
     }
 
     .choice-item {
@@ -335,21 +336,24 @@ body {
     }
 
     .choice-item label {
-        width: 48px;  /* スマホ: 50px → 48px（6個1列対応） */
-        height: 48px;
-        font-size: 1.4rem;  /* スマホ: 1.5rem → 1.4rem */
+        width: 45px;  /* スマホ: 48px → 45px（テキストエリア確保） */
+        height: 45px;
+        font-size: 1.3rem;  /* スマホ: 1.4rem → 1.3rem */
         border-width: 2px;  /* ボーダーを細く */
     }
 
     /* スマホでもQ2の絵文字は統一サイズ */
     .choice-item label.emoji-circle-special,
     .choice-item label.emoji-cross-special {
-        font-size: 1.6rem;  /* スマホ: 1.8rem → 1.6rem（6個1列対応） */
+        font-size: 1.5rem;  /* スマホ: 1.6rem → 1.5rem（ボタンサイズに合わせる） */
     }
 
     .choice-label-text {
-        font-size: 0.65rem;  /* スマホ: 0.7rem → 0.65rem */
-        max-width: 48px;  /* スマホ: 60px → 48px */
+        font-size: 0.55rem;  /* スマホ: 0.6rem → 0.55rem（ミャンマー語被り防止） */
+        max-width: 52px;  /* スマホ: 48px → 52px（幅を広げる） */
         line-height: 1.2;  /* 行間を詰める */
+        margin-top: 0.4rem;  /* 上の余白を広げる */
+        word-break: keep-all;  /* 不自然な位置で折り返さない */
+        white-space: normal;  /* 折り返しを許可 */
     }
 }
