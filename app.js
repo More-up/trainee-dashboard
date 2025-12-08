@@ -58,6 +58,11 @@ function updateLanguage() {
     // 社員番号のプレースホルダー更新
     const employeeSelect = document.getElementById('employeeCode');
     employeeSelect.options[0].textContent = t.selectNationality || '選択してください';
+
+    // 質問が表示されている場合は再生成
+    if (!initialScreen.classList.contains('active')) {
+        generateQuestions();
+    }
 }
 
 // アンケート開始
@@ -85,142 +90,188 @@ surveySetup.addEventListener('submit', (e) => {
     initialScreen.classList.remove('active');
     surveyScreen.classList.add('active');
     
-    // 質問を生成
+    // 全質問を生成
     generateQuestions();
 });
 
-// 質問を生成
+// 全質問を一度に生成
 function generateQuestions() {
     const t = translations[currentLanguage];
     questionsContainer.innerHTML = '';
 
-    if (!t.categories) {
-        console.error('Categories not found in translations');
-        alert('翻訳データの読み込みに失敗しました。ページをリロードしてください。');
+    if (!t.categories || !t.questions) {
+        console.error('Translation data missing');
+        alert('翻訳データの読み込みに失敗しました。');
         return;
     }
 
-    let questionNumber = 1;
+    let currentCategory = '';
 
-    Object.entries(t.categories).forEach(([categoryKey, category]) => {
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'question-category';
-        categoryDiv.innerHTML = `<h3>${category.title}</h3>`;
+    // 35問全て生成
+    for (let i = 0; i < 35; i++) {
+        const questionKey = `q${i + 1}`;
+        const questionText = t.questions[questionKey];
+        const questionType = questionTypes[questionKey];
+        const categoryKey = getCategoryForQuestion(i + 1);
+        const categoryName = t.categories[categoryKey];
 
-        category.questions.forEach((question, qIndex) => {
-            const questionId = `q${questionNumber}`;
-            const questionDiv = document.createElement('div');
-            questionDiv.className = 'question-item';
-            questionDiv.dataset.questionNumber = questionNumber;
+        // カテゴリーが変わったらヘッダーを追加
+        if (categoryKey !== currentCategory) {
+            currentCategory = categoryKey;
+            const categoryHeader = document.createElement('div');
+            categoryHeader.className = 'category-header';
+            categoryHeader.textContent = categoryName;
+            questionsContainer.appendChild(categoryHeader);
+        }
 
-            const questionTitle = document.createElement('h4');
-            questionTitle.textContent = `${questionNumber}. ${question.text}`;
-            questionDiv.appendChild(questionTitle);
+        // 質問要素を作成
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        questionDiv.id = `question-${i + 1}`;
 
-            // 質問35は自由記述
-            if (questionNumber === 35) {
-                const textarea = document.createElement('textarea');
-                textarea.id = questionId;
-                textarea.rows = 4;
-                textarea.placeholder = t.openEndedPlaceholder || 'ご自由にお書きください';
-                questionDiv.appendChild(textarea);
-            } else {
-                // 6段階評価の顔文字を表示
-                const choicesDiv = document.createElement('div');
-                choicesDiv.className = 'emoji-options';
+        const questionTitle = document.createElement('h3');
+        questionTitle.textContent = `Q${i + 1}. ${questionText}`;
+        questionDiv.appendChild(questionTitle);
 
-                // 質問タイプに応じた選択肢を取得
-                const choiceType = question.type || 'satisfaction';
-                const choices = t.choices[choiceType] || t.choices.satisfaction;
+        // 回答方式を判定
+        if (questionType === 'text') {
+            // 自由記述
+            const textarea = document.createElement('textarea');
+            textarea.className = 'free-text';
+            textarea.placeholder = t.freeTextPlaceholder || '自由に記入してください';
+            textarea.rows = 5;
+            textarea.onchange = () => {
+                answers[questionKey] = textarea.value;
+                updateProgress();
+            };
+            questionDiv.appendChild(textarea);
+        } else {
+            // 6段階評価 - 横並び大きめ丸ボタン
+            const choicesDiv = document.createElement('div');
+            choicesDiv.className = 'choices-horizontal';
 
-                choices.forEach((choice, index) => {
-                    const value = index + 1;
-                    const choiceLabel = document.createElement('label');
-                    choiceLabel.className = 'emoji-btn';
-                    choiceLabel.innerHTML = `
-                        <input type="radio" name="${questionId}" value="${value}" required>
-                        <span class="emoji">${choice.emoji}</span>
-                        <span class="choice-text">${choice.text}</span>
-                    `;
+            const choiceLabels = getChoiceLabels(questionType, t);
+
+            choiceLabels.forEach((label, choiceIndex) => {
+                const choiceItem = document.createElement('div');
+                choiceItem.className = 'choice-item';
+                
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = questionKey;
+                radio.value = choiceIndex + 1;
+                radio.id = `${questionKey}_${choiceIndex}`;
+                
+                radio.onchange = () => {
+                    answers[questionKey] = choiceIndex + 1;
+                    updateProgress();
                     
-                    // ラジオボタン選択時のイベント
-                    const radio = choiceLabel.querySelector('input');
-                    radio.addEventListener('change', () => {
-                        answers[questionId] = value;
-                        
-                        // 次の質問にスクロール (質問35以外)
-                        if (questionNumber < 35) {
-                            const nextQuestion = document.querySelector(`[data-question-number="${questionNumber + 1}"]`);
+                    // 次の質問にスクロール
+                    if (i < 34) {
+                        setTimeout(() => {
+                            const nextQuestion = document.getElementById(`question-${i + 2}`);
                             if (nextQuestion) {
-                                setTimeout(() => {
-                                    nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                }, 300);
+                                nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }
-                        }
-                        
-                        updateProgress();
-                        checkAllAnswered();
-                    });
+                        }, 300);
+                    } else {
+                        // 最後の質問なら送信ボタンにスクロール
+                        setTimeout(() => {
+                            submitButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                    }
+                };
 
-                    choicesDiv.appendChild(choiceLabel);
-                });
+                const labelEl = document.createElement('label');
+                labelEl.htmlFor = `${questionKey}_${choiceIndex}`;
+                labelEl.textContent = label.emoji;
 
-                questionDiv.appendChild(choicesDiv);
-            }
+                const labelText = document.createElement('div');
+                labelText.className = 'choice-label-text';
+                labelText.textContent = label.text;
 
-            categoryDiv.appendChild(questionDiv);
-            questionNumber++;
-        });
+                choiceItem.appendChild(radio);
+                choiceItem.appendChild(labelEl);
+                choiceItem.appendChild(labelText);
+                choicesDiv.appendChild(choiceItem);
+            });
 
-        questionsContainer.appendChild(categoryDiv);
-    });
-    
-    // 質問が正しく生成されたか確認
-    console.log(`${questionNumber - 1}個の質問を生成しました`);
+            questionDiv.appendChild(choicesDiv);
+        }
+
+        questionsContainer.appendChild(questionDiv);
+    }
+
+    // 送信ボタンを表示
+    submitButton.style.display = 'block';
+    updateProgress();
 }
 
-// 進捗状況を更新
+// プログレスバー更新
 function updateProgress() {
-    const totalQuestions = 35;
-    const answeredQuestions = Object.keys(answers).filter(key => key.startsWith('q')).length;
-    const progress = (answeredQuestions / totalQuestions) * 100;
-    
+    const answeredCount = Object.keys(answers).filter(k => k.startsWith('q')).length;
+    const progress = (answeredCount / 35) * 100;
     progressFill.style.width = `${progress}%`;
     
     const t = translations[currentLanguage];
-    progressText.textContent = `${t.progressText || '質問'} ${answeredQuestions} / ${totalQuestions}`;
+    progressText.textContent = `${t.progressText || '質問'} ${answeredCount} / 35`;
 }
 
-// すべての質問に回答したかチェック
-function checkAllAnswered() {
-    const totalRequired = 34; // 質問35は任意
-    const answeredCount = Object.keys(answers).filter(key => key.startsWith('q') && key !== 'q35').length;
+// 質問タイプに応じた選択肢ラベルを取得
+function getChoiceLabels(type, t) {
+    const choices = t.choices;
     
-    if (answeredCount >= totalRequired) {
-        submitButton.style.display = 'block';
-        submitButton.scrollIntoView({ behavior: 'smooth' });
+    switch(type) {
+        case 'satisfaction':
+            return choices.satisfaction;
+        case 'availability':
+            return choices.availability;
+        case 'understanding':
+            return choices.understanding;
+        case 'desire':
+            return choices.desire;
+        case 'familiarity':
+            return choices.familiarity;
+        case 'negative':
+            return choices.negative;
+        default:
+            return choices.satisfaction;
     }
+}
+
+// カテゴリーを取得
+function getCategoryForQuestion(qNum) {
+    if (qNum === 1) return 'workplace';
+    if (qNum >= 2 && qNum <= 7) return 'communication';
+    if (qNum >= 8 && qNum <= 14) return 'workContent';
+    if (qNum >= 15 && qNum <= 19) return 'evaluation';
+    if (qNum >= 20 && qNum <= 24) return 'growth';
+    if (qNum >= 25 && qNum <= 30) return 'balance';
+    if (qNum >= 31 && qNum <= 34) return 'future';
+    if (qNum === 35) return 'free';
+    return 'workplace';
 }
 
 // フォーム送信
 document.getElementById('surveyForm').addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // 質問35の自由記述を保存
-    const q35 = document.getElementById('q35');
-    if (q35) {
-        answers.q35 = q35.value || '';
+    const t = translations[currentLanguage];
+    
+    // 全質問に回答されているか確認
+    const answeredCount = Object.keys(answers).filter(k => k.startsWith('q')).length;
+    if (answeredCount < 35) {
+        alert(t.errorIncomplete || 'すべての質問に回答してください。');
+        return;
     }
 
-    // データを保存 (実際の実装では、ここでサーバーに送信)
-    console.log('Survey answers:', answers);
-    localStorage.setItem('surveyAnswers', JSON.stringify(answers));
-
-    // 完了画面を表示
+    console.log('Survey submitted:', answers);
+    
+    // 完了画面へ
     surveyScreen.classList.remove('active');
     completionScreen.classList.add('active');
 
-    // 5秒後にリロード
+    // 5秒後にリセット
     setTimeout(() => {
         location.reload();
     }, 5000);
@@ -228,4 +279,3 @@ document.getElementById('surveyForm').addEventListener('submit', (e) => {
 
 // 初期化
 updateLanguage();
-console.log('アプリケーション初期化完了');
