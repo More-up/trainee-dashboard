@@ -2,6 +2,24 @@
 let currentLanguage = 'ja';
 let currentQuestionIndex = 0;
 let answers = {};
+let companyCode = null; // 追加
+
+// API エンドポイント（修正）
+const API_ENDPOINT = 'https://engagement-api.more-up.workers.dev';
+
+// URL パラメータから会社コードを取得
+function getCompanyCodeFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('company') || null;
+}
+
+// 年月を取得 (YYYY-MM 形式)
+function getCurrentYearMonth() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    return `${year}-${month}`;
+}
 
 // DOM要素
 const languageSelect = document.getElementById('languageSelect');
@@ -13,6 +31,10 @@ const questionsContainer = document.getElementById('questionsContainer');
 const submitButton = document.getElementById('submitButton');
 const progressFill = document.getElementById('progressFill');
 const progressText = document.getElementById('progressText');
+
+// 初期化時に会社コードを取得
+companyCode = getCompanyCodeFromURL();
+console.log('Company Code:', companyCode);
 
 // 言語変更ハンドラー
 languageSelect.addEventListener('change', (e) => {
@@ -82,6 +104,8 @@ surveySetup.addEventListener('submit', (e) => {
     answers = {
         employeeCode,
         nationality,
+        companyCode: companyCode,  // 追加
+        yearMonth: getCurrentYearMonth(),  // 追加
         language: currentLanguage,
         timestamp: new Date().toISOString()
     };
@@ -239,21 +263,138 @@ function getChoiceLabels(type, t) {
     }
 }
 
-// カテゴリーを取得
+// カテゴリーを取得（修正版 - 技能実習生向け）
 function getCategoryForQuestion(qNum) {
-    if (qNum === 1) return 'workplace';
-    if (qNum >= 2 && qNum <= 7) return 'communication';
-    if (qNum >= 8 && qNum <= 14) return 'workContent';
-    if (qNum >= 15 && qNum <= 19) return 'evaluation';
-    if (qNum >= 20 && qNum <= 24) return 'growth';
-    if (qNum >= 25 && qNum <= 30) return 'balance';
-    if (qNum >= 31 && qNum <= 34) return 'future';
-    if (qNum === 35) return 'free';
-    return 'workplace';
+    if (qNum >= 1 && qNum <= 4) return 'work';        // 業務・職場環境
+    if (qNum >= 5 && qNum <= 8) return 'salary';      // 給与・待遇
+    if (qNum >= 9 && qNum <= 12) return 'family';     // 家族・プライベート
+    if (qNum >= 13 && qNum <= 16) return 'relationship'; // 人間関係
+    if (qNum >= 17 && qNum <= 21) return 'communication'; // 日本語・コミュニケーション
+    if (qNum >= 22 && qNum <= 23) return 'culture';   // 文化・価値観
+    if (qNum >= 24 && qNum <= 29) return 'living';    // 生活環境
+    if (qNum >= 30 && qNum <= 35) return 'career';    // キャリア・将来の見通し
+    return 'work';
+}
+
+// カテゴリー別スコアを計算
+function calculateCategoryScores() {
+    const categoryScores = {};
+    
+    const categoryQuestions = {
+        work: [1, 2, 3, 4],
+        salary: [5, 6, 7, 8],
+        family: [9, 10, 11, 12],
+        relationship: [13, 14, 15, 16],
+        communication: [17, 18, 19, 20, 21],
+        culture: [22, 23],
+        living: [24, 25, 26, 27, 28, 29],
+        career: [30, 31, 32, 33, 34, 35]
+    };
+
+    Object.entries(categoryQuestions).forEach(([category, questions]) => {
+        let total = 0;
+        let count = 0;
+        
+        questions.forEach(qNum => {
+            const answer = answers[`q${qNum}`];
+            if (typeof answer === 'number') {
+                total += answer;
+                count++;
+            }
+        });
+        
+        // 100点満点に変換
+        const maxScore = count * 6; // 6段階評価
+        categoryScores[category] = Math.round((total / maxScore) * 100);
+    });
+
+    return categoryScores;
+}
+
+// 総合スコアを計算
+function calculateTotalScore() {
+    let total = 0;
+    let count = 0;
+
+    for (let i = 1; i <= 35; i++) {
+        const answer = answers[`q${i}`];
+        if (typeof answer === 'number') {
+            total += answer;
+            count++;
+        }
+    }
+
+    // 100点満点に変換
+    const maxScore = count * 6;
+    return Math.round((total / maxScore) * 100);
+}
+
+// APIへデータ送信
+async function submitToAPI() {
+    const t = translations[currentLanguage];
+    
+    try {
+        // 質問の回答のみを抽出
+        const questionAnswers = {};
+        for (let i = 1; i <= 35; i++) {
+            const key = `q${i}`;
+            if (answers[key] !== undefined) {
+                questionAnswers[i] = answers[key];
+            }
+        }
+
+        // カテゴリー別スコアを計算
+        const categoryScores = calculateCategoryScores();
+
+        // 総合スコアを計算
+        const totalScore = calculateTotalScore();
+
+        // 送信データ
+        const submitData = {
+            resultId: `TRAINEE-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            employeeCode: answers.employeeCode,
+            department: 'trainee', // 技能実習生
+            nationality: answers.nationality,
+            companyCode: answers.companyCode,
+            yearMonth: answers.yearMonth,
+            totalScore: totalScore,
+            surveyDate: new Date().toISOString().split('T')[0],
+            categoryScores: categoryScores,
+            answers: questionAnswers
+        };
+
+        console.log('Submitting data:', submitData);
+
+        const response = await fetch(`${API_ENDPOINT}/api/save-result`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(submitData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        if (!result.success) {
+            throw new Error(result.error || 'Failed to save data');
+        }
+
+        console.log('Data saved successfully:', result);
+        return true;
+
+    } catch (error) {
+        console.error('Submit error:', error);
+        alert(t.errorSubmit || 'データの送信に失敗しました。もう一度お試しください。');
+        return false;
+    }
 }
 
 // フォーム送信
-document.getElementById('surveyForm').addEventListener('submit', (e) => {
+document.getElementById('surveyForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const t = translations[currentLanguage];
@@ -265,16 +406,27 @@ document.getElementById('surveyForm').addEventListener('submit', (e) => {
         return;
     }
 
-    console.log('Survey submitted:', answers);
-    
-    // 完了画面へ
-    surveyScreen.classList.remove('active');
-    completionScreen.classList.add('active');
+    // 送信ボタンを無効化
+    submitButton.disabled = true;
+    submitButton.textContent = t.submitting || '送信中...';
 
-    // 5秒後にリセット
-    setTimeout(() => {
-        location.reload();
-    }, 5000);
+    // APIへ送信
+    const success = await submitToAPI();
+
+    if (success) {
+        // 完了画面へ
+        surveyScreen.classList.remove('active');
+        completionScreen.classList.add('active');
+
+        // 5秒後にリセット
+        setTimeout(() => {
+            location.reload();
+        }, 5000);
+    } else {
+        // エラー時は送信ボタンを再有効化
+        submitButton.disabled = false;
+        submitButton.textContent = t.submitButton || '送信';
+    }
 });
 
 // 初期化
