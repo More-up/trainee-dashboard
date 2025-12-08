@@ -122,14 +122,14 @@ const translations = {
                 { emoji: '😕', text: 'あまり思わない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '😊', text: 'ややそう思う' },
-                { emoji: '◎', text: 'とてもそう思う' }
+                { emoji: '⭕', text: 'とてもそう思う' }
             ],
             understanding: [
                 { emoji: '❌', text: '全く分からない' },
                 { emoji: '😕', text: 'あまり分からない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '🙂', text: 'だいたい分かる' },
-                { emoji: '◎', text: 'よく分かる' }
+                { emoji: '⭕', text: 'よく分かる' }
             ],
             familiarity: [
                 { emoji: '😰', text: '全く慣れていない' },
@@ -143,10 +143,10 @@ const translations = {
                 { emoji: '😕', text: 'あまりない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '🙂', text: 'ある程度ある' },
-                { emoji: '◎', text: '十分ある' }
+                { emoji: '⭕', text: '十分ある' }
             ],
             negative: [
-                { emoji: '◎', text: '全くない' },
+                { emoji: '⭕', text: '全くない' },
                 { emoji: '🙂', text: 'ほとんどない' },
                 { emoji: '😐', text: '時々ある' },
                 { emoji: '😕', text: 'よくある' },
@@ -154,8 +154,8 @@ const translations = {
                 { emoji: '❌', text: 'いつもある' }
             ],
             safety_concern: [
-                { emoji: '◎', text: '全くない' },
-                { emoji: '○', text: 'ほとんどない' },
+                { emoji: '⭕', text: '全くない' },
+                { emoji: '◯', text: 'ほとんどない' },
                 { emoji: '△', text: 'あまりない' },
                 { emoji: '▽', text: '少しある' },
                 { emoji: '×', text: 'よくある' },
@@ -246,14 +246,14 @@ const translations = {
                 { emoji: '😕', text: 'Không nghĩ vậy lắm' },
                 { emoji: '😐', text: 'Bình thường' },
                 { emoji: '😊', text: 'Hơi nghĩ vậy' },
-                { emoji: '◎', text: 'Rất nghĩ vậy' }
+                { emoji: '⭕', text: 'Rất nghĩ vậy' }
             ],
             understanding: [
                 { emoji: '❌', text: 'Hoàn toàn không hiểu' },
                 { emoji: '😕', text: 'Không hiểu lắm' },
                 { emoji: '😐', text: 'Bình thường' },
                 { emoji: '🙂', text: 'Hiểu đại khái' },
-                { emoji: '◎', text: 'Hiểu rõ' }
+                { emoji: '⭕', text: 'Hiểu rõ' }
             ],
             familiarity: [
                 { emoji: '😰', text: 'Hoàn toàn chưa quen' },
@@ -267,10 +267,10 @@ const translations = {
                 { emoji: '😕', text: 'Không có lắm' },
                 { emoji: '😐', text: 'Bình thường' },
                 { emoji: '🙂', text: 'Có một phần' },
-                { emoji: '◎', text: 'Có đầy đủ' }
+                { emoji: '⭕', text: 'Có đầy đủ' }
             ],
             negative: [
-                { emoji: '◎', text: 'Hoàn toàn không' },
+                { emoji: '⭕', text: 'Hoàn toàn không' },
                 { emoji: '🙂', text: 'Hầu như không' },
                 { emoji: '😐', text: 'Thỉnh thoảng có' },
                 { emoji: '😕', text: 'Thường có' },
@@ -278,8 +278,8 @@ const translations = {
                 { emoji: '❌', text: 'Luôn luôn' }
             ],
             safety_concern: [
-                { emoji: '◎', text: 'Hoàn toàn không' },
-                { emoji: '○', text: 'Hầu như không' },
+                { emoji: '⭕', text: 'Hoàn toàn không' },
+                { emoji: '◯', text: 'Hầu như không' },
                 { emoji: '△', text: 'Không nhiều' },
                 { emoji: '▽', text: 'Một chút' },
                 { emoji: '×', text: 'Thường xuyên' },
@@ -383,14 +383,14 @@ const translations = {
                 { emoji: '😕', text: 'များစွာထင်မြင်မည်မဟုတ်ပါ' },
                 { emoji: '😐', text: 'များမှား' },
                 { emoji: '😊', text: 'ထင်မြင်သလောက်' },
-                { emoji: '◎', text: 'အလွန်ထင်မြင်သည်' }
+                { emoji: '⭕', text: 'အလွန်ထင်မြင်သည်' }
             ],
             understanding: [
                 { emoji: '❌', text: 'လုံးဝနားမလည်ပါ' },
                 { emoji: '😕', text: 'များစွာနားမလည်ပါ' },
                 { emoji: '😐', text: 'များမှား' },
                 { emoji: '🙂', text: 'ခန့်မှန်းနားလည်သည်' },
-                { emoji: '◎', text: 'ကောင်းစွာနားလည်သည်' }
+                { emoji: '⭕', text: 'ကောင်းစွာနားလည်သည်' }
             ],
             familiarity: [
                 { emoji: '😰', text: 'လုံးဝမရင်းနှီးပါ' },
@@ -404,10 +404,10 @@ const translations = {
                 { emoji: '😕', text: 'များစွာမရှိပါ' },
                 { emoji: '😐', text: 'များမှား' },
                 { emoji: '🙂', text: 'အတိုင်းအတာတစ်ခုရှိသည်' },
-                { emoji: '◎', text: 'လုံလောက်စွာရှိသည်' }
+                { emoji: '⭕', text: 'လုံလောက်စွာရှိသည်' }
             ],
             negative: [
-                { emoji: '◎', text: 'လုံးဝမရှိပါ' },
+                { emoji: '⭕', text: 'လုံးဝမရှိပါ' },
                 { emoji: '🙂', text: 'သိပ်မရှိပါ' },
                 { emoji: '😐', text: 'ရံဖန်ရံခါရှိသည်' },
                 { emoji: '😕', text: 'မကြာခဏရှိသည်' },
@@ -415,8 +415,8 @@ const translations = {
                 { emoji: '❌', text: 'အမြဲတမ်းရှိသည်' }
             ],
             safety_concern: [
-                { emoji: '◎', text: 'လုံးဝမရှိပါ' },
-                { emoji: '○', text: 'သိပ်မရှိပါ' },
+                { emoji: '⭕', text: 'လုံးဝမရှိပါ' },
+                { emoji: '◯', text: 'သိပ်မရှိပါ' },
                 { emoji: '△', text: 'များစွာမရှိပါ' },
                 { emoji: '▽', text: 'အနည်းငယ်ရှိသည်' },
                 { emoji: '×', text: 'မကြာခဏရှိသည်' },
