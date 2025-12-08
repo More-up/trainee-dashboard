@@ -324,38 +324,38 @@ body {
     }
 
     .choices-horizontal {
-        gap: 0.8rem;  /* スマホ: 間隔を広げる（2列表示対応） */
-        padding: 0 0.5rem;  /* 左右に余白 */
-        justify-content: space-around;  /* 均等配置 */
+        gap: 0.25rem;  /* スマホ: 最小限の間隔 */
+        padding: 0;  /* 余白なし */
+        justify-content: space-between;  /* 両端揃え */
         margin-bottom: 1rem;  /* 下の余白 */
-        flex-wrap: wrap;  /* 2列表示を許可 */
+        flex-wrap: nowrap;  /* 1列表示に戻す */
     }
 
     .choice-item {
-        flex: 0 0 calc(33.333% - 0.6rem);  /* 1行3個表示 */
-        max-width: 100px;  /* 最大幅 */
-        margin-bottom: 0.8rem;  /* 下の余白 */
+        flex: 0 1 auto;  /* 自動縮小 */
+        min-width: 0;  /* 縮小許可 */
     }
 
     .choice-item label {
-        width: 55px;  /* スマホ: 2列表示で大きく */
-        height: 55px;
-        font-size: 1.6rem;  /* スマホ: 大きく */
+        width: 44px;  /* スマホ: 小さく（6個1列対応） */
+        height: 44px;
+        font-size: 1.2rem;  /* スマホ: 小さく */
         border-width: 2px;  /* ボーダーを細く */
     }
 
     /* スマホでもQ2の絵文字は統一サイズ */
     .choice-item label.emoji-circle-special,
     .choice-item label.emoji-cross-special {
-        font-size: 1.8rem;  /* スマホ: 2列表示で大きく */
+        font-size: 1.4rem;  /* スマホ: 1列表示対応 */
     }
 
     .choice-label-text {
-        font-size: 0.7rem;  /* スマホ: 2列表示で大きく */
-        max-width: 100px;  /* スマホ: 幅を十分に */
-        line-height: 1.3;  /* 行間 */
-        margin-top: 0.5rem;  /* 上の余白 */
-        word-break: keep-all;  /* 不自然な位置で折り返さない */
-        white-space: normal;  /* 折り返しを許可 */
+        font-size: 0.5rem;  /* スマホ: 極小（被り防止） */
+        max-width: 44px;  /* スマホ: ボタン幅に合わせる */
+        line-height: 1.1;  /* 行間を詰める */
+        margin-top: 0.3rem;  /* 上の余白 */
+        word-break: break-all;  /* 強制折り返し */
+        overflow-wrap: break-word;  /* 単語途中でも折り返す */
+        white-space: normal;  /* 折り返し許可 */
     }
 }
