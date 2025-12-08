@@ -285,7 +285,7 @@ body {
     padding: 1rem;
     margin-bottom: 2rem;
     border-radius: 8px;
-    word-break: keep-all;  /* 不自然な改行を防ぐ */
+    white-space: pre-line;  /* \nを改行として認識 */
     line-height: 1.6;  /* 行間を広げて読みやすく */
 }
 
