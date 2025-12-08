@@ -350,11 +350,11 @@ body {
     }
 
     .choice-label-text {
-        font-size: 0.5rem;  /* スマホ: 極小（被り防止） */
-        max-width: 44px;  /* スマホ: ボタン幅に合わせる */
-        line-height: 1.1;  /* 行間を詰める */
-        margin-top: 0.3rem;  /* 上の余白 */
-        word-break: break-all;  /* 強制折り返し */
+        font-size: 0.52rem;  /* スマホ: ミャンマー語可読性確保 */
+        max-width: 58px;  /* スマホ: ミャンマー語の幅を確保 */
+        line-height: 1.15;  /* 行間を少し広げる */
+        margin-top: 0.35rem;  /* 上の余白 */
+        word-break: keep-all;  /* 自然な折り返し */
         overflow-wrap: break-word;  /* 単語途中でも折り返す */
         white-space: normal;  /* 折り返し許可 */
     }
