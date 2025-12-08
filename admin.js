@@ -6,6 +6,9 @@ let filteredData = [];
 let radarChart = null;
 let trendChart = null;
 
+// API エンドポイント
+const API_ENDPOINT = 'https://engagement-api.more-up.workers.dev';
+
 // カテゴリー定義
 const categories = {
   work: "業務・職場環境",
@@ -40,7 +43,15 @@ const nationalityNames = {
   nepal: "ネパール",
   india: "インド",
   cambodia: "カンボジア",
-  china: "中国"
+  china: "中国",
+  japan: "日本",
+  laos: "ラオス",
+  mongolia: "モンゴル",
+  bangladesh: "バングラデシュ",
+  srilanka: "スリランカ",
+  bhutan: "ブータン",
+  uzbekistan: "ウズベキスタン",
+  pakistan: "パキスタン"
 };
 
 // ===========================
@@ -88,30 +99,102 @@ function logout() {
 }
 
 // ===========================
-// データ読み込み
+// データ読み込み（API版）
 // ===========================
-function loadData() {
+async function loadData() {
   try {
-    // LocalStorageからデータ取得
-    const surveyData = localStorage.getItem('trainee_survey_data');
+    // ローディング表示
+    showLoading();
+
+    // APIからデータ取得
+    const response = await fetch(`${API_ENDPOINT}/api/results`);
     
-    if (surveyData) {
-      allData = JSON.parse(surveyData);
-      filteredData = [...allData];
-      
-      // フィルター選択肢を生成
-      populateFilters();
-      
-      // データ表示
-      displayData();
-    } else {
-      // データがない場合
-      showNoData();
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to load data');
+    }
+
+    allData = result.data || [];
+    
+    // データをローカル形式に変換
+    allData = allData.map(item => ({
+      timestamp: item.created_at,
+      companyCode: item.company_code,
+      employeeCode: item.employee_code,
+      nationality: item.nationality,
+      totalScore: item.total_score,
+      yearMonth: item.year_month,
+      surveyDate: item.survey_date,
+      answers: convertAnswersToArray(item.answers),
+      categoryScores: item.categoryScores || {}
+    }));
+
+    filteredData = [...allData];
+    
+    // フィルター選択肢を生成
+    populateFilters();
+    
+    // データ表示
+    displayData();
+    
+    hideLoading();
+
   } catch (error) {
     console.error('データ読み込みエラー:', error);
+    hideLoading();
+    showError('データの読み込みに失敗しました。');
     showNoData();
   }
+}
+
+// 回答データを配列に変換
+function convertAnswersToArray(answersObj) {
+  const arr = [];
+  for (let i = 1; i <= 35; i++) {
+    arr[i - 1] = answersObj[i] || 0;
+  }
+  return arr;
+}
+
+// ローディング表示
+function showLoading() {
+  const container = document.querySelector('.container');
+  if (!document.getElementById('loadingOverlay')) {
+    const overlay = document.createElement('div');
+    overlay.id = 'loadingOverlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    `;
+    overlay.innerHTML = '<div style="text-align: center;"><div style="font-size: 48px;">⏳</div><p>データ読み込み中...</p></div>';
+    document.body.appendChild(overlay);
+  }
+}
+
+// ローディング非表示
+function hideLoading() {
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) {
+    overlay.remove();
+  }
+}
+
+// エラー表示
+function showError(message) {
+  alert(message);
 }
 
 // ===========================
@@ -119,7 +202,7 @@ function loadData() {
 // ===========================
 function populateFilters() {
   // 会社コード
-  const companies = [...new Set(allData.map(d => d.companyCode))].filter(Boolean);
+  const companies = [...new Set(allData.map(d => d.companyCode))].filter(Boolean).sort();
   const companySelect = document.getElementById('filterCompany');
   companies.forEach(company => {
     const option = document.createElement('option');
@@ -197,9 +280,9 @@ function displayData() {
 function updateStatCards() {
   const totalResponses = filteredData.length;
   const scores = filteredData.map(d => d.totalScore);
-  const averageScore = Math.round(scores.reduce((a, b) => a + b, 0) / totalResponses);
-  const maxScore = Math.max(...scores);
-  const minScore = Math.min(...scores);
+  const averageScore = totalResponses > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / totalResponses) : 0;
+  const maxScore = totalResponses > 0 ? Math.max(...scores) : 0;
+  const minScore = totalResponses > 0 ? Math.min(...scores) : 0;
   
   document.getElementById('totalResponses').textContent = totalResponses;
   document.getElementById('averageScore').textContent = averageScore;
@@ -226,7 +309,7 @@ function updateTable() {
       <td>${item.employeeCode}</td>
       <td>${nationalityNames[item.nationality] || item.nationality}</td>
       <td><span class="score-badge ${scoreClass}">${item.totalScore} / 100</span></td>
-      <td>${item.yearMonth}</td>
+      <td>${item.yearMonth || '-'}</td>
     `;
     
     tbody.appendChild(row);
@@ -252,14 +335,19 @@ function updateRadarChart() {
   Object.keys(categories).forEach(cat => {
     const scores = [];
     filteredData.forEach(item => {
-      const catQuestions = categoryQuestions[cat];
-      const catAnswers = catQuestions.map(q => item.answers[q - 1]);
-      const catTotal = catAnswers.reduce((a, b) => a + b, 0);
-      const catMax = catQuestions.length * 6;
-      const catScore = Math.round((catTotal / catMax) * 100);
-      scores.push(catScore);
+      if (item.categoryScores && item.categoryScores[cat] !== undefined) {
+        scores.push(item.categoryScores[cat]);
+      } else {
+        // カテゴリースコアがない場合は計算
+        const catQuestions = categoryQuestions[cat];
+        const catAnswers = catQuestions.map(q => item.answers[q - 1] || 0);
+        const catTotal = catAnswers.reduce((a, b) => a + b, 0);
+        const catMax = catQuestions.length * 6;
+        const catScore = Math.round((catTotal / catMax) * 100);
+        scores.push(catScore);
+      }
     });
-    categoryScores[cat] = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+    categoryScores[cat] = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
   });
   
   // チャート破棄（既存）
@@ -313,7 +401,7 @@ function updateRadarChart() {
 }
 
 // ===========================
-// 月別推移チャート更新
+// 月別推移チャート更新（3年分）
 // ===========================
 function updateTrendChart() {
   const ctx = document.getElementById('trendChart');
@@ -321,15 +409,17 @@ function updateTrendChart() {
   // 月別データ集計
   const monthlyData = {};
   filteredData.forEach(item => {
+    if (!item.yearMonth) return;
     if (!monthlyData[item.yearMonth]) {
       monthlyData[item.yearMonth] = [];
     }
     monthlyData[item.yearMonth].push(item.totalScore);
   });
   
-  // 月別平均スコア計算
+  // 月別平均スコア計算（最大36ヶ月）
   const months = Object.keys(monthlyData).sort();
-  const averages = months.map(month => {
+  const recentMonths = months.slice(-36); // 最新36ヶ月
+  const averages = recentMonths.map(month => {
     const scores = monthlyData[month];
     return Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
   });
@@ -343,7 +433,7 @@ function updateTrendChart() {
   trendChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: months,
+      labels: recentMonths,
       datasets: [{
         label: '平均スコア',
         data: averages,
@@ -373,13 +463,23 @@ function updateTrendChart() {
       plugins: {
         title: {
           display: true,
-          text: '月別スコア推移',
+          text: '月別スコア推移（最大3年分）',
           font: {
             size: 16
           }
         },
         legend: {
           display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const month = context.label;
+              const score = context.parsed.y;
+              const count = monthlyData[month].length;
+              return `平均: ${score}点 (回答数: ${count}件)`;
+            }
+          }
         }
       }
     }
@@ -396,6 +496,7 @@ function updateAIAnalysis() {
   // 国籍別データ集計
   const nationalityData = {};
   filteredData.forEach(item => {
+    if (!item.nationality) return;
     if (!nationalityData[item.nationality]) {
       nationalityData[item.nationality] = [];
     }
@@ -403,7 +504,7 @@ function updateAIAnalysis() {
   });
   
   // 国籍別分析生成
-  Object.keys(nationalityData).forEach(nat => {
+  Object.keys(nationalityData).sort().forEach(nat => {
     const data = nationalityData[nat];
     const avgScore = Math.round(data.reduce((sum, d) => sum + d.totalScore, 0) / data.length);
     
@@ -412,14 +513,18 @@ function updateAIAnalysis() {
     Object.keys(categories).forEach(cat => {
       const scores = [];
       data.forEach(item => {
-        const catQuestions = categoryQuestions[cat];
-        const catAnswers = catQuestions.map(q => item.answers[q - 1]);
-        const catTotal = catAnswers.reduce((a, b) => a + b, 0);
-        const catMax = catQuestions.length * 6;
-        const catScore = Math.round((catTotal / catMax) * 100);
-        scores.push(catScore);
+        if (item.categoryScores && item.categoryScores[cat] !== undefined) {
+          scores.push(item.categoryScores[cat]);
+        } else {
+          const catQuestions = categoryQuestions[cat];
+          const catAnswers = catQuestions.map(q => item.answers[q - 1] || 0);
+          const catTotal = catAnswers.reduce((a, b) => a + b, 0);
+          const catMax = catQuestions.length * 6;
+          const catScore = Math.round((catTotal / catMax) * 100);
+          scores.push(catScore);
+        }
       });
-      categoryScores[cat] = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+      categoryScores[cat] = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
     });
     
     // 最高・最低カテゴリー
@@ -434,7 +539,7 @@ function updateAIAnalysis() {
     const card = document.createElement('div');
     card.className = 'ai-insight-card';
     card.innerHTML = `
-      <h3>🌏 ${nationalityNames[nat]} （回答者: ${data.length}名）</h3>
+      <h3>🌏 ${nationalityNames[nat] || nat} （回答者: ${data.length}名）</h3>
       <p><strong>平均スコア:</strong> ${avgScore} / 100</p>
       <p><strong>最高評価:</strong> ${categories[highestCat[0]]} (${highestCat[1]}点)</p>
       <p><strong>最低評価:</strong> ${categories[lowestCat[0]]} (${lowestCat[1]}点)</p>
@@ -531,7 +636,7 @@ function exportCSV() {
     csv += `${item.employeeCode},`;
     csv += `${nationalityNames[item.nationality] || item.nationality},`;
     csv += `${item.totalScore},`;
-    csv += `${item.yearMonth}\n`;
+    csv += `${item.yearMonth || ''}\n`;
   });
   
   // BOM追加（Excel対応）
@@ -542,7 +647,7 @@ function exportCSV() {
   const link = document.createElement('a');
   const url = URL.createObjectURL(blob);
   link.setAttribute('href', url);
-  link.setAttribute('download', `survey_data_${formatDateForFile(new Date())}.csv`);
+  link.setAttribute('download', `trainee_survey_data_${formatDateForFile(new Date())}.csv`);
   link.style.visibility = 'hidden';
   document.body.appendChild(link);
   link.click();
@@ -572,6 +677,16 @@ function showNoData() {
       <p>分析するデータがありません</p>
     </div>
   `;
+  
+  // チャートをクリア
+  if (radarChart) {
+    radarChart.destroy();
+    radarChart = null;
+  }
+  if (trendChart) {
+    trendChart.destroy();
+    trendChart = null;
+  }
 }
 
 // ===========================
