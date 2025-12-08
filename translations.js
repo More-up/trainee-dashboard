@@ -269,8 +269,15 @@ const translations = {
     }
 };
 
-// 残り15言語は日本語ベースで追加
-['cn', 'tl', 'id', 'th', 'ne', 'hi', 'my', 'kh', 'lo', 'mn', 'bd', 'lk', 'dz', 'uz', 'ur'].forEach(lang => {
+// ミャンマー語翻訳データ
+translations['my'] = {
+    title: 'နည်းပညာအလုပ်သင်များ၏ ပါဝင်မှုအဆင့်ရှာဖွေခြင်း',
+    privacyNotice: 'သင့်အမည်ကို မှတ်တမ်းမတင်ပါ။...',
+    // ... （ダウンロードしたファイルの全内容をコピペ）
+};
+
+// 残り14言語は後で追加（一旦日本語コピー）
+['cn', 'tl', 'id', 'th', 'ne', 'hi', 'kh', 'lo', 'mn', 'bd', 'lk', 'dz', 'uz', 'ur'].forEach(lang => {
     translations[lang] = JSON.parse(JSON.stringify(translations.ja));
 });
 
