@@ -39,6 +39,7 @@ console.log('Company Code:', companyCode);
 // 言語変更ハンドラー
 languageSelect.addEventListener('change', (e) => {
     currentLanguage = e.target.value;
+    document.body.setAttribute('data-lang', currentLanguage);
     updateLanguage();
 });
 
@@ -449,4 +450,5 @@ document.getElementById('surveyForm').addEventListener('submit', async (e) => {
 });
 
 // 初期化
+document.body.setAttribute('data-lang', currentLanguage);
 updateLanguage();
