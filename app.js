@@ -209,6 +209,14 @@ function generateQuestions() {
                 const labelEl = document.createElement('label');
                 labelEl.htmlFor = `${questionKey}_${choiceIndex}`;
                 labelEl.textContent = label.emoji;
+                
+                // ◎と❌に専用のクラスを追加（修正）
+                if (label.emoji === '◎') {
+                    labelEl.classList.add('emoji-circle-special');
+                }
+                if (label.emoji === '❌') {
+                    labelEl.classList.add('emoji-cross-special');
+                }
 
                 const labelText = document.createElement('div');
                 labelText.className = 'choice-label-text';
