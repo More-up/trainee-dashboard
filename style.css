@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);  /* 修正: 紫→オレンジ系 */
     min-height: 100vh;
     padding: 2rem;
     color: #2c3e50;
@@ -62,7 +62,7 @@ body {
 
 .language-selector select {
     padding: 0.6rem 1rem;
-    border: 2px solid #667eea;
+    border: 2px solid #FF8C42;  /* 修正: 紫→オレンジ */
     border-radius: 8px;
     background: white;
     font-size: 0.9rem;
@@ -72,9 +72,9 @@ body {
 }
 
 .language-selector select:hover {
-    background-color: #f0f4ff;
-    border-color: #667eea;
-    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+    background-color: #fff5f0;  /* 修正: 薄いオレンジ */
+    border-color: #FF8C42;
+    box-shadow: 0 6px 16px rgba(255, 140, 66, 0.3);
 }
 
 /* プログレスバー */
@@ -98,7 +98,7 @@ body {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);  /* 修正: 紫→オレンジ */
     transition: width 0.3s ease;
 }
 
@@ -110,7 +110,7 @@ body {
 
 /* カテゴリーヘッダー */
 .category-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);  /* 修正: 紫→オレンジ */
     color: white;
     padding: 1rem 1.5rem;
     border-radius: 12px;
@@ -125,7 +125,7 @@ body {
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 12px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #FF8C42;  /* 修正: 紫→オレンジ */
     transition: all 0.3s;
 }
 
@@ -174,16 +174,27 @@ body {
 }
 
 .choice-item label:hover {
-    border-color: #667eea;
-    background: #f0f4ff;
+    border-color: #FF8C42;  /* 修正: 紫→オレンジ */
+    background: #fff5f0;
     transform: scale(1.1);
 }
 
 .choice-item input[type="radio"]:checked + label {
-    border-color: #667eea;
-    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    border-color: #FF8C42;  /* 修正: 紫→オレンジ */
+    background: linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%);  /* 修正: 薄いオレンジ */
+    box-shadow: 0 4px 16px rgba(255, 140, 66, 0.4);
     transform: scale(1.15);
+}
+
+/* ◎と❌のスタイル統一 */
+.choice-item label:contains('◎'),
+.choice-item label:contains('❌') {
+    font-size: 3rem;  /* 追加: サイズを大きく */
+}
+
+/* ◎を赤くする（❌と同じ色） */
+.choice-item input[type="radio"]:checked + label:contains('◎') {
+    color: #e74c3c;  /* 追加: 赤色 */
 }
 
 .choice-label-text {
@@ -209,7 +220,7 @@ body {
 
 .free-text:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #FF8C42;  /* 修正: 紫→オレンジ */
 }
 
 /* ボタン */
@@ -225,13 +236,13 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);  /* 修正: 紫→オレンジ */
     color: white;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 10px 20px rgba(255, 140, 66, 0.4);
 }
 
 .btn-primary:active {
@@ -265,7 +276,7 @@ body {
 
 .form-group select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #FF8C42;  /* 修正: 紫→オレンジ */
 }
 
 /* プライバシー通知 */
