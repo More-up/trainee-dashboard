@@ -359,9 +359,29 @@ body {
         white-space: normal;  /* 折り返し許可 */
     }
 
-    /* ミャンマー語のみフォントサイズをさらに小さく */
+    /* ミャンマー語のみ2列表示 + バランス調整 */
+    body[data-lang="my"] .choices-horizontal {
+        flex-wrap: wrap;  /* 2列表示許可 */
+        justify-content: center;  /* 中央揃え */
+        gap: 0.8rem 0.6rem;  /* 縦横のギャップ */
+        padding: 0.5rem;  /* 余白 */
+    }
+
+    body[data-lang="my"] .choice-item {
+        flex: 0 0 calc(33.333% - 0.4rem);  /* 3列配置（バランス重視） */
+        max-width: 90px;  /* 最大幅 */
+    }
+
+    body[data-lang="my"] .choice-item label {
+        width: 55px;  /* ボタンサイズ拡大 */
+        height: 55px;
+        font-size: 1.5rem;  /* 絵文字サイズ */
+    }
+
     body[data-lang="my"] .choice-label-text {
-        font-size: 0.46rem;  /* ミャンマー語専用: さらに縮小 */
-        line-height: 1.1;  /* 行間を詰める */
+        font-size: 0.55rem;  /* 読みやすいサイズ */
+        max-width: 85px;  /* 幅を広げる */
+        line-height: 1.2;  /* 行間 */
+        margin-top: 0.4rem;  /* 上余白 */
     }
 }
