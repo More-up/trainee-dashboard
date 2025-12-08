@@ -143,11 +143,11 @@ body {
 /* 横並び選択肢 - 大きめの丸ボタン（修正） */
 .choices-horizontal {
     display: flex;
-    justify-content: center;  /* 修正: space-between → center */
-    flex-wrap: wrap;  /* 追加: 折り返しを許可 */
-    gap: 0.8rem;  /* 修正: 1rem → 0.8rem */
+    justify-content: space-between;  /* 両端揃えで均等配置 */
+    flex-wrap: nowrap;  /* 折り返し禁止（1列に固定） */
+    gap: 0.5rem;  /* PC版: 適度な間隔 */
     margin-top: 1.5rem;
-    padding: 0 0.5rem;  /* 追加: 左右に余白 */
+    padding: 0 0.5rem;  /* 左右の余白 */
 }
 
 .choice-item {
@@ -162,8 +162,8 @@ body {
 }
 
 .choice-item label {
-    width: 80px;
-    height: 80px;
+    width: 70px;  /* PC版: 80px → 70px（6つ表示対応）*/
+    height: 70px;  /* PC版: 80px → 70px（6つ表示対応）*/
     border-radius: 50%;
     border: 3px solid #e0e0e0;
     background: white;
@@ -172,7 +172,7 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
-    font-size: 2.5rem;
+    font-size: 2rem;  /* PC版: 2.5rem → 2rem（6つ表示対応）*/
 }
 
 .choice-item label:hover {
@@ -191,7 +191,7 @@ body {
 /* Q2の絵文字特別スタイル（⭕◯×❌） */
 .choice-item label.emoji-circle-special,
 .choice-item label.emoji-cross-special {
-    font-size: 2.2rem;  /* 3rem → 2.2rem（スマホ対応） */
+    font-size: 2rem;  /* PC版: 2.2rem → 2rem（6つ表示対応） */
     color: #e74c3c;  /* 赤色統一 */
 }
 
@@ -201,7 +201,7 @@ body {
     color: #7f8c8d;
     text-align: center;
     line-height: 1.3;
-    max-width: 80px;  /* 追加: テキストの最大幅 */
+    max-width: 70px;  /* PC版: 80px → 70px */
 }
 
 /* 自由記述 */
@@ -322,24 +322,32 @@ body {
     }
 
     .choices-horizontal {
-        gap: 0.3rem;  /* スマホではさらに狭く（6個表示対応） */
+        gap: 0.2rem;  /* スマホ: 最小限の間隔（6個1列対応） */
         padding: 0;  /* 左右の余白をなくす */
+        justify-content: space-between;  /* 両端揃え */
+    }
+
+    .choice-item {
+        flex: 0 1 auto;  /* 自動縮小対応 */
+        min-width: 0;  /* 縮小を許可 */
     }
 
     .choice-item label {
-        width: 50px;  /* 60px → 50px */
-        height: 50px;  /* 60px → 50px */
-        font-size: 1.5rem;  /* 2rem → 1.5rem */
+        width: 48px;  /* スマホ: 50px → 48px（6個1列対応） */
+        height: 48px;
+        font-size: 1.4rem;  /* スマホ: 1.5rem → 1.4rem */
+        border-width: 2px;  /* ボーダーを細く */
     }
 
     /* スマホでもQ2の絵文字は統一サイズ */
     .choice-item label.emoji-circle-special,
     .choice-item label.emoji-cross-special {
-        font-size: 1.8rem;  /* 2.5rem → 1.8rem（6個表示対応） */
+        font-size: 1.6rem;  /* スマホ: 1.8rem → 1.6rem（6個1列対応） */
     }
 
     .choice-label-text {
-        font-size: 0.7rem;  /* 修正: 0.75rem → 0.7rem */
-        max-width: 60px;  /* スマホでの最大幅 */
+        font-size: 0.65rem;  /* スマホ: 0.7rem → 0.65rem */
+        max-width: 48px;  /* スマホ: 60px → 48px */
+        line-height: 1.2;  /* 行間を詰める */
     }
 }
