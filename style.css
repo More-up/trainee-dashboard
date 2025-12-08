@@ -201,7 +201,9 @@ body {
     color: #7f8c8d;
     text-align: center;
     line-height: 1.3;
-    max-width: 70px;  /* PC版: 80px → 70px */
+    max-width: 90px;  /* PC版: 70px → 90px（改行防止） */
+    white-space: nowrap;  /* 強制的に1行表示 */
+    overflow: hidden;  /* はみ出しを隠す */
 }
 
 /* 自由記述 */
@@ -285,6 +287,8 @@ body {
     padding: 1rem;
     margin-bottom: 2rem;
     border-radius: 8px;
+    word-break: keep-all;  /* 不自然な改行を防ぐ */
+    line-height: 1.6;  /* 行間を広げて読みやすく */
 }
 
 /* 完了画面 */
