@@ -210,11 +210,19 @@ function generateQuestions() {
                 labelEl.htmlFor = `${questionKey}_${choiceIndex}`;
                 labelEl.textContent = label.emoji;
                 
-                // ◎と❌に専用のクラスを追加（修正）
-                if (label.emoji === '◎') {
+                // 修正: 大きい丸(⭕)と大きいバツ(❌)、中間の◯と×を検出
+                const emojiText = label.emoji.trim();
+                
+                // 大きい丸(⭕)と中間の丸(◯)を検出
+                if (emojiText === '⭕' || emojiText === '◯' ||
+                    emojiText.includes('⭕') || emojiText.includes('◯')) {
                     labelEl.classList.add('emoji-circle-special');
                 }
-                if (label.emoji === '❌') {
+                
+                // 大きいバツ(❌)と中間のバツ(×)を検出
+                if (emojiText === '❌' || emojiText === '×' ||
+                    emojiText.includes('❌') || emojiText.includes('×') ||
+                    emojiText.charCodeAt(0) === 0x274C || emojiText.charCodeAt(0) === 0x00D7) {
                     labelEl.classList.add('emoji-cross-special');
                 }
 
@@ -249,7 +257,7 @@ function updateProgress() {
     progressText.textContent = `${t.progressText || '質問'} ${answeredCount} / 35`;
 }
 
-// 質問タイプに応じた選択肢ラベルを取得（修正）
+// 質問タイプに応じた選択肢ラベルを取得
 function getChoiceLabels(type, t) {
     const choices = t.choices;
     
@@ -266,14 +274,14 @@ function getChoiceLabels(type, t) {
             return choices.familiarity;
         case 'negative':
             return choices.negative;
-        case 'safety_concern':  // ← 追加！
+        case 'safety_concern':
             return choices.safety_concern;
         default:
             return choices.satisfaction;
     }
 }
 
-// カテゴリーを取得（修正版 - 技能実習生向け）
+// カテゴリーを取得
 function getCategoryForQuestion(qNum) {
     if (qNum >= 1 && qNum <= 4) return 'work';
     if (qNum >= 5 && qNum <= 8) return 'salary';
