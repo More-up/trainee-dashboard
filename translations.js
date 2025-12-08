@@ -40,14 +40,14 @@ const questionTypes = {
 // 翻訳データ
 const translations = {
     ja: {
-        title: '職場アンケート',  // 変更
+        title: '職場アンケート',
         privacyNotice: 'お名前は記録されません。安心して正直にお答えください。',
         employeeCode: '社員番号',
         nationality: '国籍',
         selectNationality: '選択してください',
         startButton: 'アンケート開始',
-        submitButton: '送信',  // 追加
-        submitting: '送信中...',  // 追加
+        submitButton: '送信',
+        submitting: '送信中...',
         completionTime: '所要時間: 約5〜10分',
         completionTitle: '✓ 完了しました',
         completionMessage: 'ご協力ありがとうございました。\n5秒後に自動的に最初の画面に戻ります。',
@@ -63,8 +63,8 @@ const translations = {
             id: 'インドネシア', np: 'ネパール', cn: '中国', jp: '日本'
         },
         categories: {
-            workplace: '業務・職場環境',
-            compensation: '給与・待遇',
+            work: '業務・職場環境',              // 修正: workplace → work
+            salary: '給与・待遇',                // 修正: compensation → salary
             family: '家族・プライベート事情',
             relationship: '人間関係',
             communication: '日本語・コミュニケーション',
@@ -74,7 +74,7 @@ const translations = {
         },
         questions: {
             q1: '仕事の内容は、自分に合っていますか?',
-            q2: '働く場所で、怪我や事故の心配はありませんか?',  // 変更
+            q2: '働く場所で、怪我や事故の心配はありませんか?',
             q3: '休みの日や働く時間は、ちょうどよいですか?',
             q4: '職場の雰囲気は、働きやすいですか?',
             q5: '給料の金額に、満足していますか?',
@@ -122,14 +122,14 @@ const translations = {
                 { emoji: '😕', text: 'あまり思わない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '😊', text: 'ややそう思う' },
-                { emoji: '◎', text: 'とてもそう思う' }  // 変更: 💯 → ◎
+                { emoji: '◎', text: 'とてもそう思う' }
             ],
             understanding: [
                 { emoji: '❌', text: '全く分からない' },
                 { emoji: '😕', text: 'あまり分からない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '🙂', text: 'だいたい分かる' },
-                { emoji: '◎', text: 'よく分かる' }  // 変更: ✅ → ◎
+                { emoji: '◎', text: 'よく分かる' }
             ],
             familiarity: [
                 { emoji: '😰', text: '全く慣れていない' },
@@ -143,17 +143,17 @@ const translations = {
                 { emoji: '😕', text: 'あまりない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '🙂', text: 'ある程度ある' },
-                { emoji: '◎', text: '十分ある' }  // 変更: ✅ → ◎
+                { emoji: '◎', text: '十分ある' }
             ],
             negative: [
-                { emoji: '◎', text: '全くない' },  // 変更: ✅ → ◎
+                { emoji: '◎', text: '全くない' },
                 { emoji: '🙂', text: 'ほとんどない' },
                 { emoji: '😐', text: '時々ある' },
                 { emoji: '😕', text: 'よくある' },
                 { emoji: '😟', text: 'かなりある' },
                 { emoji: '❌', text: 'いつもある' }
             ],
-            safety_concern: [  // 新規追加: Q2専用の評価スケール
+            safety_concern: [
                 { emoji: '◎', text: '全くない' },
                 { emoji: '○', text: 'ほとんどない' },
                 { emoji: '△', text: 'あまりない' },
@@ -170,8 +170,8 @@ const translations = {
         nationality: 'Quốc tịch',
         selectNationality: 'Vui lòng chọn',
         startButton: 'Bắt đầu khảo sát',
-        submitButton: 'Gửi',  // 追加
-        submitting: 'Đang gửi...',  // 追加
+        submitButton: 'Gửi',
+        submitting: 'Đang gửi...',
         completionTime: 'Thời gian: Khoảng 5-10 phút',
         completionTitle: '✓ Hoàn thành',
         completionMessage: 'Cảm ơn sự hợp tác của bạn.\nSẽ tự động quay lại màn hình đầu sau 5 giây.',
@@ -187,8 +187,8 @@ const translations = {
             id: 'Indonesia', np: 'Nepal', cn: 'Trung Quốc', jp: 'Nhật Bản'
         },
         categories: {
-            workplace: 'Công việc & Môi trường làm việc',
-            compensation: 'Lương & Đãi ngộ',
+            work: 'Công việc & Môi trường làm việc',
+            salary: 'Lương & Đãi ngộ',
             family: 'Gia đình & Đời sống cá nhân',
             relationship: 'Quan hệ con người',
             communication: 'Tiếng Nhật & Giao tiếp',
@@ -198,7 +198,7 @@ const translations = {
         },
         questions: {
             q1: 'Nội dung công việc có phù hợp với bạn không?',
-            q2: 'Bạn có lo lắng về chấn thương hoặc tai nạn tại nơi làm việc không?',  // 変更
+            q2: 'Bạn có lo lắng về chấn thương hoặc tai nạn tại nơi làm việc không?',
             q3: 'Ngày nghỉ và giờ làm việc có vừa phải không?',
             q4: 'Bầu không khí nơi làm việc có dễ làm việc không?',
             q5: 'Bạn có hài lòng với mức lương không?',
@@ -288,14 +288,14 @@ const translations = {
         }
     },
     my: {
-        title: 'အလုပ်ခွင်စစ်တမ်း',  // 変更
+        title: 'အလုပ်ခွင်စစ်တမ်း',
         privacyNotice: 'သင့်အမည်ကို မှတ်တမ်းမတင်ပါ။ စိတ်ချလုံခြုံစွာ ရိုးသားစွာဖြေဆိုနိုင်ပါသည်။',
         employeeCode: 'ဝန်ထမ်းနံပါတ်',
         nationality: 'နိုင်ငံသား',
         selectNationality: 'ကျေးဇူးပြု၍ ရွေးချယ်ပါ',
         startButton: 'စစ်တမ်းစတင်မည်',
-        submitButton: 'တင်သွင်းမည်',  // 追加
-        submitting: 'တင်သွင်းနေသည်...',  // 追加
+        submitButton: 'တင်သွင်းမည်',
+        submitting: 'တင်သွင်းနေသည်...',
         completionTime: 'ကြာချိန်: ၅ မှ ၁၀ မိနစ်ခန့်',
         completionTitle: '✓ ပြီးစီးပါပြီ',
         completionMessage: 'ပူးပေါင်းဆောင်ရွက်မှုအတွက် ကျေးဇူးတင်ပါသည်။\n၅ စက္ကန့်အကြာတွင် အစမှစာမျက်နှာသို့ အလိုအလျောက်ပြန်သွားပါမည်။',
@@ -324,8 +324,8 @@ const translations = {
             jp: 'ဂျပန်'
         },
         categories: {
-            workplace: 'လုပ်ငန်းနှင့် အလုပ်ခွင်ပတ်ဝန်းကျင်',
-            compensation: 'လစာနှင့် ခံစားခွင့်များ',
+            work: 'လုပ်ငန်းနှင့် အလုပ်ခွင်ပတ်ဝန်းကျင်',
+            salary: 'လစာနှင့် ခံစားခွင့်များ',
             family: 'မိသားစုနှင့် ကိုယ်ရေးကိုယ်တာအခြေအနေ',
             relationship: 'လူတို့အကြား ဆက်ဆံရေး',
             communication: 'ဂျပန်စာနှင့် ဆက်သွယ်ရေး',
@@ -335,7 +335,7 @@ const translations = {
         },
         questions: {
             q1: 'သင်လုပ်ဆောင်ရသော အလုပ်သည် သင့်နှင့် ကိုက်ညီပါသလား။',
-            q2: 'သင်အလုပ်လုပ်သောနေရာတွင် ဒဏ်ရာ သို့မဟုတ် မတော်တဆမှုများအတွက် စိုးရိမ်စရာ မရှိပါလား။',  // 変更
+            q2: 'သင်အလုပ်လုပ်သောနေရာတွင် ဒဏ်ရာ သို့မဟုတ် မတော်တဆမှုများအတွက် စိုးရိမ်စရာ မရှိပါလား။',
             q3: 'ပိတ်ရက်များနှင့် အလုပ်ချိန်သည် သင့်လျော်ပါသလား။',
             q4: 'အလုပ်ခွင်ရှိ ပတ်ဝန်းကျင်သည် အလုပ်လုပ်ရန် လွယ်ကူပါသလား။',
             q5: 'လစာပမာဏကို ကျေနပ်ပါသလား။',
