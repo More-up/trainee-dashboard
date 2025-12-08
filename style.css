@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     background: white;
     border-radius: 20px;
@@ -64,6 +64,11 @@ body {
 /* プログレスバー */
 .progress-container {
     margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 1rem 0;
+    z-index: 10;
 }
 
 .progress-bar {
@@ -87,104 +92,111 @@ body {
     font-size: 0.9rem;
 }
 
-/* 完了画面 */
-.completion-message {
-    text-align: center;
-    padding: 2rem;
-}
-
-.completion-message h2 {
-    color: #4caf50;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.completion-time {
-    text-align: center;
-    color: #7f8c8d;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
-.header {
+/* カテゴリーヘッダー */
+.category-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 2rem 0 1.5rem 0;
+}
+
+/* 質問 */
+.question {
+    background: #f8f9fa;
     padding: 2rem;
-    text-align: center;
-}
-
-.header .icon {
-    font-size: 3rem;
-    display: block;
-    margin-bottom: 1rem;
-}
-
-.header h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-.language-indicator {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    margin-top: 0.5rem;
-}
-
-#setupForm {
-    padding: 2rem;
-}
-
-.privacy-notice {
-    background: #e8f5e9;
-    border-left: 4px solid #4caf50;
-    padding: 1rem;
     margin-bottom: 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s;
 }
 
-.privacy-notice .icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    display: block;
+.question:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.privacy-notice p {
-    margin: 0.25rem 0;
-}
-
-.form-group {
+.question h3 {
+    color: #2c3e50;
     margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
-.form-group label {
+/* 横並び選択肢 - 大きめの丸ボタン */
+.choices-horizontal {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.choice-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choice-item input[type="radio"] {
+    display: none;
+}
+
+.choice-item label {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #e0e0e0;
+    background: white;
     display: flex;
     align-items: center;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #2c3e50;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 2.5rem;
 }
 
-.form-group label .icon {
-    font-size: 1.2rem;
-    margin-right: 0.5rem;
+.choice-item label:hover {
+    border-color: #667eea;
+    background: #f0f4ff;
+    transform: scale(1.1);
 }
 
-.form-group input,
-.form-group select {
+.choice-item input[type="radio"]:checked + label {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    transform: scale(1.15);
+}
+
+.choice-label-text {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* 自由記述 */
+.free-text {
     width: 100%;
-    padding: 0.75rem;
+    padding: 1rem;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
     transition: border-color 0.3s;
+    margin-top: 1rem;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.free-text:focus {
     outline: none;
     border-color: #667eea;
 }
 
+/* ボタン */
 .btn {
     width: 100%;
     padding: 1rem;
@@ -210,131 +222,65 @@ body {
     transform: translateY(0);
 }
 
-.footer-info {
-    text-align: center;
-    margin-top: 1.5rem;
-    color: #7f8c8d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#submitButton {
+    margin-top: 2rem;
 }
 
-.footer-info .icon {
-    margin-right: 0.5rem;
+/* フォーム */
+.form-group {
+    margin-bottom: 1.5rem;
 }
 
-#surveyContainer {
-    padding: 2rem;
-}
-
-#questionsContainer {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.question {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    border-radius: 12px;
-    border-left: 4px solid #667eea;
-    transition: all 0.3s;
-}
-
-.question:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.question h3 {
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-.choices {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.choice {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.choice:hover {
-    border-color: #667eea;
-    background: #f0f4ff;
-}
-
-.choice input[type="radio"] {
-    margin-right: 0.75rem;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.choice input[type="radio"]:checked + * {
+.form-group label {
+    display: block;
     font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
 }
 
-.choice:has(input[type="radio"]:checked) {
-    border-color: #667eea;
-    background: #e3f2fd;
-}
-
-.free-text {
+.form-group select {
     width: 100%;
     padding: 0.75rem;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
-    font-family: inherit;
-    resize: vertical;
     transition: border-color 0.3s;
 }
 
-.free-text:focus {
+.form-group select:focus {
     outline: none;
     border-color: #667eea;
 }
 
-#submitSurvey {
-    margin-top: 2rem;
-    animation: slideUp 0.5s ease-out;
+/* プライバシー通知 */
+.privacy-notice {
+    background: #e8f5e9;
+    border-left: 4px solid #4caf50;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
 }
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* 完了画面 */
+.completion-message {
+    text-align: center;
+    padding: 2rem;
 }
 
-#completionScreen {
-    animation: fadeIn 0.5s ease-out;
+.completion-message h2 {
+    color: #4caf50;
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.completion-time {
+    text-align: center;
+    color: #7f8c8d;
+    margin-top: 1rem;
+    font-size: 0.9rem;
 }
 
+/* レスポンシブ */
 @media (max-width: 768px) {
     body {
         padding: 1rem;
@@ -342,26 +288,24 @@ body {
 
     .container {
         border-radius: 12px;
-    }
-
-    .header {
-        padding: 1.5rem;
-    }
-
-    .header h1 {
-        font-size: 1.5rem;
-    }
-
-    #setupForm,
-    #surveyContainer {
-        padding: 1.5rem;
-    }
-
-    .question {
         padding: 1rem;
     }
 
-    .choice {
-        padding: 0.75rem;
+    .question {
+        padding: 1.5rem;
+    }
+
+    .choices-horizontal {
+        gap: 0.5rem;
+    }
+
+    .choice-item label {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+
+    .choice-label-text {
+        font-size: 0.75rem;
     }
 }
