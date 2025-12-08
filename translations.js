@@ -1,7 +1,7 @@
 // 質問タイプの定義（グローバル）
 const questionTypes = {
     q1: 'satisfaction',
-    q2: 'satisfaction',
+    q2: 'safety_concern',  // 変更: 新しいタイプを追加
     q3: 'satisfaction',
     q4: 'satisfaction',
     q5: 'satisfaction',
@@ -40,12 +40,14 @@ const questionTypes = {
 // 翻訳データ
 const translations = {
     ja: {
-        title: '技能実習生エンゲージメント診断',
+        title: '職場アンケート',  // 変更
         privacyNotice: 'お名前は記録されません。安心して正直にお答えください。',
         employeeCode: '社員番号',
         nationality: '国籍',
         selectNationality: '選択してください',
         startButton: 'アンケート開始',
+        submitButton: '送信',  // 追加
+        submitting: '送信中...',  // 追加
         completionTime: '所要時間: 約5〜10分',
         completionTitle: '✓ 完了しました',
         completionMessage: 'ご協力ありがとうございました。\n5秒後に自動的に最初の画面に戻ります。',
@@ -72,7 +74,7 @@ const translations = {
         },
         questions: {
             q1: '仕事の内容は、自分に合っていますか?',
-            q2: '働く場所は、安全だと思いますか?',
+            q2: '働く場所で、怪我や事故の心配はありませんか?',  // 変更
             q3: '休みの日や働く時間は、ちょうどよいですか?',
             q4: '職場の雰囲気は、働きやすいですか?',
             q5: '給料の金額に、満足していますか?',
@@ -120,14 +122,14 @@ const translations = {
                 { emoji: '😕', text: 'あまり思わない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '😊', text: 'ややそう思う' },
-                { emoji: '💯', text: 'とてもそう思う' }
+                { emoji: '◎', text: 'とてもそう思う' }  // 変更: 💯 → ◎
             ],
             understanding: [
                 { emoji: '❌', text: '全く分からない' },
                 { emoji: '😕', text: 'あまり分からない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '🙂', text: 'だいたい分かる' },
-                { emoji: '✅', text: 'よく分かる' }
+                { emoji: '◎', text: 'よく分かる' }  // 変更: ✅ → ◎
             ],
             familiarity: [
                 { emoji: '😰', text: '全く慣れていない' },
@@ -141,25 +143,35 @@ const translations = {
                 { emoji: '😕', text: 'あまりない' },
                 { emoji: '😐', text: 'どちらでもない' },
                 { emoji: '🙂', text: 'ある程度ある' },
-                { emoji: '✅', text: '十分ある' }
+                { emoji: '◎', text: '十分ある' }  // 変更: ✅ → ◎
             ],
             negative: [
-                { emoji: '✅', text: '全くない' },
+                { emoji: '◎', text: '全くない' },  // 変更: ✅ → ◎
                 { emoji: '🙂', text: 'ほとんどない' },
                 { emoji: '😐', text: '時々ある' },
                 { emoji: '😕', text: 'よくある' },
                 { emoji: '😟', text: 'かなりある' },
                 { emoji: '❌', text: 'いつもある' }
+            ],
+            safety_concern: [  // 新規追加: Q2専用の評価スケール
+                { emoji: '◎', text: '全くない' },
+                { emoji: '○', text: 'ほとんどない' },
+                { emoji: '△', text: 'あまりない' },
+                { emoji: '▽', text: '少しある' },
+                { emoji: '×', text: 'よくある' },
+                { emoji: '❌', text: 'いつもある' }
             ]
         }
     },
     vn: {
-        title: 'Chẩn đoán Mức độ gắn kết của Thực tập sinh kỹ năng',
+        title: 'Khảo sát nơi làm việc',
         privacyNotice: 'Tên của bạn sẽ không được ghi lại. Hãy trả lời trung thực một cách an tâm.',
         employeeCode: 'Mã nhân viên',
         nationality: 'Quốc tịch',
         selectNationality: 'Vui lòng chọn',
         startButton: 'Bắt đầu khảo sát',
+        submitButton: 'Gửi',  // 追加
+        submitting: 'Đang gửi...',  // 追加
         completionTime: 'Thời gian: Khoảng 5-10 phút',
         completionTitle: '✓ Hoàn thành',
         completionMessage: 'Cảm ơn sự hợp tác của bạn.\nSẽ tự động quay lại màn hình đầu sau 5 giây.',
@@ -186,7 +198,7 @@ const translations = {
         },
         questions: {
             q1: 'Nội dung công việc có phù hợp với bạn không?',
-            q2: 'Bạn có nghĩ nơi làm việc an toàn không?',
+            q2: 'Bạn có lo lắng về chấn thương hoặc tai nạn tại nơi làm việc không?',  // 変更
             q3: 'Ngày nghỉ và giờ làm việc có vừa phải không?',
             q4: 'Bầu không khí nơi làm việc có dễ làm việc không?',
             q5: 'Bạn có hài lòng với mức lương không?',
@@ -234,14 +246,14 @@ const translations = {
                 { emoji: '😕', text: 'Không nghĩ vậy lắm' },
                 { emoji: '😐', text: 'Bình thường' },
                 { emoji: '😊', text: 'Hơi nghĩ vậy' },
-                { emoji: '💯', text: 'Rất nghĩ vậy' }
+                { emoji: '◎', text: 'Rất nghĩ vậy' }
             ],
             understanding: [
                 { emoji: '❌', text: 'Hoàn toàn không hiểu' },
                 { emoji: '😕', text: 'Không hiểu lắm' },
                 { emoji: '😐', text: 'Bình thường' },
                 { emoji: '🙂', text: 'Hiểu đại khái' },
-                { emoji: '✅', text: 'Hiểu rõ' }
+                { emoji: '◎', text: 'Hiểu rõ' }
             ],
             familiarity: [
                 { emoji: '😰', text: 'Hoàn toàn chưa quen' },
@@ -255,25 +267,35 @@ const translations = {
                 { emoji: '😕', text: 'Không có lắm' },
                 { emoji: '😐', text: 'Bình thường' },
                 { emoji: '🙂', text: 'Có một phần' },
-                { emoji: '✅', text: 'Có đầy đủ' }
+                { emoji: '◎', text: 'Có đầy đủ' }
             ],
             negative: [
-                { emoji: '✅', text: 'Hoàn toàn không' },
+                { emoji: '◎', text: 'Hoàn toàn không' },
                 { emoji: '🙂', text: 'Hầu như không' },
                 { emoji: '😐', text: 'Thỉnh thoảng có' },
                 { emoji: '😕', text: 'Thường có' },
                 { emoji: '😟', text: 'Khá nhiều' },
                 { emoji: '❌', text: 'Luôn luôn' }
+            ],
+            safety_concern: [
+                { emoji: '◎', text: 'Hoàn toàn không' },
+                { emoji: '○', text: 'Hầu như không' },
+                { emoji: '△', text: 'Không nhiều' },
+                { emoji: '▽', text: 'Một chút' },
+                { emoji: '×', text: 'Thường xuyên' },
+                { emoji: '❌', text: 'Luôn luôn' }
             ]
         }
     },
     my: {
-        title: 'နည်းပညာအလုပ်သင်များ၏ ပါဝင်မှုအဆင့်ရှာဖွေခြင်း',
+        title: 'အလုပ်ခွင်စစ်တမ်း',  // 変更
         privacyNotice: 'သင့်အမည်ကို မှတ်တမ်းမတင်ပါ။ စိတ်ချလုံခြုံစွာ ရိုးသားစွာဖြေဆိုနိုင်ပါသည်။',
         employeeCode: 'ဝန်ထမ်းနံပါတ်',
         nationality: 'နိုင်ငံသား',
         selectNationality: 'ကျေးဇူးပြု၍ ရွေးချယ်ပါ',
         startButton: 'စစ်တမ်းစတင်မည်',
+        submitButton: 'တင်သွင်းမည်',  // 追加
+        submitting: 'တင်သွင်းနေသည်...',  // 追加
         completionTime: 'ကြာချိန်: ၅ မှ ၁၀ မိနစ်ခန့်',
         completionTitle: '✓ ပြီးစီးပါပြီ',
         completionMessage: 'ပူးပေါင်းဆောင်ရွက်မှုအတွက် ကျေးဇူးတင်ပါသည်။\n၅ စက္ကန့်အကြာတွင် အစမှစာမျက်နှာသို့ အလိုအလျောက်ပြန်သွားပါမည်။',
@@ -313,7 +335,7 @@ const translations = {
         },
         questions: {
             q1: 'သင်လုပ်ဆောင်ရသော အလုပ်သည် သင့်နှင့် ကိုက်ညီပါသလား။',
-            q2: 'သင်အလုပ်လုပ်သောနေရာသည် ဘေးကင်းလုံခြုံသည်ဟု ထင်ပါသလား။',
+            q2: 'သင်အလုပ်လုပ်သောနေရာတွင် ဒဏ်ရာ သို့မဟုတ် မတော်တဆမှုများအတွက် စိုးရိမ်စရာ မရှိပါလား။',  // 変更
             q3: 'ပိတ်ရက်များနှင့် အလုပ်ချိန်သည် သင့်လျော်ပါသလား။',
             q4: 'အလုပ်ခွင်ရှိ ပတ်ဝန်းကျင်သည် အလုပ်လုပ်ရန် လွယ်ကူပါသလား။',
             q5: 'လစာပမာဏကို ကျေနပ်ပါသလား။',
@@ -340,65 +362,73 @@ const translations = {
             q26: 'ဂျပန်တွင် နေထိုင်ရာတွင် အခက်အခဲ ရှိပါသလား။',
             q27: 'ကုမ္ပဏီက နေထိုင်မှုအတွက် ကူညီထောက်ပံ့ပေးပါသလား။',
             q28: 'အဆောင် သို့မဟုတ် အိမ်တွင် နေထိုင်မှုပတ်ဝန်းကျင်(အခန်းအကျယ်ဝန်း၊ အထောက်အကူပစ္စည်းများ)ကို ကျေနပ်ပါသလား။',
-            q29: 'ဂျပန်တွင် နေထိုင်မှုသည် ဘေးကင်းလုံခြုံပြီး သက်တောင့်သက်သာရှိပါသလား။',
-            q30: 'လက်ရှိအလုပ်တွင် နည်းပညာနှင့် အသိပညာ ရရှိနေပါသလား။',
-            q31: 'ကြိုးစားအားထုတ်သလောက် အကဲဖြတ်မှုနှင့် ခံစားခွင့်များ တိုးတက်လာသည်ဟု ခံစားရပါသလား။',
-            q32: 'ဤကုမ္ပဏီတွင် ရေရှည်အလုပ်လုပ်လိုသည်ဟု ထင်ပါသလား။',
-            q33: 'ဗီဇာ(နေထိုင်ခွင့်)သက်တမ်းတိုးခြင်းနှင့် လုပ်ထုံးလုပ်နည်းများတွင် ကုမ္ပဏီ သို့မဟုတ် အဖွဲ့က ကူညီပေးပါသလား။',
-            q34: 'ဤကုမ္ပဏီတွင် အလုပ်လုပ်ခြင်းဖြင့် မိခင်နိုင်ငံပြန်သောအခါ အသုံးဝင်သော နည်းပညာများ လေ့လာရရှိနေပါသလား။',
-            q35: 'မိခင်နိုင်ငံရှိ မိတ်ဆွေများကိုပါ "ဤကုမ္ပဏီတွင် အလုပ်လုပ်သင့်သည်" ဟု ထင်ပါသလား။'
+            q29: 'ဂျပန်တွင် နေထိုင်ခြင်းသည် ဘေးကင်းပြီး သက်တောင့်သက်သာပါသလား။',
+            q30: 'လက်ရှိအလုပ်မှ နည်းပညာနှင့် အသိပညာများ ရရှိနေပါသလား။',
+            q31: 'ကြိုးစားလုပ်ဆောင်မှုအတွက် အကဲဖြတ်မှုနှင့် ခံစားခွင့်များ ပိုကောင်းလာမည်ဟု ခံစားရပါသလား။',
+            q32: 'ဤကုမ္ပဏီတွင် ရှည်ကြာစွာ အလုပ်လုပ်လိုပါသလား။',
+            q33: 'ဗီဇာ(နေထိုင်ခွင့်အရည်အချင်း) အသစ်လုပ်ခြင်း သို့မဟုတ် လုပ်ထုံးလုပ်နည်းများတွင် ကုမ္ပဏီ သို့မဟုတ် အဖွဲ့အစည်းက ကူညီပေးပါသလား။',
+            q34: 'ဤကုမ္ပဏီတွင် အလုပ်လုပ်ခြင်းဖြင့် မိခင်နိုင်ငံသို့ ပြန်ရောက်သောအခါ အသုံးဝင်သော နည်းပညာများ သင်ယူနိုင်ပါသလား။',
+            q35: 'မိခင်နိုင်ငံက မိတ်ဆွေများကိုလည်း "ဤကုမ္ပဏီတွင် အလုပ်လုပ်တာ ကောင်းတယ်" ဟု ထင်ပါသလား။'
         },
         choices: {
             satisfaction: [
                 { emoji: '😢', text: 'အလွန်မကျေနပ်ပါ' },
-                { emoji: '🙁', text: 'အနည်းငယ်မကျေနပ်ပါ' },
-                { emoji: '😐', text: 'မည်သည်လည်းမဟုတ်ပါ' },
-                { emoji: '🙂', text: 'အနည်းငယ်ကျေနပ်ပါသည်' },
+                { emoji: '🙁', text: 'မကျေနပ်သလောက်' },
+                { emoji: '😐', text: 'များမှား' },
+                { emoji: '🙂', text: 'ကျေနပ်သလောက်' },
                 { emoji: '😄', text: 'အလွန်ကျေနပ်ပါသည်' }
             ],
             desire: [
-                { emoji: '😔', text: 'လုံးဝထိုသို့မထင်ပါ' },
-                { emoji: '😕', text: 'သိပ်မထင်ပါ' },
-                { emoji: '😐', text: 'မည်သည်လည်းမဟုတ်ပါ' },
-                { emoji: '😊', text: 'အနည်းငယ်ထိုသို့ထင်ပါသည်' },
-                { emoji: '💯', text: 'အလွန်ထိုသို့ထင်ပါသည်' }
+                { emoji: '😔', text: 'လုံးဝထင်မြင်မည်မဟုတ်ပါ' },
+                { emoji: '😕', text: 'များစွာထင်မြင်မည်မဟုတ်ပါ' },
+                { emoji: '😐', text: 'များမှား' },
+                { emoji: '😊', text: 'ထင်မြင်သလောက်' },
+                { emoji: '◎', text: 'အလွန်ထင်မြင်သည်' }
             ],
             understanding: [
                 { emoji: '❌', text: 'လုံးဝနားမလည်ပါ' },
-                { emoji: '😕', text: 'သိပ်နားမလည်ပါ' },
-                { emoji: '😐', text: 'မည်သည်လည်းမဟုတ်ပါ' },
-                { emoji: '🙂', text: 'အများအားဖြင့် နားလည်ပါသည်' },
-                { emoji: '✅', text: 'ကောင်းစွာနားလည်ပါသည်' }
+                { emoji: '😕', text: 'များစွာနားမလည်ပါ' },
+                { emoji: '😐', text: 'များမှား' },
+                { emoji: '🙂', text: 'ခန့်မှန်းနားလည်သည်' },
+                { emoji: '◎', text: 'ကောင်းစွာနားလည်သည်' }
             ],
             familiarity: [
-                { emoji: '😰', text: 'လုံးဝရင်းနှီးခြင်းမရှိပါ' },
-                { emoji: '😕', text: 'သိပ်ရင်းနှီးခြင်းမရှိပါ' },
-                { emoji: '😐', text: 'မည်သည်လည်းမဟုတ်ပါ' },
-                { emoji: '😊', text: 'အနည်းငယ်ရင်းနှီးပါသည်' },
-                { emoji: '🌟', text: 'အလွန်ရင်းနှီးပါသည်' }
+                { emoji: '😰', text: 'လုံးဝမရင်းနှီးပါ' },
+                { emoji: '😕', text: 'များစွာမရင်းနှီးပါ' },
+                { emoji: '😐', text: 'များမှား' },
+                { emoji: '😊', text: 'ရင်းနှီးသလောက်' },
+                { emoji: '🌟', text: 'အလွန်ရင်းနှီးသည်' }
             ],
             availability: [
                 { emoji: '❌', text: 'လုံးဝမရှိပါ' },
-                { emoji: '😕', text: 'သိပ်မရှိပါ' },
-                { emoji: '😐', text: 'မည်သည်လည်းမဟုတ်ပါ' },
-                { emoji: '🙂', text: 'အတိုင်းအတာတစ်ခုရှိပါသည်' },
-                { emoji: '✅', text: 'လုံလောက်စွာရှိပါသည်' }
+                { emoji: '😕', text: 'များစွာမရှိပါ' },
+                { emoji: '😐', text: 'များမှား' },
+                { emoji: '🙂', text: 'အတိုင်းအတာတစ်ခုရှိသည်' },
+                { emoji: '◎', text: 'လုံလောက်စွာရှိသည်' }
             ],
             negative: [
-                { emoji: '✅', text: 'လုံးဝမရှိပါ' },
-                { emoji: '🙂', text: 'နည်းနည်းသာရှိပါသည်' },
-                { emoji: '😐', text: 'တစ်ခါတစ်ရံရှိပါသည်' },
-                { emoji: '😕', text: 'မကြာခဏရှိပါသည်' },
-                { emoji: '😟', text: 'များစွာရှိပါသည်' },
-                { emoji: '❌', text: 'အမြဲတမ်းရှိပါသည်' }
+                { emoji: '◎', text: 'လုံးဝမရှိပါ' },
+                { emoji: '🙂', text: 'သိပ်မရှိပါ' },
+                { emoji: '😐', text: 'ရံဖန်ရံခါရှိသည်' },
+                { emoji: '😕', text: 'မကြာခဏရှိသည်' },
+                { emoji: '😟', text: 'များစွာရှိသည်' },
+                { emoji: '❌', text: 'အမြဲတမ်းရှိသည်' }
+            ],
+            safety_concern: [
+                { emoji: '◎', text: 'လုံးဝမရှိပါ' },
+                { emoji: '○', text: 'သိပ်မရှိပါ' },
+                { emoji: '△', text: 'များစွာမရှိပါ' },
+                { emoji: '▽', text: 'အနည်းငယ်ရှိသည်' },
+                { emoji: '×', text: 'မကြာခဏရှိသည်' },
+                { emoji: '❌', text: 'အမြဲတမ်းရှိသည်' }
             ]
         }
     }
 };
 
-// 残り14言語は後で追加（一旦日本語コピー）
+// 残り14言語のプレースホルダー（将来的に翻訳追加）
 ['cn', 'tl', 'id', 'th', 'ne', 'hi', 'kh', 'lo', 'mn', 'bd', 'lk', 'dz', 'uz', 'ur'].forEach(lang => {
     translations[lang] = JSON.parse(JSON.stringify(translations.ja));
 });
 
-console.log('技能実習生エンゲージメント診断 翻訳データを読み込みました');
+console.log('エンゲージメントアンケート翻訳データが読み込まれました。');
