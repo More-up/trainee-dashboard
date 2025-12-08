@@ -1,274 +1,224 @@
+// グローバル変数
 let currentLanguage = 'ja';
-let currentAnswers = {};
+let currentQuestionIndex = 0;
+let answers = {};
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Page loaded - Initializing...');
-    
-    if (typeof translations === 'undefined') {
-        console.error('Translations not loaded');
-        return;
-    }
-    
-    // 言語選択の初期化
-    const languageSelect = document.getElementById('languageSelect');
-    if (languageSelect) {
-        languageSelect.addEventListener('change', function() {
-            currentLanguage = this.value;
-            updateLanguage();
-        });
-    }
-    
-    // 国籍選択の初期化
-    const nationalitySelect = document.getElementById('nationality');
-    if (nationalitySelect) {
-        nationalitySelect.value = '';
-    }
-    
-    // アンケート開始ボタンの初期化
-    const startButton = document.getElementById('startSurvey');
-    if (startButton) {
-        startButton.addEventListener('click', startSurvey);
-    }
-    
-    // 初期言語検出と表示更新
-    detectLanguage();
+// DOM要素
+const languageSelect = document.getElementById('languageSelect');
+const surveySetup = document.getElementById('surveySetup');
+const initialScreen = document.getElementById('initialScreen');
+const surveyScreen = document.getElementById('surveyScreen');
+const completionScreen = document.getElementById('completionScreen');
+const questionsContainer = document.getElementById('questionsContainer');
+const submitButton = document.getElementById('submitButton');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+
+// 言語変更ハンドラー
+languageSelect.addEventListener('change', (e) => {
+    currentLanguage = e.target.value;
+    updateLanguage();
 });
 
-function detectLanguage() {
-    const browserLang = navigator.language.toLowerCase();
-    if (browserLang.startsWith('vi')) {
-        currentLanguage = 'vn';
-    } else if (browserLang.startsWith('id')) {
-        currentLanguage = 'id';
-    } else {
-        currentLanguage = 'ja';
-    }
-    
-    const languageSelect = document.getElementById('languageSelect');
-    if (languageSelect) {
-        languageSelect.value = currentLanguage;
-    }
-    
-    updateLanguage();
-}
-
+// 言語に応じてUIを更新
 function updateLanguage() {
-    if (!translations[currentLanguage]) {
+    const t = translations[currentLanguage];
+    
+    if (!t) {
         console.error(`Language ${currentLanguage} not found`);
         currentLanguage = 'ja';
+        return;
     }
-    
-    const t = translations[currentLanguage];
-    
-    // ページタイトルを更新
+
+    // タイトルとラベルを更新
     document.title = t.title;
-    
-    // data-i18n属性を持つすべての要素を更新
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        const keys = key.split('.');
-        let value = t;
-        for (let k of keys) {
-            value = value[k];
-            if (!value) break;
-        }
-        if (value) {
-            if (element.tagName === 'OPTION') {
-                element.textContent = value;
-            } else if (element.tagName === 'TITLE') {
-                element.textContent = value;
-            } else {
-                element.textContent = value;
-            }
-        }
-    });
-    
-    // data-i18n-placeholder属性を持つ要素のプレースホルダーを更新
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-i18n-placeholder');
-        if (t[key]) {
-            element.placeholder = t[key];
-        }
-    });
-    
-    // 国籍選択のオプションを更新
+    document.getElementById('surveyTitle').textContent = t.title;
+    document.getElementById('privacyNotice').textContent = t.privacyNotice;
+    document.getElementById('employeeCodeLabel').textContent = t.employeeCode;
+    document.getElementById('nationalityLabel').textContent = t.nationality;
+    document.getElementById('startButton').textContent = t.startButton;
+    document.getElementById('completionTime').textContent = t.completionTime;
+    document.getElementById('completionTitle').textContent = t.completionTitle;
+    document.getElementById('completionMessage').textContent = t.completionMessage;
+
+    // 国籍選択肢を更新
     const nationalitySelect = document.getElementById('nationality');
-    if (nationalitySelect && t.nationalities) {
-        const currentValue = nationalitySelect.value;
-        nationalitySelect.innerHTML = '<option value="" data-i18n="nationality">' + t.nationality + '</option>';
-        Object.entries(t.nationalities).forEach(([code, name]) => {
-            const option = document.createElement('option');
-            option.value = code;
-            option.textContent = name;
-            nationalitySelect.appendChild(option);
-        });
-        if (currentValue) {
-            nationalitySelect.value = currentValue;
-        }
-    }
-}
-
-function startSurvey() {
-    const employeeCode = document.getElementById('employeeCode').value.trim();
-    const nationality = document.getElementById('nationality').value;
+    const currentValue = nationalitySelect.value;
+    nationalitySelect.innerHTML = `<option value="">${t.selectNationality || '選択してください'}</option>`;
     
-    if (!employeeCode) {
-        alert(translations[currentLanguage].errors.employeeCode);
-        return;
-    }
-    
-    if (!nationality) {
-        alert(translations[currentLanguage].errors.nationality);
-        return;
-    }
-    
-    document.getElementById('setupForm').style.display = 'none';
-    document.getElementById('surveyContainer').style.display = 'block';
-    
-    generateQuestions();
-}
-
-function generateQuestions() {
-    if (!translations[currentLanguage]) {
-        console.error('Translations not loaded');
-        return;
-    }
-    
-    const container = document.getElementById('questionsContainer');
-    container.innerHTML = '';
-    
-    const t = translations[currentLanguage];
-    
-    Object.entries(t.questions).forEach(([qKey, qText]) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.className = 'question';
-        questionDiv.dataset.question = qKey;
-        
-        const questionTitle = document.createElement('h3');
-        questionTitle.textContent = qText;
-        questionDiv.appendChild(questionTitle);
-        
-        const choiceType = questionTypes[qKey];
-        
-        if (choiceType === 'text') {
-            const textarea = document.createElement('textarea');
-            textarea.className = 'free-text';
-            textarea.rows = 4;
-            textarea.addEventListener('input', function() {
-                currentAnswers[qKey] = this.value;
-                checkCompletion();
-            });
-            questionDiv.appendChild(textarea);
-        } else {
-            const choicesDiv = document.createElement('div');
-            choicesDiv.className = 'choices';
-            
-            const choices = t.choices[choiceType];
-            choices.forEach((choiceText, index) => {
-                const label = document.createElement('label');
-                label.className = 'choice';
-                
-                const radio = document.createElement('input');
-                radio.type = 'radio';
-                radio.name = qKey;
-                radio.value = index + 1;
-                radio.addEventListener('change', function() {
-                    currentAnswers[qKey] = this.value;
-                    checkCompletion();
-                    scrollToNextQuestion(questionDiv);
-                });
-                
-                label.appendChild(radio);
-                label.appendChild(document.createTextNode(choiceText));
-                choicesDiv.appendChild(label);
-            });
-            
-            questionDiv.appendChild(choicesDiv);
-        }
-        
-        container.appendChild(questionDiv);
+    Object.entries(t.nationalities).forEach(([code, name]) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = name;
+        nationalitySelect.appendChild(option);
     });
-}
-
-function scrollToNextQuestion(currentQuestion) {
-    const allQuestions = document.querySelectorAll('.question');
-    const currentIndex = Array.from(allQuestions).indexOf(currentQuestion);
     
-    if (currentIndex < allQuestions.length - 1) {
-        setTimeout(() => {
-            allQuestions[currentIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
-    }
+    if (currentValue) nationalitySelect.value = currentValue;
+
+    // 社員番号のプレースホルダー更新
+    const employeeSelect = document.getElementById('employeeCode');
+    employeeSelect.options[0].textContent = t.selectNationality || '選択してください';
 }
 
-function checkCompletion() {
-    const requiredQuestions = Object.keys(translations[currentLanguage].questions).filter(q => q !== 'q35');
-    const answered = requiredQuestions.every(q => currentAnswers[q]);
+// アンケート開始
+surveySetup.addEventListener('submit', (e) => {
+    e.preventDefault();
     
-    let submitButton = document.getElementById('submitSurvey');
-    if (answered && !submitButton) {
-        submitButton = document.createElement('button');
-        submitButton.id = 'submitSurvey';
-        submitButton.className = 'btn btn-primary';
-        submitButton.textContent = '送信 / Submit';
-        submitButton.addEventListener('click', submitSurvey);
-        document.getElementById('questionsContainer').appendChild(submitButton);
-        submitButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-}
-
-function submitSurvey() {
     const employeeCode = document.getElementById('employeeCode').value;
     const nationality = document.getElementById('nationality').value;
     
-    const surveyData = {
-        timestamp: new Date().toISOString(),
-        employeeCode: employeeCode,
-        nationality: nationality,
+    if (!employeeCode || !nationality) {
+        const t = translations[currentLanguage];
+        alert(t.errorEmployeeCode || 'すべての項目を入力してください');
+        return;
+    }
+
+    // データ保存
+    answers = {
+        employeeCode,
+        nationality,
         language: currentLanguage,
-        answers: currentAnswers
+        timestamp: new Date().toISOString()
     };
+
+    // 画面切り替え
+    initialScreen.classList.remove('active');
+    surveyScreen.classList.add('active');
     
-    console.log('Survey submitted:', surveyData);
-    
-    document.getElementById('surveyContainer').style.display = 'none';
-    showCompletionScreen();
+    // 質問を生成
+    generateQuestions();
+});
+
+// 質問を生成
+function generateQuestions() {
+    const t = translations[currentLanguage];
+    questionsContainer.innerHTML = '';
+
+    if (!t.categories) {
+        console.error('Categories not found in translations');
+        return;
+    }
+
+    let questionNumber = 1;
+
+    Object.entries(t.categories).forEach(([categoryKey, category]) => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'question-category';
+        categoryDiv.innerHTML = `<h3>${category.title}</h3>`;
+
+        category.questions.forEach((question, qIndex) => {
+            const questionId = `q${questionNumber}`;
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-item';
+            questionDiv.dataset.questionNumber = questionNumber;
+
+            const questionTitle = document.createElement('h4');
+            questionTitle.textContent = `${questionNumber}. ${question.text}`;
+            questionDiv.appendChild(questionTitle);
+
+            // 質問35は自由記述
+            if (questionNumber === 35) {
+                const textarea = document.createElement('textarea');
+                textarea.id = questionId;
+                textarea.rows = 4;
+                textarea.placeholder = t.openEndedPlaceholder || 'ご自由にお書きください';
+                questionDiv.appendChild(textarea);
+            } else {
+                // 6段階評価の顔文字を表示
+                const choicesDiv = document.createElement('div');
+                choicesDiv.className = 'emoji-options';
+
+                // 質問タイプに応じた選択肢を取得
+                const choiceType = question.type || 'satisfaction';
+                const choices = t.choices[choiceType] || t.choices.satisfaction;
+
+                choices.forEach((choice, index) => {
+                    const value = index + 1;
+                    const choiceLabel = document.createElement('label');
+                    choiceLabel.className = 'emoji-btn';
+                    choiceLabel.innerHTML = `
+                        <input type="radio" name="${questionId}" value="${value}" required>
+                        <span class="emoji">${choice.emoji}</span>
+                        <span class="choice-text">${choice.text}</span>
+                    `;
+                    
+                    // ラジオボタン選択時のイベント
+                    const radio = choiceLabel.querySelector('input');
+                    radio.addEventListener('change', () => {
+                        answers[questionId] = value;
+                        
+                        // 次の質問にスクロール (質問35以外)
+                        if (questionNumber < 35) {
+                            const nextQuestion = document.querySelector(`[data-question-number="${questionNumber + 1}"]`);
+                            if (nextQuestion) {
+                                setTimeout(() => {
+                                    nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }, 300);
+                            }
+                        }
+                        
+                        updateProgress();
+                        checkAllAnswered();
+                    });
+
+                    choicesDiv.appendChild(choiceLabel);
+                });
+
+                questionDiv.appendChild(choicesDiv);
+            }
+
+            categoryDiv.appendChild(questionDiv);
+            questionNumber++;
+        });
+
+        questionsContainer.appendChild(categoryDiv);
+    });
 }
 
-function showCompletionScreen() {
-    const t = translations[currentLanguage].completion;
+// 進捗状況を更新
+function updateProgress() {
+    const totalQuestions = 35;
+    const answeredQuestions = Object.keys(answers).filter(key => key.startsWith('q')).length;
+    const progress = (answeredQuestions / totalQuestions) * 100;
     
-    const completionDiv = document.createElement('div');
-    completionDiv.id = 'completionScreen';
-    completionDiv.style.textAlign = 'center';
-    completionDiv.style.padding = '2rem';
-    
-    const title = document.createElement('h2');
-    title.textContent = t.title;
-    title.style.color = '#2ecc71';
-    completionDiv.appendChild(title);
-    
-    const message = document.createElement('p');
-    message.textContent = t.message;
-    message.style.fontSize = '1.2rem';
-    message.style.marginTop = '1rem';
-    completionDiv.appendChild(message);
-    
-    const countdown = document.createElement('p');
-    countdown.style.marginTop = '2rem';
-    countdown.style.color = '#7f8c8d';
-    completionDiv.appendChild(countdown);
-    
-    document.body.appendChild(completionDiv);
-    
-    let timeLeft = 5;
-    const countdownInterval = setInterval(() => {
-        countdown.textContent = `${t.autoClose} ${t.remaining} ${timeLeft} ${t.seconds}`;
-        timeLeft--;
-        
-        if (timeLeft < 0) {
-            clearInterval(countdownInterval);
-            window.location.reload();
-        }
-    }, 1000);
+    progressFill.style.width = `${progress}%`;
+    progressText.textContent = `質問 ${answeredQuestions} / ${totalQuestions}`;
 }
+
+// すべての質問に回答したかチェック
+function checkAllAnswered() {
+    const totalRequired = 34; // 質問35は任意
+    const answeredCount = Object.keys(answers).filter(key => key.startsWith('q') && key !== 'q35').length;
+    
+    if (answeredCount >= totalRequired) {
+        submitButton.style.display = 'block';
+        submitButton.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// フォーム送信
+document.getElementById('surveyForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // 質問35の自由記述を保存
+    const q35 = document.getElementById('q35');
+    if (q35) {
+        answers.q35 = q35.value || '';
+    }
+
+    // データを保存 (実際の実装では、ここでサーバーに送信)
+    console.log('Survey answers:', answers);
+    localStorage.setItem('surveyAnswers', JSON.stringify(answers));
+
+    // 完了画面を表示
+    surveyScreen.classList.remove('active');
+    completionScreen.classList.add('active');
+
+    // 5秒後にリロード
+    setTimeout(() => {
+        location.reload();
+    }, 5000);
+});
+
+// 初期化
+updateLanguage();
