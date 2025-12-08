@@ -2,9 +2,9 @@
 let currentLanguage = 'ja';
 let currentQuestionIndex = 0;
 let answers = {};
-let companyCode = null; // 追加
+let companyCode = null;
 
-// API エンドポイント（修正）
+// API エンドポイント
 const API_ENDPOINT = 'https://engagement-api.more-up.workers.dev';
 
 // URL パラメータから会社コードを取得
@@ -104,8 +104,8 @@ surveySetup.addEventListener('submit', (e) => {
     answers = {
         employeeCode,
         nationality,
-        companyCode: companyCode,  // 追加
-        yearMonth: getCurrentYearMonth(),  // 追加
+        companyCode: companyCode,
+        yearMonth: getCurrentYearMonth(),
         language: currentLanguage,
         timestamp: new Date().toISOString()
     };
@@ -241,7 +241,7 @@ function updateProgress() {
     progressText.textContent = `${t.progressText || '質問'} ${answeredCount} / 35`;
 }
 
-// 質問タイプに応じた選択肢ラベルを取得
+// 質問タイプに応じた選択肢ラベルを取得（修正）
 function getChoiceLabels(type, t) {
     const choices = t.choices;
     
@@ -258,6 +258,8 @@ function getChoiceLabels(type, t) {
             return choices.familiarity;
         case 'negative':
             return choices.negative;
+        case 'safety_concern':  // ← 追加！
+            return choices.safety_concern;
         default:
             return choices.satisfaction;
     }
@@ -265,14 +267,14 @@ function getChoiceLabels(type, t) {
 
 // カテゴリーを取得（修正版 - 技能実習生向け）
 function getCategoryForQuestion(qNum) {
-    if (qNum >= 1 && qNum <= 4) return 'work';        // 業務・職場環境
-    if (qNum >= 5 && qNum <= 8) return 'salary';      // 給与・待遇
-    if (qNum >= 9 && qNum <= 12) return 'family';     // 家族・プライベート
-    if (qNum >= 13 && qNum <= 16) return 'relationship'; // 人間関係
-    if (qNum >= 17 && qNum <= 21) return 'communication'; // 日本語・コミュニケーション
-    if (qNum >= 22 && qNum <= 23) return 'culture';   // 文化・価値観
-    if (qNum >= 24 && qNum <= 29) return 'living';    // 生活環境
-    if (qNum >= 30 && qNum <= 35) return 'career';    // キャリア・将来の見通し
+    if (qNum >= 1 && qNum <= 4) return 'work';
+    if (qNum >= 5 && qNum <= 8) return 'salary';
+    if (qNum >= 9 && qNum <= 12) return 'family';
+    if (qNum >= 13 && qNum <= 16) return 'relationship';
+    if (qNum >= 17 && qNum <= 21) return 'communication';
+    if (qNum >= 22 && qNum <= 23) return 'culture';
+    if (qNum >= 24 && qNum <= 29) return 'living';
+    if (qNum >= 30 && qNum <= 35) return 'career';
     return 'work';
 }
 
@@ -304,7 +306,7 @@ function calculateCategoryScores() {
         });
         
         // 100点満点に変換
-        const maxScore = count * 6; // 6段階評価
+        const maxScore = count * 6;
         categoryScores[category] = Math.round((total / maxScore) * 100);
     });
 
@@ -353,7 +355,7 @@ async function submitToAPI() {
         const submitData = {
             resultId: `TRAINEE-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
             employeeCode: answers.employeeCode,
-            department: 'trainee', // 技能実習生
+            department: 'trainee',
             nationality: answers.nationality,
             companyCode: answers.companyCode,
             yearMonth: answers.yearMonth,
