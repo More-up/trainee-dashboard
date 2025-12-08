@@ -3,65 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title">職場アンケート</title>
+    <title>職場アンケート</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 言語選択 (右上) -->
+    <div class="language-selector">
+        <select id="languageSelect">
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="vn">🇻🇳 Tiếng Việt</option>
+            <option value="cn">🇨🇳 中文</option>
+            <option value="tl">🇵🇭 Filipino</option>
+            <option value="id">🇮🇩 Bahasa Indonesia</option>
+            <option value="th">🇹🇭 ไทย</option>
+            <option value="ne">🇳🇵 नेपाली</option>
+            <option value="hi">🇮🇳 हिन्दी</option>
+            <option value="my">🇲🇲 မြန်မာဘာသာ</option>
+            <option value="kh">🇰🇭 ខ្មែរ</option>
+            <option value="lo">🇱🇦 ລາວ</option>
+            <option value="mn">🇲🇳 Монгол</option>
+            <option value="bd">🇧🇩 বাংলা</option>
+            <option value="lk">🇱🇰 සිංහල</option>
+            <option value="dz">🇧🇹 རྫོང་ཁ</option>
+            <option value="uz">🇺🇿 Oʻzbek</option>
+            <option value="ur">🇵🇰 اردو</option>
+        </select>
+    </div>
+
     <div class="container">
-        <div class="header">
-            <div class="header-left">
-                <span class="icon">📋</span>
-                <h1 data-i18n="title">職場アンケート</h1>
-            </div>
-            <div class="header-right">
-                <label for="languageSelect" style="display: flex; align-items: center; gap: 8px; color: white; font-size: 14px;">
-                    <span>🌐</span>
-                    <select id="languageSelect" style="padding: 8px 12px; border-radius: 8px; border: none; font-size: 14px; cursor: pointer;">
-                        <option value="ja">日本語</option>
-                        <option value="vn">Tiếng Việt</option>
-                        <option value="id">Bahasa Indonesia</option>
-                    </select>
-                </label>
-            </div>
-        </div>
+        <!-- 初期画面 -->
+        <div id="initialScreen" class="screen active">
+            <div class="card">
+                <h1 id="surveyTitle">職場アンケート</h1>
+                <p class="privacy-notice" id="privacyNotice">お名前は記録されません。安心して正直にお答えください。</p>
+                
+                <form id="surveySetup">
+                    <div class="form-group">
+                        <label for="employeeCode" id="employeeCodeLabel">社員番号</label>
+                        <select id="employeeCode" required>
+                            <option value="">選択してください</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
 
-        <div id="setupForm">
-            <div class="privacy-notice">
-                <span class="icon">🔒</span>
-                <p><strong data-i18n="privacyTitle">あなたの名前は記録されません</strong></p>
-                <p data-i18n="privacyMessage">安心して正直に答えてください</p>
-            </div>
+                    <div class="form-group">
+                        <label for="nationality" id="nationalityLabel">国籍</label>
+                        <select id="nationality" required>
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
 
-            <div class="form-group">
-                <label for="employeeCode">
-                    <span class="icon">👤</span>
-                    <span data-i18n="employeeCode">社員番号</span>
-                </label>
-                <input type="text" id="employeeCode" data-i18n-placeholder="employeeCode">
-            </div>
-
-            <div class="form-group">
-                <label for="nationality">
-                    <span class="icon">🌍</span>
-                    <span data-i18n="nationality">国籍</span>
-                </label>
-                <select id="nationality">
-                    <option value="" data-i18n="nationality">国籍</option>
-                </select>
-            </div>
-
-            <button id="startSurvey" class="btn btn-primary" data-i18n="button">
-                アンケートを始める
-            </button>
-
-            <div class="footer-info">
-                <span class="icon">⏱️</span>
-                <span data-i18n="footerInfo">所要時間: 約5〜10分</span>
+                    <button type="submit" class="btn btn-primary" id="startButton">アンケート開始</button>
+                    <p class="completion-time" id="completionTime">所要時間: 約5〜10分</p>
+                </form>
             </div>
         </div>
 
-        <div id="surveyContainer" style="display: none;">
-            <div id="questionsContainer"></div>
+        <!-- アンケート画面 -->
+        <div id="surveyScreen" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="progress-text">質問 1 / 35</p>
+            </div>
+
+            <form id="surveyForm">
+                <div id="questionsContainer"></div>
+                <button type="submit" class="btn btn-primary" id="submitButton" style="display: none;">送信</button>
+            </form>
+        </div>
+
+        <!-- 完了画面 -->
+        <div id="completionScreen" class="screen">
+            <div class="card">
+                <div class="completion-message">
+                    <h2 id="completionTitle">✓ 完了しました</h2>
+                    <p id="completionMessage">ご協力ありがとうございました。<br>5秒後に自動的に最初の画面に戻ります。</p>
+                </div>
+            </div>
         </div>
     </div>
 
