@@ -124,9 +124,9 @@ const translations = {
             ],
             understanding: [
                 { emoji: '❌', text: '全く分からない' },
-                { emoji: '👎', text: 'あまり分からない' },
+                { emoji: '😕', text: 'あまり分からない' },
                 { emoji: '😐', text: 'どちらでもない' },
-                { emoji: '👍', text: 'だいたい分かる' },
+                { emoji: '🙂', text: 'だいたい分かる' },
                 { emoji: '✅', text: 'よく分かる' }
             ],
             familiarity: [
@@ -138,18 +138,18 @@ const translations = {
             ],
             availability: [
                 { emoji: '❌', text: '全くない' },
-                { emoji: '👎', text: 'あまりない' },
+                { emoji: '😕', text: 'あまりない' },
                 { emoji: '😐', text: 'どちらでもない' },
-                { emoji: '👍', text: 'ある程度ある' },
+                { emoji: '🙂', text: 'ある程度ある' },
                 { emoji: '✅', text: '十分ある' }
             ],
             negative: [
-                { emoji: '❌', text: '全くない' },
-                { emoji: '👎', text: 'ほとんどない' },
+                { emoji: '✅', text: '全くない' },
+                { emoji: '🙂', text: 'ほとんどない' },
                 { emoji: '😐', text: '時々ある' },
-                { emoji: '👍', text: 'よくある' },
-                { emoji: '✅', text: 'かなりある' },
-                { emoji: '💯', text: 'いつもある' }
+                { emoji: '😕', text: 'よくある' },
+                { emoji: '😟', text: 'かなりある' },
+                { emoji: '❌', text: 'いつもある' }
             ]
         }
     },
@@ -238,9 +238,9 @@ const translations = {
             ],
             understanding: [
                 { emoji: '❌', text: 'Hoàn toàn không hiểu' },
-                { emoji: '👎', text: 'Không hiểu lắm' },
+                { emoji: '😕', text: 'Không hiểu lắm' },
                 { emoji: '😐', text: 'Bình thường' },
-                { emoji: '👍', text: 'Hiểu đại khái' },
+                { emoji: '🙂', text: 'Hiểu đại khái' },
                 { emoji: '✅', text: 'Hiểu rõ' }
             ],
             familiarity: [
@@ -252,18 +252,18 @@ const translations = {
             ],
             availability: [
                 { emoji: '❌', text: 'Hoàn toàn không có' },
-                { emoji: '👎', text: 'Không có lắm' },
+                { emoji: '😕', text: 'Không có lắm' },
                 { emoji: '😐', text: 'Bình thường' },
-                { emoji: '👍', text: 'Có một phần' },
+                { emoji: '🙂', text: 'Có một phần' },
                 { emoji: '✅', text: 'Có đầy đủ' }
             ],
             negative: [
-                { emoji: '❌', text: 'Hoàn toàn không' },
-                { emoji: '👎', text: 'Hầu như không' },
+                { emoji: '✅', text: 'Hoàn toàn không' },
+                { emoji: '🙂', text: 'Hầu như không' },
                 { emoji: '😐', text: 'Thỉnh thoảng có' },
-                { emoji: '👍', text: 'Thường có' },
-                { emoji: '✅', text: 'Khá nhiều' },
-                { emoji: '💯', text: 'Luôn luôn' }
+                { emoji: '😕', text: 'Thường có' },
+                { emoji: '😟', text: 'Khá nhiều' },
+                { emoji: '❌', text: 'Luôn luôn' }
             ]
         }
     }
