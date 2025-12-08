@@ -2,9 +2,9 @@ let currentLanguage = 'ja';
 let currentAnswers = {};
 
 const languageMap = {
-    'jp': 'ja', 'vn': 'vn', 'cn': 'cn', 'ph': 'tl', 'id': 'id', 'th': 'th',
-    'np': 'ne', 'in': 'hi', 'mm': 'my', 'kh': 'kh', 'la': 'lo', 'mn': 'mn',
-    'bd': 'bd', 'lk': 'lk', 'bt': 'dz', 'uz': 'uz'
+    'jp': 'ja', 'vn': 'vn', 'cn': 'ja', 'ph': 'ja', 'id': 'id', 'th': 'ja',
+    'np': 'ja', 'in': 'ja', 'pk': 'ja', 'mm': 'ja', 'kh': 'ja', 'la': 'ja', 
+    'mn': 'ja', 'bd': 'ja', 'lk': 'ja', 'bt': 'ja', 'uz': 'ja'
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -33,6 +33,8 @@ function detectLanguage() {
     const browserLang = navigator.language.toLowerCase();
     if (browserLang.startsWith('vi')) {
         currentLanguage = 'vn';
+    } else if (browserLang.startsWith('id')) {
+        currentLanguage = 'id';
     } else {
         currentLanguage = 'ja';
     }
@@ -42,15 +44,18 @@ function detectLanguage() {
 function handleNationalityChange(event) {
     const nationalityCode = event.target.value;
     if (nationalityCode && languageMap[nationalityCode]) {
-        currentLanguage = languageMap[nationalityCode];
-        updateLanguage();
+        const mappedLang = languageMap[nationalityCode];
+        if (translations[mappedLang]) {
+            currentLanguage = mappedLang;
+            updateLanguage();
+        }
     }
 }
 
 function updateLanguage() {
     if (!translations[currentLanguage]) {
         console.error(`Language ${currentLanguage} not found`);
-        return;
+        currentLanguage = 'ja';
     }
     
     const t = translations[currentLanguage];
