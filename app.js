@@ -96,6 +96,7 @@ function generateQuestions() {
 
     if (!t.categories) {
         console.error('Categories not found in translations');
+        alert('翻訳データの読み込みに失敗しました。ページをリロードしてください。');
         return;
     }
 
@@ -173,6 +174,9 @@ function generateQuestions() {
 
         questionsContainer.appendChild(categoryDiv);
     });
+    
+    // 質問が正しく生成されたか確認
+    console.log(`${questionNumber - 1}個の質問を生成しました`);
 }
 
 // 進捗状況を更新
@@ -182,7 +186,9 @@ function updateProgress() {
     const progress = (answeredQuestions / totalQuestions) * 100;
     
     progressFill.style.width = `${progress}%`;
-    progressText.textContent = `質問 ${answeredQuestions} / ${totalQuestions}`;
+    
+    const t = translations[currentLanguage];
+    progressText.textContent = `${t.progressText || '質問'} ${answeredQuestions} / ${totalQuestions}`;
 }
 
 // すべての質問に回答したかチェック
@@ -222,3 +228,4 @@ document.getElementById('surveyForm').addEventListener('submit', (e) => {
 
 // 初期化
 updateLanguage();
+console.log('アプリケーション初期化完了');
