@@ -272,6 +272,9 @@ function displayData() {
   
   // AI分析更新
   updateAIAnalysis();
+  
+  // リスクアラート更新
+  updateRiskAlerts();
 }
 
 // ===========================
@@ -707,4 +710,274 @@ function formatDateForFile(date) {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}${month}${day}`;
+}
+
+// ===========================
+// リスクアラート更新
+// ===========================
+function updateRiskAlerts() {
+  const riskContainer = document.getElementById('riskAlertContainer');
+  const dropContainer = document.getElementById('scoreDropContainer');
+  
+  if (filteredData.length === 0) {
+    riskContainer.innerHTML = '<div class="no-risk"><span class="material-icons">check_circle</span><p>データがありません</p></div>';
+    dropContainer.innerHTML = '';
+    return;
+  }
+
+  // リスク分類
+  const highRisk = [];
+  const mediumRisk = [];
+  const lowRisk = [];
+
+  filteredData.forEach(item => {
+    const risk = calculateRiskLevel(item);
+    if (risk === 'high') {
+      highRisk.push(item);
+    } else if (risk === 'medium') {
+      mediumRisk.push(item);
+    } else {
+      lowRisk.push(item);
+    }
+  });
+
+  // リスクアラート表示
+  riskContainer.innerHTML = '';
+
+  // 高リスク
+  if (highRisk.length > 0) {
+    const highCard = createRiskCard('high', highRisk);
+    riskContainer.appendChild(highCard);
+  }
+
+  // 中リスク
+  if (mediumRisk.length > 0) {
+    const mediumCard = createRiskCard('medium', mediumRisk);
+    riskContainer.appendChild(mediumCard);
+  }
+
+  // 安定
+  if (lowRisk.length > 0) {
+    const lowCard = createRiskCard('low', lowRisk);
+    riskContainer.appendChild(lowCard);
+  }
+
+  // スコア急降下アラート
+  updateScoreDropAlerts(dropContainer);
+}
+
+// ===========================
+// リスクレベル計算
+// ===========================
+function calculateRiskLevel(item) {
+  const totalScore = item.totalScore;
+  const categoryScores = item.categoryScores || {};
+
+  // 高リスク: 総合40点以下 OR 給与・人間関係が30点以下
+  if (totalScore <= 40) {
+    return 'high';
+  }
+
+  const salaryScore = categoryScores.salary || 0;
+  const relationshipScore = categoryScores.relationship || 0;
+
+  if (salaryScore <= 30 || relationshipScore <= 30) {
+    return 'high';
+  }
+
+  // 中リスク: 総合50点以下
+  if (totalScore <= 50) {
+    return 'medium';
+  }
+
+  // 安定: 60点以上
+  return 'low';
+}
+
+// ===========================
+// リスクカード作成
+// ===========================
+function createRiskCard(level, employees) {
+  const card = document.createElement('div');
+  card.className = `risk-card ${level}`;
+
+  const labels = {
+    high: { icon: '🔴', text: '高リスク', desc: '要緊急対応！' },
+    medium: { icon: '🟡', text: '中リスク', desc: '注意が必要' },
+    low: { icon: '🟢', text: '安定', desc: '良好な状態' }
+  };
+
+  const label = labels[level];
+
+  let html = `
+    <div class="risk-card-header">
+      <div class="risk-card-title">
+        <span>${label.icon}</span>
+        <span>${label.text} (${employees.length}名)</span>
+      </div>
+      <span style="font-size: 13px; color: var(--text-secondary);">${label.desc}</span>
+    </div>
+    <div class="risk-card-content">
+  `;
+
+  employees.forEach(emp => {
+    const action = getRecommendedAction(emp, level);
+    const categoryScores = emp.categoryScores || {};
+
+    let details = '';
+    if (level === 'high' || level === 'medium') {
+      const lowCategories = Object.entries(categoryScores)
+        .filter(([cat, score]) => score <= 40)
+        .map(([cat, score]) => `${categories[cat]}:${score}点`)
+        .slice(0, 3);
+      
+      if (lowCategories.length > 0) {
+        details = `低評価: ${lowCategories.join(', ')}`;
+      }
+    }
+
+    html += `
+      <div class="risk-employee">
+        <div class="risk-employee-header">
+          <span class="risk-employee-info">従業員コード ${emp.employeeCode} (${nationalityNames[emp.nationality] || emp.nationality})</span>
+          <span class="score-badge ${emp.totalScore >= 60 ? 'score-medium' : 'score-low'}">${emp.totalScore}点</span>
+        </div>
+        ${details ? `<div class="risk-employee-details">${details}</div>` : ''}
+        ${action ? `<div class="risk-employee-action"><strong>→ 推奨アクション:</strong> ${action}</div>` : ''}
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  card.innerHTML = html;
+  return card;
+}
+
+// ===========================
+// 推奨アクション取得
+// ===========================
+function getRecommendedAction(item, riskLevel) {
+  const categoryScores = item.categoryScores || {};
+  const actions = [];
+
+  if (riskLevel === 'high') {
+    actions.push('個別面談を今週中に実施');
+
+    if (categoryScores.salary <= 30) {
+      actions.push('給与・手当の説明を再度行う');
+    }
+    if (categoryScores.relationship <= 30) {
+      actions.push('同国籍の先輩とペアリング');
+    }
+    if (categoryScores.communication <= 30) {
+      actions.push('母国語通訳を手配してヒアリング');
+    }
+  } else if (riskLevel === 'medium') {
+    if (categoryScores.communication <= 40) {
+      actions.push('通訳サポートを強化');
+    }
+    if (categoryScores.living <= 40) {
+      actions.push('生活環境の改善を検討');
+    }
+    if (categoryScores.work <= 40) {
+      actions.push('業務内容の見直しを実施');
+    }
+  }
+
+  return actions.length > 0 ? actions[0] : '';
+}
+
+// ===========================
+// スコア急降下アラート
+// ===========================
+function updateScoreDropAlerts(container) {
+  container.innerHTML = '';
+
+  // 月別データを取得
+  const monthlyData = {};
+  allData.forEach(item => {
+    if (!item.yearMonth) return;
+    if (!monthlyData[item.yearMonth]) {
+      monthlyData[item.yearMonth] = {};
+    }
+    if (!monthlyData[item.yearMonth][item.employeeCode]) {
+      monthlyData[item.yearMonth][item.employeeCode] = [];
+    }
+    monthlyData[item.yearMonth][item.employeeCode].push(item);
+  });
+
+  // 最新2ヶ月のデータを比較
+  const months = Object.keys(monthlyData).sort();
+  if (months.length < 2) {
+    return; // 比較できない
+  }
+
+  const currentMonth = months[months.length - 1];
+  const previousMonth = months[months.length - 2];
+
+  const currentData = monthlyData[currentMonth];
+  const previousData = monthlyData[previousMonth];
+
+  const scoreDrops = [];
+
+  Object.keys(currentData).forEach(empCode => {
+    if (!previousData[empCode]) return;
+
+    const currentScores = currentData[empCode].map(d => d.totalScore);
+    const previousScores = previousData[empCode].map(d => d.totalScore);
+
+    const currentAvg = Math.round(currentScores.reduce((a, b) => a + b, 0) / currentScores.length);
+    const previousAvg = Math.round(previousScores.reduce((a, b) => a + b, 0) / previousScores.length);
+
+    const diff = currentAvg - previousAvg;
+
+    if (diff <= -15) {
+      const currentItem = currentData[empCode][0];
+      scoreDrops.push({
+        employee: currentItem,
+        previousScore: previousAvg,
+        currentScore: currentAvg,
+        diff: diff
+      });
+    }
+  });
+
+  if (scoreDrops.length === 0) {
+    return;
+  }
+
+  // スコア急降下カード表示
+  scoreDrops.forEach(drop => {
+    const card = document.createElement('div');
+    card.className = 'score-drop-card';
+
+    // 低下したカテゴリーを特定
+    const categoryScores = drop.employee.categoryScores || {};
+    const droppedCategories = Object.entries(categoryScores)
+      .filter(([cat, score]) => score <= 40)
+      .map(([cat, score]) => `${categories[cat]}:${score}点`)
+      .slice(0, 2);
+
+    card.innerHTML = `
+      <div class="score-drop-header">
+        <span class="material-icons">trending_down</span>
+        <span>⚠️ スコア急降下</span>
+      </div>
+      <div style="margin-bottom: 8px;">
+        <strong>従業員コード ${drop.employee.employeeCode} (${nationalityNames[drop.employee.nationality] || drop.employee.nationality})</strong>
+      </div>
+      <div class="score-comparison">
+        <span class="score-old">前月: ${drop.previousScore}点</span>
+        <span class="material-icons" style="font-size: 20px;">arrow_forward</span>
+        <span class="score-new">今月: ${drop.currentScore}点</span>
+        <span class="score-diff">(${drop.diff}点)</span>
+      </div>
+      ${droppedCategories.length > 0 ? `<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">低下したカテゴリー: ${droppedCategories.join(', ')}</div>` : ''}
+      <div class="risk-employee-action">
+        <strong>→ 推奨アクション:</strong> 個別面談を実施し、急激な変化の原因をヒアリング
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
 }
