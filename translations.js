@@ -1,7 +1,7 @@
 // 質問タイプの定義（グローバル）
 const questionTypes = {
     q1: 'satisfaction',
-    q2: 'safety_concern',  // 変更: 新しいタイプを追加
+    q2: 'safety_concern',
     q3: 'satisfaction',
     q4: 'satisfaction',
     q5: 'satisfaction',
@@ -63,8 +63,8 @@ const translations = {
             id: 'インドネシア', np: 'ネパール', cn: '中国', jp: '日本'
         },
         categories: {
-            work: '業務・職場環境',              // 修正: workplace → work
-            salary: '給与・待遇',                // 修正: compensation → salary
+            work: '業務・職場環境',
+            salary: '給与・待遇',
             family: '家族・プライベート事情',
             relationship: '人間関係',
             communication: '日本語・コミュニケーション',
@@ -305,23 +305,10 @@ const translations = {
         errorIncomplete: 'မေးခွန်းအားလုံးကို ဖြေဆိုပေးပါ',
         progressText: 'မေးခွန်း',
         nationalities: {
-            mm: 'မြန်မာ',
-            vn: 'ဗီယက်နမ်',
-            kh: 'ကမ္ဘောဒီးယား',
-            in: 'အိန္ဒိယ',
-            ph: 'ဖိလစ်ပိုင်',
-            la: 'လာအို',
-            mn: 'မွန်ဂိုလီးယား',
-            bd: 'ဘင်္ဂလားဒေ့ရှ်',
-            lk: 'သီရိလင်္ကာ',
-            bt: 'ဘူတန်',
-            uz: 'ဥဇဘက်ကစ္စတန်',
-            pk: 'ပါကစ္စတန်',
-            th: 'ထိုင်း',
-            id: 'အင်ဒိုနီးရှား',
-            np: 'နီပေါ',
-            cn: 'တရုတ်',
-            jp: 'ဂျပန်'
+            mm: 'မြန်မာ', vn: 'ဗီယက်နမ်', kh: 'ကမ္ဘောဒီးယား', in: 'အိန္ဒိယ', ph: 'ဖိလစ်ပိုင်', 
+            la: 'လာအို', mn: 'မွန်ဂိုလီးယား', bd: 'ဘင်္ဂလားဒေ့ရှ်', lk: 'သီရိလင်္ကာ',
+            bt: 'ဘူတန်', uz: 'ဥဇဘက်ကစ္စတန်', pk: 'ပါကစ္စတန်', th: 'ထိုင်း',
+            id: 'အင်ဒိုနီးရှား', np: 'နီပေါ', cn: 'တရုတ်', jp: 'ဂျပန်'
         },
         categories: {
             work: 'လုပ်ငန်းနှင့် အလုပ်ခွင်ပတ်ဝန်းကျင်',
@@ -423,12 +410,1756 @@ const translations = {
                 { emoji: '❌', text: 'အမြဲတမ်းရှိသည်' }
             ]
         }
+    },
+    cn: {
+        title: '职场问卷调查',
+        privacyNotice: '您的姓名不会被记录\n请放心如实回答。',
+        employeeCode: '员工编号',
+        nationality: '国籍',
+        selectNationality: '请选择',
+        startButton: '开始问卷',
+        submitButton: '✓ 提交',
+        submitting: '⏳ 提交中...',
+        completionTime: '所需时间：约5-10分钟',
+        completionTitle: '✓ 完成',
+        completionMessage: '感谢您的配合。\n5秒后将自动返回首页。',
+        freeTextPlaceholder: '请自由填写',
+        errorEmployeeCode: '请选择员工编号',
+        errorNationality: '请选择国籍',
+        errorIncomplete: '请回答所有问题',
+        progressText: '问题',
+        nationalities: {
+            mm: '缅甸', vn: '越南', kh: '柬埔寨', in: '印度', ph: '菲律宾',
+            la: '老挝', mn: '蒙古', bd: '孟加拉', lk: '斯里兰卡',
+            bt: '不丹', uz: '乌兹别克斯坦', pk: '巴基斯坦', th: '泰国',
+            id: '印度尼西亚', np: '尼泊尔', cn: '中国', jp: '日本'
+        },
+        categories: {
+            work: '工作与工作环境',
+            salary: '工资与待遇',
+            family: '家庭与私人情况',
+            relationship: '人际关系',
+            communication: '日语与沟通',
+            culture: '文化与价值观',
+            living: '生活环境',
+            career: '职业与未来展望'
+        },
+        questions: {
+            q1: '工作内容是否适合您？',
+            q2: '工作场所是否担心受伤或发生事故？',
+            q3: '休息日和工作时间是否合适？',
+            q4: '工作场所的氛围是否容易工作？',
+            q5: '您对工资金额满意吗？',
+            q6: '加班费和补贴是否完全收到？',
+            q7: '保险和假期等制度是否充足？',
+            q8: '在这家公司工作能否获得生活所需的资金？',
+            q9: '与家人联系的时间是否充足？',
+            q10: '是否有余力汇款给家人？',
+            q11: '自己的时间（休息和私人时间）是否充足？',
+            q12: '将来您想把家人带到日本吗？',
+            q13: '与其他技能实习生的关系好吗？',
+            q14: '日本上司和同事是否听您说话？',
+            q15: '遇到困难时，其他技能实习生是否帮助您？',
+            q16: '在工作场所是否受到欺凌或歧视？',
+            q17: '日语会话是否有困难？',
+            q18: '工作说明和指示是否容易理解？',
+            q19: '不明白的时候是否容易提问？',
+            q20: '公司是否帮助学习日语？',
+            q21: '是否有能用母语咨询的人（翻译或前辈）？',
+            q22: '您习惯日本的文化和习俗吗？',
+            q23: '工作中是否因文化差异而遇到困难？',
+            q24: '居住的地方（宿舍、公寓等）舒适吗？',
+            q25: '生活费相对于工资是否合适？',
+            q26: '在日本生活是否有困难？',
+            q27: '公司是否支持生活？',
+            q28: '您对宿舍或家的生活环境（房间大小、设备等）满意吗？',
+            q29: '在日本的生活是否安全舒适？',
+            q30: '目前的工作是否学到技术和知识？',
+            q31: '您是否感到努力后评价和待遇会变好？',
+            q32: '您想在这家公司长期工作吗？',
+            q33: '在签证（在留资格）更新和手续方面，公司或组合是否帮助您？',
+            q34: '在这家公司工作能否学到回国后有用的技术？',
+            q35: '您是否觉得"在这家公司工作很好"可以向家乡的朋友推荐？'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: '非常不满' },
+                { emoji: '🙁', text: '有些不满' },
+                { emoji: '😐', text: '一般' },
+                { emoji: '🙂', text: '有些满意' },
+                { emoji: '😄', text: '非常满意' }
+            ],
+            desire: [
+                { emoji: '😔', text: '完全不这样想' },
+                { emoji: '😕', text: '不太这样想' },
+                { emoji: '😐', text: '一般' },
+                { emoji: '😊', text: '有些这样想' },
+                { emoji: '⭕', text: '非常这样想' }
+            ],
+            understanding: [
+                { emoji: '❌', text: '完全不明白' },
+                { emoji: '😕', text: '不太明白' },
+                { emoji: '😐', text: '一般' },
+                { emoji: '🙂', text: '大致明白' },
+                { emoji: '⭕', text: '很明白' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: '完全不习惯' },
+                { emoji: '😕', text: '不太习惯' },
+                { emoji: '😐', text: '一般' },
+                { emoji: '😊', text: '有些习惯' },
+                { emoji: '🌟', text: '非常习惯' }
+            ],
+            availability: [
+                { emoji: '❌', text: '完全没有' },
+                { emoji: '😕', text: '不太有' },
+                { emoji: '😐', text: '一般' },
+                { emoji: '🙂', text: '有一定程度' },
+                { emoji: '⭕', text: '充足' }
+            ],
+            negative: [
+                { emoji: '⭕', text: '完全没有' },
+                { emoji: '🙂', text: '几乎没有' },
+                { emoji: '😐', text: '偶尔有' },
+                { emoji: '😕', text: '经常有' },
+                { emoji: '😟', text: '相当多' },
+                { emoji: '❌', text: '总是有' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: '完全没有' },
+                { emoji: '◯', text: '几乎没有' },
+                { emoji: '△', text: '不太有' },
+                { emoji: '▽', text: '有一点' },
+                { emoji: '×', text: '经常有' },
+                { emoji: '❌', text: '总是有' }
+            ]
+        }
+    },
+    tl: {
+        title: 'Sarbey sa Lugar ng Trabaho',
+        privacyNotice: 'Ang iyong pangalan ay hindi itatala\nMangyaring sumagot nang tapat nang may kapakanan.',
+        employeeCode: 'Numero ng Empleyado',
+        nationality: 'Nasyonalidad',
+        selectNationality: 'Mangyaring pumili',
+        startButton: 'Simulan ang Sarbey',
+        submitButton: '✓ Ipasa',
+        submitting: '⏳ Ipinapasa...',
+        completionTime: 'Oras: Humigit-kumulang 5-10 minuto',
+        completionTitle: '✓ Nakumpleto',
+        completionMessage: 'Salamat sa iyong kooperasyon.\nAwtomatikong babalik sa unang screen pagkatapos ng 5 segundo.',
+        freeTextPlaceholder: 'Mangyaring magsulat nang malaya',
+        errorEmployeeCode: 'Mangyaring pumili ng numero ng empleyado',
+        errorNationality: 'Mangyaring pumili ng nasyonalidad',
+        errorIncomplete: 'Mangyaring sagutin ang lahat ng tanong',
+        progressText: 'Tanong',
+        nationalities: {
+            mm: 'Myanmar', vn: 'Vietnam', kh: 'Cambodia', in: 'India', ph: 'Pilipinas',
+            la: 'Laos', mn: 'Mongolia', bd: 'Bangladesh', lk: 'Sri Lanka',
+            bt: 'Bhutan', uz: 'Uzbekistan', pk: 'Pakistan', th: 'Thailand',
+            id: 'Indonesia', np: 'Nepal', cn: 'Tsina', jp: 'Hapon'
+        },
+        categories: {
+            work: 'Trabaho at Kapaligiran sa Trabaho',
+            salary: 'Sahod at Benepisyo',
+            family: 'Pamilya at Personal na Sitwasyon',
+            relationship: 'Relasyon ng Tao',
+            communication: 'Wikang Hapon at Komunikasyon',
+            culture: 'Kultura at Halaga',
+            living: 'Kapaligiran sa Pamumuhay',
+            career: 'Karera at Pangmatagalang Pananaw'
+        },
+        questions: {
+            q1: 'Ang nilalaman ng trabaho ba ay akma sa iyo?',
+            q2: 'May pag-aalala ka ba tungkol sa pinsala o aksidente sa lugar ng trabaho?',
+            q3: 'Ang araw ng pahinga at oras ng trabaho ba ay tama?',
+            q4: 'Ang atmospera ng lugar ng trabaho ba ay madaling magtrabaho?',
+            q5: 'Nasiyahan ka ba sa halaga ng sahod?',
+            q6: 'Tumatanggap ka ba ng kumpleto ng overtime pay at allowance?',
+            q7: 'Ang mga sistema tulad ng insurance at bakasyon ba ay sapat?',
+            q8: 'Sa pagtatrabaho sa kumpanyang ito, nakakakuha ka ba ng pera na kailangan para sa buhay?',
+            q9: 'May sapat ka bang oras para makipag-ugnayan sa pamilya?',
+            q10: 'May kakayahan ka bang magpadala ng pera sa pamilya?',
+            q11: 'Ang iyong sariling oras (pahinga at personal) ba ay sapat?',
+            q12: 'Sa hinaharap, nais mo bang dalhin ang pamilya sa Japan?',
+            q13: 'Mabuti ba ang relasyon sa mga kapwa technical intern trainee?',
+            q14: 'Ang mga boss at kasamahan na Hapon ba ay nakikinig sa iyo?',
+            q15: 'Kapag may problema, tumutulong ba ang mga kapwa technical intern trainee?',
+            q16: 'May bullying o diskriminasyon ba sa lugar ng trabaho?',
+            q17: 'May kahirapan ka ba sa pakikipag-usap sa Hapon?',
+            q18: 'Ang paliwanag at tagubilin sa trabaho ba ay madaling maintindihan?',
+            q19: 'Madali bang magtanong kapag may hindi mo naintindihan?',
+            q20: 'Tumutulong ba ang kumpanya sa pag-aaral ng Hapon?',
+            q21: 'May taong maaaring pagsanggunian sa sariling wika (interpreter o senior)?',
+            q22: 'Nasanay ka na ba sa kultura at kaugalian ng Japan?',
+            q23: 'May kahirapan ba dahil sa pagkakaiba ng kultura habang nagtatrabaho?',
+            q24: 'Ang lugar ng tirahan (dormitoryo, apartment, atbp.) ba ay komportable?',
+            q25: 'Ang gastos sa pamumuhay ba ay tama kumpara sa sahod?',
+            q26: 'May kahirapan ka ba sa pamumuhay sa Japan?',
+            q27: 'Sumusuporta ba ang kumpanya sa pamumuhay?',
+            q28: 'Nasiyahan ka ba sa kapaligiran ng pamumuhay sa dormitoryo o bahay (laki ng kuwarto, pasilidad, atbp.)?',
+            q29: 'Ang pamumuhay sa Japan ba ay ligtas at komportable?',
+            q30: 'Sa kasalukuyang trabaho, nakakakuha ka ba ng teknikal na kasanayan at kaalaman?',
+            q31: 'Nakakaramdam ka ba na ang pagsusumikap ay magreresulta sa mas magandang pagsusuri at trato?',
+            q32: 'Nais mo bang magtrabaho ng matagal sa kumpanyang ito?',
+            q33: 'Sa pag-renew at proseso ng visa (residence status), tumutulong ba ang kumpanya o samahan?',
+            q34: 'Sa pagtatrabaho sa kumpanyang ito, natututo ka ba ng mga teknikal na kasanayan na makakatulong kapag bumalik sa sariling bansa?',
+            q35: 'Sa mga kaibigan sa sariling bansa, maiisip mo ba na "Mabuti ang magtrabaho sa kumpanyang ito"?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'Labis na hindi nasiyahan' },
+                { emoji: '🙁', text: 'Medyo hindi nasiyahan' },
+                { emoji: '😐', text: 'Hindi alam' },
+                { emoji: '🙂', text: 'Medyo nasiyahan' },
+                { emoji: '😄', text: 'Labis na nasiyahan' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'Hindi talaga iniisip' },
+                { emoji: '😕', text: 'Hindi masyadong iniisip' },
+                { emoji: '😐', text: 'Hindi alam' },
+                { emoji: '😊', text: 'Medyo iniisip' },
+                { emoji: '⭕', text: 'Lubos na iniisip' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'Hindi talaga naintindihan' },
+                { emoji: '😕', text: 'Hindi masyadong naintindihan' },
+                { emoji: '😐', text: 'Hindi alam' },
+                { emoji: '🙂', text: 'Halos naintindihan' },
+                { emoji: '⭕', text: 'Naintindihan nang mabuti' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'Hindi talaga nasanay' },
+                { emoji: '😕', text: 'Hindi masyadong nasanay' },
+                { emoji: '😐', text: 'Hindi alam' },
+                { emoji: '😊', text: 'Medyo nasanay' },
+                { emoji: '🌟', text: 'Lubos na nasanay' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'Wala talaga' },
+                { emoji: '😕', text: 'Hindi masyadong mayroon' },
+                { emoji: '😐', text: 'Hindi alam' },
+                { emoji: '🙂', text: 'May bahagya' },
+                { emoji: '⭕', text: 'Sapat' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'Wala talaga' },
+                { emoji: '🙂', text: 'Halos wala' },
+                { emoji: '😐', text: 'Paminsan-minsan' },
+                { emoji: '😕', text: 'Madalas' },
+                { emoji: '😟', text: 'Medyo marami' },
+                { emoji: '❌', text: 'Palagi' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'Wala talaga' },
+                { emoji: '◯', text: 'Halos wala' },
+                { emoji: '△', text: 'Hindi masyadong mayroon' },
+                { emoji: '▽', text: 'Kaunti' },
+                { emoji: '×', text: 'Madalas' },
+                { emoji: '❌', text: 'Palagi' }
+            ]
+        }
+    },
+    id: {
+        title: 'Survei Tempat Kerja',
+        privacyNotice: 'Nama Anda tidak akan dicatat\nSilakan menjawab dengan jujur dengan tenang.',
+        employeeCode: 'Nomor Karyawan',
+        nationality: 'Kewarganegaraan',
+        selectNationality: 'Silakan pilih',
+        startButton: 'Mulai Survei',
+        submitButton: '✓ Kirim',
+        submitting: '⏳ Mengirim...',
+        completionTime: 'Waktu: Sekitar 5-10 menit',
+        completionTitle: '✓ Selesai',
+        completionMessage: 'Terima kasih atas kerja sama Anda.\nAkan kembali ke layar awal secara otomatis setelah 5 detik.',
+        freeTextPlaceholder: 'Silakan tulis dengan bebas',
+        errorEmployeeCode: 'Silakan pilih nomor karyawan',
+        errorNationality: 'Silakan pilih kewarganegaraan',
+        errorIncomplete: 'Silakan jawab semua pertanyaan',
+        progressText: 'Pertanyaan',
+        nationalities: {
+            mm: 'Myanmar', vn: 'Vietnam', kh: 'Kamboja', in: 'India', ph: 'Filipina',
+            la: 'Laos', mn: 'Mongolia', bd: 'Bangladesh', lk: 'Sri Lanka',
+            bt: 'Bhutan', uz: 'Uzbekistan', pk: 'Pakistan', th: 'Thailand',
+            id: 'Indonesia', np: 'Nepal', cn: 'Tiongkok', jp: 'Jepang'
+        },
+        categories: {
+            work: 'Pekerjaan & Lingkungan Kerja',
+            salary: 'Gaji & Tunjangan',
+            family: 'Keluarga & Situasi Pribadi',
+            relationship: 'Hubungan Manusia',
+            communication: 'Bahasa Jepang & Komunikasi',
+            culture: 'Budaya & Nilai',
+            living: 'Lingkungan Hidup',
+            career: 'Karir & Prospek Masa Depan'
+        },
+        questions: {
+            q1: 'Apakah isi pekerjaan sesuai dengan Anda?',
+            q2: 'Apakah Anda khawatir tentang cedera atau kecelakaan di tempat kerja?',
+            q3: 'Apakah hari libur dan jam kerja sesuai?',
+            q4: 'Apakah suasana tempat kerja mudah untuk bekerja?',
+            q5: 'Apakah Anda puas dengan jumlah gaji?',
+            q6: 'Apakah Anda menerima uang lembur dan tunjangan dengan lengkap?',
+            q7: 'Apakah sistem seperti asuransi dan cuti cukup?',
+            q8: 'Dengan bekerja di perusahaan ini, apakah Anda mendapatkan uang yang dibutuhkan untuk hidup?',
+            q9: 'Apakah Anda memiliki cukup waktu untuk menghubungi keluarga?',
+            q10: 'Apakah Anda memiliki kemampuan untuk mengirim uang ke keluarga?',
+            q11: 'Apakah waktu pribadi Anda (liburan dan pribadi) cukup?',
+            q12: 'Di masa depan, apakah Anda ingin membawa keluarga ke Jepang?',
+            q13: 'Apakah hubungan dengan sesama peserta pelatihan teknis baik?',
+            q14: 'Apakah atasan dan rekan kerja Jepang mendengarkan Anda?',
+            q15: 'Ketika mengalami kesulitan, apakah sesama peserta pelatihan teknis membantu Anda?',
+            q16: 'Apakah ada intimidasi atau diskriminasi di tempat kerja?',
+            q17: 'Apakah Anda mengalami kesulitan dalam percakapan bahasa Jepang?',
+            q18: 'Apakah penjelasan dan instruksi pekerjaan mudah dipahami?',
+            q19: 'Apakah mudah untuk bertanya ketika tidak mengerti?',
+            q20: 'Apakah perusahaan membantu belajar bahasa Jepang?',
+            q21: 'Apakah ada orang yang dapat dikonsultasikan dalam bahasa ibu (penerjemah atau senior)?',
+            q22: 'Apakah Anda terbiasa dengan budaya dan kebiasaan Jepang?',
+            q23: 'Apakah ada kesulitan karena perbedaan budaya saat bekerja?',
+            q24: 'Apakah tempat tinggal (asrama, apartemen, dll.) nyaman?',
+            q25: 'Apakah biaya hidup sesuai dengan gaji?',
+            q26: 'Apakah ada kesulitan dalam hidup di Jepang?',
+            q27: 'Apakah perusahaan mendukung kehidupan?',
+            q28: 'Apakah Anda puas dengan lingkungan hidup di asrama atau rumah (ukuran kamar, fasilitas, dll.)?',
+            q29: 'Apakah hidup di Jepang aman dan nyaman?',
+            q30: 'Dalam pekerjaan saat ini, apakah Anda memperoleh keterampilan teknis dan pengetahuan?',
+            q31: 'Apakah Anda merasa evaluasi dan perlakuan menjadi lebih baik dengan usaha?',
+            q32: 'Apakah Anda ingin bekerja lama di perusahaan ini?',
+            q33: 'Dalam pembaruan dan prosedur visa (status tinggal), apakah perusahaan atau asosiasi membantu Anda?',
+            q34: 'Dengan bekerja di perusahaan ini, apakah Anda belajar keterampilan teknis yang berguna setelah kembali ke negara asal?',
+            q35: 'Untuk teman-teman di negara asal, apakah Anda berpikir "Lebih baik bekerja di perusahaan ini"?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'Sangat tidak puas' },
+                { emoji: '🙁', text: 'Agak tidak puas' },
+                { emoji: '😐', text: 'Biasa saja' },
+                { emoji: '🙂', text: 'Agak puas' },
+                { emoji: '😄', text: 'Sangat puas' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'Sama sekali tidak berpikir begitu' },
+                { emoji: '😕', text: 'Tidak terlalu berpikir begitu' },
+                { emoji: '😐', text: 'Biasa saja' },
+                { emoji: '😊', text: 'Agak berpikir begitu' },
+                { emoji: '⭕', text: 'Sangat berpikir begitu' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'Sama sekali tidak mengerti' },
+                { emoji: '😕', text: 'Tidak terlalu mengerti' },
+                { emoji: '😐', text: 'Biasa saja' },
+                { emoji: '🙂', text: 'Hampir mengerti' },
+                { emoji: '⭕', text: 'Mengerti dengan baik' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'Sama sekali tidak terbiasa' },
+                { emoji: '😕', text: 'Tidak terlalu terbiasa' },
+                { emoji: '😐', text: 'Biasa saja' },
+                { emoji: '😊', text: 'Agak terbiasa' },
+                { emoji: '🌟', text: 'Sangat terbiasa' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'Sama sekali tidak ada' },
+                { emoji: '😕', text: 'Tidak terlalu ada' },
+                { emoji: '😐', text: 'Biasa saja' },
+                { emoji: '🙂', text: 'Ada sebagian' },
+                { emoji: '⭕', text: 'Cukup' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'Sama sekali tidak ada' },
+                { emoji: '🙂', text: 'Hampir tidak ada' },
+                { emoji: '😐', text: 'Kadang-kadang' },
+                { emoji: '😕', text: 'Sering' },
+                { emoji: '😟', text: 'Cukup banyak' },
+                { emoji: '❌', text: 'Selalu' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'Sama sekali tidak ada' },
+                { emoji: '◯', text: 'Hampir tidak ada' },
+                { emoji: '△', text: 'Tidak terlalu ada' },
+                { emoji: '▽', text: 'Sedikit' },
+                { emoji: '×', text: 'Sering' },
+                { emoji: '❌', text: 'Selalu' }
+            ]
+        }
+    },
+    th: {
+        title: 'แบบสำรวจสถานที่ทำงาน',
+        privacyNotice: 'ชื่อของคุณจะไม่ถูกบันทึก\nโปรดตอบอย่างซื่อสัตย์ด้วยความสบายใจ',
+        employeeCode: 'รหัสพนักงาน',
+        nationality: 'สัญชาติ',
+        selectNationality: 'กรุณาเลือก',
+        startButton: 'เริ่มแบบสำรวจ',
+        submitButton: '✓ ส่ง',
+        submitting: '⏳ กำลังส่ง...',
+        completionTime: 'เวลา: ประมาณ 5-10 นาที',
+        completionTitle: '✓ เสร็จสมบูรณ์',
+        completionMessage: 'ขอบคุณสำหรับความร่วมมือ\nจะกลับไปที่หน้าจอแรกโดยอัตโนมัติหลังจาก 5 วินาที',
+        freeTextPlaceholder: 'กรุณาเขียนอย่างอิสระ',
+        errorEmployeeCode: 'กรุณาเลือกรหัสพนักงาน',
+        errorNationality: 'กรุณาเลือกสัญชาติ',
+        errorIncomplete: 'กรุณาตอบคำถามทั้งหมด',
+        progressText: 'คำถาม',
+        nationalities: {
+            mm: 'เมียนมาร์', vn: 'เวียดนาม', kh: 'กัมพูชา', in: 'อินเดีย', ph: 'ฟิลิปปินส์',
+            la: 'ลาว', mn: 'มองโกเลีย', bd: 'บังกลาเทศ', lk: 'ศรีลังกา',
+            bt: 'ภูฏาน', uz: 'อุซเบกิสถาน', pk: 'ปากีสถาน', th: 'ไทย',
+            id: 'อินโดนีเซีย', np: 'เนปาล', cn: 'จีน', jp: 'ญี่ปุ่น'
+        },
+        categories: {
+            work: 'งานและสภาพแวดล้อมการทำงาน',
+            salary: 'เงินเดือนและสวัสดิการ',
+            family: 'ครอบครัวและสถานการณ์ส่วนตัว',
+            relationship: 'ความสัมพันธ์ระหว่างบุคคล',
+            communication: 'ภาษาญี่ปุ่นและการสื่อสาร',
+            culture: 'วัฒนธรรมและคุณค่า',
+            living: 'สภาพแวดล้อมการใช้ชีวิต',
+            career: 'อาชีพและมุมมองในอนาคต'
+        },
+        questions: {
+            q1: 'เนื้อหางานเหมาะสมกับคุณหรือไม่?',
+            q2: 'คุณกังวลเกี่ยวกับการบาดเจ็บหรืออุบัติเหตุในสถานที่ทำงานหรือไม่?',
+            q3: 'วันหยุดและเวลาทำงานเหมาะสมหรือไม่?',
+            q4: 'บรรยากาศในสถานที่ทำงานทำงานง่ายหรือไม่?',
+            q5: 'คุณพอใจกับจำนวนเงินเดือนหรือไม่?',
+            q6: 'คุณได้รับค่าล่วงเวลาและค่าเบี้ยเลี้ยงอย่างครบถ้วนหรือไม่?',
+            q7: 'ระบบต่างๆ เช่น ประกันและวันลา เพียงพอหรือไม่?',
+            q8: 'การทำงานที่บริษัทนี้ทำให้คุณได้เงินที่จำเป็นสำหรับการใช้ชีวิตหรือไม่?',
+            q9: 'คุณมีเวลาเพียงพอในการติดต่อกับครอบครัวหรือไม่?',
+            q10: 'คุณมีความสามารถในการส่งเงินให้ครอบครัวหรือไม่?',
+            q11: 'เวลาส่วนตัวของคุณ (พักผ่อนและส่วนตัว) เพียงพอหรือไม่?',
+            q12: 'ในอนาคตคุณต้องการนำครอบครัวมาญี่ปุ่นหรือไม่?',
+            q13: 'ความสัมพันธ์กับเพื่อนร่วมฝึกงานเทคนิคดีหรือไม่?',
+            q14: 'หัวหน้าและเพื่อนร่วมงานชาวญี่ปุ่นรับฟังคุณหรือไม่?',
+            q15: 'เมื่อมีปัญหาเพื่อนร่วมฝึกงานเทคนิคช่วยเหลือคุณหรือไม่?',
+            q16: 'มีการรังแกหรือเลือกปฏิบัติในสถานที่ทำงานหรือไม่?',
+            q17: 'คุณมีปัญหาในการสนทนาภาษาญี่ปุ่นหรือไม่?',
+            q18: 'คำอธิบายและคำแนะนำในการทำงานเข้าใจง่ายหรือไม่?',
+            q19: 'ถามคำถามได้ง่ายเมื่อไม่เข้าใจหรือไม่?',
+            q20: 'บริษัทช่วยเหลือในการเรียนภาษาญี่ปุ่นหรือไม่?',
+            q21: 'มีคนที่สามารถปรึกษาในภาษาแม่ (ล่าม หรือรุ่นพี่) หรือไม่?',
+            q22: 'คุณคุ้นเคยกับวัฒนธรรมและประเพณีของญี่ปุ่นหรือไม่?',
+            q23: 'มีปัญหาเนื่องจากความแตกต่างทางวัฒนธรรมขณะทำงานหรือไม่?',
+            q24: 'สถานที่พักอาศัย (หอพัก, อพาร์ทเมนต์, ฯลฯ) สะดวกสบายหรือไม่?',
+            q25: 'ค่าครองชีพเหมาะสมกับเงินเดือนหรือไม่?',
+            q26: 'คุณมีปัญหาในการใช้ชีวิตในญี่ปุ่นหรือไม่?',
+            q27: 'บริษัทสนับสนุนการใช้ชีวิตหรือไม่?',
+            q28: 'คุณพอใจกับสภาพแวดล้อมการใช้ชีวิตในหอพักหรือบ้าน (ขนาดห้อง, เครื่องอำนวยความสะดวก, ฯลฯ) หรือไม่?',
+            q29: 'การใช้ชีวิตในญี่ปุ่นปลอดภัยและสะดวกสบายหรือไม่?',
+            q30: 'ในงานปัจจุบันคุณได้รับทักษะเทคนิคและความรู้หรือไม่?',
+            q31: 'คุณรู้สึกว่าการประเมินและการปฏิบัติจะดีขึ้นเมื่อพยายามหรือไม่?',
+            q32: 'คุณต้องการทำงานที่บริษัทนี้เป็นเวลานานหรือไม่?',
+            q33: 'ในการต่ออายุและขั้นตอนวีซ่า (สถานะการพำนัก) บริษัทหรือสมาคมช่วยเหลือคุณหรือไม่?',
+            q34: 'การทำงานที่บริษัทนี้ทำให้คุณเรียนรู้ทักษะเทคนิคที่มีประโยชน์เมื่อกลับประเทศหรือไม่?',
+            q35: 'สำหรับเพื่อนในประเทศคุณคิดว่า "ทำงานที่บริษัทนี้ดี" หรือไม่?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'ไม่พอใจมาก' },
+                { emoji: '🙁', text: 'ค่อนข้างไม่พอใจ' },
+                { emoji: '😐', text: 'ปานกลาง' },
+                { emoji: '🙂', text: 'ค่อนข้างพอใจ' },
+                { emoji: '😄', text: 'พอใจมาก' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'ไม่คิดอย่างนั้นเลย' },
+                { emoji: '😕', text: 'ไม่ค่อยคิดอย่างนั้น' },
+                { emoji: '😐', text: 'ปานกลาง' },
+                { emoji: '😊', text: 'ค่อนข้างคิดอย่างนั้น' },
+                { emoji: '⭕', text: 'คิดอย่างนั้นมาก' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'ไม่เข้าใจเลย' },
+                { emoji: '😕', text: 'ไม่ค่อยเข้าใจ' },
+                { emoji: '😐', text: 'ปานกลาง' },
+                { emoji: '🙂', text: 'เข้าใจโดยประมาณ' },
+                { emoji: '⭕', text: 'เข้าใจดี' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'ไม่คุ้นเคยเลย' },
+                { emoji: '😕', text: 'ไม่ค่อยคุ้นเคย' },
+                { emoji: '😐', text: 'ปานกลาง' },
+                { emoji: '😊', text: 'ค่อนข้างคุ้นเคย' },
+                { emoji: '🌟', text: 'คุ้นเคยมาก' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'ไม่มีเลย' },
+                { emoji: '😕', text: 'ไม่ค่อยมี' },
+                { emoji: '😐', text: 'ปานกลาง' },
+                { emoji: '🙂', text: 'มีบางส่วน' },
+                { emoji: '⭕', text: 'เพียงพอ' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'ไม่มีเลย' },
+                { emoji: '🙂', text: 'เกือบจะไม่มี' },
+                { emoji: '😐', text: 'บางครั้ง' },
+                { emoji: '😕', text: 'บ่อยครั้ง' },
+                { emoji: '😟', text: 'ค่อนข้างมาก' },
+                { emoji: '❌', text: 'เสมอ' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'ไม่มีเลย' },
+                { emoji: '◯', text: 'เกือบจะไม่มี' },
+                { emoji: '△', text: 'ไม่ค่อยมี' },
+                { emoji: '▽', text: 'มีเล็กน้อย' },
+                { emoji: '×', text: 'บ่อยครั้ง' },
+                { emoji: '❌', text: 'เสมอ' }
+            ]
+        }
+    },
+    
+    // ネパール語
+    ne: {
+        title: 'कार्यस्थल सर्वेक्षण',
+        privacyNotice: 'यस सर्वेक्षणको परिणाम गुमनाम रूपमा प्रक्रिया गरिनेछ र व्यक्तिगत रूपमा पहिचान हुने छैन।\nकृपया इमानदारीपूर्वक उत्तर दिनुहोस्।',
+        employeeCodeLabel: 'कर्मचारी संख्या दर्ता गर्नुहोस्',
+        employeeCodePlaceholder: 'कर्मचारी संख्या',
+        nationalityLabel: 'राष्ट्रियता चयन गर्नुहोस्',
+        nationalityPlaceholder: 'राष्ट्रियता',
+        startButton: 'सुरु गर्नुहोस्',
+        submitButton: '✓ पेश गर्नुहोस्',
+        submitting: '⏳ पेश गर्दै...',
+        completionTitle: 'सर्वेक्षण पूरा भयो!',
+        completionMessage: 'प्रतिक्रियाको लागि धन्यवाद।',
+        completionTime: 'समय: ५ देखि १० मिनेट',
+        errorEmployeeCode: 'कृपया कर्मचारी संख्या दर्ता गर्नुहोस्',
+        errorNationality: 'कृपया राष्ट्रियता चयन गर्नुहोस्',
+        errorIncomplete: 'कृपया सबै प्रश्नहरूको उत्तर दिनुहोस्',
+        progressText: 'प्रश्न',
+        nationalities: {
+            mm: 'म्यानमार', vn: 'भियतनाम', kh: 'कम्बोडिया', in: 'भारत', ph: 'फिलिपिन्स',
+            la: 'लाओस', mn: 'मंगोलिया', bd: 'बंगलादेश', lk: 'श्रीलंका',
+            bt: 'भुटान', uz: 'उज्बेकिस्तान', pk: 'पाकिस्तान', th: 'थाइल्याण्ड',
+            id: 'इन्डोनेसिया', np: 'नेपाल', cn: 'चीन', jp: 'जापान'
+        },
+        categories: {
+            work: 'काम र कार्य वातावरण',
+            salary: 'तलब र लाभहरू',
+            family: 'परिवार र व्यक्तिगत परिस्थिति',
+            relationship: 'पारस्परिक सम्बन्धहरू',
+            communication: 'जापानी भाषा र सञ्चार',
+            culture: 'संस्कृति र मूल्यहरू',
+            living: 'जीवन वातावरण',
+            career: 'करियर र भविष्य दृष्टिकोण'
+        },
+        questions: {
+            q1: 'के कामको सामग्री तपाईंसँग मेल खान्छ?',
+            q2: 'के तपाईं कार्यस्थलमा चोटपटक वा दुर्घटनाको बारेमा चिन्तित हुनुहुन्छ?',
+            q3: 'के बिदा र काम गर्ने समय उपयुक्त छ?',
+            q4: 'के कार्यस्थलको वातावरणमा काम गर्न सजिलो छ?',
+            q5: 'के तपाईं आफ्नो तलबको रकमसँग सन्तुष्ट हुनुहुन्छ?',
+            q6: 'के तपाईंलाई ओभरटाइम भुक्तानी र भत्ता उचित रूपमा दिइन्छ?',
+            q7: 'के बीमा र बिदाजस्ता प्रणालीहरू पर्याप्त छन्?',
+            q8: 'के यो कम्पनीमा काम गर्दा तपाईंलाई बाँच्नको लागि आवश्यक पर्ने पैसा मिल्छ?',
+            q9: 'के तपाईंसँग आफ्नो परिवारसँग सम्पर्क गर्न पर्याप्त समय छ?',
+            q10: 'के तपाईं आफ्नो परिवारलाई पैसा पठाउन सक्षम हुनुहुन्छ?',
+            q11: 'के तपाईंको व्यक्तिगत समय (आराम र एक्लै समय) पर्याप्त छ?',
+            q12: 'के तपाईं भविष्यमा आफ्नो परिवारलाई जापान ल्याउन चाहनुहुन्छ?',
+            q13: 'के अन्य प्राविधिक प्रशिक्षार्थीहरूसँगको सम्बन्ध राम्रो छ?',
+            q14: 'के जापानी पर्यवेक्षक र सहकर्मीहरूले तपाईंको कुरा सुन्छन्?',
+            q15: 'के समस्या हुँदा अन्य प्राविधिक प्रशिक्षार्थीहरूले मद्दत गर्छन्?',
+            q16: 'के कार्यस्थलमा दुर्व्यवहार वा भेदभाव छ?',
+            q17: 'के तपाईंलाई जापानी भाषामा कुराकानी गर्न समस्या छ?',
+            q18: 'के कामको निर्देशन र निर्देशनहरू बुझ्न सजिलो छ?',
+            q19: 'जब तपाईंलाई बुझिदैन, के तपाईं सजिलै प्रश्न सोध्न सक्नुहुन्छ?',
+            q20: 'के कम्पनीले जापानी भाषा अध्ययनमा मद्दत गर्दछ?',
+            q21: 'के त्यहाँ आफ्नो मातृभाषामा परामर्श गर्न सक्ने व्यक्ति (दोभाषे वा सिनियर) छ?',
+            q22: 'के तपाईं जापानी संस्कृति र चलनसँग परिचित हुनुहुन्छ?',
+            q23: 'के काममा सांस्कृतिक भिन्नताका कारण समस्याहरू छन्?',
+            q24: 'के आवास (छात्रावास, अपार्टमेन्ट, आदि) सहज छ?',
+            q25: 'के जीवन यापन खर्च तलबसँग उचित छ?',
+            q26: 'के तपाईंलाई जापानमा बस्न समस्या छ?',
+            q27: 'के कम्पनीले जीवनमा सहयोग प्रदान गर्दछ?',
+            q28: 'के तपाईं छात्रावास वा घरको जीवन वातावरण (कोठाको आकार, सुविधाहरू, आदि) सँग सन्तुष्ट हुनुहुन्छ?',
+            q29: 'के जापानमा बस्नु सुरक्षित र सहज छ?',
+            q30: 'के तपाईं आफ्नो हालको कामबाट प्राविधिक कौशल र ज्ञान प्राप्त गर्दै हुनुहुन्छ?',
+            q31: 'के तपाईंलाई लाग्छ कि प्रयास गर्दा मूल्याङ्कन र उपचार सुधार हुनेछ?',
+            q32: 'के तपाईं यो कम्पनीमा लामो समयसम्म काम गर्न चाहनुहुन्छ?',
+            q33: 'के कम्पनी वा संघले भिसा (बसोबासको स्थिति) नवीकरण र प्रक्रियाहरूमा मद्दत गर्दछ?',
+            q34: 'के यो कम्पनीमा काम गर्नाले तपाईंलाई स्वदेश फर्कँदा उपयोगी प्राविधिक कौशल सिक्न सक्नुहुन्छ?',
+            q35: 'के तपाईं आफ्नो देशका साथीहरूलाई "यो कम्पनीमा काम गर्नु राम्रो छ" भन्न चाहनुहुन्छ?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'धेरै असन्तुष्ट' },
+                { emoji: '🙁', text: 'केही असन्तुष्ट' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '🙂', text: 'केही सन्तुष्ट' },
+                { emoji: '😄', text: 'धेरै सन्तुष्ट' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'त्यस्तो सोच्दिन' },
+                { emoji: '😕', text: 'त्यस्तो धेरै सोच्दिन' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '😊', text: 'केही सोच्छु' },
+                { emoji: '⭕', text: 'धेरै सोच्छु' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'बुझ्दिन' },
+                { emoji: '😕', text: 'धेरै बुझ्दिन' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '🙂', text: 'केही बुझ्छु' },
+                { emoji: '⭕', text: 'राम्रो बुझ्छु' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'परिचित छैन' },
+                { emoji: '😕', text: 'धेरै परिचित छैन' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '😊', text: 'केही परिचित' },
+                { emoji: '🌟', text: 'धेरै परिचित' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'छैन' },
+                { emoji: '😕', text: 'धेरै छैन' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '🙂', text: 'केही छ' },
+                { emoji: '⭕', text: 'पर्याप्त छ' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'छैन' },
+                { emoji: '🙂', text: 'लगभग छैन' },
+                { emoji: '😐', text: 'कहिलेकाहीं' },
+                { emoji: '😕', text: 'प्रायः' },
+                { emoji: '😟', text: 'धेरै' },
+                { emoji: '❌', text: 'सधैं' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'छैन' },
+                { emoji: '◯', text: 'लगभग छैन' },
+                { emoji: '△', text: 'धेरै छैन' },
+                { emoji: '▽', text: 'केही छ' },
+                { emoji: '×', text: 'प्रायः' },
+                { emoji: '❌', text: 'सधैं' }
+            ]
+        }
+    },
+    
+    // ヒンディー語
+    hi: {
+        title: 'कार्यस्थल सर्वेक्षण',
+        privacyNotice: 'इस सर्वेक्षण के परिणाम गुमनाम रूप से संसाधित किए जाएंगे और व्यक्तिगत रूप से पहचाने नहीं जाएंगे।\nकृपया ईमानदारी से उत्तर दें।',
+        employeeCodeLabel: 'कर्मचारी संख्या दर्ज करें',
+        employeeCodePlaceholder: 'कर्मचारी संख्या',
+        nationalityLabel: 'राष्ट्रीयता चुनें',
+        nationalityPlaceholder: 'राष्ट्रीयता',
+        startButton: 'शुरू करें',
+        submitButton: '✓ जमा करें',
+        submitting: '⏳ जमा कर रहे हैं...',
+        completionTitle: 'सर्वेक्षण पूर्ण!',
+        completionMessage: 'प्रतिक्रिया के लिए धन्यवाद।',
+        completionTime: 'समय: ५ से १० मिनट',
+        errorEmployeeCode: 'कृपया कर्मचारी संख्या दर्ज करें',
+        errorNationality: 'कृपया राष्ट्रीयता चुनें',
+        errorIncomplete: 'कृपया सभी प्रश्नों के उत्तर दें',
+        progressText: 'प्रश्न',
+        nationalities: {
+            mm: 'म्यांमार', vn: 'वियतनाम', kh: 'कंबोडिया', in: 'भारत', ph: 'फिलीपींस',
+            la: 'लाओस', mn: 'मंगोलिया', bd: 'बांग्लादेश', lk: 'श्रीलंका',
+            bt: 'भूटान', uz: 'उज़्बेकिस्तान', pk: 'पाकिस्तान', th: 'थाईलैंड',
+            id: 'इंडोनेशिया', np: 'नेपाल', cn: 'चीन', jp: 'जापान'
+        },
+        categories: {
+            work: 'कार्य और कार्य वातावरण',
+            salary: 'वेतन और लाभ',
+            family: 'परिवार और व्यक्तिगत स्थिति',
+            relationship: 'पारस्परिक संबंध',
+            communication: 'जापानी भाषा और संचार',
+            culture: 'संस्कृति और मूल्य',
+            living: 'जीवन वातावरण',
+            career: 'करियर और भविष्य का दृष्टिकोण'
+        },
+        questions: {
+            q1: 'क्या कार्य सामग्री आपसे मेल खाती है?',
+            q2: 'क्या आप कार्यस्थल पर चोट या दुर्घटना के बारे में चिंतित हैं?',
+            q3: 'क्या छुट्टियां और काम के घंटे उपयुक्त हैं?',
+            q4: 'क्या कार्यस्थल का वातावरण काम करने में आसान है?',
+            q5: 'क्या आप अपने वेतन की राशि से संतुष्ट हैं?',
+            q6: 'क्या आपको ओवरटाइम भुगतान और भत्ते ठीक से मिलते हैं?',
+            q7: 'क्या बीमा और अवकाश जैसी प्रणालियां पर्याप्त हैं?',
+            q8: 'क्या इस कंपनी में काम करने से आपको जीने के लिए आवश्यक धन मिलता है?',
+            q9: 'क्या आपके पास अपने परिवार से संपर्क करने के लिए पर्याप्त समय है?',
+            q10: 'क्या आप अपने परिवार को पैसे भेजने में सक्षम हैं?',
+            q11: 'क्या आपका व्यक्तिगत समय (आराम और अकेला समय) पर्याप्त है?',
+            q12: 'क्या आप भविष्य में अपने परिवार को जापान लाना चाहते हैं?',
+            q13: 'क्या अन्य तकनीकी प्रशिक्षुओं के साथ संबंध अच्छे हैं?',
+            q14: 'क्या जापानी पर्यवेक्षक और सहकर्मी आपकी बात सुनते हैं?',
+            q15: 'क्या समस्या होने पर अन्य तकनीकी प्रशिक्षु मदद करते हैं?',
+            q16: 'क्या कार्यस्थल पर उत्पीड़न या भेदभाव है?',
+            q17: 'क्या आपको जापानी भाषा में बातचीत करने में समस्या है?',
+            q18: 'क्या कार्य विवरण और निर्देश समझने में आसान हैं?',
+            q19: 'जब आप नहीं समझते हैं, तो क्या आप आसानी से प्रश्न पूछ सकते हैं?',
+            q20: 'क्या कंपनी जापानी भाषा अध्ययन में सहायता करती है?',
+            q21: 'क्या ऐसा कोई व्यक्ति है जो आपकी मातृभाषा में परामर्श कर सकता है (दुभाषिया या वरिष्ठ)?',
+            q22: 'क्या आप जापानी संस्कृति और रीति-रिवाजों से परिचित हैं?',
+            q23: 'क्या काम में सांस्कृतिक अंतर के कारण समस्याएं हैं?',
+            q24: 'क्या आवास (छात्रावास, अपार्टमेंट, आदि) आरामदायक है?',
+            q25: 'क्या जीवन यापन की लागत वेतन के साथ उचित है?',
+            q26: 'क्या आपको जापान में रहने में कोई समस्या है?',
+            q27: 'क्या कंपनी जीवन में सहायता प्रदान करती है?',
+            q28: 'क्या आप छात्रावास या घर के जीवन वातावरण (कमरे का आकार, सुविधाएं, आदि) से संतुष्ट हैं?',
+            q29: 'क्या जापान में रहना सुरक्षित और आरामदायक है?',
+            q30: 'क्या आप अपने वर्तमान कार्य से तकनीकी कौशल और ज्ञान प्राप्त कर रहे हैं?',
+            q31: 'क्या आपको लगता है कि प्रयास करने पर मूल्यांकन और उपचार में सुधार होगा?',
+            q32: 'क्या आप इस कंपनी में लंबे समय तक काम करना चाहते हैं?',
+            q33: 'क्या कंपनी या संघ वीज़ा (निवास स्थिति) नवीकरण और प्रक्रियाओं में सहायता करता है?',
+            q34: 'क्या इस कंपनी में काम करने से आप स्वदेश लौटने पर उपयोगी तकनीकी कौशल सीख सकते हैं?',
+            q35: 'क्या आप अपने देश के दोस्तों को "इस कंपनी में काम करना अच्छा है" बताना चाहते हैं?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'बहुत असंतुष्ट' },
+                { emoji: '🙁', text: 'थोड़ा असंतुष्ट' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '🙂', text: 'थोड़ा संतुष्ट' },
+                { emoji: '😄', text: 'बहुत संतुष्ट' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'ऐसा नहीं सोचता' },
+                { emoji: '😕', text: 'ऐसा बहुत नहीं सोचता' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '😊', text: 'थोड़ा सोचता हूं' },
+                { emoji: '⭕', text: 'बहुत सोचता हूं' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'नहीं समझता' },
+                { emoji: '😕', text: 'बहुत नहीं समझता' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '🙂', text: 'थोड़ा समझता हूं' },
+                { emoji: '⭕', text: 'अच्छी तरह समझता हूं' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'परिचित नहीं' },
+                { emoji: '😕', text: 'बहुत परिचित नहीं' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '😊', text: 'थोड़ा परिचित' },
+                { emoji: '🌟', text: 'बहुत परिचित' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'नहीं है' },
+                { emoji: '😕', text: 'बहुत नहीं है' },
+                { emoji: '😐', text: 'सामान्य' },
+                { emoji: '🙂', text: 'थोड़ा है' },
+                { emoji: '⭕', text: 'पर्याप्त है' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'नहीं है' },
+                { emoji: '🙂', text: 'लगभग नहीं है' },
+                { emoji: '😐', text: 'कभी-कभी' },
+                { emoji: '😕', text: 'अक्सर' },
+                { emoji: '😟', text: 'बहुत' },
+                { emoji: '❌', text: 'हमेशा' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'नहीं है' },
+                { emoji: '◯', text: 'लगभग नहीं है' },
+                { emoji: '△', text: 'बहुत नहीं है' },
+                { emoji: '▽', text: 'थोड़ा है' },
+                { emoji: '×', text: 'अक्सर' },
+                { emoji: '❌', text: 'हमेशा' }
+            ]
+        }
+    },
+    
+    // クメール語（カンボジア）
+    km: {
+        title: 'ការស្ទង់មតិនៅកន្លែងធ្វើការ',
+        privacyNotice: 'លទ្ធផលនៃការស្ទង់មតិនេះនឹងត្រូវបានដំណើរការជាអនាមិក ហើយមិនអាចកំណត់អត្តសញ្ញាណបុគ្គលបានទេ។\nសូមឆ្លើយតបដោយស្មោះត្រង់។',
+        employeeCodeLabel: 'សូមបញ្ចូលលេខកូដនិយោជិត',
+        employeeCodePlaceholder: 'លេខកូដនិយោជិត',
+        nationalityLabel: 'សូមជ្រើសរើសសញ្ជាតិ',
+        nationalityPlaceholder: 'សញ្ជាតិ',
+        startButton: 'ចាប់ផ្តើម',
+        submitButton: '✓ ដាក់ស្នើ',
+        submitting: '⏳ កំពុងដាក់ស្នើ...',
+        completionTitle: 'ការស្ទង់មតិបានបញ្ចប់!',
+        completionMessage: 'សូមអរគុណសម្រាប់ការឆ្លើយតប។',
+        completionTime: 'ពេលវេលា: ៥ ដល់ ១០ នាទី',
+        errorEmployeeCode: 'សូមបញ្ចូលលេខកូដនិយោជិត',
+        errorNationality: 'សូមជ្រើសរើសសញ្ជាតិ',
+        errorIncomplete: 'សូមឆ្លើយសំណួរទាំងអស់',
+        progressText: 'សំណួរ',
+        nationalities: {
+            mm: 'មីយ៉ាន់ម៉ា', vn: 'វៀតណាម', kh: 'កម្ពុជា', in: 'ឥណ្ឌា', ph: 'ហ្វីលីពីន',
+            la: 'ឡាវ', mn: 'ម៉ុងហ្គោលី', bd: 'បង់ក្លាដែស', lk: 'ស្រីលង្កា',
+            bt: 'ប៊ូតង់', uz: 'អ៊ូសបេគីស្ថាន', pk: 'ប៉ាគីស្ថាន', th: 'ថៃ',
+            id: 'ឥណ្ឌូនេស៊ី', np: 'នេប៉ាល់', cn: 'ចិន', jp: 'ជប៉ុន'
+        },
+        categories: {
+            work: 'ការងារ និងបរិយាកាសការងារ',
+            salary: 'ប្រាក់ខែ និងអត្ថប្រយោជន៍',
+            family: 'គ្រួសារ និងស្ថានភាពផ្ទាល់ខ្លួន',
+            relationship: 'ទំនាក់ទំនងអន្តរបុគ្គល',
+            communication: 'ភាសាជប៉ុន និងការទំនាក់ទំនង',
+            culture: 'វប្បធម៌ និងតម្លៃ',
+            living: 'បរិយាកាសរស់នៅ',
+            career: 'អាជីព និងទស្សនវិស័យអនាគត'
+        },
+        questions: {
+            q1: 'តើខ្លឹមសារការងារសមស្របទេ?',
+            q2: 'តើអ្នកព្រួយបារម្ភអំពីរបួស ឬគ្រោះថ្នាក់នៅកន្លែងធ្វើការទេ?',
+            q3: 'តើថ្ងៃឈប់សម្រាក និងម៉ោងធ្វើការសមស្របទេ?',
+            q4: 'តើបរិយាកាសនៅកន្លែងធ្វើការងាយស្រួលធ្វើការទេ?',
+            q5: 'តើអ្នកពេញចិត្តនឹងចំនួនប្រាក់ខែទេ?',
+            q6: 'តើអ្នកទទួលបានប្រាក់បំណាច់ម៉ោងបន្ថែម និងប្រាក់ឧបត្ថម្ភគ្រប់គ្រាន់ទេ?',
+            q7: 'តើប្រព័ន្ធដូចជាធានារ៉ាប់រង និងការឈប់សម្រាកគ្រប់គ្រាន់ទេ?',
+            q8: 'តើការធ្វើការនៅក្រុមហ៊ុននេះផ្តល់ប្រាក់ចាំបាច់សម្រាប់ការរស់នៅទេ?',
+            q9: 'តើអ្នកមានពេលវេលាគ្រប់គ្រាន់ក្នុងការទំនាក់ទំនងគ្រួសារទេ?',
+            q10: 'តើអ្នកអាចផ្ញើប្រាក់ទៅគ្រួសារបានទេ?',
+            q11: 'តើពេលវេលាផ្ទាល់ខ្លួន (សម្រាក និងផ្ទាល់ខ្លួន) គ្រប់គ្រាន់ទេ?',
+            q12: 'តើអ្នកចង់នាំគ្រួសារមកជប៉ុននាពេលអនាគតទេ?',
+            q13: 'តើទំនាក់ទំនងជាមួយអ្នកកម្មករបច្ចេកទេសផ្សេងទៀតល្អទេ?',
+            q14: 'តើអ្នកគ្រប់គ្រង និងសហការីជប៉ុនស្តាប់អ្នកទេ?',
+            q15: 'តើអ្នកកម្មករបច្ចេកទេសផ្សេងទៀតជួយអ្នកនៅពេលមានបញ្ហាទេ?',
+            q16: 'តើមានការរំលោភបំពាន ឬការរើសអើងនៅកន្លែងធ្វើការទេ?',
+            q17: 'តើអ្នកមានបញ្ហាក្នុងការសន្ទនាភាសាជប៉ុនទេ?',
+            q18: 'តើការពន្យល់ និងការណែនាំការងារយល់ស្រួលទេ?',
+            q19: 'នៅពេលមិនយល់ តើអ្នកអាចសួរសំណួរបានងាយស្រួលទេ?',
+            q20: 'តើក្រុមហ៊ុនជួយក្នុងការសិក្សាភាសាជប៉ុនទេ?',
+            q21: 'តើមាននរណាម្នាក់ដែលអាចពិគ្រោះជាភាសាកំណើត (អ្នកបកប្រែ ឬបងប្អូនចាស់) ទេ?',
+            q22: 'តើអ្នកស្គាល់វប្បធម៌ និងទំនៀមទំលាប់ជប៉ុនទេ?',
+            q23: 'តើមានបញ្ហាដោយសារភាពខុសគ្នានៃវប្បធម៌ក្នុងការងារទេ?',
+            q24: 'តើកន្លែងស្នាក់នៅ (ផ្ទះសំណាក់, អាផាតមេន, ជាដើម) ងាយស្រួលទេ?',
+            q25: 'តើថ្លៃរស់នៅសមស្របជាមួយប្រាក់ខែទេ?',
+            q26: 'តើអ្នកមានបញ្ហាក្នុងការរស់នៅជប៉ុនទេ?',
+            q27: 'តើក្រុមហ៊ុនគាំទ្រការរស់នៅទេ?',
+            q28: 'តើអ្នកពេញចិត្តនឹងបរិយាកាសរស់នៅផ្ទះសំណាក់ ឬផ្ទះ (ទំហំបន្ទប់, គ្រឿងបរិក្ខារ, ជាដើម) ទេ?',
+            q29: 'តើការរស់នៅជប៉ុនមានសុវត្ថិភាព និងងាយស្រួលទេ?',
+            q30: 'តើអ្នកទទួលបាននូវជំនាញបច្ចេកទេស និងចំណេះដឹងពីការងារបច្ចុប្បន្នទេ?',
+            q31: 'តើអ្នកមានអារម្មណ៍ថាការវាយតម្លៃ និងការប្រព្រឹត្តនឹងប្រសើរឡើងនៅពេលខិតខំប្រឹងប្រែងទេ?',
+            q32: 'តើអ្នកចង់ធ្វើការនៅក្រុមហ៊ុននេះរយៈពេលយូរទេ?',
+            q33: 'តើក្រុមហ៊ុន ឬសមាគមជួយក្នុងការបន្តទិដ្ឋាការ និងនីតិវិធីទេ?',
+            q34: 'តើការធ្វើការនៅក្រុមហ៊ុននេះអាចឲ្យអ្នករៀនជំនាញបច្ចេកទេសមានប្រយោជន៍នៅពេលត្រលប់ស្រុកទេ?',
+            q35: 'តើអ្នកចង់ប្រាប់មិត្តភក្តិក្នុងស្រុកថា "ការធ្វើការនៅក្រុមហ៊ុននេះល្អ" ទេ?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'មិនពេញចិត្តខ្លាំង' },
+                { emoji: '🙁', text: 'មិនពេញចិត្តបន្តិច' },
+                { emoji: '😐', text: 'ធម្មតា' },
+                { emoji: '🙂', text: 'ពេញចិត្តបន្តិច' },
+                { emoji: '😄', text: 'ពេញចិត្តខ្លាំង' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'មិនគិតដូច្នោះទេ' },
+                { emoji: '😕', text: 'មិនគិតខ្លាំងទេ' },
+                { emoji: '😐', text: 'ធម្មតា' },
+                { emoji: '😊', text: 'គិតបន្តិច' },
+                { emoji: '⭕', text: 'គិតខ្លាំង' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'មិនយល់ទេ' },
+                { emoji: '😕', text: 'យល់តិចតួច' },
+                { emoji: '😐', text: 'ធម្មតា' },
+                { emoji: '🙂', text: 'យល់បន្តិច' },
+                { emoji: '⭕', text: 'យល់ល្អ' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'មិនស្គាល់ទេ' },
+                { emoji: '😕', text: 'ស្គាល់តិចតួច' },
+                { emoji: '😐', text: 'ធម្មតា' },
+                { emoji: '😊', text: 'ស្គាល់បន្តិច' },
+                { emoji: '🌟', text: 'ស្គាល់ខ្លាំង' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'គ្មានទេ' },
+                { emoji: '😕', text: 'មានតិចតួច' },
+                { emoji: '😐', text: 'ធម្មតា' },
+                { emoji: '🙂', text: 'មានបន្តិច' },
+                { emoji: '⭕', text: 'គ្រប់គ្រាន់' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'គ្មានទេ' },
+                { emoji: '🙂', text: 'ស្ទើរតែគ្មាន' },
+                { emoji: '😐', text: 'ពេលខ្លះ' },
+                { emoji: '😕', text: 'ជាញឹកញាប់' },
+                { emoji: '😟', text: 'ច្រើន' },
+                { emoji: '❌', text: 'ជានិច្ច' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'គ្មានទេ' },
+                { emoji: '◯', text: 'ស្ទើរតែគ្មាន' },
+                { emoji: '△', text: 'មានតិចតួច' },
+                { emoji: '▽', text: 'មានបន្តិច' },
+                { emoji: '×', text: 'ជាញឹកញាប់' },
+                { emoji: '❌', text: 'ជានិច្ច' }
+            ]
+        }
+    },
+    lo: {
+        title: 'ການສຳຫຼວດບ່ອນເຮັດວຽກ',
+        privacyNotice: 'ຜົນການສຳຫຼວດນີ້ຈະຖືກປະມວນຜົນແບບບໍ່ເປີດເຜີຍຊື່ ແລະຈະບໍ່ສາມາດລະບຸຕົວຕົນສ່ວນບຸກຄົນໄດ້.\nກະລຸນາຕອບຢ່າງຊື່ສັດ.',
+        employeeCodeLabel: 'ກະລຸນາປ້ອນລະຫັດພະນັກງານ',
+        employeeCodePlaceholder: 'ລະຫັດພະນັກງານ',
+        nationalityLabel: 'ກະລຸນາເລືອກສັນຊາດ',
+        nationalityPlaceholder: 'ສັນຊາດ',
+        startButton: 'ເລີ່ມຕົ້ນ',
+        submitButton: '✓ ສົ່ງ',
+        submitting: '⏳ ກຳລັງສົ່ງ...',
+        completionTitle: 'ການສຳຫຼວດສຳເລັດ!',
+        completionMessage: 'ຂອບໃຈສຳລັບການຕອບ.',
+        completionTime: 'ເວລາ: ໕ ຫາ ໑໐ ນາທີ',
+        errorEmployeeCode: 'ກະລຸນາປ້ອນລະຫັດພະນັກງານ',
+        errorNationality: 'ກະລຸນາເລືອກສັນຊາດ',
+        errorIncomplete: 'ກະລຸນາຕອບຄຳຖາມທັງໝົດ',
+        progressText: 'ຄຳຖາມ',
+        nationalities: {
+            mm: 'ມຽນມາ', vn: 'ຫວຽດນາມ', kh: 'ກຳປູເຈຍ', in: 'ອິນເດຍ', ph: 'ຟິລິບປິນ',
+            la: 'ລາວ', mn: 'ມົງໂກເລຍ', bd: 'ບັງກະລາເທດ', lk: 'ສີລັງກາ',
+            bt: 'ພູຖານ', uz: 'ອຸສເບກິສະຖານ', pk: 'ປາກິສະຖານ', th: 'ໄທ',
+            id: 'ອິນໂດເນເຊຍ', np: 'ເນປານ', cn: 'ຈີນ', jp: 'ຍີ່ປຸ່ນ'
+        },
+        categories: {
+            work: 'ວຽກ ແລະສະພາບແວດລ້ອມການເຮັດວຽກ',
+            salary: 'ເງິນເດືອນ ແລະຜົນປະໂຫຍດ',
+            family: 'ຄອບຄົວ ແລະສະຖານະການສ່ວນຕົວ',
+            relationship: 'ການພົວພັນລະຫວ່າງບຸກຄົນ',
+            communication: 'ພາສາຍີ່ປຸ່ນ ແລະການສື່ສານ',
+            culture: 'ວັດທະນະທຳ ແລະມູນຄ່າ',
+            living: 'ສະພາບແວດລ້ອມການດຳລົງຊີວິດ',
+            career: 'ອາຊີບ ແລະທັດສະນະອະນາຄົດ'
+        },
+        questions: {
+            q1: 'ເນື້ອໃນວຽກເໝາະສົມກັບທ່ານບໍ່?',
+            q2: 'ທ່ານກັງວົນກ່ຽວກັບການບາດເຈັບ ຫຼືອຸປະຕິເຫດທີ່ບ່ອນເຮັດວຽກບໍ່?',
+            q3: 'ວັນພັກ ແລະຊົ່ວໂມງເຮັດວຽກເໝາະສົມບໍ່?',
+            q4: 'ບັນຍາກາດບ່ອນເຮັດວຽກງ່າຍຕໍ່ການເຮັດວຽກບໍ່?',
+            q5: 'ທ່ານພໍໃຈກັບຈຳນວນເງິນເດືອນບໍ່?',
+            q6: 'ທ່ານໄດ້ຮັບຄ່າລ່ວງເວລາ ແລະເບ້ຍລ້ຽງຢ່າງຖືກຕ້ອງບໍ່?',
+            q7: 'ລະບົບຕ່າງໆເຊັ່ນ: ປະກັນໄພ ແລະວັນພັກພຽງພໍບໍ່?',
+            q8: 'ການເຮັດວຽກທີ່ບໍລິສັດນີ້ໃຫ້ເງິນທີ່ຈຳເປັນສຳລັບການດຳລົງຊີວິດບໍ່?',
+            q9: 'ທ່ານມີເວລາພຽງພໍໃນການຕິດຕໍ່ກັບຄອບຄົວບໍ່?',
+            q10: 'ທ່ານສາມາດສົ່ງເງິນໃຫ້ຄອບຄົວໄດ້ບໍ່?',
+            q11: 'ເວລາສ່ວນຕົວຂອງທ່ານ (ພັກຜ່ອນ ແລະສ່ວນຕົວ) ພຽງພໍບໍ່?',
+            q12: 'ທ່ານຕ້ອງການນຳຄອບຄົວມາຍີ່ປຸ່ນໃນອະນາຄົດບໍ່?',
+            q13: 'ການພົວພັນກັບຜູ້ຝຶກອົບຮົມດ້ານວິຊາການອື່ນໆດີບໍ່?',
+            q14: 'ຫົວໜ້າ ແລະເພື່ອນຮ່ວມງານຍີ່ປຸ່ນຟັງທ່ານບໍ່?',
+            q15: 'ເມື່ອມີບັນຫາ, ຜູ້ຝຶກອົບຮົມດ້ານວິຊາການອື່ນໆຊ່ວຍທ່ານບໍ່?',
+            q16: 'ມີການລົບກວນ ຫຼືການຈຳແນກທີ່ບ່ອນເຮັດວຽກບໍ່?',
+            q17: 'ທ່ານມີບັນຫາໃນການສົນທະນາພາສາຍີ່ປຸ່ນບໍ່?',
+            q18: 'ຄຳອະທິບາຍ ແລະຄຳແນະນຳວຽກເຂົ້າໃຈງ່າຍບໍ່?',
+            q19: 'ເມື່ອບໍ່ເຂົ້າໃຈ, ທ່ານສາມາດຖາມຄຳຖາມໄດ້ງ່າຍບໍ່?',
+            q20: 'ບໍລິສັດຊ່ວຍໃນການສຶກສາພາສາຍີ່ປຸ່ນບໍ່?',
+            q21: 'ມີຄົນທີ່ສາມາດປຶກສາໃນພາສາແມ່ (ນາຍພາສາ ຫຼືຮຸ່ນພີ່) ບໍ່?',
+            q22: 'ທ່ານຄຸ້ນເຄີຍກັບວັດທະນະທຳ ແລະປະເພນີຍີ່ປຸ່ນບໍ່?',
+            q23: 'ມີບັນຫາເນື່ອງຈາກຄວາມແຕກຕ່າງທາງວັດທະນະທຳໃນວຽກບໍ່?',
+            q24: 'ທີ່ພັກອາໄສ (ຫໍພັກ, ອາພາດເມັ້ນ, ແລະອື່ນໆ) ສະດວກສະບາຍບໍ່?',
+            q25: 'ຄ່າຄອງຊີບເໝາະສົມກັບເງິນເດືອນບໍ່?',
+            q26: 'ທ່ານມີບັນຫາໃນການດຳລົງຊີວິດຢູ່ຍີ່ປຸ່ນບໍ່?',
+            q27: 'ບໍລິສັດສະໜັບສະໜູນການດຳລົງຊີວິດບໍ່?',
+            q28: 'ທ່ານພໍໃຈກັບສະພາບແວດລ້ອມການດຳລົງຊີວິດຫໍພັກ ຫຼືບ້ານ (ຂະໜາດຫ້ອງ, ສິ່ງອຳນວຍຄວາມສະດວກ, ແລະອື່ນໆ) ບໍ່?',
+            q29: 'ການດຳລົງຊີວິດຢູ່ຍີ່ປຸ່ນປອດໄພ ແລະສະດວກສະບາຍບໍ່?',
+            q30: 'ທ່ານໄດ້ຮັບທັກສະດ້ານວິຊາການ ແລະຄວາມຮູ້ຈາກວຽກປະຈຸບັນບໍ່?',
+            q31: 'ທ່ານຮູ້ສຶກວ່າການປະເມີນ ແລະການປະຕິບັດຈະດີຂຶ້ນເມື່ອພະຍາຍາມບໍ່?',
+            q32: 'ທ່ານຕ້ອງການເຮັດວຽກຢູ່ບໍລິສັດນີ້ເປັນເວລາດົນບໍ່?',
+            q33: 'ບໍລິສັດ ຫຼືສະມາຄົມຊ່ວຍໃນການຕໍ່ວີຊາ ແລະຂັ້ນຕອນບໍ່?',
+            q34: 'ການເຮັດວຽກຢູ່ບໍລິສັດນີ້ເຮັດໃຫ້ທ່ານຮຽນທັກສະດ້ານວິຊາການທີ່ມີປະໂຫຍດເມື່ອກັບປະເທດບໍ່?',
+            q35: 'ທ່ານຕ້ອງການບອກໝູ່ໃນປະເທດວ່າ "ເຮັດວຽກຢູ່ບໍລິສັດນີ້ດີ" ບໍ່?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'ບໍ່ພໍໃຈຫຼາຍ' },
+                { emoji: '🙁', text: 'ບໍ່ຄ່ອຍພໍໃຈ' },
+                { emoji: '😐', text: 'ປານກາງ' },
+                { emoji: '🙂', text: 'ຄ່ອນຂ້າງພໍໃຈ' },
+                { emoji: '😄', text: 'ພໍໃຈຫຼາຍ' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'ບໍ່ຄິດແບບນັ້ນ' },
+                { emoji: '😕', text: 'ບໍ່ຄ່ອຍຄິດແບບນັ້ນ' },
+                { emoji: '😐', text: 'ປານກາງ' },
+                { emoji: '😊', text: 'ຄິດແບບນັ້ນເລັກນ້ອຍ' },
+                { emoji: '⭕', text: 'ຄິດແບບນັ້ນຫຼາຍ' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'ບໍ່ເຂົ້າໃຈ' },
+                { emoji: '😕', text: 'ບໍ່ຄ່ອຍເຂົ້າໃຈ' },
+                { emoji: '😐', text: 'ປານກາງ' },
+                { emoji: '🙂', text: 'ເຂົ້າໃຈເລັກນ້ອຍ' },
+                { emoji: '⭕', text: 'ເຂົ້າໃຈດີ' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'ບໍ່ຄຸ້ນເຄີຍ' },
+                { emoji: '😕', text: 'ບໍ່ຄ່ອຍຄຸ້ນເຄີຍ' },
+                { emoji: '😐', text: 'ປານກາງ' },
+                { emoji: '😊', text: 'ຄຸ້ນເຄີຍເລັກນ້ອຍ' },
+                { emoji: '🌟', text: 'ຄຸ້ນເຄີຍຫຼາຍ' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'ບໍ່ມີ' },
+                { emoji: '😕', text: 'ບໍ່ຄ່ອຍມີ' },
+                { emoji: '😐', text: 'ປານກາງ' },
+                { emoji: '🙂', text: 'ມີເລັກນ້ອຍ' },
+                { emoji: '⭕', text: 'ພຽງພໍ' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'ບໍ່ມີ' },
+                { emoji: '🙂', text: 'ເກືອບບໍ່ມີ' },
+                { emoji: '😐', text: 'ບາງຄັ້ງ' },
+                { emoji: '😕', text: 'ເລື້ອຍໆ' },
+                { emoji: '😟', text: 'ຫຼາຍ' },
+                { emoji: '❌', text: 'ສະເໝີ' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'ບໍ່ມີ' },
+                { emoji: '◯', text: 'ເກືອບບໍ່ມີ' },
+                { emoji: '△', text: 'ບໍ່ຄ່ອຍມີ' },
+                { emoji: '▽', text: 'ມີເລັກນ້ອຍ' },
+                { emoji: '×', text: 'ເລື້ອຍໆ' },
+                { emoji: '❌', text: 'ສະເໝີ' }
+            ]
+        }
+    },
+
+    // モンゴル語
+    mn: {
+        title: 'Ажлын байрны судалгаа',
+        privacyNotice: 'Энэхүү судалгааны үр дүнг нэрийг нууцалж боловсруулах бөгөөд хувийн хэрэгцээнд зориулж таних боломжгүй.\nҮнэнч хариулна уу.',
+        employeeCodeLabel: 'Ажилтны дугаар оруулна уу',
+        employeeCodePlaceholder: 'Ажилтны дугаар',
+        nationalityLabel: 'Иргэншлээ сонгоно уу',
+        nationalityPlaceholder: 'Иргэншил',
+        startButton: 'Эхлүүлэх',
+        submitButton: '✓ Илгээх',
+        submitting: '⏳ Илгээж байна...',
+        completionTitle: 'Судалгаа дууссан!',
+        completionMessage: 'Хариулт өгсөнд баярлалаа.',
+        completionTime: 'Хугацаа: 5-10 минут',
+        errorEmployeeCode: 'Ажилтны дугаар оруулна уу',
+        errorNationality: 'Иргэншлээ сонгоно уу',
+        errorIncomplete: 'Бүх асуултад хариулна уу',
+        progressText: 'Асуулт',
+        nationalities: {
+            mm: 'Мьянмар', vn: 'Вьетнам', kh: 'Камбож', in: 'Энэтхэг', ph: 'Филиппин',
+            la: 'Лаос', mn: 'Монгол', bd: 'Бангладеш', lk: 'Шри Ланка',
+            bt: 'Бутан', uz: 'Узбекистан', pk: 'Пакистан', th: 'Тайланд',
+            id: 'Индонез', np: 'Балба', cn: 'Хятад', jp: 'Япон'
+        },
+        categories: {
+            work: 'Ажил ба ажлын орчин',
+            salary: 'Цалин ба тэтгэмж',
+            family: 'Гэр бүл ба хувийн байдал',
+            relationship: 'Хүмүүс хоорондын харилцаа',
+            communication: 'Япон хэл ба харилцаа холбоо',
+            culture: 'Соёл ба үнэт зүйлс',
+            living: 'Амьдрах орчин',
+            career: 'Карьер ба ирээдүйн төлөвлөгөө'
+        },
+        questions: {
+            q1: 'Ажлын агуулга танд тохирч байна уу?',
+            q2: 'Та ажлын байрны гэмтэл эсвэл ослын талаар санаа зовж байна уу?',
+            q3: 'Амралтын өдөр ба ажлын цаг тохиромжтой юу?',
+            q4: 'Ажлын байрны орчин ажиллахад хялбар байна уу?',
+            q5: 'Та цалингийн хэмжээнд сэтгэл хангалуун байна уу?',
+            q6: 'Та илүү цагийн цалин, тэтгэмжийг зохих ёсоор авч байна уу?',
+            q7: 'Даатгал, амралтын өдөр гэх мэт систем хангалттай юу?',
+            q8: 'Энэ компанид ажиллах нь амьдрахад шаардлагатай мөнгө өгч байна уу?',
+            q9: 'Танд гэр бүлтэйгээ холбогдох хангалттай цаг байна уу?',
+            q10: 'Та гэр бүлдээ мөнгө илгээх боломжтой юу?',
+            q11: 'Таны хувийн цаг (амралт ба ганцаараа байх) хангалттай юу?',
+            q12: 'Та ирээдүйд гэр бүлээ Японд авчрахыг хүсч байна уу?',
+            q13: 'Бусад техникийн сургалтын ажилчидтай харилцаа сайн байна уу?',
+            q14: 'Япон дарга болон хамт олон танайг сонсдог уу?',
+            q15: 'Асуудал гарвал бусад техникийн сургалтын ажилчид танд тусалдаг уу?',
+            q16: 'Ажлын байранд дарамт эсвэл ялгаварлал байдаг уу?',
+            q17: 'Танд япон хэлээр ярихад асуудал байна уу?',
+            q18: 'Ажлын тайлбар ба зааварчилгаа ойлгоход хялбар байна уу?',
+            q19: 'Ойлгохгүй үед та асуулт асуухад хялбар байна уу?',
+            q20: 'Компани япон хэл сурахад тусалдаг уу?',
+            q21: 'Эх хэлээрээ зөвлөгөө авах (орчуулагч эсвэл ахлах) хүн байдаг уу?',
+            q22: 'Та япон соёл ба заншлыг мэддэг үү?',
+            q23: 'Ажилд соёлын ялгаанаас болж асуудал гардаг уу?',
+            q24: 'Амьдрах газар (байр, орон сууц гэх мэт) тав тухтай юу?',
+            q25: 'Амьжиргааны зардал цалинтай тохирч байна уу?',
+            q26: 'Танд Японд амьдрахад асуудал байна уу?',
+            q27: 'Компани амьдралд дэмжлэг үзүүлдэг үү?',
+            q28: 'Та байр эсвэл гэрийн амьдрах орчин (өрөөний хэмжээ, тохижилт гэх мэт)-д сэтгэл хангалуун байна уу?',
+            q29: 'Японд амьдрах аюулгүй бөгөөд тав тухтай юу?',
+            q30: 'Та одоогийн ажлаасаа техникийн ур чадвар ба мэдлэг олж авч байна уу?',
+            q31: 'Та хичээвэл үнэлгээ ба хандлага сайжирна гэж бодож байна уу?',
+            q32: 'Та энэ компанид удаан хугацаагаар ажиллахыг хүсч байна уу?',
+            q33: 'Компани эсвэл холбоо виз (оршин суух эрх)-ийн сунгалт ба үйл ажиллагаанд тусалдаг уу?',
+            q34: 'Энэ компанид ажиллах нь эх орондоо буцахдаа ашигтай техникийн ур чадвар сурахад тусалж байна уу?',
+            q35: 'Та эх орны найз нөхөддөө "Энэ компанид ажиллах нь сайн" гэж хэлэхийг хүсч байна уу?'
+        },
+        choices: {
+            satisfaction: [
+                { emoji: '😢', text: 'Маш сэтгэл ханамжгүй' },
+                { emoji: '🙁', text: 'Бага зэрэг сэтгэл ханамжгүй' },
+                { emoji: '😐', text: 'Дундаж' },
+                { emoji: '🙂', text: 'Бага зэрэг сэтгэл хангалуун' },
+                { emoji: '😄', text: 'Маш сэтгэл хангалуун' }
+            ],
+            desire: [
+                { emoji: '😔', text: 'Тийм биш' },
+                { emoji: '😕', text: 'Тийм ч биш' },
+                { emoji: '😐', text: 'Дундаж' },
+                { emoji: '😊', text: 'Бага зэрэг тийм' },
+                { emoji: '⭕', text: 'Маш их тийм' }
+            ],
+            understanding: [
+                { emoji: '❌', text: 'Ойлгохгүй' },
+                { emoji: '😕', text: 'Бага зэрэг ойлгохгүй' },
+                { emoji: '😐', text: 'Дундаж' },
+                { emoji: '🙂', text: 'Бага зэрэг ойлгож байна' },
+                { emoji: '⭕', text: 'Сайн ойлгож байна' }
+            ],
+            familiarity: [
+                { emoji: '😰', text: 'Танил биш' },
+                { emoji: '😕', text: 'Тийм ч танил биш' },
+                { emoji: '😐', text: 'Дундаж' },
+                { emoji: '😊', text: 'Бага зэрэг танил' },
+                { emoji: '🌟', text: 'Маш танил' }
+            ],
+            availability: [
+                { emoji: '❌', text: 'Байхгүй' },
+                { emoji: '😕', text: 'Тийм ч байхгүй' },
+                { emoji: '😐', text: 'Дундаж' },
+                { emoji: '🙂', text: 'Бага зэрэг байна' },
+                { emoji: '⭕', text: 'Хангалттай байна' }
+            ],
+            negative: [
+                { emoji: '⭕', text: 'Байхгүй' },
+                { emoji: '🙂', text: 'Бараг байхгүй' },
+                { emoji: '😐', text: 'Заримдаа' },
+                { emoji: '😕', text: 'Ихэвчлэн' },
+                { emoji: '😟', text: 'Их' },
+                { emoji: '❌', text: 'Үргэлж' }
+            ],
+            safety_concern: [
+                { emoji: '⭕', text: 'Байхгүй' },
+                { emoji: '◯', text: 'Бараг байхгүй' },
+                { emoji: '△', text: 'Тийм ч байхгүй' },
+                { emoji: '▽', text: 'Бага зэрэг байна' },
+                { emoji: '×', text: 'Ихэвчлэн' },
+                { emoji: '❌', text: 'Үргэлж' }
+            ]
+        }
+    },
+
+    bn: {
+    title: 'কর্মক্ষেত্র জরিপ',
+    privacyNotice: 'এই জরিপের ফলাফল বেনামে প্রক্রিয়া করা হবে এবং ব্যক্তিগতভাবে চিহ্নিত করা যাবে না।\nঅনুগ্রহ করে সততার সাথে উত্তর দিন।',
+    employeeCodeLabel: 'কর্মচারী নম্বর লিখুন',
+    employeeCodePlaceholder: 'কর্মচারী নম্বর',
+    nationalityLabel: 'জাতীয়তা নির্বাচন করুন',
+    nationalityPlaceholder: 'জাতীয়তা',
+    startButton: 'শুরু করুন',
+    submitButton: '✓ জমা দিন',
+    submitting: '⏳ জমা দিচ্ছি...',
+    completionTitle: 'জরিপ সম্পন্ন!',
+    completionMessage: 'প্রতিক্রিয়ার জন্য ধন্যবাদ।',
+    completionTime: 'সময়: ৫ থেকে ১০ মিনিট',
+    errorEmployeeCode: 'অনুগ্রহ করে কর্মচারী নম্বর লিখুন',
+    errorNationality: 'অনুগ্রহ করে জাতীয়তা নির্বাচন করুন',
+    errorIncomplete: 'অনুগ্রহ করে সব প্রশ্নের উত্তর দিন',
+    progressText: 'প্রশ্ন',
+    nationalities: {
+        mm: 'মিয়ানমার', vn: 'ভিয়েতনাম', kh: 'কম্বোডিয়া', in: 'ভারত', ph: 'ফিলিপাইন',
+        la: 'লাওস', mn: 'মঙ্গোলিয়া', bd: 'বাংলাদেশ', lk: 'শ্রীলংকা',
+        bt: 'ভুটান', uz: 'উজবেকিস্তান', pk: 'পাকিস্তান', th: 'থাইল্যান্ড',
+        id: 'ইন্দোনেশিয়া', np: 'নেপাল', cn: 'চীন', jp: 'জাপান'
+    },
+    categories: {
+        work: 'কাজ এবং কর্মপরিবেশ',
+        salary: 'বেতন এবং সুবিধা',
+        family: 'পরিবার এবং ব্যক্তিগত পরিস্থিতি',
+        relationship: 'আন্তঃব্যক্তিক সম্পর্ক',
+        communication: 'জাপানি ভাষা এবং যোগাযোগ',
+        culture: 'সংস্কৃতি এবং মূল্যবোধ',
+        living: 'জীবনযাত্রার পরিবেশ',
+        career: 'ক্যারিয়ার এবং ভবিষ্যৎ দৃষ্টিভঙ্গি'
+    },
+    questions: {
+        q1: 'কাজের বিষয়বস্তু কি আপনার সাথে মানানসই?',
+        q2: 'আপনি কি কর্মক্ষেত্রে আঘাত বা দুর্ঘটনা নিয়ে চিন্তিত?',
+        q3: 'ছুটির দিন এবং কাজের সময় কি উপযুক্ত?',
+        q4: 'কর্মক্ষেত্রের পরিবেশ কি কাজ করা সহজ করে?',
+        q5: 'আপনি কি বেতনের পরিমাণে সন্তুষ্ট?',
+        q6: 'আপনি কি ওভারটাইম পেমেন্ট এবং ভাতা সঠিকভাবে পাচ্ছেন?',
+        q7: 'বীমা এবং ছুটির মতো ব্যবস্থা কি যথেষ্ট?',
+        q8: 'এই কোম্পানিতে কাজ করে কি জীবনযাপনের জন্য প্রয়োজনীয় আয় পাচ্ছেন?',
+        q9: 'পরিবারের সাথে যোগাযোগ করার জন্য কি যথেষ্ট সময় আছে?',
+        q10: 'আপনি কি পরিবারে টাকা পাঠাতে পারছেন?',
+        q11: 'ব্যক্তিগত সময় (বিশ্রাম এবং গোপনীয়তা) কি যথেষ্ট?',
+        q12: 'আপনি কি ভবিষ্যতে পরিবারকে জাপানে আনতে চান?',
+        q13: 'অন্যান্য কারিগরি প্রশিক্ষণার্থীদের সাথে সম্পর্ক কি ভালো?',
+        q14: 'জাপানি সুপারভাইজার এবং সহকর্মীরা কি আপনার কথা শোনেন?',
+        q15: 'সমস্যা হলে অন্যান্য কারিগরি প্রশিক্ষণার্থীরা কি সাহায্য করেন?',
+        q16: 'কর্মক্ষেত্রে কি হয়রানি বা বৈষম্য আছে?',
+        q17: 'জাপানি ভাষায় কথোপকথনে কি আপনার অসুবিধা আছে?',
+        q18: 'কাজের ব্যাখ্যা এবং নির্দেশনা কি বোঝা সহজ?',
+        q19: 'বুঝতে না পারলে প্রশ্ন করা কি সহজ?',
+        q20: 'কোম্পানি কি জাপানি ভাষা শেখায় সহায়তা করে?',
+        q21: 'মাতৃভাষায় পরামর্শ নেওয়ার মতো কেউ (দোভাষী বা সিনিয়র) আছে কি?',
+        q22: 'আপনি কি জাপানি সংস্কৃতি এবং রীতিনীতির সাথে পরিচিত?',
+        q23: 'কাজে সাংস্কৃতিক পার্থক্যের কারণে কি সমস্যা আছে?',
+        q24: 'বাসস্থান (ডরমিটরি, অ্যাপার্টমেন্ট ইত্যাদি) কি আরামদায়ক?',
+        q25: 'জীবনযাত্রার খরচ কি বেতনের সাথে উপযুক্ত?',
+        q26: 'জাপানে বসবাসে কি কোনো সমস্যা আছে?',
+        q27: 'কোম্পানি কি জীবনযাত্রায় সহায়তা প্রদান করে?',
+        q28: 'ডরমিটরি বা বাড়ির জীবনযাত্রার পরিবেশ (কক্ষের আকার, সুবিধা ইত্যাদি) নিয়ে কি সন্তুষ্ট?',
+        q29: 'জাপানে বসবাস কি নিরাপদ এবং আরামদায়ক?',
+        q30: 'বর্তমান কাজ থেকে কি প্রযুক্তিগত দক্ষতা এবং জ্ঞান পাচ্ছেন?',
+        q31: 'আপনি কি মনে করেন যে প্রচেষ্টা করলে মূল্যায়ন এবং আচরণ উন্নত হবে?',
+        q32: 'আপনি কি এই কোম্পানিতে দীর্ঘদিন কাজ করতে চান?',
+        q33: 'ভিসা (বসবাসের অবস্থা) নবায়ন এবং পদ্ধতিতে কোম্পানি বা সমিতি কি সাহায্য করে?',
+        q34: 'এই কোম্পানিতে কাজ করে দেশে ফেরার পর দরকারী প্রযুক্তি শিখতে পারছেন কি?',
+        q35: 'আপনি কি দেশের বন্ধুদের "এই কোম্পানিতে কাজ করা ভালো" বলতে চান?'
+    },
+    choices: {
+        satisfaction: [
+            { emoji: '😢', text: 'খুবই অসন্তুষ্ট' },
+            { emoji: '🙁', text: 'কিছুটা অসন্তুষ্ট' },
+            { emoji: '😐', text: 'সাধারণ' },
+            { emoji: '🙂', text: 'কিছুটা সন্তুষ্ট' },
+            { emoji: '😄', text: 'খুবই সন্তুষ্ট' }
+        ],
+        desire: [
+            { emoji: '😔', text: 'তা মনে হয় না' },
+            { emoji: '😕', text: 'খুব একটা মনে হয় না' },
+            { emoji: '😐', text: 'সাধারণ' },
+            { emoji: '😊', text: 'কিছুটা মনে হয়' },
+            { emoji: '⭕', text: 'খুব মনে হয়' }
+        ],
+        understanding: [
+            { emoji: '❌', text: 'বুঝতে পারি না' },
+            { emoji: '😕', text: 'খুব একটা বুঝতে পারি না' },
+            { emoji: '😐', text: 'সাধারণ' },
+            { emoji: '🙂', text: 'মোটামুটি বুঝতে পারি' },
+            { emoji: '⭕', text: 'ভালো বুঝতে পারি' }
+        ],
+        familiarity: [
+            { emoji: '😰', text: 'অভ্যস্ত নই' },
+            { emoji: '😕', text: 'খুব একটা অভ্যস্ত নই' },
+            { emoji: '😐', text: 'সাধারণ' },
+            { emoji: '😊', text: 'কিছুটা অভ্যস্ত' },
+            { emoji: '🌟', text: 'খুব অভ্যস্ত' }
+        ],
+        availability: [
+            { emoji: '❌', text: 'নেই' },
+            { emoji: '😕', text: 'খুব একটা নেই' },
+            { emoji: '😐', text: 'সাধারণ' },
+            { emoji: '🙂', text: 'কিছুটা আছে' },
+            { emoji: '⭕', text: 'যথেষ্ট আছে' }
+        ],
+        negative: [
+            { emoji: '⭕', text: 'নেই' },
+            { emoji: '🙂', text: 'প্রায় নেই' },
+            { emoji: '😐', text: 'মাঝে মাঝে' },
+            { emoji: '😕', text: 'প্রায়ই' },
+            { emoji: '😟', text: 'অনেক' },
+            { emoji: '❌', text: 'সবসময়' }
+        ],
+        safety_concern: [
+            { emoji: '⭕', text: 'নেই' },
+            { emoji: '◯', text: 'প্রায় নেই' },
+            { emoji: '△', text: 'খুব একটা নেই' },
+            { emoji: '▽', text: 'কিছুটা আছে' },
+            { emoji: '×', text: 'প্রায়ই' },
+            { emoji: '❌', text: 'সবসময়' }
+        ]
     }
+},
+
+    si: {
+    title: 'සේවා ස්ථාන සමීක්ෂණය',
+    privacyNotice: 'මෙම සමීක්ෂණයේ ප්‍රතිඵල නිර්නාමිකව සැකසීමට ලක් කෙරෙන අතර පුද්ගලිකව හඳුනා ගත නොහැකිය.\nකරුණාකර අවංකව පිළිතුරු දෙන්න.',
+    employeeCodeLabel: 'සේවක අංකය ඇතුළත් කරන්න',
+    employeeCodePlaceholder: 'සේවක අංකය',
+    nationalityLabel: 'ජාතිකත්වය තෝරන්න',
+    nationalityPlaceholder: 'ජාතිකත්වය',
+    startButton: 'ආරම්භ කරන්න',
+    submitButton: '✓ ඉදිරිපත් කරන්න',
+    submitting: '⏳ ඉදිරිපත් කරමින්...',
+    completionTitle: 'සමීක්ෂණය සම්පූර්ණයි!',
+    completionMessage: 'ප්‍රතිචාරය සඳහා ස්තූතියි.',
+    completionTime: 'කාලය: මිනිත්තු 5 සිට 10 දක්වා',
+    errorEmployeeCode: 'කරුණාකර සේවක අංකය ඇතුළත් කරන්න',
+    errorNationality: 'කරුණාකර ජාතිකත්වය තෝරන්න',
+    errorIncomplete: 'කරුණාකර සියලුම ප්‍රශ්නවලට පිළිතුරු දෙන්න',
+    progressText: 'ප්‍රශ්නය',
+    nationalities: {
+        mm: 'මියන්මාරය', vn: 'වියට්නාමය', kh: 'කාම්බෝජය', in: 'ඉන්දියාව', ph: 'පිලිපීනය',
+        la: 'ලාඕසය', mn: 'මොන්ගෝලියාව', bd: 'බංග්ලාදේශය', lk: 'ශ්‍රී ලංකාව',
+        bt: 'භූතානය', uz: 'උස්බෙකිස්ථානය', pk: 'පකිස්ථානය', th: 'තායිලන්තය',
+        id: 'ඉන්දුනීසියාව', np: 'නේපාලය', cn: 'චීනය', jp: 'ජපානය'
+    },
+    categories: {
+        work: 'වැඩ සහ සේවා පරිසරය',
+        salary: 'වැටුප සහ ප්‍රතිලාභ',
+        family: 'පවුල සහ පෞද්ගලික තත්ත්වය',
+        relationship: 'අන්තර් පුද්ගල සබඳතා',
+        communication: 'ජපන් භාෂාව සහ සන්නිවේදනය',
+        culture: 'සංස්කෘතිය සහ වටිනාකම්',
+        living: 'ජීවන පරිසරය',
+        career: 'වෘත්තීය සහ අනාගත දැක්ම'
+    },
+    questions: {
+        q1: 'රැකියාවේ අන්තර්ගතය ඔබට ගැලපේද?',
+        q2: 'ඔබ සේවා ස්ථානයේ තුවාල හෝ අනතුරු ගැන කනස්සල්ලෙන් සිටිනවාද?',
+        q3: 'නිවාඩු දින සහ වැඩ කාලය සුදුසුද?',
+        q4: 'සේවා ස්ථානයේ වාතාවරණය වැඩ කිරීමට පහසුද?',
+        q5: 'ඔබ වැටුප් මුදල ගැන සතුටුද?',
+        q6: 'ඔබට අතිකාල ගෙවීම් සහ දීමනා නිසි ලෙස ලැබෙනවාද?',
+        q7: 'රක්ෂණ සහ නිවාඩු වැනි පද්ධති ප්‍රමාණවත්ද?',
+        q8: 'මෙම සමාගමේ වැඩ කිරීමෙන් ජීවත් වීමට අවශ්‍ය ආදායම ලැබෙනවාද?',
+        q9: 'පවුල සමඟ සන්නිවේදනය කිරීමට ප්‍රමාණවත් කාලය තිබේද?',
+        q10: 'ඔබට පවුලට මුදල් යැවිය හැකිද?',
+        q11: 'පෞද්ගලික කාලය (විවේකය සහ පුද්ගලිකත්වය) ප්‍රමාණවත්ද?',
+        q12: 'ඔබ අනාගතයේදී පවුල ජපානයට ගෙන ඒමට කැමතිද?',
+        q13: 'අනෙකුත් තාක්ෂණික පුහුණුකරුවන් සමඟ සබඳතා හොඳද?',
+        q14: 'ජපන් අධීක්ෂකවරු සහ සගයන් ඔබේ කතාව අසනවාද?',
+        q15: 'ගැටළුවක් ඇති විට අනෙකුත් තාක්ෂණික පුහුණුකරුවන් උදව් කරනවාද?',
+        q16: 'සේවා ස්ථානයේ හිරිහැර හෝ වෙනස් කොට සැලකීම තිබේද?',
+        q17: 'ජපන් භාෂාවෙන් සංවාද කිරීමේ දුෂ්කරතා ඔබට තිබේද?',
+        q18: 'වැඩ පැහැදිලි කිරීම් සහ උපදෙස් තේරුම් ගැනීමට පහසුද?',
+        q19: 'නොතේරෙන විට ප්‍රශ්න ඇසීමට පහසුද?',
+        q20: 'සමාගම ජපන් භාෂාව ඉගෙනීමට සහාය දක්වනවාද?',
+        q21: 'මව් භාෂාවෙන් උපදෙස් ලබා ගත හැකි කෙනෙක් (පරිවර්තක හෝ ජ්‍යෙෂ්ඨ) සිටිනවාද?',
+        q22: 'ඔබ ජපන් සංස්කෘතිය සහ චාරිත්‍ර වාරිත්‍ර සමඟ හුරුපුරුදුද?',
+        q23: 'වැඩේදී සංස්කෘතික වෙනස්කම් හේතුවෙන් ගැටළු තිබේද?',
+        q24: 'නේවාසිකාගාරය (නේවාසිකාගාරය, මහල් නිවාස ආදිය) සුවපහසුද?',
+        q25: 'ජීවන වියදම වැටුප සමඟ සුදුසුද?',
+        q26: 'ජපානයේ ජීවත් වීමේ ගැටළු ඔබට තිබේද?',
+        q27: 'සමාගම ජීවන පහසුකම් සපයනවාද?',
+        q28: 'නේවාසිකාගාරයේ හෝ නිවසේ ජීවන පරිසරය (කාමරයේ ප්‍රමාණය, පහසුකම් ආදිය) ගැන ඔබ සතුටුද?',
+        q29: 'ජපානයේ ජීවත් වීම ආරක්ෂිත සහ සුවපහසුද?',
+        q30: 'වර්තමාන වැඩෙන් තාක්ෂණික කුසලතා සහ දැනුම ලබා ගන්නවාද?',
+        q31: 'ඔබ වෙහෙස මහන්සි වී වැඩ කළහොත් ඇගයීම සහ සැලකීම වැඩි දියුණු වේ යැයි ඔබ හිතනවාද?',
+        q32: 'ඔබ මෙම සමාගමේ දිගු කාලයක් වැඩ කිරීමට කැමතිද?',
+        q33: 'වීසා (නේවාසික තත්ත්වය) අළුත් කිරීම සහ ක්‍රියා පටිපාටිවල සමාගම හෝ සංගමය උදව් කරනවාද?',
+        q34: 'මෙම සමාගමේ වැඩ කිරීමෙන් මව්බිමට ආපසු යන විට ප්‍රයෝජනවත් තාක්ෂණය ඉගෙන ගත හැකිද?',
+        q35: 'ඔබ ඔබේ රටේ මිතුරන්ට "මෙම සමාගමේ වැඩ කිරීම හොඳයි" කියා කියන්නට කැමතිද?'
+    },
+    choices: {
+        satisfaction: [
+            { emoji: '😢', text: 'ඉතා අසතුටුයි' },
+            { emoji: '🙁', text: 'තරමක් අසතුටුයි' },
+            { emoji: '😐', text: 'සාමාන්‍යයි' },
+            { emoji: '🙂', text: 'තරමක් සතුටුයි' },
+            { emoji: '😄', text: 'ඉතා සතුටුයි' }
+        ],
+        desire: [
+            { emoji: '😔', text: 'එසේ හිතන්නේ නැහැ' },
+            { emoji: '😕', text: 'එතරම් හිතන්නේ නැහැ' },
+            { emoji: '😐', text: 'සාමාන්‍යයි' },
+            { emoji: '😊', text: 'තරමක් හිතනවා' },
+            { emoji: '⭕', text: 'ඉතා හිතනවා' }
+        ],
+        understanding: [
+            { emoji: '❌', text: 'තේරෙන්නේ නැහැ' },
+            { emoji: '😕', text: 'එතරම් තේරෙන්නේ නැහැ' },
+            { emoji: '😐', text: 'සාමාන්‍යයි' },
+            { emoji: '🙂', text: 'දළ වශයෙන් තේරෙනවා' },
+            { emoji: '⭕', text: 'හොඳින් තේරෙනවා' }
+        ],
+        familiarity: [
+            { emoji: '😰', text: 'හුරු නැහැ' },
+            { emoji: '😕', text: 'එතරම් හුරු නැහැ' },
+            { emoji: '😐', text: 'සාමාන්‍යයි' },
+            { emoji: '😊', text: 'තරමක් හුරුයි' },
+            { emoji: '🌟', text: 'ඉතා හුරුයි' }
+        ],
+        availability: [
+            { emoji: '❌', text: 'නැහැ' },
+            { emoji: '😕', text: 'එතරම් නැහැ' },
+            { emoji: '😐', text: 'සාමාන්‍යයි' },
+            { emoji: '🙂', text: 'ටිකක් තිබේ' },
+            { emoji: '⭕', text: 'ප්‍රමාණවත්' }
+        ],
+        negative: [
+            { emoji: '⭕', text: 'නැහැ' },
+            { emoji: '🙂', text: 'බොහෝ විට නැහැ' },
+            { emoji: '😐', text: 'සමහර විට' },
+            { emoji: '😕', text: 'නිතර' },
+            { emoji: '😟', text: 'ඉතා' },
+            { emoji: '❌', text: 'සැමවිටම' }
+        ],
+        safety_concern: [
+            { emoji: '⭕', text: 'නැහැ' },
+            { emoji: '◯', text: 'බොහෝ විට නැහැ' },
+            { emoji: '△', text: 'එතරම් නැහැ' },
+            { emoji: '▽', text: 'ටිකක් තිබේ' },
+            { emoji: '×', text: 'නිතර' },
+            { emoji: '❌', text: 'සැමවිටම' }
+        ]
+    }
+},
+
+    dz: {
+    title: 'ལས་ཀའི་གནས་ཚུལ་ཞིབ་དཔྱད',
+    privacyNotice: 'འདི་གི་ཞིབ་དཔྱད་ཀྱི་གྲུབ་འབྲས་མིང་མེད་ལུ་བཟོ་ནི་ཨིན་ དང་མི་ངོ་རང་བཞིན་གྱིས་ངོས་འཛིན་འབད་མི་ཚུགས།\nགནས་དོན་དང་ལྡན་པའི་ལན་སྤྲོད་གནང།',
+    employeeCodeLabel: 'ལས་བཟོ་མིའི་ཨང་གྲངས་ཐོ་བཀོད་འབད',
+    employeeCodePlaceholder: 'ལས་བཟོ་མིའི་ཨང་གྲངས',
+    nationalityLabel: 'རྒྱལ་ཁབ་གདམ་ཁ་རྐྱབས',
+    nationalityPlaceholder: 'རྒྱལ་ཁབ',
+    startButton: 'འགོ་བཙུགས',
+    submitButton: '✓ ཕུལ་བ',
+    submitting: '⏳ ཕུལ་བའི་བར་ན...',
+    completionTitle: 'ཞིབ་དཔྱད་ཚར་སོང!',
+    completionMessage: 'ལན་གྱི་དོན་ལུ་ཐུགས་རྗེ་ཆེ།',
+    completionTime: 'དུས་ཡུན: སྐར་མ་ 5 ལས་ 10 ཚུན',
+    errorEmployeeCode: 'ལས་བཟོ་མིའི་ཨང་གྲངས་ཐོ་བཀོད་འབད་གནང',
+    errorNationality: 'རྒྱལ་ཁབ་གདམ་ཁ་རྐྱབས་གནང',
+    errorIncomplete: 'དྲི་བ་ཆ་མཉམ་ལུ་ལན་སྤྲོད་གནང',
+    progressText: 'དྲི་བ',
+    nationalities: {
+        mm: 'མེ་ཡན་མར', vn: 'བེཊ་ནཱམ', kh: 'ཀམ་བོ་ཌི་ཡ', in: 'རྒྱ་གར', ph: 'ཕི་ལི་པིནས',
+        la: 'ལ་འོསི', mn: 'སོག་པོ', bd: 'བངྒ་ལ་དེཤ', lk: 'ཤྲཱི་ལངྐ',
+        bt: 'འབྲུག', uz: 'ཨུཛ་བེ་ཀིསི་ཏཱན', pk: 'པ་ཀིསི་ཏཱན', th: 'ཐཱའི་ལེནཌ',
+        id: 'ཨིན་ཌོ་ནེ་ཤི་ཡ', np: 'བལ་ཡུལ', cn: 'རྒྱ་ནག', jp: 'ཉི་ཧོང'
+    },
+    categories: {
+        work: 'ལས་ཀ་དང་ལས་གནས',
+        salary: 'དངུལ་ལས་དང་ཕན་ཐོགས',
+        family: 'ནང་མི་དང་མི་རང་གི་གནས་སྟངས',
+        relationship: 'མི་དང་མི་གི་འབྲེལ་བ',
+        communication: 'ཉི་ཧོང་སྐད་དང་འབྲེལ་བ',
+        culture: 'རིག་གཞུང་དང་གལ་ཆེ་བ',
+        living: 'འཚོ་བའི་ཁོར་ཡུག',
+        career: 'ལས་རིགས་དང་མ་འོངས་བལྟ་སྣང'
+    },
+    questions: {
+        q1: 'ལས་ཀའི་ནང་དོན་ཁྱོད་ལུ་འཚམ་གི་ཡོདཔ་སྨོ?',
+        q2: 'ལས་གནས་ལུ་གནོད་སྐྱོན་དང་འཕྲལ་གྱི་གནད་དོན་གྱི་སྐོར་ལས་ཁྱོད་སེམས་དཀའ་གི་ཡོདཔ་སྨོ?',
+        q3: 'གཟབ་རེ་གཡོལ་ཉིན་དང་ལས་ཀའི་དུས་ཚོད་འཚམ་གི་ཡོདཔ་སྨོ?',
+        q4: 'ལས་གནས་ཀྱི་ཁོར་ཡུག་ལས་ཀ་འབད་ནིར་སྟབས་བདེ་བའི་ཡོདཔ་སྨོ?',
+        q5: 'ཁྱོད་དངུལ་ལས་ཀྱི་ཕོགས་ལས་དགའ་སེམས་ཡོདཔ་སྨོ?',
+        q6: 'ཁྱོད་ལུ་མཐའ་ཚད་ལས་འགལ་བའི་དངུལ་དང་དངུལ་འཇོག་ངེས་པོར་ཐོབ་ཀྱི་ཡོདཔ་སྨོ?',
+        q7: 'བདག་སྐྱོབ་དང་གཟབ་རེ་གཡོལ་བཅས་ཀྱི་ལམ་ལུགས་ཚུ་ལངམ་ཨིན་ན?',
+        q8: 'འདི་གི་ཁེ་ཕན་ཚོགས་པ་ནང་ལས་ཀ་འབད་མི་དེ་གིས་འཚོ་བའི་དོན་ལས་དགོས་མཁོ་ཅན་གྱི་འབབ་འབྱོར་ཐོབ་ཀྱི་ཡོདཔ་སྨོ?',
+        q9: 'ཁྱོད་ལུ་ནང་མི་དང་འབྲེལ་བ་འཐབ་ནིའི་དུས་ཡུན་ལངམ་ཡོདཔ་སྨོ?',
+        q10: 'ཁྱོད་ཀྱིས་ནང་མི་ལུ་དངུལ་ གཏོང་ཚུགས་ཀྱི་ཡོདཔ་སྨོ?',
+        q11: 'མི་རང་གི་དུས་ཡུན་(གཟབ་རེ་དང་རང་སྤྱོད)ལངམ་ཨིན་ན?',
+        q12: 'ཁྱོད་མ་འོངས་པ་ལུ་ནང་མི་ཉི་ཧོང་ལུ་འདྲེན་ནི་ཨིན་པའི་བསམ་བློ་ཡོདཔ་སྨོ?',
+        q13: 'གཞན་ལས་རིག་རྩལ་སྦྱོང་བརྡར་ཅན་ཚུ་དང་འབྲེལ་བ་ལེགས་ཤོམ་ཨིན་ན?',
+        q14: 'ཉི་ཧོང་གི་བདག་སྐྱོང་བ་དང་ལས་གྲོགས་ཀྱིས་ཁྱོད་ཀྱི་གཏམ་ཉན་གྱི་ཡོདཔ་སྨོ?',
+        q15: 'དཀའ་ངལ་བྱུང་བའི་སྐབས་གཞན་ལས་རིག་རྩལ་སྦྱོང་བརྡར་ཅན་ཚུ་གིས་གྲོགས་རམ་འབད་ཡི་ཡོདཔ་སྨོ?',
+        q16: 'ལས་གནས་ལུ་གི་མགུ་ནི་དང་ཁྱད་པར་ཡོདཔ་སྨོ?',
+        q17: 'ཁྱོད་ལུ་ཉི་ཧོང་སྐད་ཀྱི་སྐབས་དཀའ་ངལ་ཡོདཔ་སྨོ?',
+        q18: 'ལས་ཀའི་གསལ་བཤད་དང་ལམ་སྟོན་ཚུ་གོ་ནིར་སྟབས་བདེ་བའི་ཡོདཔ་སྨོ?',
+        q19: 'མ་གོ་བའི་སྐབས་དྲི་བ་འདྲི་ནིར་སྟབས་བདེ་བའི་ཡོདཔ་སྨོ?',
+        q20: 'ཁེ་ཕན་ཚོགས་པ་གིས་ཉི་ཧོང་སྐད་སློབ་སྦྱོང་ལུ་གྲོགས་རམ་འབད་ཡི་ཡོདཔ་སྨོ?',
+        q21: 'ཕ་སྐད་ནང་ལུ་བསམ་འཆར་འདྲི་ནི་ཚུགས་པའི་མི་(སྐད་སྒྱུར་བ་དང་ཚུགས་མ)ཡོདཔ་སྨོ?',
+        q22: 'ཁྱོད་ཉི་ཧོང་གི་རིག་གཞུང་དང་སྲོལ་རྒྱུན་ལུ་ཤེས་པ་ཡོདཔ་སྨོ?',
+        q23: 'ལས་ཀའི་ནང་རིག་གཞུང་གི་ཁྱད་པར་ལས་བརྟེན་པའི་དཀའ་ངལ་ཡོདཔ་སྨོ?',
+        q24: 'གནས་སྡོད་ས་གནས་(གནས་སྡོད་ཁང་མིག,ཕྱེད་ཁང་མིག་སོགས)སྐྱིད་པོ་ཡོདཔ་སྨོ?',
+        q25: 'འཚོ་བའི་ཆ་ཚད་དངུལ་ལས་དང་འཚམ་གི་ཡོདཔ་སྨོ?',
+        q26: 'ཁྱོད་ལུ་ཉི་ཧོང་ལུ་འཚོ་བའི་དཀའ་ངལ་ཡོདཔ་སྨོ?',
+        q27: 'ཁེ་ཕན་ཚོགས་པ་གིས་འཚོ་བའི་རྒྱབ་སྐྱོར་འབད་ཡི་ཡོདཔ་སྨོ?',
+        q28: 'ཁྱོད་གནས་སྡོད་ཁང་མིག་དང་ཁང་མིག་གི་འཚོ་བའི་ཁོར་ཡུག་(ཁང་པའི་ཚད་,ཡོ་ཆས་སོགས)ལས་དགའ་སེམས་ཡོདཔ་སྨོ?',
+        q29: 'ཉི་ཧོང་ལུ་འཚོ་བ་བདེ་ཐབས་དང་སྐྱིད་པོ་ཡོདཔ་སྨོ?',
+        q30: 'ད་ལྟོའི་ལས་ཀ་ལས་ཁྱོད་ལུ་ལས་རིག་རྩལ་དང་རིག་པ་ཐོབ་ཀྱི་ཡོདཔ་སྨོ?',
+        q31: 'ཁྱོད་ཀྱིས་བསམ་པ་ཨིན་པ་ཅིན་གདེང་འཇོག་དང་སྤྱོད་ལམ་ལེགས་བཅོས་འགྱོ་ནི་སྨོ?',
+        q32: 'ཁྱོད་འདི་གི་ཁེ་ཕན་ཚོགས་པ་ནང་ཡུན་རིངམོ་ལས་ཀ་འབད་ནི་ཨིན་པའི་བསམ་བློ་ཡོདཔ་སྨོ?',
+        q33: 'བི་ཛ་(བསྡད་སའི་དབང་ཚད)གསར་རྙིང་དང་ལག་ལེན་ལུ་ཁེ་ཕན་ཚོགས་པ་དང་ཚོགས་སྡེས་གྲོགས་རམ་འབད་ཡི་ཡོདཔ་སྨོ?',
+        q34: 'འདི་གི་ཁེ་ཕན་ཚོགས་པ་ནང་ལས་ཀ་འབད་མི་དེ་གིས་རྒྱལ་ཁབ་ལུ་ལོག་སྟེ་ཕན་ཐོགས་ཅན་གྱི་ལས་རིག་རྩལ་སློབ་ཚུགས་ཀྱི་ཡོདཔ་སྨོ?',
+        q35: 'ཁྱོད་ཀྱིས་རྒྱལ་ཁབ་ནང་གི་གྲོགས་པོ་ཚུ་ལུ་"འདི་གི་ཁེ་ཕན་ཚོགས་པ་ནང་ལས་ཀ་འབད་ནི་ལེགས་ཤོམ་ཨིན་པས"སླབ་ནི་ཨིན་པའི་བསམ་བློ་ཡོདཔ་སྨོ?'
+    },
+    choices: {
+        satisfaction: [
+            { emoji: '😢', text: 'ཧ་ཅང་དགའ་སེམས་མེད' },
+            { emoji: '🙁', text: 'ཅུང་ཙམ་དགའ་སེམས་མེད' },
+            { emoji: '😐', text: 'སྤྱིར་བཏང' },
+            { emoji: '🙂', text: 'ཅུང་ཙམ་དགའ་སེམས' },
+            { emoji: '😄', text: 'ཧ་ཅང་དགའ་སེམས' }
+        ],
+        desire: [
+            { emoji: '😔', text: 'དེ་སྦེ་མ་བསམ' },
+            { emoji: '😕', text: 'དེ་སྦེ་སྦོམ་ཅིག་མ་བསམ' },
+            { emoji: '😐', text: 'སྤྱིར་བཏང' },
+            { emoji: '😊', text: 'ཅུང་ཙམ་བསམ' },
+            { emoji: '⭕', text: 'ཧ་ཅང་བསམ' }
+        ],
+        understanding: [
+            { emoji: '❌', text: 'མ་གོ' },
+            { emoji: '😕', text: 'སྦོམ་ཅིག་མ་གོ' },
+            { emoji: '😐', text: 'སྤྱིར་བཏང' },
+            { emoji: '🙂', text: 'ཕལ་ཆེར་གོ' },
+            { emoji: '⭕', text: 'ལེགས་ཤོམ་སྦེ་གོ' }
+        ],
+        familiarity: [
+            { emoji: '😰', text: 'ཤེས་པ་མེད' },
+            { emoji: '😕', text: 'སྦོམ་ཅིག་ཤེས་པ་མེད' },
+            { emoji: '😐', text: 'སྤྱིར་བཏང' },
+            { emoji: '😊', text: 'ཅུང་ཙམ་ཤེས་པ' },
+            { emoji: '🌟', text: 'ཧ་ཅང་ཤེས་པ' }
+        ],
+        availability: [
+            { emoji: '❌', text: 'མེད' },
+            { emoji: '😕', text: 'སྦོམ་ཅིག་མེད' },
+            { emoji: '😐', text: 'སྤྱིར་བཏང' },
+            { emoji: '🙂', text: 'ཅུང་ཙམ་ཡོད' },
+            { emoji: '⭕', text: 'ལངམ' }
+        ],
+        negative: [
+            { emoji: '⭕', text: 'མེད' },
+            { emoji: '🙂', text: 'ཕལ་ཆེར་མེད' },
+            { emoji: '😐', text: 'འཕྲལ་འཕྲལ' },
+            { emoji: '😕', text: 'མང་ཤོས' },
+            { emoji: '😟', text: 'ཧ་ཅང་མང' },
+            { emoji: '❌', text: 'ཨ་རྟག་རང' }
+        ],
+        safety_concern: [
+            { emoji: '⭕', text: 'མེད' },
+            { emoji: '◯', text: 'ཕལ་ཆེར་མེད' },
+            { emoji: '△', text: 'སྦོམ་ཅིག་མེད' },
+            { emoji: '▽', text: 'ཅུང་ཙམ་ཡོད' },
+            { emoji: '×', text: 'མང་ཤོས' },
+            { emoji: '❌', text: 'ཨ་རྟག་རང' }
+        ]
+    }
+},
+
+    uz: {
+    title: 'Ish joyidagi so\'rovnoma',
+    privacyNotice: 'Ushbu so\'rovnoma natijalari anonim ravishda qayta ishlanadi va shaxsiy ma\'lumotlar aniqlanmaydi.\nIltimos, halol javob bering.',
+    employeeCodeLabel: 'Xodim raqamini kiriting',
+    employeeCodePlaceholder: 'Xodim raqami',
+    nationalityLabel: 'Milliylikni tanlang',
+    nationalityPlaceholder: 'Milliyligi',
+    startButton: 'Boshlash',
+    submitButton: '✓ Yuborish',
+    submitting: '⏳ Yuborilmoqda...',
+    completionTitle: 'So\'rovnoma yakunlandi!',
+    completionMessage: 'Javob berganingiz uchun rahmat.',
+    completionTime: 'Vaqt: 5 dan 10 daqiqagacha',
+    errorEmployeeCode: 'Iltimos, xodim raqamini kiriting',
+    errorNationality: 'Iltimos, milliylikni tanlang',
+    errorIncomplete: 'Iltimos, barcha savollarga javob bering',
+    progressText: 'Savol',
+    nationalities: {
+        mm: 'Myanma', vn: 'Vyetnam', kh: 'Kambodja', in: 'Hindiston', ph: 'Filippin',
+        la: 'Laos', mn: 'Mo\'g\'uliston', bd: 'Bangladesh', lk: 'Shri-Lanka',
+        bt: 'Butan', uz: 'O\'zbekiston', pk: 'Pokiston', th: 'Tailand',
+        id: 'Indoneziya', np: 'Nepal', cn: 'Xitoy', jp: 'Yaponiya'
+    },
+    categories: {
+        work: 'Ish va ish muhiti',
+        salary: 'Maosh va nafaqalar',
+        family: 'Oila va shaxsiy vaziyat',
+        relationship: 'Shaxslararo munosabatlar',
+        communication: 'Yapon tili va kommunikatsiya',
+        culture: 'Madaniyat va qadriyatlar',
+        living: 'Yashash muhiti',
+        career: 'Martaba va kelajak istiqboli'
+    },
+    questions: {
+        q1: 'Ish mazmuni sizga moslashadimi?',
+        q2: 'Siz ish joyidagi jarohatlар yoki baxtsiz hodisalardan xavotirda bo\'lasizmi?',
+        q3: 'Dam olish kunlari va ish vaqti moslashadimi?',
+        q4: 'Ish joyidagi muhit ishlash uchun qulayroqmi?',
+        q5: 'Siz maosh miqdoridan qoniqasizmi?',
+        q6: 'Qo\'shimcha ish haqi va nafaqalar to\'g\'ri to\'lanadimi?',
+        q7: 'Sug\'urta va dam olish kabi tizimlar yetarlimi?',
+        q8: 'Bu kompaniyada ishlash turmush uchun zarur daromad keltirmoqdami?',
+        q9: 'Oila bilan aloqa qilish uchun vaqt yetarlimi?',
+        q10: 'Siz oilaga pul yubora olasizmi?',
+        q11: 'Shaxsiy vaqt (dam olish va shaxsiy) yetarlimi?',
+        q12: 'Kelajakda oilani Yaponiyaga olib kelishni xohlaysizmi?',
+        q13: 'Boshqa texnik stajiyor bilan munosabatlar yaxshimi?',
+        q14: 'Yapon nazoratchilar va hamkasblar sizni tinglashadimi?',
+        q15: 'Muammo bo\'lganda boshqa texnik stajiyor yordam beradimi?',
+        q16: 'Ish joyida ta\'qib yoki kamsitish bormi?',
+        q17: 'Yapon tilida suhbatlashishda qiyinchilik bormi?',
+        q18: 'Ishni tushuntirish va ko\'rsatmalar tushunish uchun osonmi?',
+        q19: 'Tushunmagan vaqtingizda savol berish osonmi?',
+        q20: 'Kompaniya yapon tili o\'rganishga yordam beradimi?',
+        q21: 'Ona tilida maslahat olish uchun odam (tarjimon yoki katta) bormi?',
+        q22: 'Siz yapon madaniyati va an\'analari bilan tanishmisiz?',
+        q23: 'Ishda madaniy farqlar tufayli muammo bormi?',
+        q24: 'Turar joy (yotoqxona, kvartira va boshqalar) qulayroqmi?',
+        q25: 'Yashash xarajati maoshga to\'g\'ri keladimi?',
+        q26: 'Yaponiyada yashashda muammo bormi?',
+        q27: 'Kompaniya yashash jihatidan qo\'llab-quvvatlaydimi?',
+        q28: 'Yotoqxona yoki uyning yashash muhiti (xona o\'lchami, jihozlar va boshqalar) bilan qoniqasizmi?',
+        q29: 'Yaponiyada yashash xavfsiz va qulayroqmi?',
+        q30: 'Hozirgi ishdan texnik ko\'nikmalar va bilimlar olasizmi?',
+        q31: 'Harakat qilsangiz baholash va munosabat yaxshilanadimi deb o\'ylaysizmi?',
+        q32: 'Bu kompaniyada uzoq vaqt ishlashni xohlaysizmi?',
+        q33: 'Viza (turar joy holati) yangilanishi va jarayonlarda kompaniya yoki uyushma yordam beradimi?',
+        q34: 'Bu kompaniyada ishlash vatanga qaytganda foydali texnika o\'rganishga yordam beradimi?',
+        q35: 'Vatandagi do\'stlaringizga "bu kompaniyada ishlash yaxshi" deb aytishni xohlaysizmi?'
+    },
+    choices: {
+        satisfaction: [
+            { emoji: '😢', text: 'Juda norozi' },
+            { emoji: '🙁', text: 'Biroz norozi' },
+            { emoji: '😐', text: 'Oddiy' },
+            { emoji: '🙂', text: 'Biroz qoniqarli' },
+            { emoji: '😄', text: 'Juda qoniqarli' }
+        ],
+        desire: [
+            { emoji: '😔', text: 'Bunday o\'ylamayman' },
+            { emoji: '😕', text: 'Unchalik bunday o\'ylamayman' },
+            { emoji: '😐', text: 'Oddiy' },
+            { emoji: '😊', text: 'Biroz bunday o\'ylayman' },
+            { emoji: '⭕', text: 'Juda bunday o\'ylayman' }
+        ],
+        understanding: [
+            { emoji: '❌', text: 'Tushunmayman' },
+            { emoji: '😕', text: 'Unchalik tushunmayman' },
+            { emoji: '😐', text: 'Oddiy' },
+            { emoji: '🙂', text: 'Taxminan tushunaman' },
+            { emoji: '⭕', text: 'Yaxshi tushunaman' }
+        ],
+        familiarity: [
+            { emoji: '😰', text: 'Tanish emasman' },
+            { emoji: '😕', text: 'Unchalik tanish emasman' },
+            { emoji: '😐', text: 'Oddiy' },
+            { emoji: '😊', text: 'Biroz tanishman' },
+            { emoji: '🌟', text: 'Juda tanishman' }
+        ],
+        availability: [
+            { emoji: '❌', text: 'Yo\'q' },
+            { emoji: '😕', text: 'Unchalik yo\'q' },
+            { emoji: '😐', text: 'Oddiy' },
+            { emoji: '🙂', text: 'Biroz bor' },
+            { emoji: '⭕', text: 'Yetarli' }
+        ],
+        negative: [
+            { emoji: '⭕', text: 'Yo\'q' },
+            { emoji: '🙂', text: 'Deyarli yo\'q' },
+            { emoji: '😐', text: 'Ba\'zida' },
+            { emoji: '😕', text: 'Tez-tez' },
+            { emoji: '😟', text: 'Ko\'p' },
+            { emoji: '❌', text: 'Doimo' }
+        ],
+        safety_concern: [
+            { emoji: '⭕', text: 'Yo\'q' },
+            { emoji: '◯', text: 'Deyarli yo\'q' },
+            { emoji: '△', text: 'Unchalik yo\'q' },
+            { emoji: '▽', text: 'Biroz bor' },
+            { emoji: '×', text: 'Tez-tez' },
+            { emoji: '❌', text: 'Doimo' }
+        ]
+    }
+},
+
+    ur: {
+    title: 'کام کی جگہ کا سروے',
+    privacyNotice: 'اس سروے کے نتائج گمنام طور پر پروسیس کیے جائیں گے اور ذاتی طور پر شناخت نہیں کیے جا سکتے۔\nبراہ کرم ایمانداری سے جواب دیں۔',
+    employeeCodeLabel: 'ملازم نمبر درج کریں',
+    employeeCodePlaceholder: 'ملازم نمبر',
+    nationalityLabel: 'قومیت منتخب کریں',
+    nationalityPlaceholder: 'قومیت',
+    startButton: 'شروع کریں',
+    submitButton: '✓ جمع کرائیں',
+    submitting: '⏳ جمع ہو رہا ہے...',
+    completionTitle: 'سروے مکمل ہو گیا!',
+    completionMessage: 'جواب کے لیے شکریہ۔',
+    completionTime: 'وقت: 5 سے 10 منٹ',
+    errorEmployeeCode: 'براہ کرم ملازم نمبر درج کریں',
+    errorNationality: 'براہ کرم قومیت منتخب کریں',
+    errorIncomplete: 'براہ کرم تمام سوالات کے جواب دیں',
+    progressText: 'سوال',
+    nationalities: {
+        mm: 'میانمار', vn: 'ویتنام', kh: 'کمبوڈیا', in: 'بھارت', ph: 'فلپائن',
+        la: 'لاؤس', mn: 'منگولیا', bd: 'بنگلہ دیش', lk: 'سری لنکا',
+        bt: 'بھوٹان', uz: 'ازبکستان', pk: 'پاکستان', th: 'تھائی لینڈ',
+        id: 'انڈونیشیا', np: 'نیپال', cn: 'چین', jp: 'جاپان'
+    },
+    categories: {
+        work: 'کام اور کام کا ماحول',
+        salary: 'تنخواہ اور فوائد',
+        family: 'خاندان اور ذاتی صورتحال',
+        relationship: 'باہمی تعلقات',
+        communication: 'جاپانی زبان اور رابطہ',
+        culture: 'ثقافت اور اقدار',
+        living: 'رہائشی ماحول',
+        career: 'کیریئر اور مستقبل کا نقطہ نظر'
+    },
+    questions: {
+        q1: 'کیا کام کا مواد آپ کے لیے موزوں ہے؟',
+        q2: 'کیا آپ کام کی جگہ پر چوٹ یا حادثے کے بارے میں فکر مند ہیں؟',
+        q3: 'کیا چھٹیاں اور کام کے اوقات مناسب ہیں؟',
+        q4: 'کیا کام کی جگہ کا ماحول کام کرنا آسان بناتا ہے؟',
+        q5: 'کیا آپ تنخواہ کی رقم سے مطمئن ہیں؟',
+        q6: 'کیا آپ کو اوور ٹائم کی ادائیگی اور الاؤنسز صحیح طریقے سے ملتے ہیں؟',
+        q7: 'کیا انشورنس اور چھٹیوں جیسے نظام کافی ہیں؟',
+        q8: 'کیا اس کمپنی میں کام کرنے سے زندگی کے لیے ضروری آمدنی حاصل ہوتی ہے؟',
+        q9: 'کیا خاندان سے رابطہ کرنے کے لیے کافی وقت ہے؟',
+        q10: 'کیا آپ خاندان کو پیسے بھیج سکتے ہیں؟',
+        q11: 'کیا ذاتی وقت (آرام اور پرائیویسی) کافی ہے؟',
+        q12: 'کیا آپ مستقبل میں خاندان کو جاپان لانا چاہتے ہیں؟',
+        q13: 'کیا دوسرے تکنیکی تربیت یافتہ افراد کے ساتھ تعلقات اچھے ہیں؟',
+        q14: 'کیا جاپانی نگران اور ساتھی آپ کی بات سنتے ہیں؟',
+        q15: 'جب مسئلہ ہو تو کیا دوسرے تکنیکی تربیت یافتہ افراد مدد کرتے ہیں؟',
+        q16: 'کیا کام کی جگہ پر غنڈہ گردی یا امتیاز ہے؟',
+        q17: 'کیا آپ کو جاپانی میں گفتگو میں مشکلات ہیں؟',
+        q18: 'کیا کام کی وضاحت اور ہدایات سمجھنا آسان ہے؟',
+        q19: 'جب سمجھ نہ آئے تو کیا سوال پوچھنا آسان ہے؟',
+        q20: 'کیا کمپنی جاپانی زبان سیکھنے میں مدد کرتی ہے؟',
+        q21: 'کیا مادری زبان میں مشورہ لینے کے لیے کوئی شخص (مترجم یا سینئر) موجود ہے؟',
+        q22: 'کیا آپ جاپانی ثقافت اور روایات سے واقف ہیں؟',
+        q23: 'کیا کام میں ثقافتی اختلافات کی وجہ سے مسائل ہیں؟',
+        q24: 'کیا رہائش (ہاسٹل، اپارٹمنٹ وغیرہ) آرام دہ ہے؟',
+        q25: 'کیا رہائشی اخراجات تنخواہ کے مطابق ہیں؟',
+        q26: 'کیا آپ کو جاپان میں رہنے میں کوئی مسائل ہیں؟',
+        q27: 'کیا کمپنی زندگی میں مدد فراہم کرتی ہے؟',
+        q28: 'کیا آپ ہاسٹل یا گھر کے رہائشی ماحول (کمرے کا سائز، سہولیات وغیرہ) سے مطمئن ہیں؟',
+        q29: 'کیا جاپان میں رہنا محفوظ اور آرام دہ ہے؟',
+        q30: 'کیا آپ موجودہ کام سے تکنیکی مہارتیں اور علم حاصل کر رہے ہیں؟',
+        q31: 'کیا آپ کو لگتا ہے کہ کوشش کرنے سے تشخیص اور سلوک بہتر ہو گا؟',
+        q32: 'کیا آپ اس کمپنی میں لمبے عرصے تک کام کرنا چاہتے ہیں؟',
+        q33: 'کیا ویزا (رہائشی حیثیت) کی تجدید اور طریقہ کار میں کمپنی یا ایسوسی ایشن مدد کرتی ہے؟',
+        q34: 'کیا اس کمپنی میں کام کرنے سے وطن واپس جانے پر مفید تکنیک سیکھی جا سکتی ہے؟',
+        q35: 'کیا آپ اپنے وطن کے دوستوں کو "اس کمپنی میں کام کرنا اچھا ہے" کہنا چاہتے ہیں؟'
+    },
+    choices: {
+        satisfaction: [
+            { emoji: '😢', text: 'بہت ناخوش' },
+            { emoji: '🙁', text: 'کچھ ناخوش' },
+            { emoji: '😐', text: 'عام' },
+            { emoji: '🙂', text: 'کچھ مطمئن' },
+            { emoji: '😄', text: 'بہت مطمئن' }
+        ],
+        desire: [
+            { emoji: '😔', text: 'ایسا نہیں سوچتا' },
+            { emoji: '😕', text: 'زیادہ ایسا نہیں سوچتا' },
+            { emoji: '😐', text: 'عام' },
+            { emoji: '😊', text: 'کچھ ایسا سوچتا ہوں' },
+            { emoji: '⭕', text: 'بہت ایسا سوچتا ہوں' }
+        ],
+        understanding: [
+            { emoji: '❌', text: 'سمجھ نہیں آتا' },
+            { emoji: '😕', text: 'زیادہ سمجھ نہیں آتا' },
+            { emoji: '😐', text: 'عام' },
+            { emoji: '🙂', text: 'تقریباً سمجھ آتا ہے' },
+            { emoji: '⭕', text: 'اچھی طرح سمجھ آتا ہے' }
+        ],
+        familiarity: [
+            { emoji: '😰', text: 'واقف نہیں' },
+            { emoji: '😕', text: 'زیادہ واقف نہیں' },
+            { emoji: '😐', text: 'عام' },
+            { emoji: '😊', text: 'کچھ واقف' },
+            { emoji: '🌟', text: 'بہت واقف' }
+        ],
+        availability: [
+            { emoji: '❌', text: 'نہیں ہے' },
+            { emoji: '😕', text: 'زیادہ نہیں ہے' },
+            { emoji: '😐', text: 'عام' },
+            { emoji: '🙂', text: 'کچھ ہے' },
+            { emoji: '⭕', text: 'کافی ہے' }
+        ],
+        negative: [
+            { emoji: '⭕', text: 'نہیں ہے' },
+            { emoji: '🙂', text: 'تقریباً نہیں ہے' },
+            { emoji: '😐', text: 'کبھی کبھار' },
+            { emoji: '😕', text: 'اکثر' },
+            { emoji: '😟', text: 'بہت زیادہ' },
+            { emoji: '❌', text: 'ہمیشہ' }
+        ],
+        safety_concern: [
+            { emoji: '⭕', text: 'نہیں ہے' },
+            { emoji: '◯', text: 'تقریباً نہیں ہے' },
+            { emoji: '△', text: 'زیادہ نہیں ہے' },
+            { emoji: '▽', text: 'کچھ ہے' },
+            { emoji: '×', text: 'اکثر' },
+            { emoji: '❌', text: 'ہمیشہ' }
+        ]
+    }
+}
 };
 
-// 残り14言語のプレースホルダー（将来的に翻訳追加）
-['cn', 'tl', 'id', 'th', 'ne', 'hi', 'kh', 'lo', 'mn', 'bd', 'lk', 'dz', 'uz', 'ur'].forEach(lang => {
-    translations[lang] = JSON.parse(JSON.stringify(translations.ja));
-});
-
-console.log('エンゲージメントアンケート翻訳データが読み込まれました。');
+console.log('エンゲージメントアンケート翻訳データが読み込まれました（17言語対応）');
