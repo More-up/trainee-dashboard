@@ -240,6 +240,223 @@
     }
 
     /* ===========================
+       リスクアラートセクション
+       =========================== */
+    .risk-alert-section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+      border-left: 4px solid var(--error);
+    }
+
+    .risk-alert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+    }
+
+    .risk-alert-header h2 {
+      font-size: 18px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      color: var(--error);
+    }
+
+    .risk-legend {
+      display: flex;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+
+    .risk-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .risk-high {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .risk-medium {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .risk-low {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .risk-criteria {
+      background: var(--background);
+      border-radius: 8px;
+      padding: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .risk-criteria h3 {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .risk-criteria ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .risk-criteria li {
+      font-size: 14px;
+      padding: 4px 0;
+      color: var(--text-secondary);
+    }
+
+    .risk-alerts,
+    .score-drop-alerts {
+      display: grid;
+      gap: var(--spacing-md);
+    }
+
+    .risk-card {
+      border-radius: 8px;
+      padding: var(--spacing-md);
+      border-left: 4px solid;
+    }
+
+    .risk-card.high {
+      background: #fff5f5;
+      border-color: #e53e3e;
+    }
+
+    .risk-card.medium {
+      background: #fffbeb;
+      border-color: #d97706;
+    }
+
+    .risk-card.low {
+      background: #f0fdf4;
+      border-color: #10b981;
+    }
+
+    .risk-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .risk-card-title {
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .risk-card-content {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .risk-employee {
+      background: white;
+      border-radius: 6px;
+      padding: var(--spacing-sm);
+      margin-top: var(--spacing-sm);
+    }
+
+    .risk-employee-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .risk-employee-info {
+      font-weight: 500;
+    }
+
+    .risk-employee-details {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .risk-employee-action {
+      background: rgba(26, 115, 232, 0.1);
+      border-radius: 4px;
+      padding: 8px;
+      font-size: 13px;
+      color: var(--primary-color);
+    }
+
+    .risk-employee-action strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .no-risk {
+      text-align: center;
+      padding: var(--spacing-lg);
+      color: var(--text-secondary);
+    }
+
+    .no-risk .material-icons {
+      font-size: 48px;
+      color: var(--success);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .score-drop-card {
+      background: #fff8e1;
+      border-left: 4px solid #f57c00;
+      border-radius: 8px;
+      padding: var(--spacing-md);
+    }
+
+    .score-drop-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      margin-bottom: var(--spacing-sm);
+      font-size: 16px;
+      font-weight: 500;
+      color: #e65100;
+    }
+
+    .score-comparison {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-size: 18px;
+      font-weight: 500;
+      margin: var(--spacing-sm) 0;
+    }
+
+    .score-old {
+      color: var(--text-secondary);
+    }
+
+    .score-new {
+      color: var(--error);
+    }
+
+    .score-diff {
+      color: var(--error);
+      font-size: 16px;
+    }
+
+    /* ===========================
        チャートセクション
        =========================== */
     .chart-section {
@@ -545,7 +762,7 @@
         </div>
         <div class="filter-group">
           <label for="filterNationality">国籍</label>
-                    <select id="filterNationality" onchange="applyFilters()">
+          <select id="filterNationality" onchange="applyFilters()">
             <option value="">すべて</option>
             <option value="myanmar">ミャンマー</option>
             <option value="vietnam">ベトナム</option>
@@ -613,6 +830,38 @@
           <span class="stat-value" id="minScore">0</span>
           <span class="stat-unit">/ 100</span>
         </div>
+      </div>
+    </div>
+
+    <!-- リスクアラートセクション -->
+    <div class="risk-alert-section">
+      <div class="risk-alert-header">
+        <h2>
+          <span class="material-icons">warning</span>
+          離職リスクアラート
+        </h2>
+        <div class="risk-legend">
+          <span class="risk-badge risk-high">🔴 高リスク</span>
+          <span class="risk-badge risk-medium">🟡 中リスク</span>
+          <span class="risk-badge risk-low">🟢 安定</span>
+        </div>
+      </div>
+
+      <div class="risk-criteria">
+        <h3>【リスク判定基準】</h3>
+        <ul>
+          <li><strong>🔴 高リスク:</strong> 総合スコア40点以下 OR 特定カテゴリー（給与・人間関係）が30点以下</li>
+          <li><strong>🟡 中リスク:</strong> 総合スコア50点以下 OR 前月比-15点以上の急降下</li>
+          <li><strong>🟢 安定:</strong> 総合スコア60点以上</li>
+        </ul>
+      </div>
+
+      <div id="riskAlertContainer" class="risk-alerts">
+        <!-- リスクアラートがここに動的に生成されます -->
+      </div>
+
+      <div id="scoreDropContainer" class="score-drop-alerts">
+        <!-- スコア急降下アラートがここに動的に生成されます -->
       </div>
     </div>
 
