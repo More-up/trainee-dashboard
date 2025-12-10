@@ -1,4 +1,4 @@
-// 質問タイプの定義（グローバル）
+// 質問タイプの定義（グローバル）-更新
 const questionTypes = {
     q1: 'satisfaction',
     q2: 'safety_concern',
