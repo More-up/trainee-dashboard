@@ -118,14 +118,19 @@ surveySetup.addEventListener('submit', (e) => {
     }
 
     // データ保存
-    answers = {
-        employeeCode,
-        nationality,
-        companyCode: companyCode,
-        yearMonth: getCurrentYearMonth(),
-        language: currentLanguage,
-        timestamp: new Date().toISOString()
-    };
+answers = {
+    employeeCode,
+    nationality,
+    companyCode: companyCode,
+    yearMonth: getCurrentYearMonth(),
+    language: currentLanguage,
+    timestamp: new Date().toISOString()
+};
+
+// LocalStorageにも保存（管理画面で参照するため）
+localStorage.setItem(`nationality_${employeeCode}`, nationality);
+localStorage.setItem(`company_${employeeCode}`, companyCode);
+
 
     // 画面切り替え
     initialScreen.classList.remove('active');
