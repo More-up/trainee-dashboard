@@ -2163,3 +2163,7 @@ const translations = {
 };
 
 console.log('エンゲージメントアンケート翻訳データが読み込まれました（17言語対応）');
+// 国コードのエイリアスを設定
+translations.kh = translations.km;
+translations.bd = translations.bn;
+translations.lk = translations.si;
