@@ -4,6 +4,13 @@ let currentQuestionIndex = 0;
 let answers = {};
 let companyCode = null;
 
+// 言語マッピング（国籍コード → 言語コード）
+const languageMap = {
+    'jp': 'ja', 'vn': 'vn', 'cn': 'cn', 'ph': 'tl', 'id': 'id', 'th': 'th',
+    'np': 'ne', 'in': 'hi', 'mm': 'my', 'kh': 'km', 'la': 'lo', 'mn': 'mn',
+    'bd': 'bn', 'lk': 'si', 'bt': 'dz', 'uz': 'uz', 'pk': 'ur'
+};
+
 // API エンドポイント
 const API_ENDPOINT = 'https://engagement-api.more-up.workers.dev';
 
@@ -100,6 +107,14 @@ surveySetup.addEventListener('submit', (e) => {
         const t = translations[currentLanguage];
         alert(t.errorEmployeeCode || 'すべての項目を入力してください');
         return;
+    }
+
+    // 国籍に基づいて言語を自動設定
+    if (languageMap[nationality]) {
+        currentLanguage = languageMap[nationality];
+        languageSelect.value = currentLanguage;
+        document.body.setAttribute('data-lang', currentLanguage);
+        updateLanguage();
     }
 
     // データ保存
