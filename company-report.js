@@ -676,26 +676,40 @@ function toggleSection(sectionId) {
 
 // 全従業員の詳細を強制展開
 async function expandAllEmployees() {
+    console.log('🔍 全従業員の詳細を展開開始...');
     const employeeCodes = allEmployees.map(emp => emp.employee_code);
+    console.log('👥 対象従業員:', employeeCodes);
     
     for (const code of employeeCodes) {
         const detailDiv = document.getElementById(`detail-${code}`);
-        if (detailDiv && !detailDiv.classList.contains('expanded')) {
-            // 従業員詳細を展開
-            toggleEmployee(code);
-            await new Promise(resolve => setTimeout(resolve, 300));
+        console.log(`🔎 従業員${code}:`, detailDiv ? '見つかった' : '見つからない');
+        
+        if (detailDiv) {
+            // 強制的に表示（toggleEmployeeを使わず直接操作）
+            detailDiv.style.display = 'block';
+            detailDiv.classList.add('expanded');
+            
+            // 初回描画時のみデータを描画
+            if (!detailDiv.dataset.loaded) {
+                const employee = allEmployees.find(e => e.employee_code === code);
+                console.log(`🎨 従業員${code}の詳細を描画中...`);
+                renderEmployeeDetail(employee);
+                detailDiv.dataset.loaded = 'true';
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
         }
         
         // 35問の回答も展開
         const questionsDiv = document.getElementById(`questions-${code}`);
         if (questionsDiv) {
-            const currentHeight = questionsDiv.style.maxHeight;
-            if (!currentHeight || currentHeight === '0px' || currentHeight === '0') {
-                toggleQuestions(code);
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
+            questionsDiv.style.display = 'block';
+            questionsDiv.style.maxHeight = 'none';
+            console.log(`✅ 従業員${code}の35問を展開完了`);
         }
     }
+    
+    console.log('✅ 全従業員の展開完了');
 }
 
 // PDF出力
@@ -789,6 +803,18 @@ async function generatePDF(loadingMsg) {
         pdfContainer.querySelectorAll('.toggle-icon').forEach(icon => icon.remove());
         pdfContainer.querySelectorAll('.expand-btn').forEach(btn => btn.remove());
         pdfContainer.querySelectorAll('.questions-toggle').forEach(btn => btn.remove());
+        
+        // 全ての従業員詳細を強制表示（PDF用）
+        pdfContainer.querySelectorAll('.employee-detail').forEach(detail => {
+            detail.style.display = 'block';
+            detail.classList.add('expanded');
+        });
+        
+        // 全ての質問セクションを強制表示（PDF用）
+        pdfContainer.querySelectorAll('.questions-content').forEach(questions => {
+            questions.style.display = 'block';
+            questions.style.maxHeight = 'none';
+        });
         
         // PDF用スタイル追加
         const style = document.createElement('style');
