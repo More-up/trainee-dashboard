@@ -172,10 +172,16 @@ async function loadEmployeeData() {
     try {
         const params = getEmployeeFromURL();
         
-        const response = await fetch(`${API_BASE_URL}/api/survey-results`);
+        const response = await fetch(`${API_BASE_URL}/api/results`);
         if (!response.ok) throw new Error('データ取得失敗');
         
-        const data = await response.json();
+        const result = await response.json();
+        
+        if (!result.success) {
+            throw new Error(result.error || 'データ取得失敗');
+        }
+        
+        const data = result.data || [];
         
         // 該当従業員のデータを検索
         const employeeData = data.find(item => 
