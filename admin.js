@@ -1,1000 +1,710 @@
-// ===========================
 // グローバル変数
-// ===========================
-const API_BASE_URL = 'https://engagement-api.more-up.workers.dev';
-
 let allData = [];
 let filteredData = [];
-let radarChartInstance = null;
-let trendChartInstance = null;
-let employeeRadarChartInstance = null;
+let currentUser = null;
 
-// ===========================
-// カテゴリー定義
-// ===========================
+// API エンドポイント
+const API_BASE_URL = 'https://engagement-api.more-up.workers.dev';
+
+// カテゴリー定義（技能実習生向け）
 const categories = {
-  work: '業務・職場環境',
-  salary: '給与・待遇',
-  family: '家族・プライベート事情',
-  relationship: '人間関係',
-  communication: '日本語・コミュニケーション',
-  culture: '文化・価値観',
-  living: '生活環境',
-  career: 'キャリア・将来の見通し'
+    work: '業務・職場環境',
+    salary: '給与・待遇',
+    family: '家族・プライベート事情',
+    relationship: '人間関係',
+    communication: '日本語・コミュニケーション',
+    culture: '文化・価値観',
+    living: '生活環境',
+    career: 'キャリア・将来の見通し'
 };
 
-// カテゴリーと質問のマッピング
+// カテゴリーと質問のマッピング（新しい設問構成に対応）
 const categoryQuestionMap = {
-  work: [1, 2, 3, 4],
-  salary: [5, 6, 7, 8],
-  family: [9, 10, 11, 12],
-  relationship: [13, 14, 15, 16],
-  communication: [17, 18, 19, 20, 21],
-  culture: [22, 23],
-  living: [24, 25, 26, 27, 28, 29],
-  career: [30, 31, 32, 33, 34, 35]
+    work: [1, 2, 3, 4],           // 4問
+    salary: [5, 6, 7, 8],         // 4問
+    family: [9, 10, 11, 12],      // 4問
+    relationship: [13, 14, 15, 16], // 4問
+    communication: [17, 18, 19, 20, 21], // 5問
+    culture: [22, 23],            // 2問
+    living: [24, 25, 26, 27, 28, 29], // 6問
+    career: [30, 31, 32, 33, 34, 35]  // 6問
 };
 
-// ===========================
-// 全35問の質問データ定義（正しい質問文）
-// ===========================
-const surveyQuestions = {
-  // カテゴリー1: 業務・職場環境 (Q1-Q4)
-  1: {
-    category: 'work',
-    text: 'Q1. 仕事の内容は、自分に合っていますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  2: {
-    category: 'work',
-    text: 'Q2. 働く場所で、怪我や事故の心配はありませんか?',
-    choices: ['全くない', 'ほとんどない', 'あまりない', '少しある', 'よくある', 'いつもある'],
-    type: 'safety_reverse_6'
-  },
-  3: {
-    category: 'work',
-    text: 'Q3. 休みの日や働く時間は、ちょうどよいですか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  4: {
-    category: 'work',
-    text: 'Q4. 職場の雰囲気は、働きやすいですか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-
-  // カテゴリー2: 給与・待遇 (Q5-Q8)
-  5: {
-    category: 'salary',
-    text: 'Q5. 給料の金額に、満足していますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  6: {
-    category: 'salary',
-    text: 'Q6. 残業代や手当は、きちんと受け取れていますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  7: {
-    category: 'salary',
-    text: 'Q7. 保険や休暇などの制度は、十分だと思いますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  8: {
-    category: 'salary',
-    text: 'Q8. この会社で働くことで、生活に必要なお金を得られていますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-
-  // カテゴリー3: 家族・プライベート事情 (Q9-Q12)
-  9: {
-    category: 'family',
-    text: 'Q9. 家族と連絡をとる時間は、十分にありますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  10: {
-    category: 'family',
-    text: 'Q10. 家族に送金する余裕はありますか?',
-    choices: ['全くない', 'あまりない', '普通', 'ある程度ある', '十分ある'],
-    type: 'availability_5'
-  },
-  11: {
-    category: 'family',
-    text: 'Q11. 自分の時間(休みやプライベート)は、十分にありますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  12: {
-    category: 'family',
-    text: 'Q12. 将来、家族を日本に呼びたいと思いますか?',
-    choices: ['全くそう思わない', 'あまり思わない', '普通', 'ややそう思う', 'とてもそう思う'],
-    type: 'motivation_5'
-  },
-
-  // カテゴリー4: 人間関係 (Q13-Q16)
-  13: {
-    category: 'relationship',
-    text: 'Q13. 同じ技能実習生の仲間との関係は良いですか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  14: {
-    category: 'relationship',
-    text: 'Q14. 日本人の上司や同僚は、あなたの話を聞いてくれますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  15: {
-    category: 'relationship',
-    text: 'Q15. 困ったときに、同じ技能実習生の仲間は助けてくれますか?',
-    choices: ['全くない', 'あまりない', '普通', 'ある程度ある', '十分ある'],
-    type: 'availability_5'
-  },
-  16: {
-    category: 'relationship',
-    text: 'Q16. 職場で、いじめや差別を受けることはありますか?',
-    choices: ['全くない', 'ほとんどない', '時々ある', 'よくある', 'かなりある', 'いつもある'],
-    type: 'negative_reverse_6'
-  },
-
-  // カテゴリー5: 日本語・コミュニケーション (Q17-Q21)
-  17: {
-    category: 'communication',
-    text: 'Q17. 日本語での会話に困ることはありますか?',
-    choices: ['全くない', 'ほとんどない', '時々ある', 'よくある', 'かなりある', 'いつもある'],
-    type: 'negative_reverse_6'
-  },
-  18: {
-    category: 'communication',
-    text: 'Q18. 仕事の説明や指示は分かりやすいですか?',
-    choices: ['全く分からない', 'あまり分からない', '普通', 'だいたい分かる', 'よく分かる'],
-    type: 'understanding_5'
-  },
-  19: {
-    category: 'communication',
-    text: 'Q19. 分からないことを質問しやすいですか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  20: {
-    category: 'communication',
-    text: 'Q20. 会社は、日本語の勉強を助けてくれますか?',
-    choices: ['全くない', 'あまりない', '普通', 'ある程度ある', '十分ある'],
-    type: 'availability_5'
-  },
-  21: {
-    category: 'communication',
-    text: 'Q21. 母国語で相談できる人(通訳や先輩など)はいますか?',
-    choices: ['全くない', 'あまりない', '普通', 'ある程度ある', '十分ある'],
-    type: 'availability_5'
-  },
-
-  // カテゴリー6: 文化・価値観 (Q22-Q23)
-  22: {
-    category: 'culture',
-    text: 'Q22. 日本の文化や習慣に、慣れていますか?',
-    choices: ['全く慣れていない', 'あまり慣れていない', '普通', 'やや慣れている', 'とても慣れている'],
-    type: 'familiarity_5'
-  },
-  23: {
-    category: 'culture',
-    text: 'Q23. 仕事中に文化の違いで困ることはありますか?',
-    choices: ['全くない', 'ほとんどない', '時々ある', 'よくある', 'かなりある', 'いつもある'],
-    type: 'negative_reverse_6'
-  },
-
-  // カテゴリー7: 生活環境 (Q24-Q29)
-  24: {
-    category: 'living',
-    text: 'Q24. 住んでいる場所(寮・アパートなど)は快適ですか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  25: {
-    category: 'living',
-    text: 'Q25. 生活費は、給料に対してちょうどよいですか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  26: {
-    category: 'living',
-    text: 'Q26. 日本での生活で困ることはありますか?',
-    choices: ['全くない', 'ほとんどない', '時々ある', 'よくある', 'かなりある', 'いつもある'],
-    type: 'negative_reverse_6'
-  },
-  27: {
-    category: 'living',
-    text: 'Q27. 会社は生活のサポートをしてくれますか?',
-    choices: ['全くない', 'あまりない', '普通', 'ある程度ある', '十分ある'],
-    type: 'availability_5'
-  },
-  28: {
-    category: 'living',
-    text: 'Q28. 寮や家での生活環境(部屋の広さ・設備など)に満足していますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-  29: {
-    category: 'living',
-    text: 'Q29. 日本での生活は、安全で快適ですか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  },
-
-  // カテゴリー8: キャリア・将来の見通し (Q30-Q35)
-  30: {
-    category: 'career',
-    text: 'Q30. 今の仕事で、技術や知識が身についていますか?',
-    choices: ['全くそう思わない', 'あまり思わない', '普通', 'ややそう思う', 'とてもそう思う'],
-    type: 'motivation_5'
-  },
-  31: {
-    category: 'career',
-    text: 'Q31. 頑張った分だけ、評価や待遇が良くなると感じますか?',
-    choices: ['全くそう思わない', 'あまり思わない', '普通', 'ややそう思う', 'とてもそう思う'],
-    type: 'motivation_5'
-  },
-  32: {
-    category: 'career',
-    text: 'Q32. この会社で、長く働きたいと思いますか?',
-    choices: ['全くそう思わない', 'あまり思わない', '普通', 'ややそう思う', 'とてもそう思う'],
-    type: 'motivation_5'
-  },
-  33: {
-    category: 'career',
-    text: 'Q33. ビザ(在留資格)の更新や手続きで、会社や組合は助けてくれますか?',
-    choices: ['全くない', 'あまりない', '普通', 'ある程度ある', '十分ある'],
-    type: 'availability_5'
-  },
-  34: {
-    category: 'career',
-    text: 'Q34. この会社で働くことで、母国に帰ってから役立つ技術が学べていますか?',
-    choices: ['全くそう思わない', 'あまり思わない', '普通', 'ややそう思う', 'とてもそう思う'],
-    type: 'motivation_5'
-  },
-  35: {
-    category: 'career',
-    text: 'Q35. 母国の友達にも「この会社で働いたほうがいいよ」と思えますか?',
-    choices: ['とても不満', 'やや不満', '普通', 'やや満足', 'とても満足'],
-    type: 'satisfaction_5'
-  }
+// 国籍の表示名マッピング (17カ国)
+const nationalityDisplayNames = {
+    'jp': '日本',
+    'cn': '中国',
+    'vn': 'ベトナム',
+    'kh': 'カンボジア',
+    'hi': 'インド',
+    'ph': 'フィリピン',
+    'la': 'ラオス',
+    'mn': 'モンゴル',
+    'bn': 'バングラデシュ',
+    'si': 'スリランカ',
+    'mm': 'ミャンマー',
+    'dz': 'ブータン',
+    'uz': 'ウズベキスタン',
+    'pk': 'パキスタン',
+    'th': 'タイ',
+    'id': 'インドネシア',
+    'np': 'ネパール'
 };
 
-// 国籍の表示名
-const nationalityNames = {
-  'mm': 'ミャンマー',
-  'vn': 'ベトナム',
-  'kh': 'カンボジア',
-  'in': 'インド',
-  'ph': 'フィリピン',
-  'la': 'ラオス',
-  'mn': 'モンゴル',
-  'bd': 'バングラデシュ',
-  'lk': 'スリランカ',
-  'bt': 'ブータン',
-  'uz': 'ウズベキスタン',
-  'pk': 'パキスタン',
-  'th': 'タイ',
-  'id': 'インドネシア',
-  'np': 'ネパール',
-  'cn': '中国',
-  'jp': '日本'
-};
-
-// ===========================
 // 初期化
-// ===========================
-document.addEventListener('DOMContentLoaded', () => {
-  checkLoginStatus();
-  loadData();
-  setupEventListeners();
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM読み込み完了');
+    checkLoginStatus();
+    setupEventListeners();
 });
 
-// ===========================
 // ログイン状態確認
-// ===========================
 function checkLoginStatus() {
-  const token = localStorage.getItem('adminToken');
-  const username = localStorage.getItem('adminUsername');
-
-  if (!token) {
-    window.location.href = 'admin-login.html';
-    return;
-  }
-
-  if (username) {
-    document.getElementById('adminUsername').textContent = username;
-  }
-}
-
-// ===========================
-// ログアウト
-// ===========================
-function logout() {
-  localStorage.removeItem('adminToken');
-  localStorage.removeItem('adminUsername');
-  window.location.href = 'admin-login.html';
-}
-
-// ===========================
-// イベントリスナー設定
-// ===========================
-function setupEventListeners() {
-  // フィルター変更イベントは HTML の onchange で設定済み
-}
-
-// ===========================
-// データ読み込み
-// ===========================
-async function loadData() {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/results`);
-    if (!response.ok) throw new Error('データの取得に失敗しました');
-
-    const data = await response.json();
+    const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
     
-    // category_scores と answers を JSON パースして配列に変換
-    allData = data.map(item => {
-      let categoryScores = {};
-      let answers = {};
+    console.log('🔐 ログイン状態確認:', isLoggedIn);
+    
+    if (isLoggedIn === 'true') {
+        currentUser = sessionStorage.getItem('adminUsername') || 'moreup-trainee';
+        console.log('✅ ログイン済み - ユーザー:', currentUser);
+        
+        const adminUsernameEl = document.getElementById('adminUsername');
+        if (adminUsernameEl) {
+            adminUsernameEl.textContent = currentUser;
+            console.log('👤 ユーザー名表示完了');
+        }
+        
+        loadData();
+    } else {
+        console.log('❌ 未ログイン - ログインページへリダイレクト');
+        window.location.href = 'admin-login.html';
+    }
+}
 
-      try {
-        categoryScores = typeof item.category_scores === 'string' 
-          ? JSON.parse(item.category_scores) 
-          : item.category_scores || {};
-      } catch (e) {
-        console.error('category_scores parse error:', e);
-      }
+// ログアウト
+function logout() {
+    console.log('🚪 ログアウト処理開始');
+    sessionStorage.removeItem('adminLoggedIn');
+    sessionStorage.removeItem('adminUsername');
+    console.log('✅ セッション削除完了');
+    window.location.href = 'admin-login.html';
+}
 
-      try {
-        answers = typeof item.answers === 'string' 
-          ? JSON.parse(item.answers) 
-          : item.answers || {};
-      } catch (e) {
-        console.error('answers parse error:', e);
-      }
+// イベントリスナー設定
+function setupEventListeners() {
+    console.log('🎯 イベントリスナー設定開始');
+    
+    const filterCompany = document.getElementById('filterCompany');
+    const filterMonth = document.getElementById('filterMonth');
+    const filterEmployee = document.getElementById('filterEmployee');
+    const filterNationality = document.getElementById('filterNationality');
+    
+    console.log('📋 フィルター要素:', {
+        company: !!filterCompany,
+        month: !!filterMonth,
+        employee: !!filterEmployee,
+        nationality: !!filterNationality
+    });
+    
+    if (filterCompany) filterCompany.addEventListener('change', applyFilters);
+    if (filterMonth) filterMonth.addEventListener('change', applyFilters);
+    if (filterEmployee) filterEmployee.addEventListener('input', applyFilters);
+    if (filterNationality) filterNationality.addEventListener('change', applyFilters);
+    
+    console.log('✅ イベントリスナー設定完了');
+}
 
-      return {
-        ...item,
-        category_scores: categoryScores,
-        answers: answers
-      };
+// データ読み込み
+async function loadData() {
+    console.log('📥 データ読み込み開始');
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/results`);
+        console.log('🌐 APIレスポンスステータス:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('📊 取得したデータ:', data);
+        console.log('📊 データの型:', typeof data);
+        console.log('📊 データは配列?:', Array.isArray(data));
+        
+        if (typeof data === 'object' && data !== null) {
+            console.log('📊 データの構造(キー):', Object.keys(data));
+        }
+
+        // APIレスポンスの構造を判定
+        let resultsArray = [];
+        if (Array.isArray(data)) {
+            resultsArray = data;
+            console.log('✅ データは配列形式');
+        } else if (data.results && Array.isArray(data.results)) {
+            resultsArray = data.results;
+            console.log('✅ データはresults形式');
+        } else if (data.data && Array.isArray(data.data)) {
+            resultsArray = data.data;
+            console.log('✅ データはdata形式');
+        } else {
+            console.error('❌ 不明なデータ構造:', data);
+            throw new Error('データの形式が不正です');
+        }
+
+        console.log('📈 データ件数:', resultsArray.length);
+
+        // データ処理
+        allData = resultsArray.map(item => {
+            let categoryScores = {};
+            if (item.category_scores && item.category_scores !== 'null' && item.category_scores !== null) {
+                try {
+                    categoryScores = typeof item.category_scores === 'string' 
+                        ? JSON.parse(item.category_scores) 
+                        : item.category_scores;
+                } catch (e) {
+                    console.warn('⚠️ category_scores解析エラー:', e);
+                }
+            }
+
+            let answers = {};
+            if (item.answers && item.answers !== 'null' && item.answers !== null) {
+                try {
+                    answers = typeof item.answers === 'string' 
+                        ? JSON.parse(item.answers) 
+                        : item.answers;
+                } catch (e) {
+                    console.warn('⚠️ answers解析エラー:', e);
+                }
+            }
+
+            return {
+                ...item,
+                categoryScores: categoryScores,
+                answers: answers,
+                totalScore: parseFloat(item.total_score) || 0
+            };
+        });
+
+        console.log('✅ 処理後のデータ件数:', allData.length);
+        if (allData.length > 0) {
+            console.log('📝 最初のデータサンプル:', allData[0]);
+        }
+
+        filteredData = [...allData];
+        updateFilters();
+        updateDisplay();
+        
+        console.log('🎉 データ読み込み完了');
+        
+    } catch (error) {
+        console.error('❌ データ読み込みエラー:', error);
+        alert('データの読み込みに失敗しました: ' + error.message);
+    }
+}
+
+// フィルター更新
+function updateFilters() {
+    console.log('🔧 フィルター更新開始');
+    
+    const companies = [...new Set(allData.map(d => d.company_code).filter(Boolean))];
+    console.log('🏢 企業一覧:', companies);
+    
+    const companyFilter = document.getElementById('filterCompany');
+    if (companyFilter) {
+        companyFilter.innerHTML = '<option value="">すべて</option>' +
+            companies.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    const months = [...new Set(allData.map(d => d.year_month).filter(Boolean))].sort().reverse();
+    console.log('📅 年月一覧:', months);
+    
+    const monthFilter = document.getElementById('filterMonth');
+    if (monthFilter) {
+        monthFilter.innerHTML = '<option value="">すべて</option>' +
+            months.map(m => `<option value="${m}">${m}</option>`).join('');
+    }
+
+    // 従業員コードフィルターを追加（固定で1～20を表示）
+    const employeeFilter = document.getElementById('filterEmployee');
+    if (employeeFilter && employeeFilter.tagName === 'SELECT') {
+        // 1～20の選択肢を固定で表示
+        const employeeOptions = ['<option value="">すべて</option>'];
+        for (let i = 1; i <= 20; i++) {
+            employeeOptions.push(`<option value="${i}">${i}</option>`);
+        }
+        employeeFilter.innerHTML = employeeOptions.join('');
+        console.log('👤 従業員コードフィルター: 1～20を固定表示');
+    }
+
+    console.log('✅ フィルター更新完了');
+}
+
+// フィルター適用
+function applyFilters() {
+    console.log('🔍 フィルター適用開始');
+    
+    const company = document.getElementById('filterCompany')?.value;
+    const month = document.getElementById('filterMonth')?.value;
+    const employeeFilter = document.getElementById('filterEmployee');
+    const employee = employeeFilter?.value || '';
+    const nationality = document.getElementById('filterNationality')?.value;
+
+    console.log('🎯 フィルター条件:', { company, month, employee, nationality });
+
+    filteredData = allData.filter(item => {
+        if (company && item.company_code !== company) return false;
+        if (month && item.year_month !== month) return false;
+        // 従業員コードは完全一致または部分一致
+        if (employee) {
+            if (employeeFilter.tagName === 'SELECT') {
+                // セレクトボックスの場合は完全一致
+                if (item.employee_code !== employee) return false;
+            } else {
+                // テキストボックスの場合は部分一致
+                if (!item.employee_code.toLowerCase().includes(employee.toLowerCase())) return false;
+            }
+        }
+        if (nationality && item.nationality !== nationality) return false;
+        return true;
     });
 
-    filteredData = [...allData];
-    updateFilters();
-    applyFilters();
-  } catch (error) {
-    console.error('データ読み込みエラー:', error);
-    alert('データの読み込みに失敗しました');
-  }
+    console.log('✅ フィルター後のデータ件数:', filteredData.length);
+    updateDisplay();
 }
 
-// ===========================
-// フィルター更新
-// ===========================
-function updateFilters() {
-  const companies = [...new Set(allData.map(d => d.company_code))].sort();
-  const months = [...new Set(allData.map(d => d.year_month))].sort().reverse();
-  
-  // 会社フィルター
-  const companySelect = document.getElementById('filterCompany');
-  companySelect.innerHTML = '<option value="">すべて</option>';
-  companies.forEach(company => {
-    const option = document.createElement('option');
-    option.value = company;
-    option.textContent = company;
-    companySelect.appendChild(option);
-  });
-
-  // 月フィルター
-  const monthSelect = document.getElementById('filterMonth');
-  monthSelect.innerHTML = '<option value="">すべて</option>';
-  months.forEach(month => {
-    const option = document.createElement('option');
-    option.value = month;
-    option.textContent = month;
-    monthSelect.appendChild(option);
-  });
-
-  // 従業員コードフィルター (1～20固定)
-  const employeeSelect = document.getElementById('filterEmployee');
-  employeeSelect.innerHTML = '<option value="">すべて</option>';
-  for (let i = 1; i <= 20; i++) {
-    const option = document.createElement('option');
-    option.value = i.toString();
-    option.textContent = i.toString();
-    employeeSelect.appendChild(option);
-  }
+// 表示更新
+function updateDisplay() {
+    console.log('🖼️ 表示更新開始');
+    updateStatistics();
+    updateDataTable();
+    updateRadarChart();
+    updateTrendChart();
+    updateAIAnalysis();
+    updateRiskAlerts();
+    console.log('✅ 表示更新完了');
 }
 
-// ===========================
-// フィルター適用
-// ===========================
-function applyFilters() {
-  const companyFilter = document.getElementById('filterCompany').value;
-  const monthFilter = document.getElementById('filterMonth').value;
-  const employeeFilter = document.getElementById('filterEmployee').value;
-  const nationalityFilter = document.getElementById('filterNationality').value;
-
-  filteredData = allData.filter(item => {
-    const matchCompany = !companyFilter || item.company_code === companyFilter;
-    const matchMonth = !monthFilter || item.year_month === monthFilter;
-    const matchEmployee = !employeeFilter || item.employee_code === employeeFilter;
-    const matchNationality = !nationalityFilter || item.nationality === nationalityFilter;
-
-    return matchCompany && matchMonth && matchEmployee && matchNationality;
-  });
-
-  updateStatistics();
-  updateDataTable();
-  updateRadarChart();
-  updateTrendChart();
-  updateAIAnalysis();
-  updateRiskAlerts();
-
-  // 個別従業員表示の切り替え
-  if (employeeFilter && filteredData.length === 1) {
-    showEmployeeDetail(filteredData[0]);
-  } else {
-    hideEmployeeDetail();
-  }
-}
-
-// ===========================
 // 統計情報更新
-// ===========================
 function updateStatistics() {
-  const total = filteredData.length;
-  const scores = filteredData.map(d => d.total_score || 0);
-  const avg = total > 0 ? (scores.reduce((a, b) => a + b, 0) / total).toFixed(1) : 0;
-  const max = total > 0 ? Math.max(...scores).toFixed(1) : 0;
-  const min = total > 0 ? Math.min(...scores).toFixed(1) : 0;
+    const totalCount = filteredData.length;
+    const avgScore = totalCount > 0 
+        ? (filteredData.reduce((sum, d) => sum + d.totalScore, 0) / totalCount).toFixed(1)
+        : 0;
+    const maxScore = totalCount > 0 
+        ? Math.max(...filteredData.map(d => d.totalScore)).toFixed(1)
+        : 0;
+    const minScore = totalCount > 0 
+        ? Math.min(...filteredData.map(d => d.totalScore)).toFixed(1)
+        : 0;
 
-  document.getElementById('totalResponses').textContent = total;
-  document.getElementById('averageScore').textContent = avg;
-  document.getElementById('maxScore').textContent = max;
-  document.getElementById('minScore').textContent = min;
+    console.log('📊 統計情報:', { totalCount, avgScore, maxScore, minScore });
+
+    const totalResponsesEl = document.getElementById('totalResponses');
+    const averageScoreEl = document.getElementById('averageScore');
+    const maxScoreEl = document.getElementById('maxScore');
+    const minScoreEl = document.getElementById('minScore');
+
+    if (totalResponsesEl) totalResponsesEl.textContent = totalCount;
+    if (averageScoreEl) averageScoreEl.textContent = avgScore;
+    if (maxScoreEl) maxScoreEl.textContent = maxScore;
+    if (minScoreEl) minScoreEl.textContent = minScore;
 }
 
-// ===========================
 // データテーブル更新
-// ===========================
 function updateDataTable() {
-  const tbody = document.getElementById('dataTableBody');
-  tbody.innerHTML = '';
-
-  if (filteredData.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="no-data"><span class="material-icons">inbox</span><br>データがありません</td></tr>';
-    return;
-  }
-
-  filteredData.forEach(item => {
-    const row = document.createElement('tr');
-    const scoreClass = item.total_score >= 60 ? 'score-high' : item.total_score >= 50 ? 'score-medium' : 'score-low';
-    
-    row.innerHTML = `
-      <td>${formatDate(item.survey_date)}</td>
-      <td>${item.company_code || '-'}</td>
-      <td>${item.employee_code || '-'}</td>
-      <td>${nationalityNames[item.nationality] || item.nationality || '-'}</td>
-      <td><span class="score-badge ${scoreClass}">${(item.total_score || 0).toFixed(1)}</span></td>
-      <td>${item.year_month || '-'}</td>
-    `;
-    tbody.appendChild(row);
-  });
-}
-
-// ===========================
-// 日付フォーマット
-// ===========================
-function formatDate(dateString) {
-  if (!dateString) return '-';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('ja-JP');
-}
-
-// ===========================
-// レーダーチャート更新
-// ===========================
-function updateRadarChart() {
-  const canvas = document.getElementById('radarChart');
-  const ctx = canvas.getContext('2d');
-
-  if (radarChartInstance) {
-    radarChartInstance.destroy();
-  }
-
-  if (filteredData.length === 0) {
-    return;
-  }
-
-  // カテゴリー別平均スコア計算
-  const categoryAverages = {};
-  Object.keys(categories).forEach(key => {
-    const scores = filteredData.map(d => d.category_scores[key] || 0);
-    categoryAverages[key] = scores.length > 0 
-      ? scores.reduce((a, b) => a + b, 0) / scores.length 
-      : 0;
-  });
-
-  // ラベルを改行
-  const labels = Object.values(categories).map(label => {
-    if (label.includes('・')) {
-      return label.split('・');
+    const tbody = document.getElementById('dataTableBody');
+    if (!tbody) {
+        console.warn('⚠️ dataTableBody要素が見つかりません');
+        return;
     }
-    return label;
-  });
 
-  radarChartInstance = new Chart(ctx, {
-    type: 'radar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: '平均スコア',
-        data: Object.values(categoryAverages),
-        backgroundColor: 'rgba(26, 115, 232, 0.2)',
-        borderColor: 'rgba(26, 115, 232, 1)',
-        borderWidth: 2,
-        pointBackgroundColor: 'rgba(26, 115, 232, 1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(26, 115, 232, 1)'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      scales: {
-        r: {
-          beginAtZero: true,
-          max: 100,
-          ticks: {
-            stepSize: 20,
-            font: { size: 10 }
-          },
-          pointLabels: {
-            font: { size: 11 },
-            padding: 15
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top'
-        },
-        title: {
-          display: true,
-          text: 'カテゴリー別スコア（平均）',
-          font: { size: 16 }
-        }
-      },
-      layout: {
-        padding: 20
-      }
+    console.log('📋 テーブル更新 - データ件数:', filteredData.length);
+
+    if (filteredData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #5f6368;">データがありません</td></tr>';
+        return;
     }
-  });
-}
 
-// ===========================
-// トレンドチャート更新
-// ===========================
-function updateTrendChart() {
-  const canvas = document.getElementById('trendChart');
-  const ctx = canvas.getContext('2d');
+    tbody.innerHTML = filteredData.map(item => {
+        const nationalityDisplay = nationalityDisplayNames[item.nationality] || item.nationality || '-';
 
-  if (trendChartInstance) {
-    trendChartInstance.destroy();
-  }
-
-  if (filteredData.length === 0) {
-    return;
-  }
-
-  // 月別平均スコア計算
-  const monthlyScores = {};
-  filteredData.forEach(item => {
-    const month = item.year_month;
-    if (!monthlyScores[month]) {
-      monthlyScores[month] = [];
-    }
-    monthlyScores[month].push(item.total_score || 0);
-  });
-
-  const months = Object.keys(monthlyScores).sort();
-  const averages = months.map(month => {
-    const scores = monthlyScores[month];
-    return scores.reduce((a, b) => a + b, 0) / scores.length;
-  });
-
-  trendChartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: months,
-      datasets: [{
-        label: '平均スコア',
-        data: averages,
-        backgroundColor: 'rgba(26, 115, 232, 0.1)',
-        borderColor: 'rgba(26, 115, 232, 1)',
-        borderWidth: 2,
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 100
-        }
-      },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top'
-        },
-        title: {
-          display: true,
-          text: '月別スコア推移',
-          font: { size: 16 }
-        }
-      }
-    }
-  });
-}
-
-// ===========================
-// AI分析更新
-// ===========================
-function updateAIAnalysis() {
-  const container = document.getElementById('aiInsights');
-  container.innerHTML = '';
-
-  if (filteredData.length === 0) {
-    container.innerHTML = '<div class="no-data"><span class="material-icons">psychology</span><br>分析データがありません</div>';
-    return;
-  }
-
-  // 国籍別分析
-  const nationalityData = {};
-  filteredData.forEach(item => {
-    const nat = item.nationality;
-    if (!nationalityData[nat]) {
-      nationalityData[nat] = [];
-    }
-    nationalityData[nat].push(item.total_score || 0);
-  });
-
-  Object.entries(nationalityData).forEach(([nat, scores]) => {
-    const avg = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
-    const count = scores.length;
-    const natName = nationalityNames[nat] || nat;
-
-    const card = document.createElement('div');
-    card.className = 'ai-insight-card';
-    card.innerHTML = `
-      <h3>🌏 ${natName} (${count}名)</h3>
-      <p>平均スコア: <strong>${avg}点</strong></p>
-      <p>${getInsightMessage(parseFloat(avg), natName)}</p>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// ===========================
-// インサイトメッセージ生成
-// ===========================
-function getInsightMessage(score, nationality) {
-  if (score >= 70) {
-    return `${nationality}の方々は、職場環境に非常に満足しており、安定した状態です。`;
-  } else if (score >= 60) {
-    return `${nationality}の方々は、概ね良好な状態ですが、改善の余地があります。`;
-  } else if (score >= 50) {
-    return `${nationality}の方々は、いくつかの課題を抱えている可能性があります。面談を推奨します。`;
-  } else {
-    return `${nationality}の方々は、深刻な課題を抱えている可能性が高いです。早急な対応が必要です。`;
-  }
-}
-
-// ===========================
-// リスクアラート更新
-// ===========================
-function updateRiskAlerts() {
-  const container = document.getElementById('riskAlertContainer');
-  container.innerHTML = '';
-
-  const highRisk = filteredData.filter(d => {
-    const totalScore = d.total_score || 0;
-    const salaryScore = d.category_scores?.salary || 0;
-    const relationshipScore = d.category_scores?.relationship || 0;
-    return totalScore <= 40 || salaryScore <= 30 || relationshipScore <= 30;
-  });
-
-  const mediumRisk = filteredData.filter(d => {
-    const totalScore = d.total_score || 0;
-    return totalScore > 40 && totalScore <= 50;
-  });
-
-  if (highRisk.length === 0 && mediumRisk.length === 0) {
-    container.innerHTML = '<div class="no-risk"><span class="material-icons">check_circle</span><br>現在、リスクアラートはありません</div>';
-    return;
-  }
-
-  if (highRisk.length > 0) {
-    const card = document.createElement('div');
-    card.className = 'risk-card high';
-    card.innerHTML = `
-      <div class="risk-card-header">
-        <div class="risk-card-title">🔴 高リスク (${highRisk.length}名)</div>
-      </div>
-      <div class="risk-card-content">
-        ${highRisk.map(emp => `
-          <div class="risk-employee">
-            <div class="risk-employee-header">
-              <span class="risk-employee-info">従業員 ${emp.employee_code} (${nationalityNames[emp.nationality] || emp.nationality})</span>
-              <span class="score-badge score-low">${(emp.total_score || 0).toFixed(1)}点</span>
-            </div>
-            <div class="risk-employee-details">
-              会社: ${emp.company_code} | 調査日: ${formatDate(emp.survey_date)}
-            </div>
-            <div class="risk-employee-action">
-              <strong>推奨アクション:</strong> 早急な個別面談と改善施策の実施が必要です
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-    container.appendChild(card);
-  }
-
-  if (mediumRisk.length > 0) {
-    const card = document.createElement('div');
-    card.className = 'risk-card medium';
-    card.innerHTML = `
-      <div class="risk-card-header">
-        <div class="risk-card-title">🟡 中リスク (${mediumRisk.length}名)</div>
-      </div>
-      <div class="risk-card-content">
-        ${mediumRisk.map(emp => `
-          <div class="risk-employee">
-            <div class="risk-employee-header">
-              <span class="risk-employee-info">従業員 ${emp.employee_code} (${nationalityNames[emp.nationality] || emp.nationality})</span>
-              <span class="score-badge score-medium">${(emp.total_score || 0).toFixed(1)}点</span>
-            </div>
-            <div class="risk-employee-details">
-              会社: ${emp.company_code} | 調査日: ${formatDate(emp.survey_date)}
-            </div>
-            <div class="risk-employee-action">
-              <strong>推奨アクション:</strong> 定期的なフォローアップと状況確認を推奨します
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-    container.appendChild(card);
-  }
-}
-
-// ===========================
-// リスクレベル計算
-// ===========================
-function calculateRiskLevel(item) {
-  const totalScore = item.total_score || 0;
-  const categoryScores = item.category_scores || {};
-  
-  const salaryScore = categoryScores.salary || 0;
-  const relationshipScore = categoryScores.relationship || 0;
-  const cultureScore = categoryScores.culture || 0;
-
-  if (totalScore <= 40 || salaryScore <= 30 || relationshipScore <= 30) {
-    return 'high';
-  } else if (totalScore <= 50 || cultureScore <= 35) {
-    return 'medium';
-  } else {
-    return 'low';
-  }
-}
-
-// ===========================
-// CSV出力
-// ===========================
-function exportCSV() {
-  if (filteredData.length === 0) {
-    alert('出力するデータがありません');
-    return;
-  }
-
-  const headers = ['日時', '会社コード', '従業員コード', '国籍', '総合スコア', '月'];
-  const rows = filteredData.map(item => [
-    formatDate(item.survey_date),
-    item.company_code || '',
-    item.employee_code || '',
-    nationalityNames[item.nationality] || item.nationality || '',
-    (item.total_score || 0).toFixed(1),
-    item.year_month || ''
-  ]);
-
-  let csvContent = '\uFEFF'; // BOM for Excel
-  csvContent += headers.join(',') + '\n';
-  csvContent += rows.map(row => row.join(',')).join('\n');
-
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = `survey_data_${new Date().toISOString().split('T')[0]}.csv`;
-  link.click();
-}
-
-// ===========================
-// 個別従業員詳細表示
-// ===========================
-function showEmployeeDetail(employeeData) {
-  const section = document.getElementById('employeeDetailSection');
-  section.classList.add('visible');
-
-  // ヘッダー情報
-  document.getElementById('employeeBadge').textContent = `従業員 ${employeeData.employee_code}`;
-  document.getElementById('employeeTotalScore').textContent = (employeeData.total_score || 0).toFixed(1);
-  document.getElementById('employeeSurveyDate').textContent = formatDate(employeeData.survey_date);
-
-  // 個別レーダーチャート
-  updateEmployeeRadarChart(employeeData);
-
-  // カテゴリースコア一覧
-  updateEmployeeCategoryScores(employeeData);
-
-  // 全35問回答詳細
-  updateEmployeeAnswers(employeeData);
-}
-
-function hideEmployeeDetail() {
-  const section = document.getElementById('employeeDetailSection');
-  section.classList.remove('visible');
-}
-
-// ===========================
-// 個別従業員レーダーチャート
-// ===========================
-function updateEmployeeRadarChart(employeeData) {
-  const canvas = document.getElementById('employeeRadarChart');
-  const ctx = canvas.getContext('2d');
-
-  if (employeeRadarChartInstance) {
-    employeeRadarChartInstance.destroy();
-  }
-
-  const categoryScores = employeeData.category_scores || {};
-  
-  // ラベルを改行
-  const labels = Object.values(categories).map(label => {
-    if (label.includes('・')) {
-      return label.split('・');
-    }
-    return label;
-  });
-
-  const data = Object.keys(categories).map(key => categoryScores[key] || 0);
-
-  employeeRadarChartInstance = new Chart(ctx, {
-    type: 'radar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: `従業員 ${employeeData.employee_code}`,
-        data: data,
-        backgroundColor: 'rgba(26, 115, 232, 0.2)',
-        borderColor: 'rgba(26, 115, 232, 1)',
-        borderWidth: 2,
-        pointBackgroundColor: 'rgba(26, 115, 232, 1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(26, 115, 232, 1)'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      scales: {
-        r: {
-          beginAtZero: true,
-          max: 100,
-          ticks: {
-            stepSize: 20,
-            font: { size: 10 }
-          },
-          pointLabels: {
-            font: { size: 11 },
-            padding: 15
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top'
-        },
-        title: {
-          display: true,
-          text: `従業員 ${employeeData.employee_code} - カテゴリー別スコア`,
-          font: { size: 16 }
-        }
-      },
-      layout: {
-        padding: 20
-      }
-    }
-  });
-}
-
-// ===========================
-// カテゴリースコア一覧表示
-// ===========================
-function updateEmployeeCategoryScores(employeeData) {
-  const container = document.getElementById('employeeCategoryScores');
-  container.innerHTML = '';
-
-  const categoryScores = employeeData.category_scores || {};
-
-  Object.entries(categories).forEach(([key, label]) => {
-    const score = categoryScores[key] || 0;
-    
-    const item = document.createElement('div');
-    item.className = 'category-score-item';
-    item.innerHTML = `
-      <span class="category-name">${label}</span>
-      <span class="category-score">${score.toFixed(1)}点</span>
-    `;
-    container.appendChild(item);
-  });
-}
-
-// ===========================
-// 全35問回答詳細表示
-// ===========================
-function updateEmployeeAnswers(employeeData) {
-  const container = document.getElementById('employeeAnswersContainer');
-  container.innerHTML = '';
-
-  const answers = employeeData.answers || {};
-
-  for (let qNum = 1; qNum <= 35; qNum++) {
-    const questionData = surveyQuestions[qNum];
-    if (!questionData) continue;
-
-    const userAnswer = answers[`q${qNum}`];
-    if (userAnswer === undefined || userAnswer === null) continue;
-
-    const questionItem = document.createElement('div');
-    questionItem.className = 'question-item';
-
-    const categoryLabel = categories[questionData.category];
-
-    // 選択肢の表示
-    const choicesHTML = questionData.choices.map((choice, index) => {
-      const isSelected = userAnswer === index;
-      return `<span class="choice-item ${isSelected ? 'selected' : ''}">${choice}</span>`;
+        return `
+            <tr>
+                <td>${formatDate(item.survey_date)}</td>
+                <td>${item.company_code || '-'}</td>
+                <td>${item.employee_code || '-'}</td>
+                <td>${nationalityDisplay}</td>
+                <td><strong>${item.totalScore.toFixed(1)}</strong></td>
+                <td>${item.year_month || '-'}</td>
+            </tr>
+        `;
     }).join('');
 
-    questionItem.innerHTML = `
-      <div class="question-header">
-        <span class="question-number">Q${qNum}</span>
-        <span class="question-category-tag">${categoryLabel}</span>
-      </div>
-      <div class="question-text">${questionData.text}</div>
-      <div class="answer-choices">
-        ${choicesHTML}
-      </div>
+    console.log('✅ テーブル更新完了');
+}
+
+// 日付フォーマット関数
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+// リスクレベル計算
+function calculateRiskLevel(item) {
+    const totalScore = item.totalScore;
+    const categoryScores = item.categoryScores || {};
+
+    if (Object.keys(categoryScores).length === 0) {
+        if (totalScore <= 40) return 'high';
+        if (totalScore <= 50) return 'medium';
+        return 'low';
+    }
+
+    if (totalScore <= 40) return 'high';
+    if (categoryScores.salary && categoryScores.salary <= 30) return 'high';
+    if (categoryScores.relationship && categoryScores.relationship <= 30) return 'high';
+    if (categoryScores.culture && categoryScores.culture <= 30) return 'high';
+
+    if (totalScore <= 50) return 'medium';
+
+    return 'low';
+}
+
+// レーダーチャート更新
+function updateRadarChart() {
+    const ctx = document.getElementById('radarChart');
+    if (!ctx) {
+        console.warn('⚠️ radarChart要素が見つかりません');
+        return;
+    }
+
+    console.log('📊 レーダーチャート更新');
+
+    const categoryAverages = {};
+    const categoryCounts = {};
+
+    Object.keys(categories).forEach(key => {
+        categoryAverages[key] = 0;
+        categoryCounts[key] = 0;
+    });
+
+    filteredData.forEach(item => {
+        const categoryScores = item.categoryScores || {};
+        Object.keys(categories).forEach(key => {
+            if (categoryScores[key] !== undefined && categoryScores[key] !== null) {
+                categoryAverages[key] += parseFloat(categoryScores[key]) || 0;
+                categoryCounts[key]++;
+            }
+        });
+    });
+
+    Object.keys(categories).forEach(key => {
+        if (categoryCounts[key] > 0) {
+            categoryAverages[key] = categoryAverages[key] / categoryCounts[key];
+        }
+    });
+
+    console.log('📈 カテゴリー別平均:', categoryAverages);
+
+    const labels = Object.values(categories);
+    const data = Object.keys(categories).map(key => categoryAverages[key]);
+
+    if (window.radarChartInstance) {
+        window.radarChartInstance.destroy();
+    }
+
+    window.radarChartInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '平均スコア',
+                data: data,
+                backgroundColor: 'rgba(26, 115, 232, 0.2)',
+                borderColor: 'rgba(26, 115, 232, 1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(26, 115, 232, 1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        stepSize: 20,
+                        font: {
+                            size: 11
+                        }
+                    },
+                    pointLabels: {
+                        font: {
+                            size: 11,
+                            weight: 'normal'
+                        },
+                        padding: 15,
+                        callback: function(label) {
+                            // 長いラベルを改行
+                            if (label.length > 10) {
+                                const words = label.split('・');
+                                if (words.length > 1) {
+                                    return words;
+                                }
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    top: 20,
+                    bottom: 20,
+                    left: 20,
+                    right: 20
+                }
+            }
+        }
+    });
+
+    console.log('✅ レーダーチャート更新完了');
+}
+
+// トレンドチャート更新
+function updateTrendChart() {
+    const ctx = document.getElementById('trendChart');
+    if (!ctx) {
+        console.warn('⚠️ trendChart要素が見つかりません');
+        return;
+    }
+
+    console.log('📈 トレンドチャート更新');
+
+    const monthlyData = {};
+    
+    filteredData.forEach(item => {
+        const month = item.year_month;
+        if (!month) return;
+        
+        if (!monthlyData[month]) {
+            monthlyData[month] = { total: 0, count: 0 };
+        }
+        monthlyData[month].total += item.totalScore;
+        monthlyData[month].count++;
+    });
+
+    const sortedMonths = Object.keys(monthlyData).sort();
+    const labels = sortedMonths;
+    const data = sortedMonths.map(month => 
+        (monthlyData[month].total / monthlyData[month].count).toFixed(1)
+    );
+
+    console.log('📊 月別データ:', { labels, data });
+
+    if (window.trendChartInstance) {
+        window.trendChartInstance.destroy();
+    }
+
+    window.trendChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '平均スコア推移',
+                data: data,
+                borderColor: 'rgba(26, 115, 232, 1)',
+                backgroundColor: 'rgba(26, 115, 232, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                }
+            }
+        }
+    });
+
+    console.log('✅ トレンドチャート更新完了');
+}
+
+// AI分析更新
+function updateAIAnalysis() {
+    const aiInsights = document.getElementById('aiInsights');
+    if (!aiInsights) {
+        console.warn('⚠️ aiInsights要素が見つかりません');
+        return;
+    }
+
+    console.log('🤖 AI分析更新');
+    
+    if (filteredData.length === 0) {
+        aiInsights.innerHTML = '<div class="ai-insight-card"><p>データがありません</p></div>';
+        return;
+    }
+
+    const avgScore = filteredData.reduce((sum, d) => sum + d.totalScore, 0) / filteredData.length;
+    
+    const nationalityGroups = {};
+    filteredData.forEach(item => {
+        const nat = item.nationality || 'unknown';
+        if (!nationalityGroups[nat]) {
+            nationalityGroups[nat] = [];
+        }
+        nationalityGroups[nat].push(item);
+    });
+
+    let html = `
+        <div class="ai-insight-card">
+            <h3>📊 総合分析</h3>
+            <p>平均スコア: <strong>${avgScore.toFixed(1)}点</strong></p>
+            <p>総回答数: <strong>${filteredData.length}件</strong></p>
+        </div>
     `;
 
-    container.appendChild(questionItem);
-  }
+    Object.keys(nationalityGroups).forEach(nat => {
+        const group = nationalityGroups[nat];
+        const groupAvg = group.reduce((sum, d) => sum + d.totalScore, 0) / group.length;
+        const displayName = nationalityDisplayNames[nat] || nat;
+        
+        html += `
+            <div class="ai-insight-card">
+                <h3>${displayName}（${group.length}名）</h3>
+                <p>平均スコア: <strong>${groupAvg.toFixed(1)}点</strong></p>
+        `;
+
+        const categoryAverages = {};
+        group.forEach(item => {
+            const categoryScores = item.categoryScores || {};
+            Object.keys(categories).forEach(key => {
+                if (categoryScores[key] !== undefined && categoryScores[key] !== null) {
+                    if (!categoryAverages[key]) {
+                        categoryAverages[key] = { total: 0, count: 0 };
+                    }
+                    categoryAverages[key].total += parseFloat(categoryScores[key]);
+                    categoryAverages[key].count++;
+                }
+            });
+        });
+
+        if (Object.keys(categoryAverages).length > 0) {
+            const lowCategories = Object.keys(categoryAverages)
+                .filter(key => categoryAverages[key].count > 0)
+                .map(key => ({
+                    key,
+                    avg: categoryAverages[key].total / categoryAverages[key].count
+                }))
+                .filter(c => c.avg < 50)
+                .sort((a, b) => a.avg - b.avg);
+
+            if (lowCategories.length > 0) {
+                html += `<p style="opacity: 0.9;">⚠️ 注意が必要なカテゴリー:</p><ul style="opacity: 0.9;">`;
+                lowCategories.forEach(cat => {
+                    html += `<li>${categories[cat.key]}: ${cat.avg.toFixed(1)}点</li>`;
+                });
+                html += `</ul>`;
+            }
+        }
+
+        html += `</div>`;
+    });
+
+    aiInsights.innerHTML = html;
+    console.log('✅ AI分析更新完了');
+}
+
+// リスクアラート更新
+function updateRiskAlerts() {
+    const container = document.getElementById('riskAlertContainer');
+    if (!container) {
+        console.warn('⚠️ riskAlertContainer要素が見つかりません');
+        return;
+    }
+
+    console.log('⚠️ リスクアラート更新');
+
+    const highRisk = filteredData.filter(d => calculateRiskLevel(d) === 'high');
+    const mediumRisk = filteredData.filter(d => calculateRiskLevel(d) === 'medium');
+    const lowRisk = filteredData.filter(d => calculateRiskLevel(d) === 'low');
+
+    console.log('📊 リスク分布:', {
+        high: highRisk.length,
+        medium: mediumRisk.length,
+        low: lowRisk.length
+    });
+
+    if (highRisk.length === 0 && mediumRisk.length === 0) {
+        container.innerHTML = `
+            <div class="no-risk">
+                <span class="material-icons">check_circle</span>
+                <p>リスクアラートはありません</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+
+    if (highRisk.length > 0) {
+        html += '<h3 style="color: #d93025; margin-bottom: 16px;">🔴 高リスク対象者</h3>';
+        highRisk.forEach(item => {
+            const nationalityDisplay = nationalityDisplayNames[item.nationality] || item.nationality || '-';
+            html += `
+                <div class="risk-card high">
+                    <div class="risk-header">
+                        <span class="risk-level">高リスク</span>
+                        <span class="risk-score">${item.totalScore.toFixed(1)}点</span>
+                    </div>
+                    <p><strong>${item.employee_code}</strong> (${nationalityDisplay})</p>
+                    <p class="risk-reason">総合スコアが低い、または重要カテゴリーのスコアが著しく低い</p>
+                </div>
+            `;
+        });
+    }
+
+    if (mediumRisk.length > 0) {
+        html += '<h3 style="color: #f9ab00; margin-bottom: 16px; margin-top: 24px;">🟡 中リスク対象者</h3>';
+        mediumRisk.forEach(item => {
+            const nationalityDisplay = nationalityDisplayNames[item.nationality] || item.nationality || '-';
+            html += `
+                <div class="risk-card medium">
+                    <div class="risk-header">
+                        <span class="risk-level">中リスク</span>
+                        <span class="risk-score">${item.totalScore.toFixed(1)}点</span>
+                    </div>
+                    <p><strong>${item.employee_code}</strong> (${nationalityDisplay})</p>
+                    <p class="risk-reason">改善の余地があるスコア</p>
+                </div>
+            `;
+        });
+    }
+
+    container.innerHTML = html;
+    console.log('✅ リスクアラート更新完了');
 }
