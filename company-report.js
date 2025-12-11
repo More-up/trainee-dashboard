@@ -680,17 +680,20 @@ async function expandAllEmployees() {
     
     for (const code of employeeCodes) {
         const detailDiv = document.getElementById(`detail-${code}`);
-        if (detailDiv && detailDiv.style.display === 'none') {
+        if (detailDiv && !detailDiv.classList.contains('expanded')) {
             // 従業員詳細を展開
-            await toggleEmployee(code);
-            await new Promise(resolve => setTimeout(resolve, 100));
+            toggleEmployee(code);
+            await new Promise(resolve => setTimeout(resolve, 300));
         }
         
         // 35問の回答も展開
         const questionsDiv = document.getElementById(`questions-${code}`);
-        if (questionsDiv && questionsDiv.style.maxHeight === '0px') {
-            toggleQuestions(code);
-            await new Promise(resolve => setTimeout(resolve, 50));
+        if (questionsDiv) {
+            const currentHeight = questionsDiv.style.maxHeight;
+            if (!currentHeight || currentHeight === '0px' || currentHeight === '0') {
+                toggleQuestions(code);
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
         }
     }
 }
@@ -752,16 +755,38 @@ async function generatePDF(loadingMsg) {
         
         // ステップ3: PDF化する要素をクローン
         loadingMsg.innerHTML = '📄 PDF生成中...<br><small style="font-size: 14px; opacity: 0.8;">ステップ3/3: PDFを生成中...</small>';
+        
+        // ヘッダーとコンテンツを含むPDF用要素を作成
+        const pdfContainer = document.createElement('div');
+        pdfContainer.className = 'pdf-container';
+        
+        // ヘッダーをクローン
+        const header = document.querySelector('.report-header').cloneNode(true);
+        // 月選択ドロップダウンと比較ボタンを削除
+        const monthSelector = header.querySelector('.month-selector-container');
+        if (monthSelector) {
+            const select = monthSelector.querySelector('select');
+            const compareBtn = monthSelector.querySelector('.btn-compare');
+            if (compareBtn) compareBtn.remove();
+            if (select) {
+                const selectedMonth = select.options[select.selectedIndex].text;
+                monthSelector.innerHTML = `<span style="font-size: 18px; opacity: 0.9;">調査月: ${selectedMonth}</span>`;
+            }
+        }
+        pdfContainer.appendChild(header);
+        
+        // コンテンツをクローン
         const element = document.getElementById('content').cloneNode(true);
+        pdfContainer.appendChild(element);
         
         // アクションボタンを削除（PDFには不要）
-        const actionButtons = element.querySelector('.action-buttons');
+        const actionButtons = pdfContainer.querySelector('.action-buttons');
         if (actionButtons) actionButtons.remove();
         
         // 折りたたみアイコンを削除
-        element.querySelectorAll('.toggle-icon').forEach(icon => icon.remove());
-        element.querySelectorAll('.expand-btn').forEach(btn => btn.remove());
-        element.querySelectorAll('.questions-toggle').forEach(btn => btn.remove());
+        pdfContainer.querySelectorAll('.toggle-icon').forEach(icon => icon.remove());
+        pdfContainer.querySelectorAll('.expand-btn').forEach(btn => btn.remove());
+        pdfContainer.querySelectorAll('.questions-toggle').forEach(btn => btn.remove());
         
         // PDF用スタイル追加
         const style = document.createElement('style');
@@ -937,7 +962,7 @@ async function generatePDF(loadingMsg) {
             ul { margin-left: 20px; }
             li { margin-bottom: 5px; }
         `;
-        element.insertBefore(style, element.firstChild);
+        pdfContainer.insertBefore(style, pdfContainer.firstChild);
         
         // レーダーチャートのレンダリングを待つ
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -967,7 +992,7 @@ async function generatePDF(loadingMsg) {
         };
         
         // PDF生成
-        await html2pdf().set(opt).from(element).save();
+        await html2pdf().set(opt).from(pdfContainer).save();
         
         // ローディング削除
         if (loadingMsg && loadingMsg.parentNode) {
