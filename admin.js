@@ -6,7 +6,7 @@ let currentUser = null;
 // API エンドポイント
 const API_BASE_URL = 'https://engagement-api.more-up.workers.dev';
 
-// カテゴリー定義（技能実習生向けに修正）
+// カテゴリー定義（技能実習生向け）
 const categories = {
     work: '業務・職場環境',
     salary: '給与・待遇',
@@ -18,16 +18,16 @@ const categories = {
     career: 'キャリア・将来の見通し'
 };
 
-// カテゴリーと質問のマッピング（技能実習生向けに修正）
+// カテゴリーと質問のマッピング（新しい設問構成に対応）
 const categoryQuestionMap = {
-    work: [1, 2, 3, 4],
-    salary: [5, 6, 7, 8],
-    family: [9, 10, 11, 12, 13],
-    relationship: [14, 15, 16, 17, 18],
-    communication: [19, 20, 21, 22, 23],
-    culture: [24, 25, 26, 27],
-    living: [28, 29, 30],
-    career: [31, 32, 33, 34, 35]
+    work: [1, 2, 3, 4],           // 4問
+    salary: [5, 6, 7, 8],         // 4問
+    family: [9, 10, 11, 12],      // 4問
+    relationship: [13, 14, 15, 16], // 4問
+    communication: [17, 18, 19, 20, 21], // 5問
+    culture: [22, 23],            // 2問
+    living: [24, 25, 26, 27, 28, 29], // 6問
+    career: [30, 31, 32, 33, 34, 35]  // 6問
 };
 
 // 国籍の表示名マッピング (17カ国)
