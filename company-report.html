@@ -14,7 +14,15 @@
             <h1>📊 技能実習生エンゲージメント診断レポート</h1>
             <div class="header-info">
                 <div class="company-name" id="companyName">読み込み中...</div>
-                <div class="survey-period" id="surveyPeriod">-</div>
+                <div class="month-selector-container">
+                    <label for="monthSelector">調査月:</label>
+                    <select id="monthSelector" class="month-selector" onchange="changeMonth()">
+                        <option value="">読み込み中...</option>
+                    </select>
+                    <button class="btn-compare" id="compareBtn" onclick="showComparison()" style="display: none;">
+                        📊 前月と比較
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -30,6 +38,17 @@
             <p id="errorMessage">データの読み込みに失敗しました</p>
         </div>
 
+        <!-- 月別比較モーダル -->
+        <div id="comparisonModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📊 月別比較レポート</h2>
+                    <button class="modal-close" onclick="closeComparison()">✕</button>
+                </div>
+                <div class="modal-body" id="comparisonContent"></div>
+            </div>
+        </div>
+
         <!-- メインコンテンツ -->
         <div id="content" style="display: none;">
             
@@ -41,9 +60,6 @@
                 <button class="btn btn-secondary" onclick="exportCSV()">
                     📊 CSV出力
                 </button>
-                <a href="admin-dashboard.html" class="btn btn-outline">
-                    ← 管理画面に戻る
-                </a>
             </div>
 
             <!-- サマリーカード -->
@@ -109,7 +125,14 @@
                                     <span class="criteria-reason">→ 急激な環境変化・トラブル発生の可能性</span>
                                 </li>
                             </ul>
-                            <div class="action-tag">推奨アクション：<strong>今週中に個別面談を実施</strong></div>
+                            <div class="action-tag">
+                                <strong>推奨アクション：</strong><br>
+                                ・今週中に個別面談を実施し、不満の原因を特定<br>
+                                ・母国語通訳を手配し、本音を引き出す環境を整備<br>
+                                ・「給与・待遇」が30点以下の場合：給与明細の詳細説明、手当・控除の内訳を再確認<br>
+                                ・「人間関係」が30点以下の場合：同国籍の先輩実習生とペアリング、組合からの人的サポートを推奨<br>
+                                ・「日本語・コミュニケーション」が30点以下の場合：日本語学習サポートの強化を推奨（週1回の日本語教室、eラーニング教材の提供など）
+                            </div>
                         </div>
                         <div class="criteria-card medium">
                             <h3>🟡 中リスク（要注意）</h3>
@@ -121,7 +144,13 @@
                                     <span class="criteria-reason">→ 部分的な課題があり、早めの対応が必要</span>
                                 </li>
                             </ul>
-                            <div class="action-tag">推奨アクション：<strong>2週間以内に状況確認</strong></div>
+                            <div class="action-tag">
+                                <strong>推奨アクション：</strong><br>
+                                ・2週間以内に個別面談を実施し、不満の原因を特定<br>
+                                ・「給与・待遇」が40点以下の場合：給与明細の詳細説明、手当・控除の内訳を再確認<br>
+                                ・「人間関係」が40点以下の場合：同国籍の先輩実習生とペアリング、組合からの人的サポートを推奨<br>
+                                ・「日本語・コミュニケーション」が40点以下の場合：日本語学習サポートの強化を推奨（週1回の日本語教室、eラーニング教材の提供など）
+                            </div>
                         </div>
                         <div class="criteria-card low">
                             <h3>🟢 安定（良好）</h3>
@@ -130,7 +159,7 @@
                                     <span class="criteria-reason">→ 現状に満足しており、継続就労の意欲が高い</span>
                                 </li>
                             </ul>
-                            <div class="action-tag">推奨アクション：<strong>現状維持・定期的なフォロー</strong></div>
+                            <div class="action-tag"><strong>推奨アクション：</strong> 現状維持・定期的なフォロー</div>
                         </div>
                     </div>
                 </div>
