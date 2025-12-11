@@ -53,54 +53,56 @@ const nationalityDisplayNames = {
 
 // 初期化
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM読み込み完了');
+    console.log('🚀 DOM読み込み完了');
     checkLoginStatus();
     setupEventListeners();
 });
 
-// ログイン状態確認
+// ログイン状態確認（完全修正版）
 function checkLoginStatus() {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
     
-    console.log('ログイン状態確認:', isLoggedIn);
+    console.log('🔐 ログイン状態確認:', isLoggedIn);
     
     if (isLoggedIn === 'true') {
-        currentUser = sessionStorage.getItem('adminUsername') || 'Admin';
-        console.log('ログイン済み - ユーザー:', currentUser);
+        currentUser = sessionStorage.getItem('adminUsername') || 'moreup-trainee';
+        console.log('✅ ログイン済み - ユーザー:', currentUser);
         
         // ユーザー名表示
         const adminUsernameEl = document.getElementById('adminUsername');
         if (adminUsernameEl) {
             adminUsernameEl.textContent = currentUser;
+            console.log('👤 ユーザー名表示完了');
         }
         
         // データ読み込み
         loadData();
     } else {
-        console.log('未ログイン - ログインページへリダイレクト');
+        console.log('❌ 未ログイン - ログインページへリダイレクト');
         window.location.href = 'admin-login.html';
     }
 }
 
 // ログアウト
 function logout() {
-    console.log('ログアウト処理');
+    console.log('🚪 ログアウト処理開始');
     sessionStorage.removeItem('adminLoggedIn');
     sessionStorage.removeItem('adminUsername');
+    console.log('✅ セッション削除完了');
     window.location.href = 'admin-login.html';
 }
 
 // イベントリスナー設定
 function setupEventListeners() {
-    console.log('イベントリスナー設定開始');
+    console.log('🎯 イベントリスナー設定開始');
     
-    // フィルター要素の取得と確認
+    // フィルター
     const filterCompany = document.getElementById('filterCompany');
     const filterMonth = document.getElementById('filterMonth');
     const filterEmployee = document.getElementById('filterEmployee');
     const filterNationality = document.getElementById('filterNationality');
     
-    console.log('フィルター要素:', {
+    console.log('📋 フィルター要素:', {
         company: !!filterCompany,
         month: !!filterMonth,
         employee: !!filterEmployee,
@@ -111,23 +113,25 @@ function setupEventListeners() {
     if (filterMonth) filterMonth.addEventListener('change', applyFilters);
     if (filterEmployee) filterEmployee.addEventListener('input', applyFilters);
     if (filterNationality) filterNationality.addEventListener('change', applyFilters);
+    
+    console.log('✅ イベントリスナー設定完了');
 }
 
 // データ読み込み
 async function loadData() {
-    console.log('データ読み込み開始');
+    console.log('📥 データ読み込み開始');
     
     try {
         const response = await fetch(`${API_BASE_URL}/api/results`);
-        console.log('APIレスポンスステータス:', response.status);
+        console.log('🌐 APIレスポンスステータス:', response.status);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
-        console.log('取得したデータ:', data);
-        console.log('データ件数:', data.results?.length);
+        console.log('📊 取得したデータ:', data);
+        console.log('📈 データ件数:', data.results?.length);
         
         // データ処理
         allData = data.results.map(item => {
@@ -139,7 +143,7 @@ async function loadData() {
                         ? JSON.parse(item.category_scores) 
                         : item.category_scores;
                 } catch (e) {
-                    console.warn('category_scores解析エラー:', e, item.category_scores);
+                    console.warn('⚠️ category_scores解析エラー:', e);
                 }
             }
 
@@ -151,7 +155,7 @@ async function loadData() {
                         ? JSON.parse(item.answers) 
                         : item.answers;
                 } catch (e) {
-                    console.warn('answers解析エラー:', e);
+                    console.warn('⚠️ answers解析エラー:', e);
                 }
             }
 
@@ -163,26 +167,30 @@ async function loadData() {
             };
         });
 
-        console.log('処理後のデータ件数:', allData.length);
-        console.log('最初のデータサンプル:', allData[0]);
+        console.log('✅ 処理後のデータ件数:', allData.length);
+        if (allData.length > 0) {
+            console.log('📝 最初のデータサンプル:', allData[0]);
+        }
 
         filteredData = [...allData];
         updateFilters();
         updateDisplay();
         
+        console.log('🎉 データ読み込み完了');
+        
     } catch (error) {
-        console.error('データ読み込みエラー:', error);
+        console.error('❌ データ読み込みエラー:', error);
         alert('データの読み込みに失敗しました: ' + error.message);
     }
 }
 
 // フィルター更新
 function updateFilters() {
-    console.log('フィルター更新開始');
+    console.log('🔧 フィルター更新開始');
     
     // 企業フィルター
     const companies = [...new Set(allData.map(d => d.company_code).filter(Boolean))];
-    console.log('企業一覧:', companies);
+    console.log('🏢 企業一覧:', companies);
     
     const companyFilter = document.getElementById('filterCompany');
     if (companyFilter) {
@@ -192,7 +200,7 @@ function updateFilters() {
 
     // 年月フィルター
     const months = [...new Set(allData.map(d => d.year_month).filter(Boolean))].sort().reverse();
-    console.log('年月一覧:', months);
+    console.log('📅 年月一覧:', months);
     
     const monthFilter = document.getElementById('filterMonth');
     if (monthFilter) {
@@ -200,32 +208,19 @@ function updateFilters() {
             months.map(m => `<option value="${m}">${m}</option>`).join('');
     }
 
-    // 従業員フィルター（自動生成）
-    const employees = [...new Set(allData.map(d => d.employee_code).filter(Boolean))].sort();
-    const employeeFilter = document.getElementById('filterEmployee');
-    if (employeeFilter) {
-        // inputタイプなのでdatalist使用
-        let datalist = document.getElementById('employeeList');
-        if (!datalist) {
-            datalist = document.createElement('datalist');
-            datalist.id = 'employeeList';
-            employeeFilter.after(datalist);
-            employeeFilter.setAttribute('list', 'employeeList');
-        }
-        datalist.innerHTML = employees.map(e => `<option value="${e}">`).join('');
-    }
+    console.log('✅ フィルター更新完了');
 }
 
 // フィルター適用
 function applyFilters() {
-    console.log('フィルター適用開始');
+    console.log('🔍 フィルター適用開始');
     
     const company = document.getElementById('filterCompany')?.value;
     const month = document.getElementById('filterMonth')?.value;
     const employee = document.getElementById('filterEmployee')?.value.toLowerCase();
     const nationality = document.getElementById('filterNationality')?.value;
 
-    console.log('フィルター条件:', { company, month, employee, nationality });
+    console.log('🎯 フィルター条件:', { company, month, employee, nationality });
 
     filteredData = allData.filter(item => {
         if (company && item.company_code !== company) return false;
@@ -235,19 +230,20 @@ function applyFilters() {
         return true;
     });
 
-    console.log('フィルター後のデータ件数:', filteredData.length);
+    console.log('✅ フィルター後のデータ件数:', filteredData.length);
     updateDisplay();
 }
 
 // 表示更新
 function updateDisplay() {
-    console.log('表示更新開始');
+    console.log('🖼️ 表示更新開始');
     updateStatistics();
     updateDataTable();
     updateRadarChart();
     updateTrendChart();
     updateAIAnalysis();
     updateRiskAlerts();
+    console.log('✅ 表示更新完了');
 }
 
 // 統計情報更新
@@ -263,7 +259,7 @@ function updateStatistics() {
         ? Math.min(...filteredData.map(d => d.totalScore)).toFixed(1)
         : 0;
 
-    console.log('統計情報:', { totalCount, avgScore, maxScore, minScore });
+    console.log('📊 統計情報:', { totalCount, avgScore, maxScore, minScore });
 
     const totalResponsesEl = document.getElementById('totalResponses');
     const averageScoreEl = document.getElementById('averageScore');
@@ -280,14 +276,14 @@ function updateStatistics() {
 function updateDataTable() {
     const tbody = document.getElementById('dataTableBody');
     if (!tbody) {
-        console.warn('dataTableBody要素が見つかりません');
+        console.warn('⚠️ dataTableBody要素が見つかりません');
         return;
     }
 
-    console.log('テーブル更新 - データ件数:', filteredData.length);
+    console.log('📋 テーブル更新 - データ件数:', filteredData.length);
 
     if (filteredData.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">データがありません</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #5f6368;">データがありません</td></tr>';
         return;
     }
 
@@ -305,6 +301,8 @@ function updateDataTable() {
             </tr>
         `;
     }).join('');
+
+    console.log('✅ テーブル更新完了');
 }
 
 // リスクレベル計算
@@ -335,11 +333,11 @@ function calculateRiskLevel(item) {
 function updateRadarChart() {
     const ctx = document.getElementById('radarChart');
     if (!ctx) {
-        console.warn('radarChart要素が見つかりません');
+        console.warn('⚠️ radarChart要素が見つかりません');
         return;
     }
 
-    console.log('レーダーチャート更新');
+    console.log('📊 レーダーチャート更新');
 
     // カテゴリー別平均スコア計算
     const categoryAverages = {};
@@ -367,7 +365,7 @@ function updateRadarChart() {
         }
     });
 
-    console.log('カテゴリー別平均:', categoryAverages);
+    console.log('📈 カテゴリー別平均:', categoryAverages);
 
     const labels = Object.values(categories);
     const data = Object.keys(categories).map(key => categoryAverages[key]);
@@ -407,17 +405,19 @@ function updateRadarChart() {
             }
         }
     });
+
+    console.log('✅ レーダーチャート更新完了');
 }
 
 // トレンドチャート更新
 function updateTrendChart() {
     const ctx = document.getElementById('trendChart');
     if (!ctx) {
-        console.warn('trendChart要素が見つかりません');
+        console.warn('⚠️ trendChart要素が見つかりません');
         return;
     }
 
-    console.log('トレンドチャート更新');
+    console.log('📈 トレンドチャート更新');
 
     // 年月別平均スコア計算
     const monthlyData = {};
@@ -440,7 +440,7 @@ function updateTrendChart() {
         (monthlyData[month].total / monthlyData[month].count).toFixed(1)
     );
 
-    console.log('月別データ:', { labels, data });
+    console.log('📊 月別データ:', { labels, data });
 
     if (window.trendChartInstance) {
         window.trendChartInstance.destroy();
@@ -473,17 +473,19 @@ function updateTrendChart() {
             }
         }
     });
+
+    console.log('✅ トレンドチャート更新完了');
 }
 
 // AI分析更新
 function updateAIAnalysis() {
     const aiInsights = document.getElementById('aiInsights');
     if (!aiInsights) {
-        console.warn('aiInsights要素が見つかりません');
+        console.warn('⚠️ aiInsights要素が見つかりません');
         return;
     }
 
-    console.log('AI分析更新');
+    console.log('🤖 AI分析更新');
     
     if (filteredData.length === 0) {
         aiInsights.innerHTML = '<div class="ai-insight-card"><p>データがありません</p></div>';
@@ -559,23 +561,24 @@ function updateAIAnalysis() {
     });
 
     aiInsights.innerHTML = html;
+    console.log('✅ AI分析更新完了');
 }
 
 // リスクアラート更新
 function updateRiskAlerts() {
     const container = document.getElementById('riskAlertContainer');
     if (!container) {
-        console.warn('riskAlertContainer要素が見つかりません');
+        console.warn('⚠️ riskAlertContainer要素が見つかりません');
         return;
     }
 
-    console.log('リスクアラート更新');
+    console.log('⚠️ リスクアラート更新');
 
     const highRisk = filteredData.filter(d => calculateRiskLevel(d) === 'high');
     const mediumRisk = filteredData.filter(d => calculateRiskLevel(d) === 'medium');
     const lowRisk = filteredData.filter(d => calculateRiskLevel(d) === 'low');
 
-    console.log('リスク分布:', {
+    console.log('📊 リスク分布:', {
         high: highRisk.length,
         medium: mediumRisk.length,
         low: lowRisk.length
@@ -608,6 +611,7 @@ function updateRiskAlerts() {
     }
 
     container.innerHTML = html;
+    console.log('✅ リスクアラート更新完了');
 }
 
 // リスクカード作成
@@ -667,7 +671,7 @@ function getRecommendedAction(item, level) {
 
 // CSVエクスポート
 function exportCSV() {
-    console.log('CSV出力開始');
+    console.log('📥 CSV出力開始');
     
     if (filteredData.length === 0) {
         alert('エクスポートするデータがありません');
@@ -713,7 +717,7 @@ function exportCSV() {
     link.download = `trainee_survey_${new Date().toISOString().split('T')[0]}.csv`;
     link.click();
     
-    console.log('CSV出力完了');
+    console.log('✅ CSV出力完了');
 }
 
 // 日付フォーマット
