@@ -674,6 +674,27 @@ function toggleSection(sectionId) {
     }
 }
 
+// 全従業員の詳細を強制展開
+async function expandAllEmployees() {
+    const employeeCodes = allEmployees.map(emp => emp.employee_code);
+    
+    for (const code of employeeCodes) {
+        const detailDiv = document.getElementById(`detail-${code}`);
+        if (detailDiv && detailDiv.style.display === 'none') {
+            // 従業員詳細を展開
+            await toggleEmployee(code);
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        
+        // 35問の回答も展開
+        const questionsDiv = document.getElementById(`questions-${code}`);
+        if (questionsDiv && questionsDiv.style.maxHeight === '0px') {
+            toggleQuestions(code);
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+    }
+}
+
 // PDF出力
 async function exportPDF() {
     try {
@@ -684,15 +705,16 @@ async function exportPDF() {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             color: white;
-            padding: 30px 50px;
-            border-radius: 10px;
+            padding: 40px 60px;
+            border-radius: 15px;
             z-index: 10000;
-            font-size: 18px;
+            font-size: 20px;
             text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         `;
-        loadingMsg.innerHTML = '📄 PDF生成中...<br><small>数秒お待ちください</small>';
+        loadingMsg.innerHTML = '📄 PDF生成中...<br><small style="font-size: 14px; opacity: 0.8;">全従業員の詳細を展開しています<br>10～20秒お待ちください</small>';
         document.body.appendChild(loadingMsg);
         
         // html2pdf.jsが読み込まれていない場合は動的に読み込む
@@ -708,6 +730,9 @@ async function exportPDF() {
     } catch (error) {
         console.error('PDF生成エラー:', error);
         alert('PDF生成に失敗しました: ' + error.message);
+        if (loadingMsg && loadingMsg.parentNode) {
+            loadingMsg.parentNode.removeChild(loadingMsg);
+        }
     }
 }
 
@@ -717,7 +742,16 @@ async function generatePDF(loadingMsg) {
         const params = getURLParams();
         const filename = `技能実習生エンゲージメント診断レポート_${params.company}_${params.month}.pdf`;
         
-        // PDF化する要素をクローン
+        // ステップ1: 全従業員の詳細を強制展開
+        loadingMsg.innerHTML = '📄 PDF甞成中...<br><small style="font-size: 14px; opacity: 0.8;">ステップ1/3: 全従業員の詳細を展開中...</small>';
+        await expandAllEmployees();
+        
+        // ステップ2: レーダーチャートの描画を待つ
+        loadingMsg.innerHTML = '📄 PDF生成中...<br><small style="font-size: 14px; opacity: 0.8;">ステップ2/3: チャートを描画中...</small>';
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // ステップ3: PDF化する要素をクローン
+        loadingMsg.innerHTML = '📄 PDF生成中...<br><small style="font-size: 14px; opacity: 0.8;">ステップ3/3: PDFを生成中...</small>';
         const element = document.getElementById('content').cloneNode(true);
         
         // アクションボタンを削除（PDFには不要）
@@ -747,20 +781,37 @@ async function generatePDF(loadingMsg) {
                 line-height: 1.6;
             }
             
-            /* サマリーカードを2列グリッド */
+            /* サマリーカードを4列グリッド（横向き用） */
             .summary-cards {
                 display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 15px !important;
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 12px !important;
                 page-break-after: avoid;
                 margin-bottom: 20px;
             }
             
             .summary-card {
                 page-break-inside: avoid;
-                padding: 15px;
+                padding: 12px;
                 border: 1px solid #ddd;
-                border-radius: 8px;
+                border-radius: 6px;
+                text-align: center;
+            }
+            
+            .summary-card .card-icon {
+                font-size: 32px;
+                margin-bottom: 8px;
+            }
+            
+            .summary-card .card-value {
+                font-size: 24px;
+                font-weight: bold;
+                margin: 8px 0;
+            }
+            
+            .summary-card .card-label {
+                font-size: 12px;
+                color: #666;
             }
             
             /* リスク判定基準を3列グリッド */
@@ -812,18 +863,20 @@ async function generatePDF(loadingMsg) {
                 page-break-inside: avoid;
             }
             
-            /* レーダーチャート */
+            /* レーダーチャート（横向き用） */
             .chart-container {
                 page-break-inside: avoid;
                 width: 100% !important;
-                max-width: 350px !important;
-                height: 350px !important;
+                max-width: 280px !important;
+                height: 280px !important;
                 margin: 0 auto;
             }
             
             .chart-container canvas {
                 width: 100% !important;
                 height: 100% !important;
+                max-width: 280px !important;
+                max-height: 280px !important;
             }
             
             /* カテゴリー別スコアグリッド */
@@ -903,7 +956,7 @@ async function generatePDF(loadingMsg) {
             jsPDF: { 
                 unit: 'mm', 
                 format: 'a4', 
-                orientation: 'portrait',
+                orientation: 'landscape',
                 compress: true
             },
             pagebreak: { 
