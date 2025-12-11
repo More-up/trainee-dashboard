@@ -6,28 +6,28 @@ let currentUser = null;
 // API エンドポイント
 const API_BASE_URL = 'https://engagement-api.more-up.workers.dev';
 
-// カテゴリー定義
+// カテゴリー定義（技能実習生向けに修正）
 const categories = {
     work: '業務・職場環境',
     salary: '給与・待遇',
-    living: '生活環境',
+    family: '家族・プライベート事情',
     relationship: '人間関係',
-    communication: 'コミュニケーション',
-    support: '会社のサポート',
-    career: 'キャリア・将来',
-    overall: '全体評価'
+    communication: '日本語・コミュニケーション',
+    culture: '文化・価値観',
+    living: '生活環境',
+    career: 'キャリア・将来の見通し'
 };
 
-// カテゴリーと質問のマッピング
+// カテゴリーと質問のマッピング（技能実習生向けに修正）
 const categoryQuestionMap = {
     work: [1, 2, 3, 4],
-    salary: [5, 6, 7, 8, 9],
-    living: [10, 11, 12, 13, 14],
-    relationship: [15, 16, 17, 18, 19],
-    communication: [20, 21, 22, 23, 24],
-    support: [25, 26, 27, 28, 29],
-    career: [30, 31, 32, 33],
-    overall: [34, 35]
+    salary: [5, 6, 7, 8],
+    family: [9, 10, 11, 12, 13],
+    relationship: [14, 15, 16, 17, 18],
+    communication: [19, 20, 21, 22, 23],
+    culture: [24, 25, 26, 27],
+    living: [28, 29, 30],
+    career: [31, 32, 33, 34, 35]
 };
 
 // 国籍の表示名マッピング (17カ国)
@@ -321,6 +321,17 @@ function updateDataTable() {
     console.log('✅ テーブル更新完了');
 }
 
+// 日付フォーマット関数
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 // リスクレベル計算
 function calculateRiskLevel(item) {
     const totalScore = item.totalScore;
@@ -335,6 +346,7 @@ function calculateRiskLevel(item) {
     if (totalScore <= 40) return 'high';
     if (categoryScores.salary && categoryScores.salary <= 30) return 'high';
     if (categoryScores.relationship && categoryScores.relationship <= 30) return 'high';
+    if (categoryScores.culture && categoryScores.culture <= 30) return 'high';
 
     if (totalScore <= 50) return 'medium';
 
@@ -605,4 +617,37 @@ function updateRiskAlerts() {
     if (highRisk.length > 0) {
         html += '<h3 style="color: #d93025; margin-bottom: 16px;">🔴 高リスク対象者</h3>';
         highRisk.forEach(item => {
-            html
+            const nationalityDisplay = nationalityDisplayNames[item.nationality] || item.nationality || '-';
+            html += `
+                <div class="risk-card high">
+                    <div class="risk-header">
+                        <span class="risk-level">高リスク</span>
+                        <span class="risk-score">${item.totalScore.toFixed(1)}点</span>
+                    </div>
+                    <p><strong>${item.employee_code}</strong> (${nationalityDisplay})</p>
+                    <p class="risk-reason">総合スコアが低い、または重要カテゴリーのスコアが著しく低い</p>
+                </div>
+            `;
+        });
+    }
+
+    if (mediumRisk.length > 0) {
+        html += '<h3 style="color: #f9ab00; margin-bottom: 16px; margin-top: 24px;">🟡 中リスク対象者</h3>';
+        mediumRisk.forEach(item => {
+            const nationalityDisplay = nationalityDisplayNames[item.nationality] || item.nationality || '-';
+            html += `
+                <div class="risk-card medium">
+                    <div class="risk-header">
+                        <span class="risk-level">中リスク</span>
+                        <span class="risk-score">${item.totalScore.toFixed(1)}点</span>
+                    </div>
+                    <p><strong>${item.employee_code}</strong> (${nationalityDisplay})</p>
+                    <p class="risk-reason">改善の余地があるスコア</p>
+                </div>
+            `;
+        });
+    }
+
+    container.innerHTML = html;
+    console.log('✅ リスクアラート更新完了');
+}
