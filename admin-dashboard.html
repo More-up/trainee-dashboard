@@ -637,211 +637,6 @@
     }
 
     /* ===========================
-       個別従業員詳細セクション（新規追加）
-       =========================== */
-    .employee-detail-section {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: var(--spacing-lg);
-      margin-bottom: var(--spacing-lg);
-      box-shadow: var(--shadow-md);
-      border-left: 4px solid var(--primary-color);
-      display: none; /* 初期は非表示 */
-    }
-
-    .employee-detail-section.visible {
-      display: block;
-    }
-
-    .employee-detail-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--spacing-lg);
-      padding-bottom: var(--spacing-md);
-      border-bottom: 2px solid var(--border-color);
-    }
-
-    .employee-detail-title {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-    }
-
-    .employee-detail-title h2 {
-      font-size: 20px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-xs);
-    }
-
-    .employee-badge {
-      background: var(--primary-color);
-      color: white;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .employee-score-summary {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-md);
-      background: var(--background);
-      padding: var(--spacing-md);
-      border-radius: 8px;
-    }
-
-    .employee-score-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .employee-score-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-    }
-
-    .employee-score-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--primary-color);
-    }
-
-    /* レーダーチャート + カテゴリースコア */
-    .employee-detail-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-lg);
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .employee-chart-container {
-      background: var(--background);
-      border-radius: 8px;
-      padding: var(--spacing-md);
-      height: 400px;
-    }
-
-    .employee-category-scores {
-      background: var(--background);
-      border-radius: 8px;
-      padding: var(--spacing-md);
-    }
-
-    .category-score-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--spacing-sm);
-      margin-bottom: var(--spacing-xs);
-      background: white;
-      border-radius: 6px;
-      transition: var(--transition);
-    }
-
-    .category-score-item:hover {
-      transform: translateX(4px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .category-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .category-score {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--primary-color);
-    }
-
-    /* 全35問回答詳細 */
-    .employee-answers-section {
-      background: var(--background);
-      border-radius: 8px;
-      padding: var(--spacing-lg);
-    }
-
-    .employee-answers-section h3 {
-      font-size: 18px;
-      font-weight: 500;
-      margin-bottom: var(--spacing-md);
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-xs);
-    }
-
-    .question-item {
-      background: white;
-      border-radius: 8px;
-      padding: var(--spacing-md);
-      margin-bottom: var(--spacing-md);
-      border-left: 3px solid var(--primary-light);
-    }
-
-    .question-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .question-number {
-      background: var(--primary-color);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .question-category-tag {
-      background: var(--background);
-      color: var(--text-secondary);
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 12px;
-    }
-
-    .question-text {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: var(--spacing-sm);
-      line-height: 1.5;
-    }
-
-    .answer-choices {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .choice-item {
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      background: var(--background);
-      color: var(--text-secondary);
-      border: 2px solid var(--border-color);
-      transition: var(--transition);
-    }
-
-    .choice-item.selected {
-      background: var(--primary-color);
-      color: white;
-      border-color: var(--primary-color);
-      font-weight: 500;
-      transform: scale(1.05);
-    }
-
-    /* ===========================
        空データ表示
        =========================== */
     .no-data {
@@ -877,10 +672,6 @@
         grid-template-columns: 1fr;
       }
 
-      .employee-detail-grid {
-        grid-template-columns: 1fr;
-      }
-
       .table-wrapper {
         font-size: 12px;
       }
@@ -907,8 +698,7 @@
 
       .chart-section,
       .table-section,
-      .ai-analysis,
-      .employee-detail-section {
+      .ai-analysis {
         page-break-inside: avoid;
         box-shadow: none;
       }
@@ -1136,52 +926,6 @@
             <!-- データが動的に挿入されます -->
           </tbody>
         </table>
-      </div>
-    </div>
-
-    <!-- ===========================
-         個別従業員詳細セクション（新規追加）
-         =========================== -->
-    <div class="employee-detail-section" id="employeeDetailSection">
-      <div class="employee-detail-header">
-        <div class="employee-detail-title">
-          <h2>
-            <span class="material-icons">person</span>
-            個別従業員詳細
-          </h2>
-          <span class="employee-badge" id="employeeBadge">従業員 X</span>
-        </div>
-        <div class="employee-score-summary">
-          <div class="employee-score-item">
-            <span class="employee-score-label">総合スコア</span>
-            <span class="employee-score-value" id="employeeTotalScore">--</span>
-          </div>
-          <div class="employee-score-item">
-            <span class="employee-score-label">調査日</span>
-            <span class="employee-score-value" style="font-size: 16px;" id="employeeSurveyDate">--</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- レーダーチャート + カテゴリースコア -->
-      <div class="employee-detail-grid">
-        <div class="employee-chart-container">
-          <canvas id="employeeRadarChart"></canvas>
-        </div>
-        <div class="employee-category-scores" id="employeeCategoryScores">
-          <!-- カテゴリー別スコアが動的に生成されます -->
-        </div>
-      </div>
-
-      <!-- 全35問回答詳細 -->
-      <div class="employee-answers-section">
-        <h3>
-          <span class="material-icons">quiz</span>
-          全35問 回答詳細
-        </h3>
-        <div id="employeeAnswersContainer">
-          <!-- 質問と回答が動的に生成されます -->
-        </div>
       </div>
     </div>
 
