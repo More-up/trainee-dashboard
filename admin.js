@@ -53,6 +53,11 @@ function checkLoginStatus() {
     const loginSection = document.getElementById('loginSection');
     const dashboardSection = document.getElementById('dashboardSection');
 
+    if (!loginSection || !dashboardSection) {
+        console.error('loginSection または dashboardSection が見つかりません');
+        return;
+    }
+
     if (isLoggedIn === 'true') {
         currentUser = localStorage.getItem('adminUsername') || 'Admin';
         loginSection.style.display = 'none';
@@ -123,8 +128,10 @@ async function handleLogin(e) {
         localStorage.setItem('adminUsername', 'Admin');
         checkLoginStatus();
     } else {
-        errorDiv.textContent = 'パスワードが正しくありません';
-        errorDiv.style.display = 'block';
+        if (errorDiv) {
+            errorDiv.textContent = 'パスワードが正しくありません';
+            errorDiv.style.display = 'block';
+        }
     }
 }
 
@@ -137,11 +144,13 @@ async function loadData() {
         }
         const data = await response.json();
         
+        console.log('取得したデータ:', data);
+        
         // データ処理
         allData = data.results.map(item => {
             // category_scoresの安全な解析
             let categoryScores = {};
-            if (item.category_scores && item.category_scores !== 'null') {
+            if (item.category_scores && item.category_scores !== 'null' && item.category_scores !== null) {
                 try {
                     categoryScores = typeof item.category_scores === 'string' 
                         ? JSON.parse(item.category_scores) 
@@ -154,7 +163,7 @@ async function loadData() {
 
             // answersの安全な解析
             let answers = {};
-            if (item.answers && item.answers !== 'null') {
+            if (item.answers && item.answers !== 'null' && item.answers !== null) {
                 try {
                     answers = typeof item.answers === 'string' 
                         ? JSON.parse(item.answers) 
@@ -172,6 +181,8 @@ async function loadData() {
                 totalScore: parseFloat(item.total_score) || 0
             };
         });
+
+        console.log('処理後のデータ件数:', allData.length);
 
         filteredData = [...allData];
         updateFilters();
@@ -254,16 +265,26 @@ function updateStatistics() {
         ? Math.min(...filteredData.map(d => d.totalScore)).toFixed(1)
         : 0;
 
-    document.getElementById('totalCount').textContent = totalCount;
-    document.getElementById('avgScore').textContent = avgScore;
-    document.getElementById('maxScore').textContent = maxScore;
-    document.getElementById('minScore').textContent = minScore;
+    const totalCountEl = document.getElementById('totalCount');
+    const avgScoreEl = document.getElementById('avgScore');
+    const maxScoreEl = document.getElementById('maxScore');
+    const minScoreEl = document.getElementById('minScore');
+
+    if (totalCountEl) totalCountEl.textContent = totalCount;
+    if (avgScoreEl) avgScoreEl.textContent = avgScore;
+    if (maxScoreEl) maxScoreEl.textContent = maxScore;
+    if (minScoreEl) minScoreEl.textContent = minScore;
 }
 
 // データテーブル更新
 function updateDataTable() {
     const tbody = document.getElementById('dataTableBody');
     if (!tbody) return;
+
+    if (filteredData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center">データがありません</td></tr>';
+        return;
+    }
 
     tbody.innerHTML = filteredData.map(item => {
         const riskLevel = calculateRiskLevel(item);
@@ -304,8 +325,8 @@ function calculateRiskLevel(item) {
 
     // 高リスク判定
     if (totalScore <= 40) return 'high';
-    if (categoryScores.salary <= 30) return 'high';
-    if (categoryScores.relationship <= 30) return 'high';
+    if (categoryScores.salary && categoryScores.salary <= 30) return 'high';
+    if (categoryScores.relationship && categoryScores.relationship <= 30) return 'high';
 
     // 中リスク判定
     if (totalScore <= 50) return 'medium';
@@ -446,8 +467,10 @@ function updateTrendChart() {
 // AI分析更新
 function updateAIAnalysis() {
     const analysisDiv = document.getElementById('aiAnalysisContent');
-    if (!analysisDiv || filteredData.length === 0) {
-        if (analysisDiv) analysisDiv.innerHTML = '<p>データがありません</p>';
+    if (!analysisDiv) return;
+    
+    if (filteredData.length === 0) {
+        analysisDiv.innerHTML = '<p>データがありません</p>';
         return;
     }
 
@@ -616,7 +639,12 @@ function getRecommendedAction(item, riskLevel) {
 // スコア急降下アラート更新
 function updateScoreDropAlerts() {
     const alertsDiv = document.getElementById('scoreDropAlerts');
-    if (!alertsDiv || filteredData.length === 0) return;
+    if (!alertsDiv) return;
+    
+    if (filteredData.length === 0) {
+        alertsDiv.innerHTML = '<p>データがありません</p>';
+        return;
+    }
 
     // 年月でソート
     const sortedData = [...allData].sort((a, b) => 
