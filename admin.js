@@ -224,15 +224,16 @@ function updateFilters() {
             months.map(m => `<option value="${m}">${m}</option>`).join('');
     }
 
-    // 従業員コードフィルターを追加
-    const employees = [...new Set(allData.map(d => d.employee_code).filter(Boolean))].sort();
-    console.log('👤 従業員一覧:', employees);
-    
+    // 従業員コードフィルターを追加（固定で1～20を表示）
     const employeeFilter = document.getElementById('filterEmployee');
     if (employeeFilter && employeeFilter.tagName === 'SELECT') {
-        // セレクトボックスの場合
-        employeeFilter.innerHTML = '<option value="">すべて</option>' +
-            employees.map(e => `<option value="${e}">${e}</option>`).join('');
+        // 1～20の選択肢を固定で表示
+        const employeeOptions = ['<option value="">すべて</option>'];
+        for (let i = 1; i <= 20; i++) {
+            employeeOptions.push(`<option value="${i}">${i}</option>`);
+        }
+        employeeFilter.innerHTML = employeeOptions.join('');
+        console.log('👤 従業員コードフィルター: 1～20を固定表示');
     }
 
     console.log('✅ フィルター更新完了');
