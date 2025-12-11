@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企業別診断レポート</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="company-report.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <header class="report-header">
+            <h1>📊 技能実習生エンゲージメント診断レポート</h1>
+            <div class="header-info">
+                <div class="company-name" id="companyName">読み込み中...</div>
+                <div class="survey-period" id="surveyPeriod">-</div>
+            </div>
+        </header>
+
+        <!-- ローディング -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>データ読み込み中...</p>
+        </div>
+
+        <!-- エラー -->
+        <div id="error" class="error" style="display: none;">
+            <span class="material-icons">error_outline</span>
+            <p id="errorMessage">データの読み込みに失敗しました</p>
+        </div>
+
+        <!-- メインコンテンツ -->
+        <div id="content" style="display: none;">
+            
+            <!-- アクションボタン -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="exportPDF()">
+                    📄 PDF出力
+                </button>
+                <button class="btn btn-secondary" onclick="exportCSV()">
+                    📊 CSV出力
+                </button>
+                <a href="admin-dashboard.html" class="btn btn-outline">
+                    ← 管理画面に戻る
+                </a>
+            </div>
+
+            <!-- サマリーカード -->
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="card-icon">👥</div>
+                    <div class="card-content">
+                        <div class="card-label">総回答数</div>
+                        <div class="card-value" id="totalEmployees">0</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">📊</div>
+                    <div class="card-content">
+                        <div class="card-label">平均スコア</div>
+                        <div class="card-value" id="averageScore">0</div>
+                    </div>
+                </div>
+                <div class="summary-card risk-high">
+                    <div class="card-icon">🔴</div>
+                    <div class="card-content">
+                        <div class="card-label">高リスク</div>
+                        <div class="card-value" id="highRiskCount">0</div>
+                    </div>
+                </div>
+                <div class="summary-card risk-medium">
+                    <div class="card-icon">🟡</div>
+                    <div class="card-content">
+                        <div class="card-label">中リスク</div>
+                        <div class="card-value" id="mediumRiskCount">0</div>
+                    </div>
+                </div>
+                <div class="summary-card risk-low">
+                    <div class="card-icon">🟢</div>
+                    <div class="card-content">
+                        <div class="card-label">安定</div>
+                        <div class="card-value" id="lowRiskCount">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- リスク判定基準 -->
+            <div class="section">
+                <div class="section-header collapsible" onclick="toggleSection('riskCriteria')">
+                    <h2>⚖️ リスク判定基準</h2>
+                    <span class="toggle-icon" id="riskCriteriaIcon">▼</span>
+                </div>
+                <div class="section-content" id="riskCriteriaContent">
+                    <div class="criteria-grid">
+                        <div class="criteria-card high">
+                            <h3>🔴 高リスク（離職可能性：高）</h3>
+                            <ul>
+                                <li><strong>総合スコア40点以下</strong><br>
+                                    <span class="criteria-reason">→ 全体的な不満が強く、早期離職の可能性が高い</span>
+                                </li>
+                                <li><strong>給与・待遇が30点以下</strong><br>
+                                    <span class="criteria-reason">→ 経済的動機が満たされず、他社への転職を検討</span>
+                                </li>
+                                <li><strong>人間関係が30点以下</strong><br>
+                                    <span class="criteria-reason">→ 孤立・いじめ・ストレスが蓄積し精神的負担大</span>
+                                </li>
+                                <li><strong>前月比-15点以上の急降下</strong><br>
+                                    <span class="criteria-reason">→ 急激な環境変化・トラブル発生の可能性</span>
+                                </li>
+                            </ul>
+                            <div class="action-tag">推奨アクション：<strong>今週中に個別面談を実施</strong></div>
+                        </div>
+                        <div class="criteria-card medium">
+                            <h3>🟡 中リスク（要注意）</h3>
+                            <ul>
+                                <li><strong>総合スコア41～50点</strong><br>
+                                    <span class="criteria-reason">→ 不満が蓄積しており、放置すると離職リスク増大</span>
+                                </li>
+                                <li><strong>特定カテゴリーが40点以下</strong><br>
+                                    <span class="criteria-reason">→ 部分的な課題があり、早めの対応が必要</span>
+                                </li>
+                            </ul>
+                            <div class="action-tag">推奨アクション：<strong>2週間以内に状況確認</strong></div>
+                        </div>
+                        <div class="criteria-card low">
+                            <h3>🟢 安定（良好）</h3>
+                            <ul>
+                                <li><strong>総合スコア60点以上</strong><br>
+                                    <span class="criteria-reason">→ 現状に満足しており、継続就労の意欲が高い</span>
+                                </li>
+                            </ul>
+                            <div class="action-tag">推奨アクション：<strong>現状維持・定期的なフォロー</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI総合分析 -->
+            <div class="section">
+                <div class="section-header collapsible" onclick="toggleSection('aiAnalysis')">
+                    <h2>🤖 AI総合分析</h2>
+                    <span class="toggle-icon" id="aiAnalysisIcon">▼</span>
+                </div>
+                <div class="section-content" id="aiAnalysisContent">
+                    <div id="aiSummary" class="ai-analysis"></div>
+                </div>
+            </div>
+
+            <!-- 従業員一覧 -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>👥 従業員一覧</h2>
+                </div>
+                <div class="section-content">
+                    <div id="employeeList" class="employee-list"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="company-report.js"></script>
+</body>
+</html>
