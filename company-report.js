@@ -97,31 +97,51 @@ async function loadData() {
 }
 
 // ヘッダー情報表示と月選択ドロップダウン
-function displayHeader() {
+async function displayHeader() {
     const params = getURLParams();
     document.getElementById('companyName').textContent = params.company;
     
     // 月選択ドロップダウンを構築
-    populateMonthSelector();
+    await populateMonthSelector();
 }
 
-// 月選択ドロップダウンを構築
-function populateMonthSelector() {
+// 月選択ドロップダウンを構築（データ連動）
+async function populateMonthSelector() {
     const monthSelector = document.getElementById('monthSelector');
     const currentMonth = getURLParams().month;
+    const currentCompany = getURLParams().company;
     
-    // 2024年1月から2026年12月までの月を生成
-    const months = [];
-    for (let year = 2024; year <= 2026; year++) {
-        for (let month = 1; month <= 12; month++) {
-            const monthStr = `${year}-${String(month).padStart(2, '0')}`;
-            months.push(monthStr);
+    try {
+        // APIから全データを取得
+        const response = await fetch(`${API_BASE_URL}/api/results`);
+        if (!response.ok) throw new Error('データ取得失敗');
+        
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error || 'データ取得失敗');
+        
+        const data = result.data || [];
+        
+        // 該当企業のデータから月を抽出（重複除去&ソート）
+        const months = [...new Set(
+            data
+                .filter(item => item.company_code === currentCompany)
+                .map(item => item.year_month)
+                .filter(Boolean)
+        )].sort().reverse(); // 降順ソート（最新が上）
+        
+        if (months.length === 0) {
+            monthSelector.innerHTML = '<option value="">データなし</option>';
+            return;
         }
+        
+        monthSelector.innerHTML = months.map(m => 
+            `<option value="${m}" ${m === currentMonth ? 'selected' : ''}>${m}</option>`
+        ).join('');
+        
+    } catch (error) {
+        console.error('月選択ドロップダウンの構築エラー:', error);
+        monthSelector.innerHTML = '<option value="">読み込みエラー</option>';
     }
-    
-    monthSelector.innerHTML = months.map(m => 
-        `<option value="${m}" ${m === currentMonth ? 'selected' : ''}>${m}</option>`
-    ).join('');
 }
 
 // 月選択変更時
@@ -469,7 +489,7 @@ function generateAIFeedback(employee) {
     // 低スコアの質問を抽出（回答が1またづ2以下）
     const lowAnswers = [];
     for (let i = 1; i <= 35; i++) {
-        const answer = answers[i];
+        const answer = answers[`q${i}`];
         if (answer && answer <= 2) {
             lowAnswers.push({ num: i, answer: answer, text: QUESTIONS[i].text });
         }
@@ -688,9 +708,9 @@ function exportCSV() {
         csv += `${categoryScores.relationship || 0},${categoryScores.communication || 0},${categoryScores.culture || 0},`;
         csv += `${categoryScores.living || 0},${categoryScores.career || 0},`;
         
-        // 全35問の回答
+        // 全35問の回答(キーは "q1", "q2", ... "q35")
         for (let i = 1; i <= 35; i++) {
-            const answer = answers[i] || '';
+            const answer = answers[`q${i}`] || '';
             csv += `${answer},`;
         }
         csv = csv.slice(0, -1) + '\n'; // 最後のカンマを削除して改行
@@ -716,7 +736,7 @@ async function init() {
         document.getElementById('content').style.display = 'none';
         
         await loadData();
-        displayHeader();
+        await displayHeader();
         updateSummaryCards();
         generateAISummary();
         displayEmployeeList();
