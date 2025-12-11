@@ -130,11 +130,33 @@ async function loadData() {
         }
         
         const data = await response.json();
-        console.log('📊 取得したデータ:', data);
-        console.log('📈 データ件数:', data.results?.length);
-        
-        // データ処理
-        allData = data.results.map(item => {
+console.log('📊 取得したデータ:', data);
+console.log('📊 データの構造:', Object.keys(data));
+
+// APIレスポンスの構造を判定
+let resultsArray = [];
+if (Array.isArray(data)) {
+    // dataが配列の場合
+    resultsArray = data;
+    console.log('✅ データは配列形式');
+} else if (data.results && Array.isArray(data.results)) {
+    // data.resultsが存在する場合
+    resultsArray = data.results;
+    console.log('✅ データはresults形式');
+} else if (data.data && Array.isArray(data.data)) {
+    // data.dataが存在する場合
+    resultsArray = data.data;
+    console.log('✅ データはdata形式');
+} else {
+    console.error('❌ 不明なデータ構造:', data);
+    throw new Error('データの形式が不正です');
+}
+
+console.log('📈 データ件数:', resultsArray.length);
+
+// データ処理
+allData = resultsArray.map(item => {
+
             // category_scoresの安全な解析
             let categoryScores = {};
             if (item.category_scores && item.category_scores !== 'null' && item.category_scores !== null) {
