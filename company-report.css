@@ -723,3 +723,44 @@ body {
         width: 100%;
     }
 }
+/* ========== PDF印刷用スタイル ========== */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .report-header {
+        background: #667eea !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .action-buttons {
+        display: none !important;
+    }
+    
+    .month-selector-container button {
+        display: none !important;
+    }
+    
+    .summary-card {
+        page-break-inside: avoid;
+    }
+    
+    .section {
+        page-break-inside: avoid;
+    }
+    
+    .employee-card {
+        page-break-inside: avoid;
+    }
+    
+    .criteria-card {
+        page-break-inside: avoid;
+    }
+}
