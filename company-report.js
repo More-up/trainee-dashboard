@@ -674,9 +674,166 @@ function toggleSection(sectionId) {
     }
 }
 
-// PDF出力（プレースホルダー）
-function exportPDF() {
-    alert('PDF出力機能は次のフェーズで実装予定です');
+// PDF出力
+async function exportPDF() {
+    try {
+        // ローディング表示
+        const loadingMsg = document.createElement('div');
+        loadingMsg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 10px;
+            z-index: 10000;
+            font-size: 18px;
+            text-align: center;
+        `;
+        loadingMsg.innerHTML = '📄 PDF生成中...<br><small>数秒お待ちください</small>';
+        document.body.appendChild(loadingMsg);
+        
+        // html2pdf.jsが読み込まれていない場合は動的に読み込む
+        if (typeof html2pdf === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+            script.onload = () => generatePDF(loadingMsg);
+            document.head.appendChild(script);
+        } else {
+            await generatePDF(loadingMsg);
+        }
+        
+    } catch (error) {
+        console.error('PDF生成エラー:', error);
+        alert('PDF生成に失敗しました: ' + error.message);
+    }
+}
+
+// PDF生成処理
+async function generatePDF(loadingMsg) {
+    try {
+        const params = getURLParams();
+        const filename = `技能実習生エンゲージメント診断レポート_${params.company}_${params.month}.pdf`;
+        
+        // PDF化する要素をクローン
+        const element = document.getElementById('content').cloneNode(true);
+        
+        // アクションボタンを削除（PDFには不要）
+        const actionButtons = element.querySelector('.action-buttons');
+        if (actionButtons) actionButtons.remove();
+        
+        // 折りたたみアイコンを削除
+        element.querySelectorAll('.toggle-icon').forEach(icon => icon.remove());
+        element.querySelectorAll('.expand-btn').forEach(btn => btn.remove());
+        element.querySelectorAll('.questions-toggle').forEach(btn => btn.remove());
+        
+        // PDF用スタイル追加
+        const style = document.createElement('style');
+        style.textContent = `
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+            
+            body {
+                font-family: 'Yu Gothic', '游ゴシック', 'Hiragino Sans', 'Meiryo', sans-serif;
+            }
+            
+            .summary-cards {
+                page-break-after: avoid;
+                margin-bottom: 20px;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 30px;
+            }
+            
+            .criteria-grid {
+                page-break-inside: avoid;
+            }
+            
+            .employee-card {
+                page-break-inside: avoid;
+                margin-bottom: 30px;
+                border: 1px solid #ddd;
+                padding: 15px;
+                border-radius: 8px;
+            }
+            
+            .employee-detail {
+                display: block !important;
+            }
+            
+            .detail-grid {
+                page-break-inside: avoid;
+            }
+            
+            .chart-container {
+                page-break-inside: avoid;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .questions-content {
+                display: block !important;
+                max-height: none !important;
+            }
+            
+            .category-block {
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            
+            h1 { font-size: 24px; margin-bottom: 10px; }
+            h2 { font-size: 20px; margin-bottom: 8px; page-break-after: avoid; }
+            h3 { font-size: 18px; margin-bottom: 6px; page-break-after: avoid; }
+            h4 { font-size: 16px; margin-bottom: 5px; page-break-after: avoid; }
+        `;
+        element.insertBefore(style, element.firstChild);
+        
+        // PDF生成オプション
+        const opt = {
+            margin: [15, 15, 15, 15],
+            filename: filename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                letterRendering: true
+            },
+            jsPDF: { 
+                unit: 'mm', 
+                format: 'a4', 
+                orientation: 'portrait',
+                compress: true
+            },
+            pagebreak: { 
+                mode: ['avoid-all', 'css', 'legacy'],
+                before: '.section',
+                after: '.employee-card'
+            }
+        };
+        
+        // PDF生成
+        await html2pdf().set(opt).from(element).save();
+        
+        // ローディング削除
+        if (loadingMsg && loadingMsg.parentNode) {
+            loadingMsg.parentNode.removeChild(loadingMsg);
+        }
+        
+        console.log('PDF生成完了:', filename);
+        
+    } catch (error) {
+        if (loadingMsg && loadingMsg.parentNode) {
+            loadingMsg.parentNode.removeChild(loadingMsg);
+        }
+        throw error;
+    }
 }
 
 // CSV出力
