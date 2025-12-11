@@ -751,7 +751,7 @@ async function generatePDF(loadingMsg) {
         
         // ステップ2: レーダーチャートの描画を待つ
         loadingMsg.innerHTML = '📄 PDF生成中...<br><small style="font-size: 14px; opacity: 0.8;">ステップ2/3: チャートを描画中...</small>';
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
         
         // ステップ3: PDF化する要素をクローン
         loadingMsg.innerHTML = '📄 PDF生成中...<br><small style="font-size: 14px; opacity: 0.8;">ステップ3/3: PDFを生成中...</small>';
@@ -759,6 +759,8 @@ async function generatePDF(loadingMsg) {
         // ヘッダーとコンテンツを含むPDF用要素を作成
         const pdfContainer = document.createElement('div');
         pdfContainer.className = 'pdf-container';
+        pdfContainer.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 1200px;';
+        document.body.appendChild(pdfContainer);
         
         // ヘッダーをクローン
         const header = document.querySelector('.report-header').cloneNode(true);
@@ -993,6 +995,11 @@ async function generatePDF(loadingMsg) {
         
         // PDF生成
         await html2pdf().set(opt).from(pdfContainer).save();
+        
+        // PDF生成後、一時コンテナを削除
+        if (pdfContainer && pdfContainer.parentNode) {
+            pdfContainer.parentNode.removeChild(pdfContainer);
+        }
         
         // ローディング削除
         if (loadingMsg && loadingMsg.parentNode) {
