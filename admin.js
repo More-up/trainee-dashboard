@@ -224,6 +224,17 @@ function updateFilters() {
             months.map(m => `<option value="${m}">${m}</option>`).join('');
     }
 
+    // 従業員コードフィルターを追加
+    const employees = [...new Set(allData.map(d => d.employee_code).filter(Boolean))].sort();
+    console.log('👤 従業員一覧:', employees);
+    
+    const employeeFilter = document.getElementById('filterEmployee');
+    if (employeeFilter && employeeFilter.tagName === 'SELECT') {
+        // セレクトボックスの場合
+        employeeFilter.innerHTML = '<option value="">すべて</option>' +
+            employees.map(e => `<option value="${e}">${e}</option>`).join('');
+    }
+
     console.log('✅ フィルター更新完了');
 }
 
@@ -233,7 +244,8 @@ function applyFilters() {
     
     const company = document.getElementById('filterCompany')?.value;
     const month = document.getElementById('filterMonth')?.value;
-    const employee = document.getElementById('filterEmployee')?.value.toLowerCase();
+    const employeeFilter = document.getElementById('filterEmployee');
+    const employee = employeeFilter?.value || '';
     const nationality = document.getElementById('filterNationality')?.value;
 
     console.log('🎯 フィルター条件:', { company, month, employee, nationality });
@@ -241,7 +253,16 @@ function applyFilters() {
     filteredData = allData.filter(item => {
         if (company && item.company_code !== company) return false;
         if (month && item.year_month !== month) return false;
-        if (employee && !item.employee_code.toLowerCase().includes(employee)) return false;
+        // 従業員コードは完全一致または部分一致
+        if (employee) {
+            if (employeeFilter.tagName === 'SELECT') {
+                // セレクトボックスの場合は完全一致
+                if (item.employee_code !== employee) return false;
+            } else {
+                // テキストボックスの場合は部分一致
+                if (!item.employee_code.toLowerCase().includes(employee.toLowerCase())) return false;
+            }
+        }
         if (nationality && item.nationality !== nationality) return false;
         return true;
     });
@@ -410,19 +431,54 @@ function updateRadarChart() {
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: true,
             scales: {
                 r: {
                     beginAtZero: true,
                     max: 100,
                     ticks: {
-                        stepSize: 20
+                        stepSize: 20,
+                        font: {
+                            size: 11
+                        }
+                    },
+                    pointLabels: {
+                        font: {
+                            size: 11,
+                            weight: 'normal'
+                        },
+                        padding: 15,
+                        callback: function(label) {
+                            // 長いラベルを改行
+                            if (label.length > 10) {
+                                const words = label.split('・');
+                                if (words.length > 1) {
+                                    return words;
+                                }
+                            }
+                            return label;
+                        }
                     }
                 }
             },
             plugins: {
                 legend: {
                     display: true,
-                    position: 'top'
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    top: 20,
+                    bottom: 20,
+                    left: 20,
+                    right: 20
                 }
             }
         }
