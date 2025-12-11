@@ -405,7 +405,7 @@ async function submitToAPI() {
 
         console.log('Submitting data:', submitData);
 
-        const response = await fetch(`${API_ENDPOINT}/api/save-result`, {
+        const response = await fetch(`${API_ENDPOINT}/api/submit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
