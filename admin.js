@@ -169,8 +169,13 @@ async function loadData() {
   }
 }
 
-// 回答データを配列に変換
+// 回答データを配列に変換（NULL/undefined 対応）
 function convertAnswersToArray(answersObj) {
+  // answersObj が null, undefined, または空オブジェクトの場合は空配列を返す
+  if (!answersObj || typeof answersObj !== 'object' || Object.keys(answersObj).length === 0) {
+    return [];
+  }
+  
   const arr = [];
   for (let i = 1; i <= 35; i++) {
     arr[i - 1] = answersObj[i] || 0;
@@ -357,8 +362,8 @@ function updateRadarChart() {
     filteredData.forEach(item => {
       if (item.categoryScores && item.categoryScores[cat] !== undefined) {
         scores.push(item.categoryScores[cat]);
-      } else {
-        // カテゴリースコアがない場合は計算
+      } else if (item.answers && item.answers.length > 0) {
+        // カテゴリースコアがない場合は計算（answers がある場合のみ）
         const catQuestions = categoryQuestions[cat];
         const catAnswers = catQuestions.map(q => item.answers[q - 1] || 0);
         const catTotal = catAnswers.reduce((a, b) => a + b, 0);
@@ -535,7 +540,7 @@ function updateAIAnalysis() {
       data.forEach(item => {
         if (item.categoryScores && item.categoryScores[cat] !== undefined) {
           scores.push(item.categoryScores[cat]);
-        } else {
+        } else if (item.answers && item.answers.length > 0) {
           const catQuestions = categoryQuestions[cat];
           const catAnswers = catQuestions.map(q => item.answers[q - 1] || 0);
           const catTotal = catAnswers.reduce((a, b) => a + b, 0);
@@ -991,7 +996,7 @@ function updateScoreDropAlerts(container) {
       </div>
       ${droppedCategories.length > 0 ? `<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">低下したカテゴリー: ${droppedCategories.join(', ')}</div>` : ''}
       <div class="risk-employee-action">
-        <strong>→ 推奨アクション:</strong> 個別面談を実施し、急激な変化の原因をヒアリング
+        <strong→ 推奨アクション:</strong> 個別面談を実施し、急激な変化の原因をヒアリング
       </div>
     `;
 
