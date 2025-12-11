@@ -737,22 +737,55 @@ async function generatePDF(loadingMsg) {
                 margin: 15mm;
             }
             
-            body {
-                font-family: 'Yu Gothic', '游ゴシック', 'Hiragino Sans', 'Meiryo', sans-serif;
+            * {
+                box-sizing: border-box;
             }
             
+            body {
+                font-family: 'Yu Gothic', '游ゴシック', 'Hiragino Sans', 'Meiryo', sans-serif;
+                font-size: 12px;
+                line-height: 1.6;
+            }
+            
+            /* サマリーカードを2列グリッド */
             .summary-cards {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px !important;
                 page-break-after: avoid;
                 margin-bottom: 20px;
             }
             
+            .summary-card {
+                page-break-inside: avoid;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+            
+            /* リスク判定基準を3列グリッド */
+            .criteria-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 15px !important;
+                page-break-inside: avoid;
+            }
+            
+            .criteria-card {
+                page-break-inside: avoid;
+                padding: 15px;
+                border: 2px solid;
+                border-radius: 8px;
+                font-size: 11px;
+            }
+            
+            .criteria-card.high { border-color: #e74c3c; background: #ffebee; }
+            .criteria-card.medium { border-color: #f39c12; background: #fff8e1; }
+            .criteria-card.low { border-color: #27ae60; background: #e8f5e9; }
+            
             .section {
                 page-break-inside: avoid;
                 margin-bottom: 30px;
-            }
-            
-            .criteria-grid {
-                page-break-inside: avoid;
             }
             
             .employee-card {
@@ -767,14 +800,44 @@ async function generatePDF(loadingMsg) {
                 display: block !important;
             }
             
+            /* 詳細グリッドを2列 */
             .detail-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
                 page-break-inside: avoid;
             }
             
+            .detail-section {
+                page-break-inside: avoid;
+            }
+            
+            /* レーダーチャート */
             .chart-container {
                 page-break-inside: avoid;
-                max-width: 400px;
+                width: 100% !important;
+                max-width: 350px !important;
+                height: 350px !important;
                 margin: 0 auto;
+            }
+            
+            .chart-container canvas {
+                width: 100% !important;
+                height: 100% !important;
+            }
+            
+            /* カテゴリー別スコアグリッド */
+            .category-scores-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+            
+            .category-score-item {
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 11px;
             }
             
             .questions-content {
@@ -787,12 +850,44 @@ async function generatePDF(loadingMsg) {
                 margin-bottom: 20px;
             }
             
-            h1 { font-size: 24px; margin-bottom: 10px; }
-            h2 { font-size: 20px; margin-bottom: 8px; page-break-after: avoid; }
-            h3 { font-size: 18px; margin-bottom: 6px; page-break-after: avoid; }
-            h4 { font-size: 16px; margin-bottom: 5px; page-break-after: avoid; }
+            .question-item {
+                page-break-inside: avoid;
+                margin-bottom: 10px;
+                font-size: 11px;
+            }
+            
+            /* AIフィードバック */
+            .ai-feedback {
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            
+            .feedback-section {
+                margin-bottom: 15px;
+            }
+            
+            /* ネクストアクション */
+            .next-actions {
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            
+            .action-category {
+                margin-bottom: 15px;
+            }
+            
+            h1 { font-size: 22px; margin-bottom: 10px; page-break-after: avoid; }
+            h2 { font-size: 18px; margin-bottom: 8px; page-break-after: avoid; }
+            h3 { font-size: 16px; margin-bottom: 6px; page-break-after: avoid; }
+            h4 { font-size: 14px; margin-bottom: 5px; page-break-after: avoid; }
+            
+            ul { margin-left: 20px; }
+            li { margin-bottom: 5px; }
         `;
         element.insertBefore(style, element.firstChild);
+        
+        // レーダーチャートのレンダリングを待つ
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         // PDF生成オプション
         const opt = {
