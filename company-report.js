@@ -96,11 +96,52 @@ async function loadData() {
     }
 }
 
-// ヘッダー情報表示
+// ヘッダー情報表示と月選択ドロップダウン
 function displayHeader() {
     const params = getURLParams();
     document.getElementById('companyName').textContent = params.company;
-    document.getElementById('surveyPeriod').textContent = `調査月: ${params.month}`;
+    
+    // 月選択ドロップダウンを構築
+    populateMonthSelector();
+}
+
+// 月選択ドロップダウンを構築
+function populateMonthSelector() {
+    const monthSelector = document.getElementById('monthSelector');
+    const currentMonth = getURLParams().month;
+    
+    // 2024年1月から2026年12月までの月を生成
+    const months = [];
+    for (let year = 2024; year <= 2026; year++) {
+        for (let month = 1; month <= 12; month++) {
+            const monthStr = `${year}-${String(month).padStart(2, '0')}`;
+            months.push(monthStr);
+        }
+    }
+    
+    monthSelector.innerHTML = months.map(m => 
+        `<option value="${m}" ${m === currentMonth ? 'selected' : ''}>${m}</option>`
+    ).join('');
+}
+
+// 月選択変更時
+function changeMonth() {
+    const monthSelector = document.getElementById('monthSelector');
+    const newMonth = monthSelector.value;
+    const params = getURLParams();
+    
+    // URLパラメータを更新してページをリロード
+    window.location.href = `?company=${encodeURIComponent(params.company)}&month=${newMonth}`;
+}
+
+// 月別比較表示
+function showComparison() {
+    alert('月別比較機能は実装中です');
+}
+
+// 月別比較モーダルを閉じる
+function closeComparison() {
+    document.getElementById('comparisonModal').style.display = 'none';
 }
 
 // サマリーカード更新
@@ -417,10 +458,22 @@ function generateAIFeedback(employee) {
     const categoryScores = typeof employee.category_scores === 'string' 
         ? JSON.parse(employee.category_scores) 
         : employee.category_scores;
+    const answers = typeof employee.answers === 'string' 
+        ? JSON.parse(employee.answers) 
+        : employee.answers;
     
     const sortedCats = Object.entries(categoryScores).sort((a,b) => b[1] - a[1]);
     const strengths = sortedCats.slice(0, 2);
     const weaknesses = sortedCats.slice(-2);
+    
+    // 低スコアの質問を抽出（回答が1またづ2以下）
+    const lowAnswers = [];
+    for (let i = 1; i <= 35; i++) {
+        const answer = answers[i];
+        if (answer && answer <= 2) {
+            lowAnswers.push({ num: i, answer: answer, text: QUESTIONS[i].text });
+        }
+    }
     
     let html = `
         <div class="feedback-section">
@@ -438,13 +491,21 @@ function generateAIFeedback(employee) {
                     <li>${CATEGORIES[key].icon} ${CATEGORIES[key].name}が${score.toFixed(0)}点${score < 45 ? '（要注意）' : ''}</li>
                 `).join('')}
             </ul>
+            ${lowAnswers.length > 0 ? `
+                <p style="margin-top: 10px;"><strong>特に不満が強い項目:</strong></p>
+                <ul>
+                    ${lowAnswers.slice(0, 3).map(item => `
+                        <li>${item.text.replace(/^Q\d+\.\s*/, '')} <span style="color: #e74c3c;">→ 回答: ${item.answer}点</span></li>
+                    `).join('')}
+                </ul>
+            ` : ''}
         </div>
     `;
     
     container.innerHTML = html;
 }
 
-// ネクストアクション生成
+// ネクストアクション生成（短期・中期・長期）
 function generateNextActions(employee) {
     const code = employee.employee_code;
     const container = document.getElementById(`actions-${code}`);
@@ -453,39 +514,72 @@ function generateNextActions(employee) {
         ? JSON.parse(employee.category_scores) 
         : employee.category_scores;
     
-    const actions = [];
+    const shortTerm = [];
+    const midTerm = [];
+    const longTerm = [];
     
+    // 短期（1週間以内）
     if (risk === 'high') {
-        actions.push('今週中に個別面談を実施し、不満の原因を詳しくヒアリング');
-        actions.push('母国語通訳を手配し、本音を引き出す環境を整備');
+        shortTerm.push('今週中に個別面談を実施し、不満の原因を詳しくヒアリング');
+        shortTerm.push('母国語通訳を手配し、本音を引き出す環境を整備');
+    } else if (risk === 'medium') {
+        shortTerm.push('2週間以内に個別面談を実施し、不満の原因を特定');
     }
     
     if (categoryScores.salary <= 40) {
-        actions.push('給与明細の説明を再度実施し、手当・控除の内訳を明確化');
+        shortTerm.push('給与明細の詳細説明を実施し、手当・控除の内訳を明確化');
     }
     
+    // 中期（1ヶ月以内）
     if (categoryScores.relationship <= 40) {
-        actions.push('同国籍の先輩実習生とペアリングし、メンター制度を導入');
+        midTerm.push('同国籍の先輩実習生とペアリングし、組合からの人的サポートを要請');
     }
     
     if (categoryScores.communication <= 40) {
-        actions.push('日本語学習サポートを強化（週1回の日本語教室など）');
+        midTerm.push('日本語学習サポートを強化（週1回の日本語教室、eラーニング教材の提供など）');
     }
     
     if (categoryScores.living <= 40) {
-        actions.push('生活環境の改善（寮の設備点検・買い物サポートなど）');
+        midTerm.push('生活環境の改善（寮の設備点検・買い物サポートなど）');
     }
     
     if (categoryScores.culture <= 40) {
-        actions.push('文化適応プログラムの提供（日本文化理解セミナーなど）');
+        midTerm.push('文化適応プログラムの提供（日本文化理解セミナー、生活マナーワークショップなど）');
     }
     
-    if (actions.length === 0) {
-        actions.push('現状を維持し、定期的なフォローアップ面談を実施');
-        actions.push('より高いエンゲージメントを目指し、キャリアパス面談を検討');
+    if (categoryScores.career <= 50) {
+        midTerm.push('キャリアパス面談を実施し、技能習得計画を共有');
     }
     
-    container.innerHTML = actions.map(action => `<li>${action}</li>`).join('');
+    // 長期（3ヶ月）
+    longTerm.push('定期的なフォローアップ面談（月次調査の継続）');
+    longTerm.push('母国帰国後のキャリア支援（技能証明書発行・就職支援など）');
+    
+    if (risk === 'low') {
+        longTerm.push('より高いエンゲージメントを目指し、リーダー育成プログラムを検討');
+    }
+    
+    let html = '';
+    
+    if (shortTerm.length > 0) {
+        html += '<div class="action-category"><h4>💨 短期（1週間以内）</h4><ul>';
+        html += shortTerm.map(action => `<li>${action}</li>`).join('');
+        html += '</ul></div>';
+    }
+    
+    if (midTerm.length > 0) {
+        html += '<div class="action-category"><h4>💼 中期（1ヶ月以内）</h4><ul>';
+        html += midTerm.map(action => `<li>${action}</li>`).join('');
+        html += '</ul></div>';
+    }
+    
+    if (longTerm.length > 0) {
+        html += '<div class="action-category"><h4>🎯 長期（3ヶ月）</h4><ul>';
+        html += longTerm.map(action => `<li>${action}</li>`).join('');
+        html += '</ul></div>';
+    }
+    
+    container.innerHTML = html;
 }
 
 // 質問回答展開/折りたたみ
@@ -567,12 +661,39 @@ function exportPDF() {
 
 // CSV出力
 function exportCSV() {
-    let csv = '従業員コード,国籍,総合スコア,リスクレベル,調査日\n';
+    // ヘッダー行: 基本情報 + 8カテゴリ + 全35問
+    let csv = '従業員コード,国籍,調査日,総合スコア,リスクレベル,';
+    csv += '業務スコア,給与スコア,家族スコア,人間関係スコア,日本語スコア,文化スコア,生活スコア,キャリアスコア,';
+    for (let i = 1; i <= 35; i++) {
+        csv += `Q${i},`;
+    }
+    csv = csv.slice(0, -1) + '\n'; // 最後のカンマを削除して改行
     
+    // データ行
     allEmployees.forEach(emp => {
         const risk = calculateRiskLevel(emp);
         const riskText = { high: '高リスク', medium: '中リスク', low: '安定' }[risk];
-        csv += `${emp.employee_code},${emp.nationality},${emp.total_score.toFixed(1)},${riskText},${emp.survey_date}\n`;
+        const categoryScores = typeof emp.category_scores === 'string' 
+            ? JSON.parse(emp.category_scores) 
+            : emp.category_scores;
+        const answers = typeof emp.answers === 'string' 
+            ? JSON.parse(emp.answers) 
+            : emp.answers;
+        
+        // 基本情報
+        csv += `${emp.employee_code},${emp.nationality},${emp.survey_date},${emp.total_score.toFixed(1)},${riskText},`;
+        
+        // 8カテゴリスコア
+        csv += `${categoryScores.work || 0},${categoryScores.salary || 0},${categoryScores.family || 0},`;
+        csv += `${categoryScores.relationship || 0},${categoryScores.communication || 0},${categoryScores.culture || 0},`;
+        csv += `${categoryScores.living || 0},${categoryScores.career || 0},`;
+        
+        // 全35問の回答
+        for (let i = 1; i <= 35; i++) {
+            const answer = answers[i] || '';
+            csv += `${answer},`;
+        }
+        csv = csv.slice(0, -1) + '\n'; // 最後のカンマを削除して改行
     });
     
     const bom = '\uFEFF';
@@ -580,7 +701,7 @@ function exportCSV() {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `report_${getURLParams().company}_${getURLParams().month}.csv`);
+    link.setAttribute('download', `詳細レポート_${getURLParams().company}_${getURLParams().month}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -599,6 +720,9 @@ async function init() {
         updateSummaryCards();
         generateAISummary();
         displayEmployeeList();
+        
+        // 前月比較ボタンの表示制御（データが2ヶ月以上ある場合のみ表示）
+        // 現在は非表示のまま
         
         document.getElementById('loading').style.display = 'none';
         document.getElementById('content').style.display = 'block';
