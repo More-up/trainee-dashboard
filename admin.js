@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
 });
 
-// ログイン状態確認（完全修正版）
+// ログイン状態確認
 function checkLoginStatus() {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
     
@@ -68,14 +68,12 @@ function checkLoginStatus() {
         currentUser = sessionStorage.getItem('adminUsername') || 'moreup-trainee';
         console.log('✅ ログイン済み - ユーザー:', currentUser);
         
-        // ユーザー名表示
         const adminUsernameEl = document.getElementById('adminUsername');
         if (adminUsernameEl) {
             adminUsernameEl.textContent = currentUser;
             console.log('👤 ユーザー名表示完了');
         }
         
-        // データ読み込み
         loadData();
     } else {
         console.log('❌ 未ログイン - ログインページへリダイレクト');
@@ -96,7 +94,6 @@ function logout() {
 function setupEventListeners() {
     console.log('🎯 イベントリスナー設定開始');
     
-    // フィルター
     const filterCompany = document.getElementById('filterCompany');
     const filterMonth = document.getElementById('filterMonth');
     const filterEmployee = document.getElementById('filterEmployee');
@@ -131,20 +128,22 @@ async function loadData() {
         
         const data = await response.json();
         console.log('📊 取得したデータ:', data);
-        console.log('📊 データの構造:', Object.keys(data));
+        console.log('📊 データの型:', typeof data);
+        console.log('📊 データは配列?:', Array.isArray(data));
+        
+        if (typeof data === 'object' && data !== null) {
+            console.log('📊 データの構造(キー):', Object.keys(data));
+        }
 
         // APIレスポンスの構造を判定
         let resultsArray = [];
         if (Array.isArray(data)) {
-            // dataが配列の場合
             resultsArray = data;
             console.log('✅ データは配列形式');
         } else if (data.results && Array.isArray(data.results)) {
-            // data.resultsが存在する場合
             resultsArray = data.results;
             console.log('✅ データはresults形式');
         } else if (data.data && Array.isArray(data.data)) {
-            // data.dataが存在する場合
             resultsArray = data.data;
             console.log('✅ データはdata形式');
         } else {
@@ -156,7 +155,6 @@ async function loadData() {
 
         // データ処理
         allData = resultsArray.map(item => {
-            // category_scoresの安全な解析
             let categoryScores = {};
             if (item.category_scores && item.category_scores !== 'null' && item.category_scores !== null) {
                 try {
@@ -168,7 +166,6 @@ async function loadData() {
                 }
             }
 
-            // answersの安全な解析
             let answers = {};
             if (item.answers && item.answers !== 'null' && item.answers !== null) {
                 try {
@@ -209,7 +206,6 @@ async function loadData() {
 function updateFilters() {
     console.log('🔧 フィルター更新開始');
     
-    // 企業フィルター
     const companies = [...new Set(allData.map(d => d.company_code).filter(Boolean))];
     console.log('🏢 企業一覧:', companies);
     
@@ -219,7 +215,6 @@ function updateFilters() {
             companies.map(c => `<option value="${c}">${c}</option>`).join('');
     }
 
-    // 年月フィルター
     const months = [...new Set(allData.map(d => d.year_month).filter(Boolean))].sort().reverse();
     console.log('📅 年月一覧:', months);
     
@@ -331,22 +326,18 @@ function calculateRiskLevel(item) {
     const totalScore = item.totalScore;
     const categoryScores = item.categoryScores || {};
 
-    // カテゴリースコアが存在しない場合は総合点のみで判定
     if (Object.keys(categoryScores).length === 0) {
         if (totalScore <= 40) return 'high';
         if (totalScore <= 50) return 'medium';
         return 'low';
     }
 
-    // 高リスク判定: 総合40点以下 OR 給与30点以下 OR 人間関係30点以下
     if (totalScore <= 40) return 'high';
     if (categoryScores.salary && categoryScores.salary <= 30) return 'high';
     if (categoryScores.relationship && categoryScores.relationship <= 30) return 'high';
 
-    // 中リスク判定: 総合50点以下
     if (totalScore <= 50) return 'medium';
 
-    // 安定: 60点以上
     return 'low';
 }
 
@@ -360,7 +351,6 @@ function updateRadarChart() {
 
     console.log('📊 レーダーチャート更新');
 
-    // カテゴリー別平均スコア計算
     const categoryAverages = {};
     const categoryCounts = {};
 
@@ -379,7 +369,6 @@ function updateRadarChart() {
         });
     });
 
-    // 平均計算
     Object.keys(categories).forEach(key => {
         if (categoryCounts[key] > 0) {
             categoryAverages[key] = categoryAverages[key] / categoryCounts[key];
@@ -440,7 +429,6 @@ function updateTrendChart() {
 
     console.log('📈 トレンドチャート更新');
 
-    // 年月別平均スコア計算
     const monthlyData = {};
     
     filteredData.forEach(item => {
@@ -454,7 +442,6 @@ function updateTrendChart() {
         monthlyData[month].count++;
     });
 
-    // ソートして平均計算
     const sortedMonths = Object.keys(monthlyData).sort();
     const labels = sortedMonths;
     const data = sortedMonths.map(month => 
@@ -515,7 +502,6 @@ function updateAIAnalysis() {
 
     const avgScore = filteredData.reduce((sum, d) => sum + d.totalScore, 0) / filteredData.length;
     
-    // 国籍別分析
     const nationalityGroups = {};
     filteredData.forEach(item => {
         const nat = item.nationality || 'unknown';
@@ -544,7 +530,6 @@ function updateAIAnalysis() {
                 <p>平均スコア: <strong>${groupAvg.toFixed(1)}点</strong></p>
         `;
 
-        // カテゴリー別分析
         const categoryAverages = {};
         group.forEach(item => {
             const categoryScores = item.categoryScores || {};
@@ -620,137 +605,4 @@ function updateRiskAlerts() {
     if (highRisk.length > 0) {
         html += '<h3 style="color: #d93025; margin-bottom: 16px;">🔴 高リスク対象者</h3>';
         highRisk.forEach(item => {
-            html += createRiskCard(item, 'high');
-        });
-    }
-
-    if (mediumRisk.length > 0) {
-        html += '<h3 style="color: #f9ab00; margin-bottom: 16px; margin-top: 24px;">🟡 中リスク対象者</h3>';
-        mediumRisk.forEach(item => {
-            html += createRiskCard(item, 'medium');
-        });
-    }
-
-    container.innerHTML = html;
-    console.log('✅ リスクアラート更新完了');
-}
-
-// リスクカード作成
-function createRiskCard(item, level) {
-    const nationalityDisplay = nationalityDisplayNames[item.nationality] || item.nationality || '-';
-    const categoryScores = item.categoryScores || {};
-    
-    let reasons = [];
-    if (item.totalScore <= 40) reasons.push(`総合スコア${item.totalScore.toFixed(1)}点`);
-    if (categoryScores.salary && categoryScores.salary <= 30) reasons.push(`給与満足度${categoryScores.salary.toFixed(1)}点`);
-    if (categoryScores.relationship && categoryScores.relationship <= 30) reasons.push(`人間関係${categoryScores.relationship.toFixed(1)}点`);
-    if (reasons.length === 0 && item.totalScore <= 50) reasons.push(`総合スコア${item.totalScore.toFixed(1)}点`);
-    if (reasons.length === 0) reasons.push('総合的な判定');
-
-    const action = getRecommendedAction(item, level);
-
-    return `
-        <div class="risk-employee">
-            <div class="risk-employee-header">
-                <span class="risk-employee-info">${item.employee_code} (${nationalityDisplay})</span>
-                <span><strong>${item.totalScore.toFixed(1)}点</strong></span>
-            </div>
-            <div class="risk-employee-details">
-                ${item.company_code || '-'} | ${item.year_month || '-'}
-            </div>
-            <div class="risk-employee-details">
-                <strong>リスク要因:</strong> ${reasons.join('、')}
-            </div>
-            <div class="risk-employee-action">
-                <strong>推奨アクション:</strong>
-                ${action}
-            </div>
-        </div>
-    `;
-}
-
-// 推奨アクション取得
-function getRecommendedAction(item, level) {
-    const categoryScores = item.categoryScores || {};
-    
-    if (level === 'high') {
-        if (categoryScores.salary && categoryScores.salary <= 30) {
-            return '給与・待遇に関する面談を早急に実施してください';
-        }
-        if (categoryScores.relationship && categoryScores.relationship <= 30) {
-            return '職場の人間関係について個別ヒアリングを実施してください';
-        }
-        return '早急な個別面談と状況改善が必要です';
-    }
-    
-    if (level === 'medium') {
-        return '定期的なフォローアップと状況確認を行ってください';
-    }
-    
-    return '現状維持で問題ありません';
-}
-
-// CSVエクスポート
-function exportCSV() {
-    console.log('📥 CSV出力開始');
-    
-    if (filteredData.length === 0) {
-        alert('エクスポートするデータがありません');
-        return;
-    }
-
-    const headers = [
-        '日時',
-        '会社コード',
-        '従業員コード',
-        '国籍',
-        '総合スコア',
-        '月',
-        'リスクレベル'
-    ];
-
-    const rows = filteredData.map(item => {
-        const riskLevel = calculateRiskLevel(item);
-        const riskLabels = {
-            high: '高リスク',
-            medium: '中リスク',
-            low: '安定'
-        };
-        const nationalityDisplay = nationalityDisplayNames[item.nationality] || item.nationality || '-';
-
-        return [
-            formatDate(item.survey_date),
-            item.company_code || '',
-            item.employee_code || '',
-            nationalityDisplay,
-            item.totalScore.toFixed(1),
-            item.year_month || '',
-            riskLabels[riskLevel]
-        ];
-    });
-
-    let csv = headers.join(',') + '\n';
-    csv += rows.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
-
-    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `trainee_survey_${new Date().toISOString().split('T')[0]}.csv`;
-    link.click();
-    
-    console.log('✅ CSV出力完了');
-}
-
-// 日付フォーマット
-function formatDate(dateString) {
-    if (!dateString) return '-';
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return dateString;
-    return date.toLocaleDateString('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-}
+            html
