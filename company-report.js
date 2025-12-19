@@ -702,7 +702,85 @@ async function expandAllEmployees() {
 
 // PDF出力(一時的に無効化)
 async function exportPDF() {
-    alert('PDF出力機能は現在調整中です。\nCSV出力をご利用ください。');
+    try {
+        // ローディング表示
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'pdfLoading';
+        loadingDiv.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+        `;
+        loadingDiv.innerHTML = `
+            <div style="font-size: 24px; margin-bottom: 20px;">📄 PDF生成中...</div>
+            <div style="font-size: 16px;">少々お待ちください</div>
+        `;
+        document.body.appendChild(loadingDiv);
+
+        // PDF生成対象の要素を取得
+        const element = document.getElementById('content');
+        
+        // 企業名と月を取得
+        const params = getURLParams();
+        const companyName = params.company || '企業名不明';
+        const month = params.month || getCurrentMonth();
+        
+        // PDF設定
+        const opt = {
+            margin: [10, 10, 10, 10],
+            filename: `エンゲージメント診断レポート_${companyName}_${month}.pdf`,
+            image: { 
+                type: 'jpeg', 
+                quality: 0.95 
+            },
+            html2canvas: { 
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                letterRendering: true,
+                scrollY: 0,
+                scrollX: 0
+            },
+            jsPDF: { 
+                unit: 'mm', 
+                format: 'a4', 
+                orientation: 'portrait',
+                compress: true
+            },
+            pagebreak: { 
+                mode: ['avoid-all', 'css', 'legacy'],
+                before: '.page-break-before',
+                after: '.page-break-after',
+                avoid: ['.summary-card', '.category-card', '.employee-card', '.criteria-card']
+            }
+        };
+
+        // PDF生成
+        await html2pdf().set(opt).from(element).save();
+        
+        // ローディング削除
+        document.body.removeChild(loadingDiv);
+        
+    } catch (error) {
+        console.error('PDF生成エラー:', error);
+        
+        // ローディング削除
+        const loadingDiv = document.getElementById('pdfLoading');
+        if (loadingDiv) {
+            document.body.removeChild(loadingDiv);
+        }
+        
+        alert('PDF生成に失敗しました。\n\nエラー: ' + error.message + '\n\nCSV出力をご利用いただくか、ブラウザの印刷機能(Ctrl+P)をお試しください。');
+    }
 }
 
 // CSV出力
