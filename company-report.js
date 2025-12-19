@@ -726,8 +726,17 @@ async function exportPDF() {
         `;
         document.body.appendChild(loadingDiv);
 
-        // PDF生成対象の要素を取得
-        const element = document.getElementById('content');
+        // ボタンを一時的に非表示
+        const actionButtons = document.querySelector('.action-buttons');
+        const monthSelector = document.querySelector('.month-selector-container');
+        if (actionButtons) actionButtons.style.display = 'none';
+        if (monthSelector) {
+            const buttons = monthSelector.querySelectorAll('button');
+            buttons.forEach(btn => btn.style.display = 'none');
+        }
+
+        // PDF生成対象の要素を取得(ヘッダー含む全体)
+        const element = document.querySelector('.container');
         
         // 企業名と月を取得
         const params = getURLParams();
@@ -767,11 +776,27 @@ async function exportPDF() {
         // PDF生成
         await html2pdf().set(opt).from(element).save();
         
+        // ボタンを再表示
+        if (actionButtons) actionButtons.style.display = 'flex';
+        if (monthSelector) {
+            const buttons = monthSelector.querySelectorAll('button');
+            buttons.forEach(btn => btn.style.display = 'inline-block');
+        }
+        
         // ローディング削除
         document.body.removeChild(loadingDiv);
         
     } catch (error) {
         console.error('PDF生成エラー:', error);
+        
+        // ボタンを再表示
+        const actionButtons = document.querySelector('.action-buttons');
+        const monthSelector = document.querySelector('.month-selector-container');
+        if (actionButtons) actionButtons.style.display = 'flex';
+        if (monthSelector) {
+            const buttons = monthSelector.querySelectorAll('button');
+            buttons.forEach(btn => btn.style.display = 'inline-block');
+        }
         
         // ローディング削除
         const loadingDiv = document.getElementById('pdfLoading');
